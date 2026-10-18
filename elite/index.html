@@ -209,14 +209,14 @@ html.redback.showback body{background-color:#8f0b12}
   box-shadow:inset 0 1px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.7),inset 0 -2px 3px rgba(0,0,0,.05)}
 .podback.eliteback .stk,.podback.eliteback .scuff{display:none}
 .podback.eliteback{background:
-    linear-gradient(180deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,0) 20%,rgba(255,255,255,0) 86%,rgba(255,255,255,.4) 100%),
-    radial-gradient(ellipse 70% 40% at 28% 16%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%),
-    radial-gradient(ellipse 60% 30% at 75% 70%,rgba(255,255,255,.6),rgba(255,255,255,0) 70%),
-    linear-gradient(100deg,#9aa1a8 0%,#e7eaed 10%,#ffffff 20%,#d2d6da 32%,#8e959c 44%,#a9afb5 50%,#eef0f2 60%,#ffffff 68%,#d0d4d8 80%,#9fa5ab 91%,#dde0e3 100%);
-  box-shadow:0 0 0 1px #6c7278,inset 0 0 0 2px rgba(255,255,255,.85),inset 0 0 calc(var(--w)*.05) rgba(0,0,0,.28),0 34px 60px -24px rgba(0,0,0,.55)}
-.podback.eliteback::before{background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 60%)}
+    linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 18%,rgba(255,255,255,0) 86%,rgba(255,255,255,.1) 100%),
+    radial-gradient(ellipse 70% 40% at 28% 16%,rgba(200,210,224,.35),rgba(255,255,255,0) 70%),
+    radial-gradient(ellipse 60% 30% at 75% 72%,rgba(200,210,224,.18),rgba(255,255,255,0) 70%),
+    linear-gradient(100deg,#2a2e34 0%,#5b626b 10%,#8a929b 18%,#4a5058 30%,#1c1f23 42%,#30343a 50%,#6e757e 60%,#9aa2ab 67%,#5a6068 78%,#2b2f35 90%,#454a51 100%);
+  box-shadow:0 0 0 1px #0b0c0e,inset 0 0 0 2px rgba(255,255,255,.18),inset 0 0 calc(var(--w)*.05) rgba(0,0,0,.55),0 34px 60px -24px rgba(0,0,0,.6)}
+.podback.eliteback::before{background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 60%)}
 .podback.eliteback .engrave{top:80%;white-space:pre-line;line-height:1.35;font-size:calc(var(--w)*.062);letter-spacing:.04em;
-  color:rgba(38,42,48,.78);text-shadow:0 1px 0 rgba(255,255,255,.95),0 -1px 0 rgba(0,0,0,.3)}
+  color:rgba(222,228,236,.78);text-shadow:0 -1px 0 rgba(0,0,0,.75),0 1px 0 rgba(255,255,255,.18)}
 .podback.eliteback .engrave::first-line{font-weight:600}
 /* Away Mission case: dark starship hull, command-gold wheel ring, three division stripes */
 .pod.trek{box-shadow:0 0 0 1px #0b0c0e,0 0 0 2px #5b616a,0 0 0 3px #2b2f35,0 0 0 4px #0b0c0e,0 34px 60px -24px rgba(0,0,0,.6),0 10px 22px -10px rgba(0,0,0,.4)}
@@ -522,6 +522,7 @@ html:not(.vfull) .vctl,html:not(.vfull) .vtop{display:none}
   .podwrap{--w:100vw;position:fixed;top:0;left:0;right:0;bottom:auto;width:auto;height:var(--fullh,100%)}
   html.showback,html.showback body{background:#b8bdc3}
   html.redback.showback,html.redback.showback body{background:#8f0b12}
+  html.eliteback.showback,html.eliteback.showback body{background:#2b2f35}
   .podback{border-radius:0}
   .stk.s1{left:21%;top:4%;width:56%}
   .stk.s2{left:20%;top:37%;width:68%}
@@ -2494,7 +2495,7 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
   pod.classList.toggle('elite', c.id === 'elite'); pod.classList.toggle('trek', c.id === 'trek');
   const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myPod Elite, whatever the case */
-  $('#podback').classList.toggle('eliteback', eliteBack);
+  $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
   $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? 'myPod Elite\nMusaka Edition' : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
   const red = c.id === 'bc' && !eliteBack;
