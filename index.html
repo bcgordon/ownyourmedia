@@ -31,6 +31,7 @@ img{max-width:100%}
     </a>
     <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 16px">
       <a href="#projects" style="padding: 10px 14px; text-decoration: none">Projects</a>
+      <a href="#tools" style="padding: 10px 14px; text-decoration: none">Detox tools</a>
       <a href="#local" style="padding: 10px 14px; text-decoration: none">Go local</a>
       <a href="#rules" style="padding: 10px 14px; text-decoration: none">Club rules</a>
     </nav>
@@ -94,6 +95,49 @@ img{max-width:100%}
 
     </div>
   </section>
+
+  <section id="tools" style="max-width: 1160px; margin: 0 auto; padding: 0 24px 88px">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 2px solid #191817; padding-top: 20px; margin-bottom: 14px">
+      <h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em; line-height: 1.02">Digital detox tools we're trying</h2>
+      <p id="toolsUpdated" style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #55524C"></p>
+    </div>
+    <p style="margin: 0 0 32px; max-width: 36em; font-size: 21px; color: #46433E">Some are apps, some are things you can hold. Three we're testing right now to help put the phone down.</p>
+    <div id="toolsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px"></div>
+  </section>
+  <script>
+  /* Detox tools: edit detox-tools.json to swap the three tools. No code changes needed. */
+  (function () {
+    var list = document.getElementById('toolsList');
+    function el(tag, style, text) { var e = document.createElement(tag); if (style) e.setAttribute('style', style); if (text != null) e.textContent = text; return e; }
+    function btn(label, href) {
+      var a = el('a', 'display: inline-flex; align-items: center; min-height: 48px; padding: 0 18px; border: 2px solid #191817; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none', label);
+      a.href = href; a.rel = 'noopener'; return a;
+    }
+    fetch('detox-tools.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.updated) document.getElementById('toolsUpdated').textContent = 'Updated ' + d.updated;
+      (d.tools || []).slice(0, 3).forEach(function (app) {
+        var card = el('article', 'display: flex; flex-direction: column; gap: 14px; padding: 26px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px');
+        var top = el('div', 'display: flex; align-items: center; gap: 14px');
+        var icon;
+        if (app.icon) { icon = el('img', 'flex: none; width: 64px; height: 64px; border-radius: 16px; border: 1px solid #D6D0C4; object-fit: cover'); icon.src = app.icon; icon.alt = ''; }
+        else icon = el('span', 'flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; background: #191817; color: #F1EDE4; font-weight: 800; font-size: 28px', (app.name || '?').replace(/[^A-Za-z0-9]/g, '').charAt(0) || '?');
+        icon.setAttribute('aria-hidden', 'true');
+        var names = el('div', 'display: flex; flex-direction: column; gap: 2px; min-width: 0');
+        names.appendChild(el('h3', 'margin: 0; font-weight: 800; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em', app.name));
+        if (app.kind) names.appendChild(el('span', "font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #55524C", app.kind));
+        top.appendChild(icon); top.appendChild(names); card.appendChild(top);
+        if (app.what) card.appendChild(el('p', 'margin: 0; flex-grow: 1', app.what));
+        if (app.take) {
+          var take = el('p', 'margin: 0; padding: 12px 14px; background: #F1EDE4; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E');
+          take.appendChild(el('b', 'color: #191817', "BC's take: ")); take.appendChild(document.createTextNode(app.take)); card.appendChild(take);
+        }
+        var row = el('div', 'display: flex; flex-wrap: wrap; gap: 10px');
+        (app.links || []).forEach(function (l) { if (l && l.url) row.appendChild(btn(l.label || 'Learn more', l.url)); });
+        card.appendChild(row); list.appendChild(card);
+      });
+    }).catch(function () { document.getElementById('tools').hidden = true; });
+  })();
+  </script>
 
   <section id="local" style="background: #FFFDF8; border-top: 2px solid #191817; border-bottom: 2px solid #191817">
     <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 88px">
