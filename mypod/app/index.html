@@ -958,7 +958,7 @@ const pms = (path, params = {}, opt) => {
   const s = cfg.server; const sep = path.includes('?') ? '&' : '?';
   return req(`${s.uri}${path}${sep}${qs({ ...baseP(), 'X-Plex-Token': s.token, ...params })}`, opt);
 };
-const art = (thumb, size = 320) => !thumb ? null : (thumb.startsWith('data:') || thumb.startsWith('http')) ? thumb :
+const art = (thumb, size = 320) => !thumb ? null : (thumb.startsWith('data:') || thumb.startsWith('blob:') || thumb.startsWith('http')) ? thumb :
   cfg.server ? `${cfg.server.uri}/photo/:/transcode?${qs({ width: size, height: size, minSize: 1, upscale: 1, url: thumb, 'X-Plex-Token': cfg.server.token })}` : null;
 
 function errText(e) {
@@ -1095,6 +1095,360 @@ const Demo = (() => {
     songs: () => List('Songs', [...tracks].sort(by('title')).map(tk))
   };
 })();
+
+/* ---------- music on this phone: files the owner imports, kept inside myPod (IndexedDB) ---------- */
+const AUDIO_EXT = /\.(mp3|m4a|m4b|aac|alac|flac|wav|aif|aiff|ogg|oga|opus|caf)$/i;
+const IMG_NAME = /(^|\/)(cover|folder|front|album|albumart)[^/]*\.(jpe?g|png|webp)$/i;
+const LDB = {
+  db: null,
+  open() {
+    if (this.db) return Promise.resolve(this.db);
+    return new Promise((res, rej) => {
+      const r = indexedDB.open('mypod-music', 1);
+      r.onupgradeneeded = () => { const d = r.result; d.createObjectStore('files'); d.createObjectStore('tracks', { keyPath: 'id' }); d.createObjectStore('art'); };
+      r.onsuccess = () => res(this.db = r.result); r.onerror = () => rej(r.error);
+    });
+  },
+  async run(stores, mode, fn) {
+    const db = await this.open();
+    return new Promise((res, rej) => { const t = db.transaction(stores, mode); let out; const r = fn(t); if (r && 'onsuccess' in r) r.onsuccess = () => { out = r.result; };
+      t.oncomplete = () => res(out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error || new Error('Storage is full.')); });
+  },
+  all(store) { return this.run(store, 'readonly', t => t.objectStore(store).getAll()); },
+  get(store, k) { return this.run(store, 'readonly', t => t.objectStore(store).get(k)); },
+  addSong(file, track, art) { return this.run(['files', 'tracks', 'art'], 'readwrite', t => {
+    t.objectStore('files').put(file, track.id); t.objectStore('tracks').put(track);
+    if (art) t.objectStore('art').put(art.blob, art.key); }); },
+  delSongs(ids, artKeys) { return this.run(['files', 'tracks', 'art'], 'readwrite', t => {
+    for (const id of ids) { t.objectStore('files').delete(id); t.objectStore('tracks').delete(id); }
+    for (const k of artKeys) t.objectStore('art').delete(k); }); }
+};
+
+/* reading song tags straight from the file: ID3 (MP3), MP4 (M4A/ALAC), FLAC and Ogg/Opus */
+const Tags = (() => {
+  const bytes = async (f, a, b) => new Uint8Array(await f.slice(a, b).arrayBuffer());
+  const latin = (u, a, b) => { let s = ''; for (let i = a; i < b; i++) s += String.fromCharCode(u[i]); return s; };
+  const utf8 = (u, a, b) => new TextDecoder('utf-8').decode(u.subarray(a, b));
+  const be32 = (u, i) => ((u[i] << 24) >>> 0) + (u[i + 1] << 16) + (u[i + 2] << 8) + u[i + 3];
+  const le32 = (u, i) => u[i] + (u[i + 1] << 8) + (u[i + 2] << 16) + ((u[i + 3] << 24) >>> 0);
+  const clean = s => (s || '').replace(/\0+$/g, '').replace(/\0/g, ' / ').trim();
+  const num = s => { const n = parseInt(String(s || '').split('/')[0], 10); return isFinite(n) ? n : 0; };
+  function txt(u, a, b) {   /* ID3 text: first byte says how it is encoded */
+    const enc = u[a]; a++;
+    if (enc === 0) return clean(latin(u, a, b));
+    if (enc === 3) return clean(utf8(u, a, b));
+    let le = enc === 1, s = a;
+    if (enc === 1 && u[a] === 0xFE && u[a + 1] === 0xFF) { le = false; s += 2; } else if (enc === 1 && u[a] === 0xFF && u[a + 1] === 0xFE) s += 2;
+    try { return clean(new TextDecoder(le ? 'utf-16le' : 'utf-16be').decode(u.subarray(s, b - ((b - s) % 2)))); } catch { return ''; }
+  }
+  function strEnd(u, i, enc) {   /* end of a null-terminated string inside a frame */
+    if (enc === 1 || enc === 2) { while (i + 1 < u.length && (u[i] || u[i + 1])) i += 2; return i + 2; }
+    while (i < u.length && u[i]) i++; return i + 1;
+  }
+  async function id3(f, u0, out) {
+    const v = u0[3], size = ((u0[6] & 127) << 21) | ((u0[7] & 127) << 14) | ((u0[8] & 127) << 7) | (u0[9] & 127);
+    const u = await bytes(f, 0, 10 + size); let i = 10;
+    if (u0[5] & 0x40) i += v === 4 ? (((u[10] & 127) << 21) | ((u[11] & 127) << 14) | ((u[12] & 127) << 7) | (u[13] & 127)) : be32(u, 10) + 4;
+    const map = v === 2 ? { TT2: 'title', TP1: 'artist', TP2: 'albumArtist', TAL: 'album', TRK: 'track', TPA: 'disc', TCO: 'genre', TYE: 'year' }
+      : { TIT2: 'title', TPE1: 'artist', TPE2: 'albumArtist', TALB: 'album', TRCK: 'track', TPOS: 'disc', TCON: 'genre', TYER: 'year', TDRC: 'year' };
+    while (i < u.length - 10) {
+      const idLen = v === 2 ? 3 : 4, id = latin(u, i, i + idLen);
+      if (!/^[A-Z0-9]+$/.test(id)) break;
+      const sz = v === 2 ? (u[i + 3] << 16) + (u[i + 4] << 8) + u[i + 5]
+        : v === 4 ? ((u[i + 4] & 127) << 21) | ((u[i + 5] & 127) << 14) | ((u[i + 6] & 127) << 7) | (u[i + 7] & 127) : be32(u, i + 4);
+      const a = i + (v === 2 ? 6 : 10), b = Math.min(u.length, a + sz);
+      if (sz <= 0) break;
+      if (map[id] && !out[map[id]]) out[map[id]] = txt(u, a, b);
+      else if ((id === 'APIC' || id === 'PIC') && !out.pic) {
+        const enc = u[a]; let p, mime;
+        if (id === 'PIC') { mime = 'image/' + latin(u, a + 1, a + 4).toLowerCase().replace('jpg', 'jpeg'); p = a + 4; }
+        else { const e = strEnd(u, a + 1, 0); mime = latin(u, a + 1, e - 1) || 'image/jpeg'; p = e; }
+        p = strEnd(u, p + 1, enc);   /* skip picture type, then description */
+        if (!mime.includes('/')) mime = 'image/' + mime.toLowerCase();
+        out.pic = { mime, data: u.slice(p, b) };
+      }
+      i = b;
+    }
+    if (out.genre) out.genre = out.genre.replace(/^\((\d+)\)/, '').trim() || out.genre;
+  }
+  async function flac(f, out) {
+    const u = await bytes(f, 0, Math.min(f.size, 6 * 1024 * 1024)); let i = 4;
+    for (let n = 0; n < 64 && i + 4 <= u.length; n++) {
+      const last = u[i] & 0x80, type = u[i] & 0x7f, len = (u[i + 1] << 16) + (u[i + 2] << 8) + u[i + 3], a = i + 4, b = a + len;
+      if (b > u.length) break;
+      if (type === 0) { const rate = (u[a + 10] << 12) | (u[a + 11] << 4) | (u[a + 12] >> 4);
+        const total = (u[a + 13] & 15) * 2 ** 32 + be32(u, a + 14); if (rate) out.dur = total / rate * 1000; }
+      else if (type === 4) vorbis(u, a, out);
+      else if (type === 6 && !out.pic) { let p = a + 4; const ml = be32(u, p); p += 4; const mime = latin(u, p, p + ml); p += ml;
+        const dl = be32(u, p); p += 4 + dl + 16; const len2 = be32(u, p); p += 4; out.pic = { mime, data: u.slice(p, p + len2) }; }
+      i = b; if (last) break;
+    }
+  }
+  function vorbis(u, a, out) {   /* little-endian comment list: KEY=value */
+    let p = a; const vl = le32(u, p); p += 4 + vl; const n = le32(u, p); p += 4;
+    const map = { TITLE: 'title', ARTIST: 'artist', ALBUMARTIST: 'albumArtist', 'ALBUM ARTIST': 'albumArtist', ALBUM: 'album', TRACKNUMBER: 'track', DISCNUMBER: 'disc', GENRE: 'genre', DATE: 'year' };
+    for (let k = 0; k < n && p + 4 <= u.length; k++) {
+      const l = le32(u, p); p += 4; const s = utf8(u, p, p + l); p += l;
+      const eq = s.indexOf('='); if (eq < 0) continue;
+      const key = map[s.slice(0, eq).toUpperCase()]; if (key && !out[key]) out[key] = s.slice(eq + 1).trim();
+      if (s.slice(0, eq).toUpperCase() === 'METADATA_BLOCK_PICTURE' && !out.pic) {
+        try { const bin = atob(s.slice(eq + 1)); const b = Uint8Array.from(bin, c => c.charCodeAt(0)); let q = 4; const ml = be32(b, q); q += 4;
+          const mime = latin(b, q, q + ml); q += ml; const dl = be32(b, q); q += 4 + dl + 16; const len = be32(b, q); q += 4; out.pic = { mime, data: b.slice(q, q + len) }; } catch {}
+      }
+    }
+  }
+  async function ogg(f, out) {
+    const u = await bytes(f, 0, Math.min(f.size, 1024 * 1024));
+    for (let i = 0; i < u.length - 8; i++) {
+      if (u[i] === 3 && latin(u, i + 1, i + 7) === 'vorbis') { vorbis(u, i + 7, out); return; }
+      if (u[i] === 0x4F && latin(u, i, i + 8) === 'OpusTags') { vorbis(u, i + 8, out); return; }
+    }
+  }
+  async function mp4(f, out) {
+    let pos = 0, moov = null;
+    for (let n = 0; n < 50 && pos + 8 <= f.size; n++) {   /* walk top-level boxes to find 'moov' (it can sit at the end) */
+      const h = await bytes(f, pos, pos + 16); let size = be32(h, 0); const type = latin(h, 4, 8);
+      if (size === 1) size = be32(h, 8) * 2 ** 32 + be32(h, 12); else if (size === 0) size = f.size - pos;
+      if (size < 8) break;
+      if (type === 'moov') { if (size > 40 * 1024 * 1024) return; moov = await bytes(f, pos, pos + size); break; }
+      pos += size;
+    }
+    if (!moov) return;
+    const kids = (u, a, b, cb) => { for (let i = a; i + 8 <= b;) { const s = be32(u, i); if (s < 8 || i + s > b) break; cb(latin(u, i + 4, i + 8), i + 8, i + s); i += s; } };
+    const map = { '\xa9nam': 'title', '\xa9ART': 'artist', aART: 'albumArtist', '\xa9alb': 'album', '\xa9gen': 'genre', '\xa9day': 'year' };
+    kids(moov, 8, moov.length, (t, a, b) => {
+      if (t === 'mvhd') { const v = moov[a]; const ts = v ? be32(moov, a + 20) : be32(moov, a + 12);
+        const d = v ? be32(moov, a + 24) * 2 ** 32 + be32(moov, a + 28) : be32(moov, a + 16); if (ts) out.dur = d / ts * 1000; }
+      if (t !== 'udta') return;
+      kids(moov, a, b, (t2, a2, b2) => { if (t2 !== 'meta') return;
+        kids(moov, a2 + 4, b2, (t3, a3, b3) => { if (t3 !== 'ilst') return;
+          kids(moov, a3, b3, (key, a4, b4) => {
+            kids(moov, a4, b4, (dt, a5, b5) => { if (dt !== 'data') return; const kind = be32(moov, a5) & 0xffffff, p = a5 + 8;
+              if (map[key] && !out[map[key]]) out[map[key]] = clean(utf8(moov, p, b5));
+              else if (key === 'trkn' && !out.track) out.track = String((moov[p + 2] << 8) + moov[p + 3]);
+              else if (key === 'disk' && !out.disc) out.disc = String((moov[p + 2] << 8) + moov[p + 3]);
+              else if (key === 'covr' && !out.pic) out.pic = { mime: kind === 14 ? 'image/png' : 'image/jpeg', data: moov.slice(p, b5) };
+            });
+          });
+        });
+      });
+    });
+  }
+  async function read(f) {
+    const out = {};
+    try {
+      const h = await bytes(f, 0, 12), sig = latin(h, 0, 4);
+      if (sig.startsWith('ID3')) await id3(f, h, out);
+      else if (sig === 'fLaC') await flac(f, out);
+      else if (sig === 'OggS') await ogg(f, out);
+      else if (latin(h, 4, 8) === 'ftyp') await mp4(f, out);
+      if (!out.title && f.size > 128) { const t = await bytes(f, f.size - 128, f.size);   /* old ID3v1 tag at the very end */
+        if (latin(t, 0, 3) === 'TAG') { out.title = clean(latin(t, 3, 33)); out.artist = out.artist || clean(latin(t, 33, 63)); out.album = out.album || clean(latin(t, 63, 93)); } }
+    } catch {}
+    out.trackNo = num(out.track); out.discNo = num(out.disc) || 1;
+    return out;
+  }
+  return { read, num };
+})();
+
+function audioLength(file) {   /* ask the browser how long a song is when the tags don't say */
+  return new Promise(res => {
+    const a = document.createElement('audio'), url = URL.createObjectURL(file);
+    const done = d => { clearTimeout(tm); a.removeAttribute('src'); try { a.load(); } catch {} URL.revokeObjectURL(url); res(d); };
+    const tm = setTimeout(() => done(0), 5000);
+    a.preload = 'metadata'; a.onloadedmetadata = () => done(isFinite(a.duration) ? a.duration * 1000 : 0); a.onerror = () => done(0); a.src = url;
+  });
+}
+const strHash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) >>> 0; return h.toString(36); };
+
+const Local = {
+  tracks: [], byId: new Map(), artUrls: new Map(), loaded: false, playUrl: null,
+  async load() {
+    try {
+      const ts = await LDB.all('tracks');
+      for (const u of this.artUrls.values()) URL.revokeObjectURL(u);
+      this.artUrls.clear(); this.byId.clear();
+      const keys = [...new Set(ts.map(t => t.artKey).filter(Boolean))];
+      await Promise.all(keys.map(async k => { const b = await LDB.get('art', k); if (b) this.artUrls.set(k, URL.createObjectURL(b)); }));
+      const self = this;
+      this.tracks = ts.map(t => { const o = { ...t, rk: t.id, local: true }; Object.defineProperty(o, 'thumb', { get() { return self.artUrls.get(t.artKey) || null; }, enumerable: true }); self.byId.set(t.id, o); return o; });
+    } catch { this.tracks = []; }
+    this.loaded = true;
+  },
+  async url(t) {
+    const f = await LDB.get('files', t.rk);
+    if (!f) return null;
+    if (this.playUrl) URL.revokeObjectURL(this.playUrl);
+    return this.playUrl = URL.createObjectURL(f);
+  },
+  bytes() { return this.tracks.reduce((s, t) => s + (t.size || 0), 0); },
+  /* the library, shaped like the Plex and demo ones so the same menus work */
+  groups() {
+    const by = (x, y) => x.localeCompare(y, undefined, { sensitivity: 'base', numeric: true });
+    const artists = new Map(), albums = new Map(), genres = new Map();
+    for (const t of this.tracks) {
+      const an = t.albumArtist || t.artist || 'Unknown Artist';
+      if (!artists.has(an)) artists.set(an, { name: an, albums: new Map(), tracks: [] });
+      const ar = artists.get(an); ar.tracks.push(t);
+      const ak = an + '\u0000' + (t.album || 'Unknown Album');
+      if (!albums.has(ak)) albums.set(ak, { title: t.album || 'Unknown Album', artist: an, artKey: t.artKey, tracks: [] });
+      const al = albums.get(ak); al.tracks.push(t); ar.albums.set(ak, al);
+      if (t.genre) { if (!genres.has(t.genre)) genres.set(t.genre, []); genres.get(t.genre).push(t); }
+    }
+    const order = (x, y) => (x.discNo || 1) - (y.discNo || 1) || (x.trackNo || 0) - (y.trackNo || 0) || by(x.title, y.title);
+    for (const al of albums.values()) { al.tracks.sort(order); Object.defineProperty(al, 'thumb', { get: () => Local.artUrls.get(al.artKey) || null }); }
+    for (const a of artists.values()) a.tracks.sort((x, y) => by(x.album || '', y.album || '') || order(x, y));
+    return { by, artists: [...artists.values()].sort((x, y) => by(x.name, y.name)), albums: [...albums.values()].sort((x, y) => by(x.title, y.title)),
+      genres: [...genres.entries()].sort((x, y) => by(x[0], y[0])) };
+  },
+  lib() {
+    const g = this.groups(), tk = t => ({ label: t.title, track: t });
+    const albumItem = al => ({ label: al.title, arrow: true, go: () => push(List(al.title, al.tracks.map(tk))) });
+    const artistView = a => List(a.name, [{ label: 'All Songs', arrow: true, go: () => push(List(a.name, a.tracks.map(tk))) }, ...[...a.albums.values()].map(albumItem)]);
+    const songs = () => [...this.tracks].sort((x, y) => g.by(x.title, y.title));
+    return {
+      albumList: g.albums,
+      artists: () => List('Artists', g.artists.map(a => ({ label: a.name, arrow: true, go: () => push(artistView(a)) }))),
+      albums: () => List('Albums', g.albums.map(albumItem)),
+      genres: () => List('Genres', g.genres.map(([name, ts]) => ({ label: name, value: String(ts.length), arrow: true, go: () => push(List(name, ts.map(tk))) }))),
+      songs: () => List('Songs', songs().map(tk)),
+      search: q => {
+        q = q.toLowerCase(); const out = [];
+        for (const a of g.artists) if (a.name.toLowerCase().includes(q)) out.push({ label: a.name, value: 'Artist', arrow: true, go: () => push(artistView(a)) });
+        for (const al of g.albums) if (al.title.toLowerCase().includes(q)) out.push({ ...albumItem(al), value: 'Album' });
+        const hits = songs().filter(t => t.title.toLowerCase().includes(q));
+        if (hits.length) { const sv = List('Songs', hits.map(tk)); hits.forEach((t, k) => out.push({ label: t.title, value: 'Song', act: () => playFrom(sv, k) })); }
+        return out;
+      }
+    };
+  }
+};
+
+/* picking files: a hidden file input, opened straight from the button press */
+function pickMusic(folder) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.multiple = true;
+  if (folder) { inp.webkitdirectory = true; inp.setAttribute('webkitdirectory', ''); }
+  else inp.accept = 'audio/*,.mp3,.m4a,.aac,.flac,.wav,.aif,.aiff,.ogg,.opus,.alac';
+  inp.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+  document.body.appendChild(inp);
+  inp.addEventListener('change', () => { const fs = [...(inp.files || [])]; inp.remove(); if (fs.length) importMusic(fs); }, { once: true });
+  inp.click();
+  setTimeout(() => { if (inp.isConnected && !inp.files?.length) inp.remove(); }, 10 * 60e3);
+}
+const canPickFolder = () => 'webkitdirectory' in document.createElement('input') && !/iPhone|iPad|iPod/.test(navigator.userAgent) && !(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+async function importMusic(files) {
+  const songs = files.filter(f => AUDIO_EXT.test(f.name) || (f.type || '').startsWith('audio/'));
+  const covers = new Map();   /* cover.jpg and friends, by folder, for songs without built-in art */
+  for (const f of files) { const p = f.webkitRelativePath || ''; if (p && IMG_NAME.test(p)) covers.set(p.slice(0, p.lastIndexOf('/')), f); }
+  const st = { done: 0, added: 0, skipped: 0, failed: 0, total: songs.length, now: '', finished: false };
+  const v = List('Adding Music', () => st.finished ? [{ label: 'Done', act: () => { pop(); } }, { label: 'Add More', act: () => pickMusic(false) }] : []);
+  Object.defineProperty(v, 'note', { get: () => !st.total ? 'No songs found in what you picked. myPod can add MP3, M4A, AAC, ALAC, FLAC and WAV files.'
+    : st.finished ? `Added ${st.added} song${st.added === 1 ? '' : 's'}.` + (st.skipped ? ` ${st.skipped} already here.` : '') + (st.failed ? ` ${st.failed} couldn't be saved.` : '')
+    : `Adding ${st.done + 1} of ${st.total}: ${st.now}` });
+  v.noteRows = 3; push(v);
+  if (!st.total) { st.finished = true; render(); return; }
+  try { await navigator.storage?.persist?.(); } catch {}
+  if (!Local.loaded) await Local.load();
+  const artDone = new Set(Local.tracks.map(t => t.artKey).filter(Boolean));
+  for (const f of songs) {
+    st.now = f.name; if (cur() === v) render();
+    const id = 'l' + strHash(`${f.name}|${f.size}|${f.lastModified}`);
+    if (Local.byId.has(id)) { st.skipped++; st.done++; continue; }
+    try {
+      const tg = await Tags.read(f);
+      const parts = (f.webkitRelativePath || '').split('/');
+      const base = f.name.replace(/\.[^.]+$/, '');
+      const m = base.match(/^(?:(\d+)[-.])?(\d{1,3})\s*[-._)]?\s+(.+)$/);
+      const title = tg.title || (m ? m[3] : base);
+      const artist = tg.artist || (parts.length >= 3 ? parts[parts.length - 3] : '') || 'Unknown Artist';
+      const album = tg.album || (parts.length >= 2 ? parts[parts.length - 2] : '') || 'Unknown Album';
+      const albumArtist = tg.albumArtist || '';
+      const artKey = 'a' + strHash((albumArtist || artist) + '\u0000' + album);
+      let art = null;
+      if (!artDone.has(artKey)) {
+        if (tg.pic?.data?.length) art = { key: artKey, blob: new Blob([tg.pic.data], { type: tg.pic.mime || 'image/jpeg' }) };
+        else { const cf = covers.get(parts.slice(0, -1).join('/')); if (cf) art = { key: artKey, blob: cf }; }
+        if (art) artDone.add(artKey);
+      }
+      const dur = tg.dur || await audioLength(f);
+      const track = { id, title, artist, albumArtist, album, genre: tg.genre || '', year: tg.year || '', trackNo: tg.trackNo || (m ? +m[2] : 0),
+        discNo: tg.discNo || (m && m[1] ? +m[1] : 1), dur: Math.round(dur || 0), size: f.size, type: f.type || '', name: f.name,
+        artKey: artDone.has(artKey) ? artKey : null, added: Date.now() };
+      await LDB.addSong(f, track, art);
+      st.added++;
+    } catch (e) {
+      st.failed++;
+      if (/quota|full/i.test(String(e && (e.name + e.message)))) { flash('This phone is out of room for more music.'); st.done++; break; }
+    }
+    st.done++;
+  }
+  await Local.load();
+  st.finished = true; if (cur() === v) render(); else flash(`Added ${st.added} song${st.added === 1 ? '' : 's'} to On This Phone`);
+}
+
+function localMenu() {
+  const v = List('On This Phone', () => {
+    const has = Local.tracks.length > 0, lib = has ? Local.lib() : null;
+    return [
+      { label: 'Add Music', act: () => pickMusic(false) },
+      ...(canPickFolder() ? [{ label: 'Add a Folder', act: () => pickMusic(true) }] : []),
+      ...(has ? [
+        { label: 'Shuffle Songs', act: localShuffle },
+        { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
+        { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
+        { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
+        { label: 'Songs', value: String(Local.tracks.length), arrow: true, go: () => push(lib.songs()) },
+        { label: 'Search', arrow: true, go: () => push(searchView(Local.lib())) },
+        { label: 'Manage', arrow: true, go: () => push(localManage()) }
+      ] : [])
+    ];
+  });
+  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : Local.tracks.length ? null
+    : 'Add songs saved on this device, like ripped CDs or downloads. myPod keeps its own copy, no Plex needed.' });
+  v.noteRows = 4;
+  if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
+  return v;
+}
+async function localShuffle() {
+  if (!Local.tracks.length) return;
+  unlockLocalAudio();
+  const ts = [...Local.tracks].sort(() => Math.random() - .5);
+  P.view = List('Shuffle Songs', ts.map(t => ({ label: t.title, track: t })));
+  if (await loadIndex(0, true)) { buildOrder(); openNowPlaying(); }
+}
+const mb = b => b >= 1e9 ? (b / 1e9).toFixed(1) + ' GB' : Math.max(1, Math.round(b / 1e6)) + ' MB';
+function localManage() {
+  const arm = { k: null };   /* press twice to remove, so a stray tap can't delete music */
+  const twice = (key, label, run) => ({ get label() { return arm.k === key ? 'Press again to remove' : label; }, act: async () => {
+    if (arm.k !== key) { arm.k = key; render(); setTimeout(() => { if (arm.k === key) { arm.k = null; render(); } }, 4000); return; }
+    arm.k = null; await run(); } });
+  const removeTracks = async ts => {
+    if (P.track?.local && ts.some(t => t.rk === P.track.rk)) endQueue();
+    const keep = new Set(Local.tracks.filter(t => !ts.includes(t)).map(t => t.artKey));
+    await LDB.delSongs(ts.map(t => t.rk), [...new Set(ts.map(t => t.artKey).filter(k => k && !keep.has(k)))]);
+    await Local.load(); flash(`Removed ${ts.length} song${ts.length === 1 ? '' : 's'}`); render();
+  };
+  const v = List('Manage', () => {
+    const g = Local.groups();
+    return [
+      { label: 'Remove an Album', arrow: true, go: () => push(List('Remove an Album', () => Local.groups().albums.map(al =>
+          twice('al:' + al.artist + al.title, al.title, () => removeTracks(al.tracks))))) },
+      ...(g.albums.length ? [twice('all', 'Remove All Music', () => removeTracks([...Local.tracks]))] : [])
+    ];
+  });
+  Object.defineProperty(v, 'note', { get: () => `${Local.tracks.length} song${Local.tracks.length === 1 ? '' : 's'}, ${mb(Local.bytes())}, saved on this device only. Removing them here doesn't touch the originals.` });
+  v.noteRows = 3;
+  return v;
+}
+/* iPhones only let a page start sound from a tap; a tiny silent clip played right away keeps the player unlocked while the song loads */
+let localUnlocked = false;
+function unlockLocalAudio() {
+  if (localUnlocked || !audio.paused) return;
+  try { P.unlocking = true; audio.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+    audio.play().then(() => { localUnlocked = true; }).catch(() => {}); } catch {}
+}
 
 /* ---------- Plex library ---------- */
 const sec = () => cfg.sectionId;
@@ -1298,10 +1652,21 @@ const txUrl = t => `${cfg.server.uri}/music/:/transcode/universal/start.mp3?${qs
 async function loadIndex(i, autoplay) {
   const it = await getAsync(P.view, i);
   if (!it || !it.track) return false;
-  P.index = i; P.track = it.track; P.time = 0; P.dur = (it.track.dur || 0) / 1000; P.tx = false;
+  let tr = it.track;
+  if (tr.local) { if (!Local.loaded) await Local.load(); tr = Local.byId.get(tr.rk) || tr; }
+  const seq = P.loadSeq = (P.loadSeq || 0) + 1;
+  P.index = i; P.track = tr; P.time = 0; P.dur = (tr.dur || 0) / 1000; P.tx = false;
   P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false;
-  if (it.track.demo) { audio.pause(); P.demoMode = true; P.playing = autoplay; }
-  else { P.demoMode = false; audio.src = streamUrl(it.track);
+  if (tr.demo) { audio.pause(); P.demoMode = true; P.playing = autoplay; }
+  else if (tr.local) {   /* a song saved on this phone */
+    P.demoMode = false;
+    const url = await Local.url(tr);
+    if (seq !== P.loadSeq) return true;
+    P.unlocking = false;
+    if (!url) { flash("That song isn't on this device anymore."); return false; }
+    audio.src = url; if (autoplay) playRetry(url);
+  }
+  else { P.demoMode = false; P.unlocking = false; audio.src = streamUrl(tr);
     if (autoplay) playRetry(audio.src); }
   setMediaSession(); updateBar(); if (cur().kind === 'np') renderNP(cur()); else render();
   return true;
@@ -1315,12 +1680,12 @@ function playRetry(src, n = 0) {
   });
 }
 function songEnded() {
-  if (P.endDone || !P.track || P.demoMode) return;
+  if (P.endDone || !P.track || P.demoMode || P.unlocking || audio.src.startsWith('data:')) return;
   P.endDone = true; next(true);
 }
 /* watchdog: if the song reached its end but the speaker never said so, move on anyway */
 function endWatch() {
-  if (!P.track || P.demoMode || !audio.src || !P.want || P.endDone || remoteActive()) return;
+  if (!P.track || P.demoMode || !audio.src || !P.want || P.endDone || P.unlocking || audio.src.startsWith('data:') || (remoteActive() && !P.track.local)) return;
   const now = performance.now(), ct = audio.currentTime || 0;
   if (Math.abs(ct - P.lastCT) > .05) { P.lastCT = ct; P.lastMove = now; }
   const d = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : P.dur;
@@ -1331,7 +1696,9 @@ function endWatch() {
 }
 async function playFrom(v, i) {
   jlJoke();
-  if (remoteActive()) return remotePlay(v, i);
+  const isLocal = !!v.get?.(i)?.track?.local;
+  if (isLocal) unlockLocalAudio();
+  if (remoteActive() && !isLocal) return remotePlay(v, i);
   P.view = v;
   if (await loadIndex(i, true)) { buildOrder(); openNowPlaying(); }
 }
@@ -1403,7 +1770,8 @@ audio.addEventListener('play', () => { P.playing = true; updateBar(); if (cur().
 audio.addEventListener('pause', () => { P.playing = false; updateBar(); if (cur().kind !== 'np') render(); });
 audio.addEventListener('ended', songEnded);
 audio.addEventListener('error', () => {
-  if (!P.track || P.demoMode || !audio.src) return;
+  if (!P.track || P.demoMode || !audio.src || audio.src.startsWith('data:')) return;
+  if (P.track.local) { flash("This song's file type won't play on this device."); return; }
   if (!P.tx) { P.tx = true; audio.src = txUrl(P.track); audio.play().catch(() => {}); }
   else flash("This song won't play here.");
 });
@@ -1462,6 +1830,7 @@ function signInPrompt(title = 'Music') {
   return Message(title, 'Sign in to Plex to play your own music.', [
     { label: 'Sign In with Plex', act: startSignIn },
     { label: 'Paste a Token', act: () => showPanel('token') },
+    { label: 'Music on This Phone', arrow: true, go: () => push(localMenu()) },
     { label: 'Use Demo Library', act: () => { cfg.demo = true; save(); stack.length = 1; push(musicMenu()); } }
   ]);
 }
@@ -1478,6 +1847,7 @@ function libMenu(title, lib) {
     { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
     { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
     { label: 'Songs', arrow: true, go: () => push(lib.songs()) },
+    { label: 'On This Phone', arrow: true, go: () => push(localMenu()) },
     { label: 'Search', arrow: true, go: () => push(searchView()) }
   ], { split: true });
 }
@@ -1529,7 +1899,7 @@ function settingsView() {
     { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
     { label: 'Wheel Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
     { label: 'Center Color', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
-    { label: 'About', arrow: true, go: () => push(Message('About', 'myPod 1.3. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+    { label: 'About', arrow: true, go: () => push(Message('About', 'myPod 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
   ]);
 }
 function plexView() {
@@ -2087,9 +2457,9 @@ function letterPing(v) {
 }
 
 /* ---------- search ---------- */
-function searchView() {
-  if (!isDemo() && !ready()) return Message('Search', 'Search works with your Plex library. Sign in under Settings › Plex.');
-  return { kind: 'search', title: 'Search', q: '', sel: 0, top: 0, items: [], state: 'idle', seq: 0,
+function searchView(lib) {
+  if (!lib && !isDemo() && !ready()) return Message('Search', 'Search works with your Plex library. Sign in under Settings › Plex.');
+  return { kind: 'search', title: 'Search', q: '', sel: 0, top: 0, items: [], state: 'idle', seq: 0, lib,
     count() { return this.items.length; }, get(i) { return this.items[i]; } };
 }
 function renderSearch(v, anim) {
@@ -2123,7 +2493,8 @@ async function runSearch(v) {
   v.state = 'loading'; if (cur() === v) renderSearchRows(v);
   try {
     let items = [];
-    if (isDemo()) items = Demo.search(q);
+    if (v.lib) items = v.lib.search(q);
+    else if (isDemo()) items = Demo.search(q);
     else {
       const d = await pms('/hubs/search', { query: q, limit: 12, sectionId: sec() });
       const hubs = d.MediaContainer?.Hub || [];
@@ -2143,19 +2514,19 @@ async function runSearch(v) {
 
 /* ---------- ratings (kept only on this myPod) ---------- */
 const RATE = { all: LS.get('ratings', {}) };
-const rateScope = t => t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
+const rateScope = t => t && t.local ? 'local' : t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
 const rateKey = t => rateScope(t) + ':' + t.rk;
 const ratingOf = t => (t && RATE.all[rateKey(t)]?.r) || 0;
 function setRating(t, r) {
   if (!t) return; r = clamp(Math.round(r), 0, 5); const k = rateKey(t);
   if (!r) delete RATE.all[k];
-  else RATE.all[k] = { r, at: Date.now(), t: { rk: t.rk, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part, demo: t.demo || undefined } };
+  else RATE.all[k] = { r, at: Date.now(), t: { rk: t.rk, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part, demo: t.demo || undefined, local: t.local || undefined } };
   LS.set('ratings', RATE.all);
 }
 const starsTxt = r => '★'.repeat(r) + '☆'.repeat(5 - r);
 function ratedTracks(test, sort) {
   const scope = isDemo() ? 'demo' : (cfg.server?.machineId || 'x');
-  let a = Object.entries(RATE.all).filter(([k, x]) => k.startsWith(scope + ':') && test(x)).map(([, x]) => x);
+  let a = Object.entries(RATE.all).filter(([k, x]) => (k.startsWith(scope + ':') || (k.startsWith('local:') && Local.byId.has(x.t.rk))) && test(x)).map(([, x]) => x);
   a.sort(sort || ((x, y) => y.r - x.r || x.t.title.localeCompare(y.t.title)));
   return a.map(x => x.t);
 }
@@ -2164,7 +2535,7 @@ function ratedList(title, test, sort, empty) {
   if (!ts.length) return Message(title, empty || 'No songs here yet. Rate a song from Now Playing: press the center until you see Rating, then turn the wheel.');
   const items = [{ label: 'Shuffle', act: () => { setShuffle(true); return playFrom(v, 1 + Math.floor(Math.random() * ts.length)); } },
     ...ts.map(t => ({ label: t.title, value: starsTxt(ratingOf(t)), track: t }))];
-  const v = List(title, items, { headLen: 1, pq: ts.some(t => t.demo) ? null : { path: '/library/metadata/' + ts.slice(0, 300).map(t => t.rk).join(',') } });
+  const v = List(title, items, { headLen: 1, pq: ts.some(t => t.demo || t.local) ? null : { path: '/library/metadata/' + ts.slice(0, 300).map(t => t.rk).join(',') } });
   return v;
 }
 function ratingsView() {
@@ -3708,6 +4079,7 @@ w95ov.addEventListener('pointerup', e => e.stopPropagation());
 applyCase();
 screenStyle();
 stack.push(mainMenu());
+Local.load().then(() => render()).catch(() => {});
 if (!LS.get('seenHelp', false)) { stack.push(Page('How to Use', HELP)); LS.set('seenHelp', true); }
 new ResizeObserver(() => layout()).observe(screenEl);
 layout();
