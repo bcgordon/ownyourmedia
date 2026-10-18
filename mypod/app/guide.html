@@ -71,6 +71,7 @@ footer .own-line{color:var(--ink);font-size:17px;font-weight:600;margin:4px 0 2p
 .steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
   font-size:15px;font-weight:700;display:grid;place-items:center}
 .path{font-weight:600;white-space:nowrap}
+@media (max-width:480px){.path{white-space:normal}}
 .key{display:inline-block;padding:0 .4em;border:1px solid #c7c7cc;border-radius:6px;background:linear-gradient(#fff,#ececef);font-size:.82em;font-weight:700;line-height:1.5;white-space:nowrap}
 .note{background:var(--wash);border-radius:12px;padding:14px 16px;margin:18px 0;font-size:17px;color:#3a3a3c}
 .note b{color:var(--ink)}
@@ -184,7 +185,8 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
       <li><a href="#playon"><span>7</span>Play On Another Speaker</a></li>
       <li><a href="#extras"><span>8</span>Extras</a></li>
       <li><a href="#settings"><span>9</span>Settings</a></li>
-      <li><a href="#help"><span>10</span>Tips and Troubleshooting</a></li>
+      <li><a href="#elite"><span>10</span>myPod Elite</a></li>
+      <li><a href="#help"><span>11</span>Tips and Troubleshooting</a></li>
     </ol>
   </nav>
 
@@ -421,8 +423,33 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
     </dl>
   </section>
 
-  <section class="ch" id="help">
+  <section class="ch" id="elite">
     <p class="num">Chapter 10</p>
+    <h2>myPod <em>Elite</em></h2>
+    <p class="lead">Want extras like playing music straight from your own network share? myPod Elite is for you. It’s the same myPod with features that take a little setup, for people who like to tinker.</p>
+    <dl class="terms">
+      <div><dt>Network Share</dt><dd>Play music from your own WebDAV server, with no Plex needed. Browse its folders under <span class="path">Music › Network Share</span>.</dd></div>
+      <div><dt>Starship looks</dt><dd>Elite opens in the Away Mission case with the Starship Console screen. (Both are in regular myPod’s Settings too.)</dd></div>
+      <div><dt>Musaka back</dt><dd>Flip it over: a dark gunmetal back engraved <b>myPod Elite · Musaka Edition</b>.</dd></div>
+      <div><dt>Its own space</dt><dd>Elite keeps its own settings, Plex sign-in, ratings and music, so you can keep both on your Home Screen.</dd></div>
+    </dl>
+    <h3>Get myPod Elite</h3>
+    <ol class="steps">
+      <li>Open <a href="/elite/" target="_top"><b>ownyourmedia.club/elite</b></a> in Safari on your iPhone (or Chrome on Android).</li>
+      <li>Tap Share, then <span class="path">Add to Home Screen</span>. It gets its own myPod Elite icon.</li>
+    </ol>
+    <h3>Set up a network share</h3>
+    <ol class="steps">
+      <li>Your share needs an address that starts with <b>https://</b>. Tailscale, a Cloudflare tunnel or a reverse proxy can give it one.</li>
+      <li>The server has to let myPod in. The easiest way is a recent version of rclone:<br><span class="path" style="white-space:normal;overflow-wrap:anywhere;word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:15px">rclone serve webdav /path/to/Music --user NAME --pass SECRET --allow-origin https://ownyourmedia.club</span></li>
+      <li>In Elite, go to <span class="path">Settings › Network Share › Connect a Share</span> and enter the address, username and password.</li>
+      <li>Open <span class="path">Music › Network Share</span>, pick a folder, and press <b>Play All</b> or <b>Shuffle</b>.</li>
+    </ol>
+    <div class="note"><b>Good to know:</b> each song downloads fully before it plays, which is quick on a home network. Folders laid out as Artist › Album, with a cover.jpg in each album folder, look best. Elite’s <span class="path">Network Share › Setup Help</span> has the details for other servers.</div>
+  </section>
+
+  <section class="ch" id="help">
+    <p class="num">Chapter 11</p>
     <h2>Tips and Troubleshooting</h2>
     <dl class="terms">
       <div><dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex. Then try <span class="path">Settings › Plex › Reconnect</span>.</dd></div>
