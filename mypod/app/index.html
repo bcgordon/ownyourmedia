@@ -16,7 +16,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Pixelify+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
 /* Layout: one iPod (5th gen) centered on a softly lit desk; every device measurement scales from --w */
 :root{
@@ -198,6 +198,70 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .podback.redback .engrave{color:rgba(255,226,226,.82);text-shadow:0 1px 0 rgba(0,0,0,.35),0 -1px 0 rgba(255,255,255,.25)}
 .podback.redback .scuff{opacity:.7}
 html.redback.showback body{background-color:#8f0b12}
+/* myPod Elite (Musaka Edition): high-gloss white front, mirror-polished chrome back, no stickers */
+.pod.elite{box-shadow:0 0 0 1px #8d939a,0 0 0 2px #f4f6f8,0 0 0 3px #b9bec4,0 0 0 4px #6f757c,0 34px 60px -24px rgba(0,0,0,.55),0 10px 22px -10px rgba(0,0,0,.35)}
+.pod.elite::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:5;
+  background:
+    radial-gradient(ellipse 90% 22% at 50% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 70%),
+    linear-gradient(180deg,rgba(255,255,255,0) 82%,rgba(120,128,138,.08) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.7),inset 0 -2px 3px rgba(0,0,0,.05)}
+.podback.eliteback .stk,.podback.eliteback .scuff{display:none}
+.podback.eliteback{background:
+    linear-gradient(180deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,0) 20%,rgba(255,255,255,0) 86%,rgba(255,255,255,.4) 100%),
+    radial-gradient(ellipse 70% 40% at 28% 16%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%),
+    radial-gradient(ellipse 60% 30% at 75% 70%,rgba(255,255,255,.6),rgba(255,255,255,0) 70%),
+    linear-gradient(100deg,#9aa1a8 0%,#e7eaed 10%,#ffffff 20%,#d2d6da 32%,#8e959c 44%,#a9afb5 50%,#eef0f2 60%,#ffffff 68%,#d0d4d8 80%,#9fa5ab 91%,#dde0e3 100%);
+  box-shadow:0 0 0 1px #6c7278,inset 0 0 0 2px rgba(255,255,255,.85),inset 0 0 calc(var(--w)*.05) rgba(0,0,0,.28),0 34px 60px -24px rgba(0,0,0,.55)}
+.podback.eliteback::before{background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 60%)}
+.podback.eliteback .engrave{top:80%;white-space:pre-line;line-height:1.35;font-size:calc(var(--w)*.062);letter-spacing:.04em;
+  color:rgba(38,42,48,.78);text-shadow:0 1px 0 rgba(255,255,255,.95),0 -1px 0 rgba(0,0,0,.3)}
+.podback.eliteback .engrave::first-line{font-weight:600}
+/* Away Mission case: dark starship hull, command-gold wheel ring, three division stripes */
+.pod.trek{box-shadow:0 0 0 1px #0b0c0e,0 0 0 2px #5b616a,0 0 0 3px #2b2f35,0 0 0 4px #0b0c0e,0 34px 60px -24px rgba(0,0,0,.6),0 10px 22px -10px rgba(0,0,0,.4)}
+.pod.trek::after{content:"";position:absolute;left:0;right:0;bottom:calc(var(--w)*.045);height:calc(var(--w)*.016);pointer-events:none;
+  background:linear-gradient(90deg,#c4302b,#c4302b) calc(50% - var(--w)*.085) 0/calc(var(--w)*.075) 100% no-repeat,
+    linear-gradient(90deg,#e7b24a,#e7b24a) 50% 0/calc(var(--w)*.075) 100% no-repeat,
+    linear-gradient(90deg,#3d7fc4,#3d7fc4) calc(50% + var(--w)*.085) 0/calc(var(--w)*.075) 100% no-repeat}
+.pod.trek .wheel{box-shadow:0 0 0 calc(var(--w)*.006) #e7b24a,0 0 calc(var(--w)*.03) rgba(231,178,74,.35)}
+
+/* Starship Console screen */
+.screen.console{background:#000;color:#ffcc99;font-family:Antonio,"Arial Narrow","Roboto Condensed",sans-serif;letter-spacing:.03em}
+.console .bar{background:#000;border:0;color:#000;position:relative;padding:0 2.4cqw 0 0}
+.console .bar::before{content:"";position:absolute;left:0;top:.8cqw;bottom:0;width:11cqw;background:#cc99cc;border-top-left-radius:6cqw}
+.console .bar-l{position:relative;padding-left:3cqw}
+.console .bar-l svg path{stroke:#000!important}
+.console .bar-t{position:relative;margin:.8cqw 2cqw 0 0;height:calc(100% - 1.6cqw);display:flex;align-items:center;justify-content:center;
+  background:#ff9966;color:#000;border-radius:0 99cqw 99cqw 0;text-transform:uppercase;font-weight:700;letter-spacing:.06em}
+.console .bar-r,.console .crn-clock{color:#ffcc99}
+.console .crn-eq i{background:#ff9966;border-radius:0}
+.console .body::before{content:"";position:absolute;left:0;top:0;bottom:0;width:11cqw;border-bottom-left-radius:6cqw;
+  background:linear-gradient(#cc99cc 0 34%,#000 34% 35.5%,#9999ff 35.5% 66%,#000 66% 67.5%,#ff9966 67.5%)}
+.console .rows{left:13cqw}
+.console .row{text-transform:uppercase;font-weight:600;color:#ffcc99;border-radius:99cqw 0 0 99cqw;padding-left:3.4cqw}
+.console .row.sel{background:#ff9966;color:#000;box-shadow:none;border-radius:99cqw}
+.console .row .r{color:#9999ff}.console .row.sel .r{color:#000}
+.console .row.dim{color:#8f86a8}
+.console .sb{border:0;background:#20203a;border-radius:99cqw}
+.console .sb i{background:#9999ff;border-radius:99cqw}
+.console .note,.console .page,.console .page h3{color:#ffcc99}
+.console .npstrip{background:#000;border-top:.6cqw solid #9999ff;color:#ffcc99;text-transform:uppercase}
+.console .npstrip .go{color:#ff9966}
+.console .np-pos{color:#9999ff}
+.console .np-title{color:#ff9966;text-transform:uppercase}
+.console .np-artist,.console .np-album{color:#ffcc99}
+.console .np-art{background:#1a1a2e;box-shadow:none;border-radius:2cqw}
+.console .trk{border:0;background:#20203a;border-radius:99cqw;overflow:hidden}
+.console .fill{background:#ff9966}
+.console .knob{background:#ffcc99;border:0;border-radius:50%;transform:translate(-50%,-50%)}
+.console .seg{border:0;background:#20203a;border-radius:99cqw}
+.console .seg button{color:#ffcc99;text-transform:uppercase}
+.console .seg button+button{border-color:#000}
+.console .seg button.on{background:#ff9966;color:#000}
+.console .stars button{color:#3d3d66}.console .stars button.on,.console .np-stars{color:#ff9966}
+.console .sbox{background:#000;border-bottom:0}
+.console .sbox input{background:#20203a;color:#ffcc99;border:0;border-radius:99cqw}
+.console .split-l{right:0}.console .split-r{display:none}.console .split-l .row:not(.sel) .r svg{visibility:visible}
+
 
 /* once the turn ends, fully hide the side facing away (iPhone Safari can bleed it through) */
 html.showback:not(.flipping) .pod{visibility:hidden}
@@ -906,15 +970,18 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
 /* ---------- storage ---------- */
+/* which edition is this? myPod, or myPod Elite (served from /elite/ with its own settings and storage) */
+const ELITE = window.MYPOD_EDITION === 'elite';
+const LSP = ELITE ? 'elite.' : 'pod.';
 const LS = {
-  get(k, d) { try { const v = localStorage.getItem('pod.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('pod.' + k, JSON.stringify(v)); } catch {} }
+  get(k, d) { try { const v = localStorage.getItem(LSP + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(LSP + k, JSON.stringify(v)); } catch {} }
 };
 const PRODUCT = 'myPod';
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
-  caseColor: 'white', bigText: true, clicker: true, demo: null, shuffle: false, repeat: 'off' }, LS.get('cfg', {}));
+  caseColor: ELITE ? 'trek' : 'white', bigText: true, clicker: true, demo: null, shuffle: false, repeat: 'off', ...(ELITE ? { screen: 'console' } : {}) }, LS.get('cfg', {}));
 delete cfg.sp; delete cfg.spClientId; delete cfg.spTarget;
 const save = () => LS.set('cfg', cfg);
 const isDemo = () => cfg.demo ?? !cfg.token;
@@ -1104,7 +1171,7 @@ const LDB = {
   open() {
     if (this.db) return Promise.resolve(this.db);
     return new Promise((res, rej) => {
-      const r = indexedDB.open('mypod-music', 1);
+      const r = indexedDB.open(ELITE ? 'mypod-elite-music' : 'mypod-music', 1);
       r.onupgradeneeded = () => { const d = r.result; d.createObjectStore('files'); d.createObjectStore('tracks', { keyPath: 'id' }); d.createObjectStore('art'); };
       r.onsuccess = () => res(this.db = r.result); r.onerror = () => rej(r.error);
     });
@@ -1813,7 +1880,7 @@ function pop() { if (stack.length > 1) { const v = stack.pop(); if (v.onLeave) v
 function openNowPlaying() { if (cur()?.kind === 'np') { renderNP(cur(), null, true); return; } push({ kind: 'np', title: 'Now Playing', mode: 'play' }); }
 
 function mainMenu() {
-  return List('myPod', () => {
+  return List(ELITE ? 'myPod Elite' : 'myPod', () => {
     const a = [
       { label: 'Music', arrow: true, go: () => push(musicMenu()) },
       { label: 'Videos', arrow: true, go: () => push(videosView()) },
@@ -1899,7 +1966,7 @@ function settingsView() {
     { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
     { label: 'Wheel Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
     { label: 'Center Color', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
-    { label: 'About', arrow: true, go: () => push(Message('About', 'myPod 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myPod Elite' : 'myPod') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
   ]);
 }
 function plexView() {
@@ -2199,6 +2266,8 @@ const CASES = [
   { id: 'zune', name: 'Zune Brown', base: '#3b281d', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(170deg,#7a5843 0%,#5a3f2e 42%,#3f2a1e 100%)', 'case-edge': '#2b1c13', wheel: 'radial-gradient(circle at 50% 38%,#6a4b38,#4a3324)', 'wheel-edge': '#2a1b12', 'wheel-ink': '#d8c3a8', 'wheel-press': '#fff3e2', center: 'linear-gradient(#7e5c46,#5b3f2d)', 'center-edge': '#2f1f15', bezel: '#0d0a08' } },
   { id: 'bc', name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
   { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
+  { id: 'elite', name: 'Elite White', eliteOnly: true, base: '#e9ecef', v: { case: 'linear-gradient(160deg,#ffffff 0%,#fdfdfd 30%,#f1f3f5 62%,#e3e6ea 100%)', 'case-edge': '#c4c9cf', wheel: 'radial-gradient(circle at 50% 35%,#ffffff,#eceef1 70%,#e1e4e8)', 'wheel-edge': '#c7ccd2', 'wheel-ink': '#9ba1a8', 'wheel-press': '#4f555c', center: 'radial-gradient(circle at 50% 30%,#ffffff,#eef0f3 70%,#dfe2e6)', 'center-edge': '#c3c8ce', bezel: '#1d1f22' } },
+  { id: 'trek', name: 'Away Mission', eliteOnly: true, base: '#1e2126', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
@@ -2246,12 +2315,16 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('squircle', c.id === 'zune');
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
-  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : 'Built by BC';
+  pod.classList.toggle('elite', c.id === 'elite'); pod.classList.toggle('trek', c.id === 'trek');
+  const eliteBack = c.id === 'elite' || c.id === 'trek'; $('#podback').classList.toggle('eliteback', eliteBack);
+  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? 'myPod Elite\nMusaka Edition' : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
   $('#podback').classList.toggle('redback', c.id === 'bc'); document.documentElement.classList.toggle('redback', c.id === 'bc');
   document.documentElement.style.setProperty('--case-base', c.base);
 }
+const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
 function caseView() {
+  const CASES = caseList();
   const v = List('Case', CASES.map(c => ({ label: c.name, get check() { return cfg.caseColor === c.id; },
     act: () => { cfg.caseColor = c.id; save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
     { onSel() { applyCase(CASES[this.sel].id); }, onLeave() { applyCase(); } });
@@ -3078,18 +3151,21 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic']];
+const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console']];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
+const screenList = () => SCREENS.filter(s => ELITE || s[0] !== 'console');
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
 function screenStyle(id = cfg.screen) {
   const w95 = $('#pod').classList.contains('jled');
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
+  screenEl.classList.toggle('console', !w95 && ELITE && id === 'console');
   screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
 }
 function applyScreen() { screenStyle(); render(); }
 try { darkQ.addEventListener('change', () => { if (cfg.screen === 'auto') applyScreen(); }); } catch {}
 function screenView() {
+  const SCREENS = screenList();
   const v = List('Screen', SCREENS.map(([id, name]) => ({ label: name, get check() { return (cfg.screen || 'color') === id; },
     act: () => { cfg.screen = id; save(); applyScreen(); } })),
     { onSel() { screenStyle(SCREENS[this.sel][0]); }, onLeave() { screenStyle(); } });
@@ -3549,7 +3625,7 @@ const KV = {
   open() {
     if (this.db) return Promise.resolve(this.db);
     return new Promise((res, rej) => {
-      const r = indexedDB.open('mypod', 1);
+      const r = indexedDB.open(ELITE ? 'mypod-elite' : 'mypod', 1);
       r.onupgradeneeded = () => r.result.createObjectStore('kv');
       r.onsuccess = () => res(this.db = r.result); r.onerror = () => rej(r.error);
     });
@@ -4067,6 +4143,8 @@ function jlBsod() {
 w95ov.addEventListener('click', e => { e.stopPropagation(); click(); w95close(); });
 w95ov.addEventListener('pointerdown', e => e.stopPropagation());
 w95ov.addEventListener('pointerup', e => e.stopPropagation());
+/* old Elite preview links (?ed=elite) now go to the real myPod Elite */
+if (!ELITE && new URLSearchParams(location.search).get('ed') === 'elite') location.replace('/elite/');
 /* the gift link: myPod/?ed=jl opens straight into the JL Edition, and remembers it on the home screen too */
 (() => {
   const ed = new URLSearchParams(location.search).get('ed');
