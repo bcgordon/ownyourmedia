@@ -1275,6 +1275,10 @@ async function poll() {
 
 /* ---------- local playback ---------- */
 const audio = new Audio(); audio.preload = 'auto'; audio.setAttribute('x-webkit-airplay', 'allow');
+/* remember whether music is meant to be playing, so a speaker that drops the end-of-song signal can't stall the queue */
+{ const _play = audio.play.bind(audio), _pause = audio.pause.bind(audio);
+  audio.play = () => { P.want = true; return _play(); };
+  audio.pause = () => { P.want = false; return _pause(); }; }
 /* AirPlay and Bluetooth: Safari's own speaker picker (it lists AirPlay speakers, Apple TVs and Bluetooth headphones) */
 const AIR = { wireless: false };
 audio.addEventListener('webkitcurrentplaybacktargetiswirelesschanged', () => { AIR.wireless = !!audio.webkitCurrentPlaybackTargetIsWireless; updateBar(); if (cur()?.kind === 'list') render(); });
@@ -1282,9 +1286,11 @@ function showSpeakers() {
   const el = (typeof V !== 'undefined' && V.active) ? vEl : audio;
   if (cfg.target && !(typeof V !== 'undefined' && V.active)) setTarget(null);
   if (typeof el.webkitShowPlaybackTargetPicker === 'function') { try { el.webkitShowPlaybackTargetPicker(); return; } catch {} }
-  push(List('Speakers', [], { note: "Can't open the speaker list here. In Control Center, press and hold the music card, then tap the AirPlay icon.", noteRows: 4 }));
+  const android = /Android/i.test(navigator.userAgent);
+  push(List('Speakers', [], { note: android ? "Pair a Bluetooth speaker or headphones in your phone's Settings. myPod plays through whatever is connected."
+    : "Can't open the speaker list here. In Control Center, press and hold the music card, then tap the AirPlay icon.", noteRows: 4 }));
 }
-const P = { view: null, index: -1, track: null, playing: false, time: 0, dur: 0, demoMode: false, tx: false, order: null };
+const P = { view: null, index: -1, track: null, playing: false, time: 0, dur: 0, demoMode: false, tx: false, order: null, want: false, endDone: false, lastCT: -1, lastMove: 0, warmed: false };
 const streamUrl = t => t.part ? `${cfg.server.uri}${t.part}?${qs({ ...baseP(), 'X-Plex-Token': cfg.server.token })}` : txUrl(t);
 const txUrl = t => `${cfg.server.uri}/music/:/transcode/universal/start.mp3?${qs({ path: '/library/metadata/' + t.rk, mediaIndex: 0, partIndex: 0,
   protocol: 'http', offset: 0, directPlay: 0, directStream: 0, musicBitrate: 320, session: clientId, ...baseP(), 'X-Plex-Token': cfg.server.token })}`;
@@ -1293,11 +1299,35 @@ async function loadIndex(i, autoplay) {
   const it = await getAsync(P.view, i);
   if (!it || !it.track) return false;
   P.index = i; P.track = it.track; P.time = 0; P.dur = (it.track.dur || 0) / 1000; P.tx = false;
+  P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false;
   if (it.track.demo) { audio.pause(); P.demoMode = true; P.playing = autoplay; }
   else { P.demoMode = false; audio.src = streamUrl(it.track);
-    if (autoplay) audio.play().catch(() => { P.playing = false; updateBar(); }); }
+    if (autoplay) playRetry(audio.src); }
   setMediaSession(); updateBar(); if (cur().kind === 'np') renderNP(cur()); else render();
   return true;
+}
+/* AirPlay speakers (HomePod) sometimes refuse the first play() of a new song while they switch streams: try again a few times */
+function playRetry(src, n = 0) {
+  audio.play().catch(() => {
+    if (audio.src !== src || !P.track) return;
+    if (n < 4) { P.want = true; setTimeout(() => { if (audio.src === src && audio.paused && P.want) playRetry(src, n + 1); }, 600 * (n + 1)); }
+    else { P.playing = false; updateBar(); }
+  });
+}
+function songEnded() {
+  if (P.endDone || !P.track || P.demoMode) return;
+  P.endDone = true; next(true);
+}
+/* watchdog: if the song reached its end but the speaker never said so, move on anyway */
+function endWatch() {
+  if (!P.track || P.demoMode || !audio.src || !P.want || P.endDone || remoteActive()) return;
+  const now = performance.now(), ct = audio.currentTime || 0;
+  if (Math.abs(ct - P.lastCT) > .05) { P.lastCT = ct; P.lastMove = now; }
+  const d = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : P.dur;
+  if (!d) return;
+  if (!P.warmed && d - ct < 20) { P.warmed = true; const j = stepIndex(1, cfg.repeat === 'all'); if (j >= 0) getAsync(P.view, j).catch(() => {}); }
+  const still = now - P.lastMove;
+  if (audio.ended || (ct >= d - 1 && (audio.paused || still > 1500)) || (ct >= d - 6 && still > 5000)) songEnded();
 }
 async function playFrom(v, i) {
   jlJoke();
@@ -1344,7 +1374,7 @@ async function next(auto) {
   if (remoteActive() && R.track) { if (auto === true) return; companion('playback/skipNext').catch(() => flash(`Couldn't reach ${cfg.target.name}`)); return; }
   if (!P.track) return;
   if (auto === true && cfg.repeat === 'one') {
-    seekTo(0); if (P.demoMode) P.playing = true; else audio.play().catch(() => {}); return;
+    P.endDone = false; P.lastMove = performance.now(); seekTo(0); if (P.demoMode) P.playing = true; else audio.play().catch(() => {}); return;
   }
   const i = stepIndex(1, cfg.repeat === 'all');
   if (i < 0 || !(await loadIndex(i, auto === true || P.playing))) endQueue();
@@ -1371,7 +1401,7 @@ audio.addEventListener('timeupdate', () => { P.time = audio.currentTime; if (cur
 audio.addEventListener('durationchange', () => { if (isFinite(audio.duration)) P.dur = audio.duration; });
 audio.addEventListener('play', () => { P.playing = true; updateBar(); if (cur().kind !== 'np') render(); });
 audio.addEventListener('pause', () => { P.playing = false; updateBar(); if (cur().kind !== 'np') render(); });
-audio.addEventListener('ended', () => next(true));
+audio.addEventListener('ended', songEnded);
 audio.addEventListener('error', () => {
   if (!P.track || P.demoMode || !audio.src) return;
   if (!P.tx) { P.tx = true; audio.src = txUrl(P.track); audio.play().catch(() => {}); }
@@ -1379,6 +1409,7 @@ audio.addEventListener('error', () => {
 });
 setInterval(() => {
   if (P.demoMode && P.playing && P.track && !remoteActive()) { P.time += .25; if (P.time >= P.dur) { next(true); return; } }
+  endWatch();
   if (cur().kind === 'np') updateNP();
   if (CF.open) cfUpdateNP();
 }, 250);
