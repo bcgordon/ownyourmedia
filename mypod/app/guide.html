@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#9bd84e">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<style>body{margin:0}</style>
+<title>myPod User’s Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap">
+<style>
+/* Layout: one narrow column like a pocket manual; a silhouette-ad color band up top, white pages after.
+   Deliberately a single light look, like the printed booklets. */
+:root{
+  --paper:#ffffff; --ink:#1d1d1f; --gray:#6e6e73; --light:#a1a1a6; --rule:#e3e3e6; --wash:#f5f5f7;
+  --lime:#9bd84e; --blue:#2f6fd2;
+  --f:"Source Sans 3","Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f);font-size:18px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:620px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--blue)}
+h1,h2,h3{text-wrap:balance}
+p{margin:0 0 .9em}
+
+/* hero: the silhouette-ad band */
+.hero{background:var(--lime);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;padding-block:44px 0}
+.hero h1{margin:0 0 6px;font-weight:300;font-size:clamp(52px,15vw,84px);letter-spacing:-.02em;line-height:.95;color:#000}
+.hero .sub{font-size:clamp(19px,5vw,24px);font-weight:400;color:#000;margin:0 0 30px;max-width:13em;line-height:1.25}
+.hero .kicker{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#1f3a08;margin:0 0 14px}
+.hero svg{display:block;width:clamp(120px,34vw,180px);height:auto}
+
+/* own your media: a black band, like the back of the box */
+.own{background:#000;color:#fff}
+.own .wrap{padding-block:48px 44px}
+.own .label{color:var(--lime)}
+.own h2{margin:0 0 18px;font-weight:300;font-size:clamp(44px,13vw,68px);letter-spacing:-.02em;line-height:.98}
+.own h2 em{font-style:normal;color:var(--lime)}
+.own p{color:#d2d2d7;font-size:19px;max-width:30em}
+.own ul{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:18px}
+.own li{border-top:1px solid #333;padding-top:14px}
+.own li b{display:block;color:#fff;font-size:21px;font-weight:600;margin-bottom:2px}
+.own li span{color:#a1a1a6;font-size:17px}
+.own .sign{margin:30px 0 0;color:#fff;font-size:21px;font-weight:300}
+footer .own-line{color:var(--ink);font-size:17px;font-weight:600;margin:4px 0 2px}
+
+/* table of contents */
+.toc{padding-block:36px 8px}
+.label{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--light);margin:0 0 12px}
+.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.toc li{border-bottom:1px solid var(--rule)}
+.toc a{display:flex;align-items:baseline;gap:16px;padding:13px 2px;color:var(--ink);text-decoration:none;font-size:19px}
+.toc a span{width:1.6em;color:var(--light);font-weight:300;font-variant-numeric:tabular-nums}
+.toc a::after{content:"›";margin-left:auto;color:var(--light)}
+.toc a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* chapters */
+.ch{padding-block:44px 8px;border-bottom:1px solid var(--rule)}
+.ch .num{font-size:15px;font-weight:600;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin:0 0 2px}
+.ch h2{font-weight:300;font-size:clamp(34px,9vw,44px);letter-spacing:-.01em;line-height:1.05;margin:0 0 18px}
+.ch h3{font-size:19px;font-weight:700;margin:26px 0 6px}
+.lead{font-size:20px;color:var(--gray)}
+.steps{list-style:none;counter-reset:s;margin:0 0 1em;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:14px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
+  font-size:15px;font-weight:700;display:grid;place-items:center}
+.path{font-weight:600;white-space:nowrap}
+.key{display:inline-block;padding:0 .4em;border:1px solid #c7c7cc;border-radius:6px;background:linear-gradient(#fff,#ececef);font-size:.82em;font-weight:700;line-height:1.5;white-space:nowrap}
+.note{background:var(--wash);border-radius:12px;padding:14px 16px;margin:18px 0;font-size:17px;color:#3a3a3c}
+.note b{color:var(--ink)}
+dl.terms{margin:0}
+dl.terms div{display:grid;grid-template-columns:7.5em 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+dl.terms dt{font-weight:700}
+dl.terms dd{margin:0;color:#3a3a3c;min-width:0}
+dl.terms .path{white-space:normal}
+
+/* figures: little iPod screens */
+figure{margin:22px 0}
+figcaption{font-size:15px;color:var(--gray);margin-top:8px;text-align:center}
+.lcd{width:min(300px,100%);margin:0 auto;border:9px solid #26282b;border-radius:6px;background:#fff;overflow:hidden;font-weight:600;font-size:17px;box-shadow:0 1px 0 #fff,0 10px 30px -14px rgba(0,0,0,.45)}
+.lcd-bar{display:grid;grid-template-columns:1.6em 1fr 1.6em;align-items:center;padding:4px 8px;background:linear-gradient(#fefefe,#d5d8dd);border-bottom:1px solid #8c939b;font-weight:700;text-align:center}
+.lcd-bar i{font-style:normal;color:var(--blue)}
+.lcd-row{display:flex;justify-content:space-between;padding:6px 12px}
+.lcd-row.sel{background:linear-gradient(#73adf0,#3b7fdb 48%,#2a68cc 52%,#2f6fd2);color:#fff}
+.lcd-row span{color:#555;font-weight:400}
+.lcd-row.sel span{color:#fff}
+.lcd-strip{display:flex;gap:8px;padding:6px 12px;border-top:1px solid #8c939b;background:linear-gradient(#f4f6f8,#cfd4da);font-size:15px}
+.lcd-strip b{color:var(--blue)}
+.lcd.classic{background:linear-gradient(#ccd6bb,#b7c2a4);color:#1a2012}
+.lcd.classic .lcd-bar{background:transparent;border-bottom:2px solid #1a2012}
+.lcd.classic .lcd-bar i{color:#1a2012}
+.lcd.classic .lcd-row span{color:#1a2012}
+.lcd.classic .lcd-row.sel{background:#1a2012;color:#ccd6bb}
+.lcd.classic .lcd-row.sel span{color:#ccd6bb}
+.pair{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pair .lcd{font-size:13px;border-width:6px;min-width:0}
+.pair .lcd-row{padding:5px 7px}
+.pair .lcd-bar{padding:3px 4px;grid-template-columns:.6em 1fr .6em}
+.lcd.dark{background:#16181b;color:#f2f3f5}
+.lcd.dark .lcd-bar{background:linear-gradient(#3a3e44,#24272c);border-bottom-color:#0b0c0e}
+.lcd.dark .lcd-row span{color:#a7adb5}
+.pair .lcd{font-size:13px;border-width:6px;min-width:0}
+.pair .lcd-row{padding:5px 7px}
+.pair .lcd-bar{padding:3px 4px;grid-template-columns:.6em 1fr .6em}
+.pair .lcd-row{padding:5px 9px}
+
+.wheelfig svg{display:block;width:min(340px,100%);height:auto;margin:0 auto}
+.modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;text-align:center;margin:18px 0}
+.modes div{border:1px solid var(--rule);border-radius:12px;padding:12px 4px;font-size:15px}
+.modes b{display:block;font-size:13px;color:var(--light);font-weight:700;letter-spacing:.06em}
+.modes i{display:flex;justify-content:center;gap:3px;margin:8px 0 6px}
+.modes i u{width:7px;height:7px;flex:none;border-radius:50%;border:1.5px solid #6b727a}
+.modes i u.on{background:var(--blue);border-color:#1d4f9e}
+
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:16px 10px;margin:16px 0 8px;padding:0;list-style:none}
+.swatches li{text-align:center;font-size:14px;color:#3a3a3c}
+.swatches li::before{content:"";display:block;width:52px;height:84px;margin:0 auto 8px;border-radius:9px;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 6px 14px -8px rgba(0,0,0,.5)}
+
+.rotate{display:flex;align-items:center;justify-content:center;gap:18px;margin:20px 0}
+.rotate svg{width:min(280px,100%);height:auto}
+
+.backbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);transform:translateX(-50%);z-index:5;
+  background:#1d1d1f;color:#fff;text-decoration:none;font-weight:600;font-size:17px;padding:12px 20px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+[hidden]{display:none!important}
+footer{padding-block:40px 56px;text-align:center;color:var(--light);font-size:14px}
+footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01em}
+@media (max-width:380px){.pair{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">User’s Guide</p>
+      <h1>myPod.</h1>
+      <p class="sub">Own your media. Hold it in one hand.</p>
+    </div>
+    <svg viewBox="0 0 180 300" role="img" aria-label="A white iPod with earbud cord">
+      <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <rect x="40" y="92" width="120" height="208" rx="14" fill="#fff"/>
+      <rect x="54" y="108" width="92" height="70" rx="3" fill="#1d1d1f"/>
+      <rect x="59" y="113" width="82" height="60" fill="#e9ecef"/>
+      <rect x="59" y="121" width="82" height="9" fill="#2f6fd2"/>
+      <rect x="63" y="136" width="44" height="4" rx="2" fill="#9aa0a7"/><rect x="63" y="146" width="34" height="4" rx="2" fill="#9aa0a7"/><rect x="63" y="156" width="50" height="4" rx="2" fill="#9aa0a7"/>
+      <circle cx="100" cy="242" r="40" fill="#ececee"/>
+      <circle cx="100" cy="242" r="15" fill="#fff"/>
+      <path d="M140 92 C140 92 140 96 136 100" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+</header>
+
+<section class="own" aria-labelledby="own-h">
+  <div class="wrap">
+    <p class="label">Before you begin</p>
+    <h2 id="own-h">Own your <em>media.</em></h2>
+    <p>The songs and films on myPod are yours. Ripped from the CDs and DVDs on your shelf, bought straight from the artists and studios you love, kept on your own server at the quality you chose.</p>
+    <ul>
+      <li><b>Yours to keep.</b><span>No subscription to cancel, no license that can expire, no album that disappears overnight.</span></li>
+      <li><b>Nothing in between.</b><span>No ads between songs, no feed, no algorithm guessing what you want next.</span></li>
+      <li><b>Every play is a choice.</b><span>You pick the album or the movie. You turn the wheel. You press play.</span></li>
+    </ul>
+    <p class="sign">Your library. Your server. Your click wheel.</p>
+  </div>
+</section>
+
+<main class="wrap">
+  <nav class="toc" aria-label="Contents">
+    <p class="label">Contents</p>
+    <ol>
+      <li><a href="#start"><span>1</span>Getting Started</a></li>
+      <li><a href="#wheel"><span>2</span>The Click Wheel</a></li>
+      <li><a href="#music"><span>3</span>Finding Music</a></li>
+      <li><a href="#playing"><span>4</span>Now Playing</a></li>
+      <li><a href="#coverflow"><span>5</span>Cover Flow</a></li>
+      <li><a href="#videos"><span>6</span>Videos</a></li>
+      <li><a href="#playon"><span>7</span>Play On Another Speaker</a></li>
+      <li><a href="#extras"><span>8</span>Extras</a></li>
+      <li><a href="#settings"><span>9</span>Settings</a></li>
+      <li><a href="#help"><span>10</span>Tips and Troubleshooting</a></li>
+    </ol>
+  </nav>
+
+  <section class="ch" id="start">
+    <p class="num">Chapter 1</p>
+    <h2>Getting Started</h2>
+    <p class="lead">Put myPod on your Home Screen, sign in to your own Plex server, and your collection is in your pocket.</p>
+    <h3>Add myPod to your Home Screen</h3>
+    <ol class="steps">
+      <li>Open myPod’s web address in Safari on your iPhone.</li>
+      <li>Tap the Share button, then <span class="path">Add to Home Screen</span>.</li>
+      <li>Open myPod from its new icon. It runs full screen, just like an app.</li>
+    </ol>
+    <h3>Sign in to Plex</h3>
+    <ol class="steps">
+      <li>Go to <span class="path">Settings › Plex › Sign In with Plex</span>.</li>
+      <li>Tap <b>Open Plex sign-in</b> and sign in on the Plex page.</li>
+      <li>Come back to myPod. It finds your server on its own.</li>
+    </ol>
+    <div class="note"><b>Just looking?</b> Until you sign in, myPod plays a small demo library with no sound, so you can try everything first.</div>
+  </section>
+
+  <section class="ch" id="wheel">
+    <p class="num">Chapter 2</p>
+    <h2>The Click Wheel</h2>
+    <p class="lead">Drag your thumb around the wheel to scroll. Press a part of it to act.</p>
+    <figure class="wheelfig">
+      <svg viewBox="0 0 340 300" role="img" aria-label="Click wheel with MENU at top, previous at left, next at right, play and pause at bottom, and select in the center">
+        <circle cx="170" cy="150" r="104" fill="#ececee" stroke="#cfd1d4" stroke-width="2"/>
+        <circle cx="170" cy="150" r="40" fill="#fff" stroke="#c9cbcf" stroke-width="2"/>
+        <text x="170" y="74" text-anchor="middle" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1" fill="#9a9da2">MENU</text>
+        <path d="M92 144h3v12h-3zM107 144v12l-10-6zM117 144v12l-10-6z" fill="#9a9da2"/>
+        <path d="M248 144h-3v12h3zM233 144v12l10-6zM223 144v12l10-6z" fill="#9a9da2"/>
+        <path d="M157 224v12l9-6zM170 224h3v12h-3zM177 224h3v12h-3z" fill="#9a9da2"/>
+        <path d="M232 62a110 110 0 0 1 32 40" fill="none" stroke="#2f6fd2" stroke-width="3" stroke-linecap="round"/>
+        <path d="M268 96l-1 11-9-6z" fill="#2f6fd2"/>
+        <g font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="14" fill="#1d1d1f">
+          <text x="170" y="22" text-anchor="middle" font-weight="700">Go back</text>
+          <text x="4" y="88" font-weight="700">Previous</text><text x="4" y="105" fill="#6e6e73">or restart</text>
+          <text x="330" y="190" text-anchor="end" font-weight="700">Next</text>
+          <text x="170" y="290" text-anchor="middle" font-weight="700">Play / Pause</text>
+          <text x="170" y="155" text-anchor="middle" font-weight="700" font-size="13">Select</text>
+          <text x="330" y="52" text-anchor="end" fill="#2f6fd2" font-weight="700">Turn to scroll</text>
+        </g>
+        <path d="M170 28v26" stroke="#c7c7cc" stroke-width="1.5"/>
+        <path d="M170 254v20" stroke="#c7c7cc" stroke-width="1.5"/>
+      </svg>
+      <figcaption>Clockwise moves down a list. Counterclockwise moves up.</figcaption>
+    </figure>
+    <h3>Or just touch the screen</h3>
+    <dl class="terms">
+      <div><dt>Choose</dt><dd>Tap any item.</dd></div>
+      <div><dt>Scroll</dt><dd>Drag the list up or down.</dd></div>
+      <div><dt>Go back</dt><dd>Tap the title bar. Look for the blue <b>‹</b>.</dd></div>
+    </dl>
+    <div class="note"><b>Fast scrolling.</b> Spin quickly through a long list and a big letter appears so you know where you are. “The Beatles” shows under B.</div>
+  </section>
+
+  <section class="ch" id="music">
+    <p class="num">Chapter 3</p>
+    <h2>Finding Music</h2>
+    <p class="lead">Everything starts in <span class="path">Music</span>.</p>
+    <figure>
+      <div class="lcd" aria-hidden="true">
+        <div class="lcd-bar"><i>‹</i>Music<i></i></div>
+        <div class="lcd-row sel">Cover Flow<span>›</span></div>
+        <div class="lcd-row">Playlists<span>›</span></div>
+        <div class="lcd-row">Ratings<span>›</span></div>
+        <div class="lcd-row">Artists<span>›</span></div>
+        <div class="lcd-row">Albums<span>›</span></div>
+        <div class="lcd-row">Genres<span>›</span></div>
+        <div class="lcd-row">Songs<span>›</span></div>
+        <div class="lcd-row">Search<span>›</span></div>
+        <div class="lcd-strip"><b>▶</b> Glass Harbor · The Lantern Hours</div>
+      </div>
+      <figcaption>The Music menu. The bar at the bottom shows what’s playing.</figcaption>
+    </figure>
+    <dl class="terms">
+      <div><dt>Genres</dt><dd>Every genre in your library. Pick one for <b>Shuffle Songs</b>, or browse its Artists, Albums, and Songs.</dd></div>
+      <div><dt>Search</dt><dd>Type with the iPhone keyboard. Results show genres, artists, albums, and songs.</dd></div>
+      <div><dt>Shuffle Songs</dt><dd>On the main menu. Plays your library in random order.</dd></div>
+      <div><dt>Now Playing bar</dt><dd>Shows on every menu while music plays. Tap it to jump to Now Playing.</dd></div>
+    </dl>
+  </section>
+
+  <section class="ch" id="playing">
+    <p class="num">Chapter 4</p>
+    <h2>Now Playing</h2>
+    <p class="lead">Press the center button to change what the wheel does. A small pop-up at the bottom of the screen shows where you are.</p>
+    <div class="modes" role="list">
+      <div role="listitem"><b>1</b><i><u class="on"></u><u></u><u></u><u></u><u></u></i>Normal</div>
+      <div role="listitem"><b>2</b><i><u></u><u class="on"></u><u></u><u></u><u></u></i>Scrub</div>
+      <div role="listitem"><b>3</b><i><u></u><u></u><u class="on"></u><u></u><u></u></i>Rating</div>
+      <div role="listitem"><b>4</b><i><u></u><u></u><u></u><u class="on"></u><u></u></i>Shuffle</div>
+      <div role="listitem"><b>5</b><i><u></u><u></u><u></u><u></u><u class="on"></u></i>Repeat</div>
+    </div>
+    <dl class="terms">
+      <div><dt>Scrub</dt><dd>Turn the wheel to move through the song.</dd></div>
+      <div><dt>Rating</dt><dd>Turn the wheel or tap a star to give the song 1 to 5 stars. Turn all the way down to clear it. The stars then show under the album name.</dd></div>
+      <div><dt>Shuffle</dt><dd>Off, or Songs. Starts with the song you picked, then mixes the rest.</dd></div>
+      <div><dt>Repeat</dt><dd>Off, Track (this song again), or Album (the whole list again).</dd></div>
+    </dl>
+    <p>You can also tap a dot in the pop-up, or a choice right on the screen. After a few seconds myPod goes back to Normal on its own.</p>
+    <div class="note"><b>Volume</b> lives on your iPhone’s side buttons.</div>
+    <h3>Ratings and rated playlists</h3>
+    <p><b>Music › Ratings</b> turns your stars into playlists that update themselves: <b>My Top Rated</b> (4 and 5 stars), one list for each star count, and <b>Recently Rated</b>. Each list starts with <b>Shuffle</b>, and they play on Plexamp too.</p>
+    <p>Your ratings are yours alone. They live on this myPod, not in Plex, so nobody else on your server sees them.</p>
+    <div class="note"><b>Keep a backup.</b> The home-screen app and Safari keep separate ratings, and deleting the app erases them. Go to <b>Settings › Ratings Backup › Back Up Ratings</b> and save the file to Files. <b>Restore from Backup</b> brings them back on any phone.</div>
+  </section>
+
+  <section class="ch" id="coverflow">
+    <p class="num">Chapter 5</p>
+    <h2>Cover Flow</h2>
+    <p class="lead">Turn your iPhone sideways and your albums fill the screen.</p>
+    <div class="rotate" aria-hidden="true">
+      <svg viewBox="0 0 280 120">
+        <rect x="10" y="10" width="58" height="100" rx="10" fill="#fff" stroke="#1d1d1f" stroke-width="2.5"/>
+        <rect x="17" y="18" width="44" height="36" rx="2" fill="#e9ecef"/><circle cx="39" cy="82" r="15" fill="#ececee" stroke="#c9cbcf"/>
+        <path d="M88 60h46" stroke="#a1a1a6" stroke-width="2.5" stroke-dasharray="4 5"/><path d="M134 53l12 7-12 7z" fill="#a1a1a6"/>
+        <rect x="160" y="26" width="110" height="68" rx="10" fill="#111" stroke="#1d1d1f" stroke-width="2.5"/>
+        <g transform="translate(215 58)">
+          <rect x="-48" y="-18" width="22" height="26" fill="#6c4aa0" transform="skewY(12)"/>
+          <rect x="26" y="-18" width="22" height="26" fill="#1d6f7a" transform="skewY(-12)"/>
+          <rect x="-20" y="-22" width="40" height="34" fill="#d49a3a"/>
+        </g>
+      </svg>
+    </div>
+    <ol class="steps">
+      <li>Swipe left or right to flip through albums. Flick to fly.</li>
+      <li>Tap the middle album to turn it over and see its songs.</li>
+      <li>Tap a song to play it. Turn the phone upright, or tap <b>Done</b>, to go back.</li>
+    </ol>
+    <div class="note"><b>Nothing happens when you turn?</b> Swipe down from the top-right corner and turn off Portrait Orientation Lock. You can also open Cover Flow from <span class="path">Music › Cover Flow</span>.</div>
+  </section>
+
+  <section class="ch" id="videos">
+    <p class="num">Chapter 6</p>
+    <h2>Videos</h2>
+    <p class="lead">Your movies and TV shows, just like the iPod with video.</p>
+    <ol class="steps">
+      <li>Choose <span class="path">Videos</span> on the main menu, then <b>Movies</b>, <b>TV Shows</b>, or <b>Continue Watching</b>.</li>
+      <li>Pick something. It starts playing right on the iPod screen.</li>
+      <li>Turn your iPhone sideways to watch full screen. Tap the video to show the controls.</li>
+    </ol>
+    <dl class="terms">
+      <div><dt>Play / Pause</dt><dd><span class="key">▶❙❙</span> or the center button.</dd></div>
+      <div><dt>Title &amp; time</dt><dd>The video fills the screen. Tap the picture to show the title bar and how far along you are. They tuck away after a few seconds.</dd></div>
+      <div><dt>Skip</dt><dd>Turn the wheel to move 10 seconds. <span class="key">⏮</span> <span class="key">⏭</span> jump 30.</dd></div>
+      <div><dt>Stop</dt><dd><span class="key">MENU</span>, or <b>Done</b> when you’re watching sideways.</dd></div>
+    </dl>
+    <div class="note"><b>Picks up where you left off.</b> myPod tells Plex how far you got, so your other Plex apps know too. Files your iPhone can’t play directly are converted by your Plex server on the fly.</div>
+  </section>
+
+  <section class="ch" id="playon">
+    <p class="num">Chapter 7</p>
+    <h2>Play On Another Speaker</h2>
+    <p class="lead">Use myPod as a remote for Plexamp anywhere in the house.</p>
+    <ol class="steps">
+      <li>Make sure Plexamp is open on the other device.</li>
+      <li>Go to <span class="path">Play On</span> and choose it. A checkmark shows your pick.</li>
+      <li>Everything you play now plays there. Choose <b>This myPod</b> to play on your phone again.</li>
+    </ol>
+    <h3>AirPlay and Bluetooth</h3>
+    <p>Choose <span class="path">Play On › AirPlay &amp; Bluetooth</span> and your iPhone’s own speaker list pops up: HomePods, Apple TVs, AirPlay speakers, Bluetooth headphones and car stereos. Pick one and myPod keeps playing there. It works for videos too.</p>
+    <div class="note"><b>Plexamp or AirPlay?</b> Plexamp sends the music from your server straight to that device, so your phone is only the remote. AirPlay and Bluetooth stream from your phone, so keep myPod open nearby.</div>
+  </section>
+
+  <section class="ch" id="extras">
+    <p class="num">Chapter 8</p>
+    <h2>Extras</h2>
+    <h3>Games</h3>
+    <p>Choose <b>Extras › Games</b>. There are four, and myPod remembers your best score in each.</p>
+    <p><b>Brick.</b> The classic. Turn the wheel or drag on the screen to move the paddle. Press the center to launch the ball.</p>
+    <p><b>Music Quiz.</b> myPod plays a few seconds from a random song in your library. Pick its name from four choices. The faster you answer, the more points you get. Ten songs a round. It plays on your phone, so it needs your Plex library, not the demo.</p>
+    <p><b>Stack.</b> Falling blocks. Turn the wheel or drag sideways to move the block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
+    <p><b>Minesweeper.</b> Open every square that isn’t a mine. A number tells you how many mines touch that square. Tap to open, press and hold to plant a flag. Prefer the wheel? Turn it to move the box, use ⏮ and ⏭ to jump a row, press the center to open, and ⏯ to flag.</p>
+    <div class="note"><b>While you play Stack or Minesweeper,</b> the ⏮ ⏭ ⏯ buttons control the game instead of the music. Press Menu to leave, and they work on music again.</div>
+    <h3>Flip it over</h3>
+    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myPod turns over to show its polished steel back, a few stickers, and an engraving. Swipe again to flip it back. The music keeps playing.</p>
+    <h3>Sleep Timer</h3>
+    <p>Choose 15, 30, 45, or 60 minutes, or <b>End of Song</b>. A small moon appears in the top bar while it’s set.</p>
+    <div class="note"><b>Falling asleep to Plexamp in another room?</b> The timer works most reliably when music is playing on your phone itself.</div>
+  </section>
+
+  <section class="ch" id="settings">
+    <p class="num">Chapter 9</p>
+    <h2>Settings</h2>
+    <h3>Case</h3>
+    <p>Fourteen finishes, including a Zune-style brown with a rounded-square pad the <b>BC Edition</b> (a clear amber-to-red shell, black wheel, red center and a polished red back), and the <b>JL Edition</b>, a beige 1995 desktop PC in your hand. Scroll the list to preview each one on your myPod, press the center to keep it.</p>
+    <ul class="swatches">
+      <li style="--c:linear-gradient(165deg,#fff,#e4e5e7)">White</li>
+      <li style="--c:linear-gradient(165deg,#34363a,#050506)">Black</li>
+      <li style="--c:linear-gradient(165deg,#eef0f2,#b7bcc3)">Silver</li>
+      <li style="--c:linear-gradient(165deg,#f8cada,#d97c9e)">Pink</li>
+      <li style="--c:linear-gradient(165deg,#b3d4f5,#4f88c8)">Blue</li>
+      <li style="--c:linear-gradient(165deg,#d3edb2,#7fb54f)">Green</li>
+      <li style="--c:linear-gradient(165deg,#f5e7c0,#c9ab62)">Gold</li>
+      <li style="--c:linear-gradient(165deg,#ffa766,#d95f18)">Cosmic Orange</li>
+      <li style="--c:linear-gradient(165deg,#e8504a,#8f0e12)">Red</li>
+      <li style="--c:radial-gradient(circle at 50% 70%,#d8232f 0 26%,transparent 27%),linear-gradient(165deg,#34363a,#050506)">Black &amp; Red</li>
+      <li style="--c:linear-gradient(165deg,#c9b4ec,#6c4aa0)">Purple</li>
+      <li style="--c:linear-gradient(170deg,#7a5843,#3f2a1e)">Zune Brown</li>
+      <li style="--c:linear-gradient(180deg,#f2ad2e,#ea5a1e 40%,#dc171c 78%)">BC Edition</li>
+      <li style="--c:linear-gradient(170deg,#e6dcbe,#c7b88e)">JL Edition</li>
+    </ul>
+    <h3>Screen</h3>
+    <p><b>Light</b> is the 5th-generation look. <b>Dark</b> flips the screen to white text on black, easier on the eyes at night. <b>Match iPhone</b> follows your phone’s own Light or Dark setting. <b>Classic</b> brings back the original black-and-white display.</p>
+    <figure>
+      <div class="pair" aria-hidden="true">
+        <div class="lcd"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd dark"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd classic"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+      </div>
+      <figcaption>Light, Dark, and Classic.</figcaption>
+    </figure>
+    <dl class="terms">
+      <div><dt>Server</dt><dd>Switch between Plex servers. Each one remembers its music library.</dd></div>
+      <div><dt>Corner</dt><dd>What shows in the top-right corner of the screen: the time, a little equalizer that dances while music plays, both (the clock that turns into the equalizer while music plays), the phone or Plexamp player the music is going to, or nothing.</dd></div>
+      <div><dt>Wheel Color</dt><dd>Give the click wheel its own color, or leave it on Match Case. Scroll the list to preview.</dd></div>
+      <div><dt>Center Color</dt><dd>Same idea for the center button. Mix and match: a red wheel with a white center on a black case, say.</dd></div>
+      <div><dt>Menu Art</dt><dd>Album art drifting beside the main and Music menus, like the iPod Classic. On from the start.</dd></div>
+      <div><dt>Large Text</dt><dd>Bigger, easier-to-read menus. On from the start.</dd></div>
+      <div><dt>Clicker</dt><dd>The little tick you hear as you scroll.</dd></div>
+      <div><dt>How to Use</dt><dd>A short version of this guide, right on your myPod.</dd></div>
+    </dl>
+  </section>
+
+  <section class="ch" id="help">
+    <p class="num">Chapter 10</p>
+    <h2>Tips and Troubleshooting</h2>
+    <dl class="terms">
+      <div><dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex. Then try <span class="path">Settings › Plex › Reconnect</span>.</dd></div>
+      <div><dt>Song won’t play</dt><dd>myPod tries a second, converted stream automatically. If it still won’t play, the file may be damaged on your server.</dd></div>
+      <div><dt>Plexamp ignores myPod</dt><dd>Open Plexamp on that device, then pick it again in <span class="path">Play On</span>.</dd></div>
+      <div><dt>Icon looks old</dt><dd>Delete myPod from your Home Screen and add it again from Safari. Your sign-in and settings stay.</dd></div>
+      <div><dt>Start fresh</dt><dd><span class="path">Settings › Plex › Sign Out</span>, then sign in again.</dd></div>
+    </dl>
+  </section>
+
+  <footer>
+    <div class="mark">myPod.</div>
+    <p class="own-line">Own your media.</p>
+    <p>Built by BC Gordon.</p>
+  </footer>
+</main>
+<a class="backbar" id="backbar" href="./" hidden>‹ Back to myPod</a>
+<script>
+(() => {
+  const inFrame = window.self !== window.top;
+  const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  if (!inFrame && standalone) document.getElementById('backbar').hidden = false;
+})();
+</script>
+
+</body>
+</html>
