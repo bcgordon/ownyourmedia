@@ -232,7 +232,8 @@ html.redback.showback body{background-color:#8f0b12}
 .console .bar::before{content:"";position:absolute;left:0;top:.8cqw;bottom:0;width:11cqw;background:#cc99cc;border-top-left-radius:6cqw}
 .console .bar-l{position:relative;padding-left:3cqw}
 .console .bar-l svg path{stroke:#000!important}
-.console .bar-t{position:relative;margin:.8cqw 2cqw 0 0;height:calc(100% - 1.6cqw);display:flex;align-items:center;justify-content:center;
+.console .bar-t{position:relative;margin:.8cqw 2cqw 0 0;height:calc(100% - 1.6cqw);line-height:calc(9.75cqw - 1.6cqw);display:block;
+  padding:0 3.4cqw 0 2.4cqw;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   background:#ff9966;color:#000;border-radius:0 99cqw 99cqw 0;text-transform:uppercase;font-weight:700;letter-spacing:.06em}
 .console .bar-r,.console .crn-clock{color:#ffcc99}
 .console .crn-eq i{background:#ff9966;border-radius:0}
@@ -833,6 +834,15 @@ html,body,.stage,.podwrap,.pod,.screen,.bar{touch-action:manipulation}
       <label for="tokenIn">Plex token</label>
       <input id="tokenIn" autocomplete="off" spellcheck="false" placeholder="Paste your X-Plex-Token">
       <div class="btns"><button class="btn primary" type="submit">Save token</button></div>
+    </form>
+    <form id="dForm" hidden autocomplete="off">
+      <label for="davUrl">Share address</label>
+      <input id="davUrl" type="url" inputmode="url" spellcheck="false" autocapitalize="off" placeholder="https://music.example.com/dav/">
+      <label for="davUser">Username</label>
+      <input id="davUser" spellcheck="false" autocapitalize="off" autocomplete="username">
+      <label for="davPass">Password</label>
+      <input id="davPass" type="password" autocomplete="current-password">
+      <div class="btns"><button class="btn primary" type="submit">Connect</button></div>
     </form>
     <div class="btns"><button class="btn" id="pClose" type="button">Close</button></div>
   </section>
@@ -1519,6 +1529,152 @@ function unlockLocalAudio() {
     audio.play().then(() => { localUnlocked = true; }).catch(() => {}); } catch {}
 }
 
+/* ---------- myPod Elite: music on a network share (WebDAV) ---------- */
+const DAV = {
+  covers: new Map(), cache: new Map(), playUrl: null, picUrls: [],
+  get on() { return ELITE && !!(cfg.dav && cfg.dav.url); },
+  base() { let u = (cfg.dav.url || '').trim(); if (!/\/$/.test(u)) u += '/'; return u; },
+  host() { try { return new URL(cfg.dav.url).host; } catch { return cfg.dav?.url || ''; } },
+  headers(extra = {}) {
+    const h = { ...extra }, d = cfg.dav || {};
+    if (d.user) h.Authorization = 'Basic ' + btoa(unescape(encodeURIComponent(d.user + ':' + (d.pass || ''))));
+    return h;
+  },
+  async list(url) {
+    const res = await fetch(url, { method: 'PROPFIND', cache: 'no-store', headers: this.headers({ Depth: '1', 'Content-Type': 'application/xml; charset=utf-8' }),
+      body: '<?xml version="1.0" encoding="utf-8"?><d:propfind xmlns:d="DAV:"><d:prop><d:resourcetype/><d:getcontentlength/><d:getcontenttype/><d:displayname/></d:prop></d:propfind>' });
+    if (!res.ok && res.status !== 207) throw Object.assign(new Error('dav'), { davStatus: res.status });
+    const xml = new DOMParser().parseFromString(await res.text(), 'application/xml');
+    if (xml.getElementsByTagName('parsererror').length) throw Object.assign(new Error('dav'), { davStatus: 'xml' });
+    const tag = (el, n) => el.getElementsByTagNameNS('DAV:', n);
+    const here = decodeURIComponent(new URL(url).pathname).replace(/\/+$/, '');
+    const out = [];
+    for (const r of tag(xml, 'response')) {
+      const href = tag(r, 'href')[0]?.textContent?.trim(); if (!href) continue;
+      const abs = new URL(href, url), path = decodeURIComponent(abs.pathname).replace(/\/+$/, '');
+      if (path === here) continue;
+      const isDir = tag(r, 'collection').length > 0;
+      const name = (tag(r, 'displayname')[0]?.textContent || '').trim() || path.split('/').pop();
+      if (!name || name.startsWith('.')) continue;
+      let href2 = abs.href; if (isDir && !href2.endsWith('/')) href2 += '/';
+      out.push({ name, url: href2, isDir, size: +(tag(r, 'getcontentlength')[0]?.textContent || 0), type: tag(r, 'getcontenttype')[0]?.textContent || '' });
+    }
+    return out;
+  },
+  async get(url) {
+    const res = await fetch(url, { headers: this.headers() });
+    if (!res.ok) throw Object.assign(new Error('dav'), { davStatus: res.status });
+    return res.blob();
+  },
+  /* a file on the share that Tags.read can peek into with small range requests */
+  remote(e) {
+    const self = this;
+    return { size: e.size, slice(a, b) { return { async arrayBuffer() {
+      const r = await fetch(e.url, { headers: self.headers({ Range: `bytes=${a}-${Math.max(a, b - 1)}` }) });
+      if (r.status !== 206) { try { r.body?.cancel(); } catch {} throw new Error('no range'); }
+      return r.arrayBuffer(); } }; } };
+  },
+  cover(folderUrl, coverUrl) {
+    if (!coverUrl) return Promise.resolve(null);
+    if (!this.covers.has(folderUrl)) this.covers.set(folderUrl, this.get(coverUrl).then(b => URL.createObjectURL(b)).catch(() => null));
+    return this.covers.get(folderUrl);
+  },
+  prefetch(t) {
+    if (!t || !t.dav || this.cache.has(t.url)) return;
+    this.cache.set(t.url, this.get(t.url).catch(() => null));
+    while (this.cache.size > 3) this.cache.delete(this.cache.keys().next().value);
+  },
+  async play(t) {
+    const p = this.cache.get(t.url) || this.get(t.url); this.cache.delete(t.url);
+    const blob = await p; if (!blob) throw Object.assign(new Error('dav'), { davStatus: 'get' });
+    if (this.playUrl) URL.revokeObjectURL(this.playUrl);
+    this.playUrl = URL.createObjectURL(blob);
+    this.fill(t, blob);
+    return this.playUrl;
+  },
+  /* fill in song name, artist, album and art from the downloaded file */
+  async fill(t, blob) {
+    try {
+      const tg = await Tags.read(blob);
+      if (tg.title) t.title = tg.title; if (tg.artist || tg.albumArtist) t.artist = tg.artist || tg.albumArtist; if (tg.album) t.album = tg.album;
+      if (tg.dur && !t.dur) t.dur = tg.dur;
+      if (tg.pic?.data?.length && !t.thumb) { const u = URL.createObjectURL(new Blob([tg.pic.data], { type: tg.pic.mime || 'image/jpeg' })); this.picUrls.push(u); t.thumb = u; while (this.picUrls.length > 12) URL.revokeObjectURL(this.picUrls.shift()); }
+      if (!t.thumb && t.coverUrl) t.thumb = await this.cover(t.folder, t.coverUrl);
+    } catch {}
+    if (P.track === t) { setMediaSession(); updateBar(); if (cur()?.kind === 'np') renderNP(cur()); }
+  }
+};
+function davErr(e) {
+  const u = cfg.dav?.url || '';
+  if (/^http:/i.test(u) && location.protocol === 'https:') return 'The share’s address has to start with https:// for myPod to reach it.';
+  if (e && (e.davStatus === 401 || e.davStatus === 403)) return 'The share turned down that username or password.';
+  if (e && e.davStatus === 404) return 'That folder isn’t on the share. Check the address.';
+  if (e && e.davStatus === 405) return 'That address isn’t a WebDAV share.';
+  if (e && e.davStatus) return `The share answered with an error (${e.davStatus}).`;
+  return 'Can’t reach the share. Check the address, and that the server lets myPod in (see Setup Help).';
+}
+const fileTitle = n => n.replace(/\.[^.]+$/, '').replace(/^(?:\d+[-.])?\d{1,3}\s*[-._)]?\s+/, '') || n;
+function davFolder(url, title) {
+  const v = List(title, () => v.items || []);
+  v.items = null; v.err = null;
+  Object.defineProperty(v, 'note', { get: () => v.err || (!v.items ? 'Opening the share…' : v.items.length ? null : 'Nothing to play in this folder.') });
+  v.noteRows = 3;
+  (async () => {
+    try {
+      const es = await DAV.list(url);
+      const by = (x, y) => x.name.localeCompare(y.name, undefined, { numeric: true, sensitivity: 'base' });
+      const dirs = es.filter(e => e.isDir).sort(by), files = es.filter(e => !e.isDir && AUDIO_EXT.test(e.name)).sort(by);
+      const cover = es.find(e => !e.isDir && IMG_NAME.test('/' + e.name));
+      const tracks = files.map(e => ({ rk: 'dav' + strHash(e.url), dav: true, url: e.url, folder: url, coverUrl: cover?.url || null, size: e.size,
+        title: fileTitle(e.name), artist: '', album: title, dur: 0, thumb: null }));
+      const head = tracks.length ? [
+        { label: 'Play All', act: () => { setShuffle(false); return playFrom(v, v.headLen); } },
+        { label: 'Shuffle', act: () => { setShuffle(true); return playFrom(v, v.headLen + Math.floor(Math.random() * tracks.length)); } }] : [];
+      v.headLen = head.length + dirs.length;   /* folders sit above the songs, so playback skips them */
+      v.items = [...head, ...dirs.map(d => ({ label: d.name, arrow: true, go: () => push(davFolder(d.url, d.name)) })),
+        ...tracks.map(t => ({ get label() { return t.title; }, track: t }))];
+      if (cover) DAV.cover(url, cover.url).then(u => { if (u) tracks.forEach(t => { if (!t.thumb) t.thumb = u; }); if (cur() === v) render(); });
+      if (cur() === v) render();
+      /* peek at song tags so the list shows real names; stops quietly if the server can't do partial downloads */
+      for (const [k, t] of tracks.slice(0, 100).entries()) {
+        if (!stack.includes(v)) break;
+        const tg = await Tags.read(DAV.remote({ url: t.url, size: t.size }));
+        if (!tg.title && !tg.artist && k === 0) break;
+        if (tg.title) t.title = tg.title; if (tg.artist || tg.albumArtist) t.artist = tg.artist || tg.albumArtist; if (tg.album) t.album = tg.album;
+        if (tg.trackNo) t.trackNo = tg.trackNo;
+        if (k % 4 === 3 && cur() === v) render();
+      }
+      if (cur() === v) render();
+    } catch (e) { v.err = davErr(e); v.items = []; if (cur() === v) render(); }
+  })();
+  return v;
+}
+const DAV_HELP = `
+<h3>What you need</h3>
+<p>A WebDAV share with your music on it, reachable at an address that starts with <b>https://</b>.</p>
+<h3>Let myPod in</h3>
+<p>Browsers only talk to servers that say a page is allowed (called CORS). The server must allow the origin <b>${location.origin}</b>, the methods <b>GET</b> and <b>PROPFIND</b>, the headers <b>Authorization</b>, <b>Depth</b> and <b>Range</b>, and answer the browser's OPTIONS check without a password.</p>
+<h3>Easiest: rclone</h3>
+<p>Use a recent version of rclone, which handles all of that with one flag:</p>
+<p>rclone serve webdav /path/to/Music --user NAME --pass SECRET --allow-origin ${location.origin}</p>
+<h3>HTTPS at home</h3>
+<p>Tailscale's serve feature, a Cloudflare tunnel, or a reverse proxy with a free certificate all give your share an https address.</p>
+<h3>Folders</h3>
+<p>Artist › Album › songs works best. A cover.jpg in an album folder becomes its artwork.</p>`;
+function davSetupView() {
+  const v = List('Network Share', () => [
+    { label: DAV.on ? 'Change Server' : 'Connect a Share', act: () => showPanel('dav') },
+    ...(DAV.on ? [
+      { label: 'Browse', arrow: true, go: () => push(davFolder(DAV.base(), cfg.dav.name || 'Network Share')) },
+      { label: 'Test Connection', act: async () => { flash('Checking the share…'); try { const es = await DAV.list(DAV.base()); flash(`Connected. ${es.length} item${es.length === 1 ? '' : 's'} in the top folder.`); } catch (e) { flash(davErr(e)); } } },
+      { label: 'Forget This Share', act: () => { cfg.dav = null; save(); flash('Share forgotten'); render(); } }
+    ] : []),
+    { label: 'Setup Help', arrow: true, go: () => push(Page('Setup Help', DAV_HELP)) }
+  ]);
+  Object.defineProperty(v, 'note', { get: () => DAV.on ? `Connected to ${DAV.host()}.` : 'Play music from your own WebDAV server, no Plex needed.' });
+  v.noteRows = 2; return v;
+}
+
 /* ---------- Plex library ---------- */
 const sec = () => cfg.sectionId;
 const Plex = {
@@ -1735,6 +1891,12 @@ async function loadIndex(i, autoplay) {
     if (!url) { flash("That song isn't on this device anymore."); return false; }
     audio.src = url; if (autoplay) playRetry(url);
   }
+  else if (tr.dav) {   /* a song on the network share (myPod Elite) */
+    P.demoMode = false;
+    let url; try { url = await DAV.play(tr); } catch (e) { if (seq === P.loadSeq) { P.unlocking = false; flash(davErr(e)); } return false; }
+    if (seq !== P.loadSeq) return true;
+    P.unlocking = false; audio.src = url; if (autoplay) playRetry(url);
+  }
   else { P.demoMode = false; P.unlocking = false; audio.src = streamUrl(tr);
     if (autoplay) playRetry(audio.src); }
   setMediaSession(); updateBar(); if (cur().kind === 'np') renderNP(cur()); else render();
@@ -1759,13 +1921,13 @@ function endWatch() {
   if (Math.abs(ct - P.lastCT) > .05) { P.lastCT = ct; P.lastMove = now; }
   const d = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : P.dur;
   if (!d) return;
-  if (!P.warmed && d - ct < 20) { P.warmed = true; const j = stepIndex(1, cfg.repeat === 'all'); if (j >= 0) getAsync(P.view, j).catch(() => {}); }
+  if (!P.warmed && d - ct < 20) { P.warmed = true; const j = stepIndex(1, cfg.repeat === 'all'); if (j >= 0) getAsync(P.view, j).then(it => { if (it?.track?.dav) DAV.prefetch(it.track); }).catch(() => {}); }
   const still = now - P.lastMove;
   if (audio.ended || (ct >= d - 1 && (audio.paused || still > 1500)) || (ct >= d - 6 && still > 5000)) songEnded();
 }
 async function playFrom(v, i) {
   jlJoke();
-  const isLocal = !!v.get?.(i)?.track?.local;
+  const isLocal = !!(v.get?.(i)?.track?.local || v.get?.(i)?.track?.dav);
   if (isLocal) unlockLocalAudio();
   if (remoteActive() && !isLocal) return remotePlay(v, i);
   P.view = v;
@@ -1840,7 +2002,7 @@ audio.addEventListener('pause', () => { P.playing = false; updateBar(); if (cur(
 audio.addEventListener('ended', songEnded);
 audio.addEventListener('error', () => {
   if (!P.track || P.demoMode || !audio.src || audio.src.startsWith('data:')) return;
-  if (P.track.local) { flash("This song's file type won't play on this device."); return; }
+  if (P.track.local || P.track.dav) { flash("This song's file type won't play on this device."); return; }
   if (!P.tx) { P.tx = true; audio.src = txUrl(P.track); audio.play().catch(() => {}); }
   else flash("This song won't play here.");
 });
@@ -1900,6 +2062,7 @@ function signInPrompt(title = 'Music') {
     { label: 'Sign In with Plex', act: startSignIn },
     { label: 'Paste a Token', act: () => showPanel('token') },
     { label: 'Music on This Phone', arrow: true, go: () => push(localMenu()) },
+    ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Use Demo Library', act: () => { cfg.demo = true; save(); stack.length = 1; push(musicMenu()); } }
   ]);
 }
@@ -1917,6 +2080,7 @@ function libMenu(title, lib) {
     { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
     { label: 'Songs', arrow: true, go: () => push(lib.songs()) },
     { label: 'On This Phone', arrow: true, go: () => push(localMenu()) },
+    ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Search', arrow: true, go: () => push(searchView()) }
   ], { split: true });
 }
@@ -1956,6 +2120,7 @@ function settingsView() {
     { label: 'User’s Guide', arrow: true, go: openGuide },
     { label: 'Plex', value: cfg.token ? (cfg.server?.name || 'No server') : 'Signed out', arrow: true, go: () => push(plexView()) },
     ...(cfg.token ? [{ label: 'Server', value: cfg.server?.name || 'Choose', arrow: true, go: () => push(serversView()) }] : []),
+    ...(ELITE ? [{ label: 'Network Share', value: DAV.on ? DAV.host() : 'Off', arrow: true, go: () => push(davSetupView()) }] : []),
     { label: 'Demo Library', value: isDemo() ? 'On' : 'Off', act: () => {
         if (isDemo() && !cfg.token) { cfg.demo = false; save(); flash('Sign in under Plex to use your own music.'); return; }
         cfg.demo = !isDemo(); save(); } },
@@ -2028,13 +2193,24 @@ const panel = $('#panel'), pStatus = $('#pStatus'), pLink = $('#pLink'), pForm =
 let pinTimer = null;
 function showPanel(mode) {
   panel.hidden = false; clearInterval(pinTimer);
-  $('#pTitle').textContent = mode === 'token' ? 'Paste a Plex token' : 'Sign in to Plex';
-  pForm.hidden = mode !== 'token'; pLink.hidden = true;
+  $('#pTitle').textContent = mode === 'token' ? 'Paste a Plex token' : mode === 'dav' ? 'Connect a network share' : 'Sign in to Plex';
+  pForm.hidden = mode !== 'token'; pLink.hidden = true; $('#dForm').hidden = mode !== 'dav';
+  if (mode === 'dav') { const d = cfg.dav || {}; $('#davUrl').value = d.url || ''; $('#davUser').value = d.user || ''; $('#davPass').value = d.pass || '';
+    pStatus.textContent = 'Your WebDAV server’s address, username and password. They stay on this device.'; setTimeout(() => $('#davUrl').focus(), 60); return; }
   pStatus.textContent = mode === 'token' ? 'In Plex Web, open any song’s ⋯ menu, choose Get Info, then View XML. Copy the X-Plex-Token value from the address bar.' : '';
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
   if (mode === 'token') setTimeout(() => $('#tokenIn').focus(), 60);
 }
-function hidePanel() { panel.hidden = true; clearInterval(pinTimer); }
+function hidePanel() { panel.hidden = true; clearInterval(pinTimer); $('#dForm').hidden = true; }
+$('#dForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const url = $('#davUrl').value.trim(); if (!url) return;
+  const prev = cfg.dav; cfg.dav = { url, user: $('#davUser').value.trim(), pass: $('#davPass').value };
+  pStatus.textContent = 'Checking the share…';
+  try { const es = await DAV.list(DAV.base()); save(); pStatus.textContent = `Connected. Found ${es.length} item${es.length === 1 ? '' : 's'} at the top. Find it under Music › Network Share.`;
+    setTimeout(() => { if (!panel.hidden) hidePanel(); }, 2500); render(); }
+  catch (err) { pStatus.textContent = davErr(err); cfg.dav = prev; }
+});
 $('#pClose').addEventListener('click', hidePanel);
 pForm.addEventListener('submit', e => { e.preventDefault(); const t = $('#tokenIn').value.trim(); if (!t) return; cfg.token = t; save(); onSignedIn(); });
 async function startSignIn() {
@@ -2269,7 +2445,7 @@ const CASES = [
   { id: 'bc', name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
   { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
   { id: 'elite', name: 'Elite White', eliteOnly: true, base: '#e9ecef', v: { case: 'linear-gradient(160deg,#ffffff 0%,#fdfdfd 30%,#f1f3f5 62%,#e3e6ea 100%)', 'case-edge': '#c4c9cf', wheel: 'radial-gradient(circle at 50% 35%,#ffffff,#eceef1 70%,#e1e4e8)', 'wheel-edge': '#c7ccd2', 'wheel-ink': '#9ba1a8', 'wheel-press': '#4f555c', center: 'radial-gradient(circle at 50% 30%,#ffffff,#eef0f3 70%,#dfe2e6)', 'center-edge': '#c3c8ce', bezel: '#1d1f22' } },
-  { id: 'trek', name: 'Away Mission', eliteOnly: true, base: '#1e2126', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
+  { id: 'trek', name: 'Away Mission', base: '#1e2126', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
@@ -2318,10 +2494,12 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
   pod.classList.toggle('elite', c.id === 'elite'); pod.classList.toggle('trek', c.id === 'trek');
-  const eliteBack = c.id === 'elite' || c.id === 'trek'; $('#podback').classList.toggle('eliteback', eliteBack);
+  const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myPod Elite, whatever the case */
+  $('#podback').classList.toggle('eliteback', eliteBack);
   $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? 'myPod Elite\nMusaka Edition' : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
-  $('#podback').classList.toggle('redback', c.id === 'bc'); document.documentElement.classList.toggle('redback', c.id === 'bc');
+  const red = c.id === 'bc' && !eliteBack;
+  $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
   document.documentElement.style.setProperty('--case-base', c.base);
 }
 const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
@@ -2589,19 +2767,19 @@ async function runSearch(v) {
 
 /* ---------- ratings (kept only on this myPod) ---------- */
 const RATE = { all: LS.get('ratings', {}) };
-const rateScope = t => t && t.local ? 'local' : t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
+const rateScope = t => t && t.dav ? 'dav' : t && t.local ? 'local' : t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
 const rateKey = t => rateScope(t) + ':' + t.rk;
 const ratingOf = t => (t && RATE.all[rateKey(t)]?.r) || 0;
 function setRating(t, r) {
   if (!t) return; r = clamp(Math.round(r), 0, 5); const k = rateKey(t);
   if (!r) delete RATE.all[k];
-  else RATE.all[k] = { r, at: Date.now(), t: { rk: t.rk, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part, demo: t.demo || undefined, local: t.local || undefined } };
+  else RATE.all[k] = { r, at: Date.now(), t: { rk: t.rk, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part, demo: t.demo || undefined, local: t.local || undefined, dav: t.dav || undefined, url: t.url || undefined } };
   LS.set('ratings', RATE.all);
 }
 const starsTxt = r => '★'.repeat(r) + '☆'.repeat(5 - r);
 function ratedTracks(test, sort) {
   const scope = isDemo() ? 'demo' : (cfg.server?.machineId || 'x');
-  let a = Object.entries(RATE.all).filter(([k, x]) => (k.startsWith(scope + ':') || (k.startsWith('local:') && Local.byId.has(x.t.rk))) && test(x)).map(([, x]) => x);
+  let a = Object.entries(RATE.all).filter(([k, x]) => (k.startsWith(scope + ':') || (k.startsWith('local:') && Local.byId.has(x.t.rk)) || (ELITE && k.startsWith('dav:'))) && test(x)).map(([, x]) => x);
   a.sort(sort || ((x, y) => y.r - x.r || x.t.title.localeCompare(y.t.title)));
   return a.map(x => x.t);
 }
@@ -2610,7 +2788,7 @@ function ratedList(title, test, sort, empty) {
   if (!ts.length) return Message(title, empty || 'No songs here yet. Rate a song from Now Playing: press the center until you see Rating, then turn the wheel.');
   const items = [{ label: 'Shuffle', act: () => { setShuffle(true); return playFrom(v, 1 + Math.floor(Math.random() * ts.length)); } },
     ...ts.map(t => ({ label: t.title, value: starsTxt(ratingOf(t)), track: t }))];
-  const v = List(title, items, { headLen: 1, pq: ts.some(t => t.demo || t.local) ? null : { path: '/library/metadata/' + ts.slice(0, 300).map(t => t.rk).join(',') } });
+  const v = List(title, items, { headLen: 1, pq: ts.some(t => t.demo || t.local || t.dav) ? null : { path: '/library/metadata/' + ts.slice(0, 300).map(t => t.rk).join(',') } });
   return v;
 }
 function ratingsView() {
@@ -3155,13 +3333,13 @@ function quizEnd(v) {
 /* ---------- screen style ---------- */
 const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console']];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
-const screenList = () => SCREENS.filter(s => ELITE || s[0] !== 'console');
+const screenList = () => SCREENS;
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
 function screenStyle(id = cfg.screen) {
   const w95 = $('#pod').classList.contains('jled');
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
-  screenEl.classList.toggle('console', !w95 && ELITE && id === 'console');
+  screenEl.classList.toggle('console', !w95 && id === 'console');
   screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
 }
 function applyScreen() { screenStyle(); render(); }
