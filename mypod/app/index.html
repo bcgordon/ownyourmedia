@@ -476,6 +476,9 @@ html:not(.vfull) .vctl,html:not(.vfull) .vtop{display:none}
 .gov-bar .gov-sp{flex:none;width:64px}
 .gov-done{flex:none;width:64px;font:inherit;font-weight:700;color:#2f6fd2;background:none;border:0;padding:8px 0;text-align:left;cursor:pointer}
 .gov iframe{flex:1;width:100%;border:0;background:#fff}
+.gov.el,.gov.el iframe{background:#000}
+.gov.el .gov-bar{background:#000;border-bottom:4px solid #cc99cc;color:#ffcc99;font-family:Antonio,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.gov.el .gov-done{color:#000;background:#ff9966;border-radius:999px;text-align:center;padding:6px 0}
 
 /* split screen: menu on the left, album art drifting on the right */
 .split-l{right:46%}
@@ -2287,7 +2290,7 @@ const HELP = `
 <h3>Make it yours</h3>
 <p>In Settings you can turn <b>Menu Art</b> on or off (album art beside the main and Music menus), change the case color, pick a <b>Wheel Color</b> and <b>Center Color</b> of your own, set the Screen to Light, Dark, Match iPhone, or the original black-and-white Classic, choose what shows in the top-right <b>Corner</b> (a clock, a little equalizer, or where the music is playing), turn Large Text on or off, and turn the click sound on or off.</p>
 <h3>The full guide</h3>
-<p><a href="guide.html" data-guide style="color:inherit;font-weight:700">Open the myPod User’s Guide ›</a></p>`;
+<p><a href="guide.html" data-guide style="color:inherit;font-weight:700">Open the ${ELITE ? 'myPod Elite' : 'myPod'} User’s Guide ›</a></p>`;
 function renderPage(v, anim) {
   bodyEl.dataset.k = '';
   if (!anim && $('#page')) return;
@@ -3725,8 +3728,8 @@ addEventListener('resize', () => vPlace());
 
 /* ---------- user's guide inside the app ---------- */
 function openGuide() {
-  const fr = $('#govFrame'); if (!fr.getAttribute('src')) fr.src = 'guide.html';
-  $('#gov').hidden = false; click();
+  const fr = $('#govFrame'); if (!fr.getAttribute('src')) fr.src = ELITE ? 'guide.html?ed=elite' : 'guide.html';
+  $('#gov').classList.toggle('el', ELITE); $('#gov').hidden = false; click();
 }
 $('#govDone').addEventListener('click', () => { $('#gov').hidden = true; click(); });
 bodyEl.addEventListener('click', e => { const a = e.target.closest('[data-guide]'); if (a) { e.preventDefault(); openGuide(); } });

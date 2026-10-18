@@ -8,10 +8,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <style>body{margin:0}</style>
 <title>myPod User’s Guide</title>
+<script>
+/* Elite: opened as guide.html?ed=elite, or from inside the myPod Elite app */
+(() => { let el = new URLSearchParams(location.search).get('ed') === 'elite';
+  try { el = el || window.parent.MYPOD_EDITION === 'elite'; } catch (e) {}
+  if (el) { document.documentElement.classList.add('elite'); document.title = 'myPod Elite User’s Guide';
+    const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = '#000000'; } })();
+</script>
+
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap">
 <style>
 /* Layout: one narrow column like a pocket manual; a silhouette-ad color band up top, white pages after.
    Deliberately a single light look, like the printed booklets. */
@@ -133,6 +141,108 @@ footer{padding-block:40px 56px;text-align:center;color:var(--light);font-size:14
 footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01em}
 @media (max-width:380px){.pair{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+
+/* ---------- myPod Elite: Starship Console edition of the guide (html.elite) ---------- */
+html.elite{--paper:#000;--ink:#ffcc99;--gray:#e8c9a8;--light:#9999ff;--rule:#2a2a44;--wash:#14142a;--blue:#9999ff;
+  --lc-peach:#ffcc99;--lc-orange:#ff9966;--lc-lilac:#cc99cc;--lc-peri:#9999ff;--lc-gold:#e7b24a;--lc-red:#cc6666;
+  --fa:Antonio,"Arial Narrow","Roboto Condensed",sans-serif;color-scheme:dark}
+html.elite body{color:#f3dcc4}
+html.elite a{color:var(--lc-peri)}
+html.elite .el-only{display:revert}
+html.elite .std-only,.el-only{display:none}
+html.elite h1,html.elite h2,html.elite h3,html.elite .label,html.elite .num,html.elite .kicker,html.elite .toc a,html.elite dl.terms dt,
+html.elite figcaption,html.elite footer,html.elite .backbar{font-family:var(--fa);letter-spacing:.04em}
+/* hero: an LCARS header frame */
+html.elite .hero{background:#000;padding:18px 0 0}
+html.elite .hero .wrap{position:relative;padding-block:30px 26px;padding-left:max(118px,calc(env(safe-area-inset-left,0px) + 98px));
+  grid-template-columns:1fr auto;align-items:center}
+html.elite .hero .wrap::before{content:"";position:absolute;left:max(20px,env(safe-area-inset-left,0px));top:0;bottom:0;width:70px;
+  background:var(--lc-lilac);border-top-left-radius:44px;border-bottom-left-radius:44px}
+html.elite .hero .wrap::after{content:"";position:absolute;left:calc(max(20px,env(safe-area-inset-left,0px)) + 40px);right:max(20px,env(safe-area-inset-right,0px));top:0;height:16px;
+  background:linear-gradient(90deg,var(--lc-lilac) 0 46%,#000 46% calc(46% + 6px),var(--lc-orange) calc(46% + 6px) 70%,#000 70% calc(70% + 6px),var(--lc-peri) calc(70% + 6px));border-top-left-radius:30px}
+html.elite .hero .kicker{color:var(--lc-orange);font-size:15px;letter-spacing:.2em;margin:10px 0 6px}
+html.elite .hero h1{color:var(--lc-peach);font-weight:600;text-transform:uppercase;font-size:clamp(46px,13vw,76px);letter-spacing:.02em;line-height:.95}
+html.elite .hero .sub{color:#f3dcc4;margin-bottom:6px}
+html.elite .hero svg{width:clamp(96px,26vw,150px)}
+html.elite .hero .wrap>div{min-width:0}html.elite .hero h1{overflow-wrap:anywhere}
+html.elite .hero .bars{display:flex;gap:6px;margin:0 max(20px,env(safe-area-inset-right,0px)) 0 calc(max(20px,env(safe-area-inset-left,0px)) + 40px);height:16px}
+html.elite .hero .bars i{display:block;height:100%;background:var(--lc-peri)}
+html.elite .hero .bars i:nth-child(1){flex:3;background:var(--lc-lilac);border-bottom-left-radius:30px;margin-left:-40px}
+html.elite .hero .bars i:nth-child(2){flex:1;background:var(--lc-gold)}
+html.elite .hero .bars i:nth-child(3){flex:2;background:var(--lc-orange)}
+html.elite .hero .bars i:nth-child(4){flex:4;background:var(--lc-peri)}
+/* own your media band */
+html.elite .own{background:#000}
+html.elite .own .wrap{border:3px solid var(--lc-orange);border-left-width:22px;border-radius:30px 0 0 30px;margin-top:22px;padding:30px 22px 30px 22px;max-width:620px}
+@media (min-width:660px){html.elite .own .wrap{margin-inline:auto}}
+@media (max-width:659px){html.elite .own .wrap{margin-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}}
+html.elite .own .label{color:var(--lc-orange)}
+html.elite .own h2{text-transform:uppercase;font-weight:600;color:var(--lc-peach);font-size:clamp(40px,11vw,60px)}
+html.elite .own h2 em{color:var(--lc-orange)}
+html.elite .own p{color:#f3dcc4}
+html.elite .own li{border-top-color:#33335a}
+html.elite .own li b{color:var(--lc-peri);font-family:var(--fa);letter-spacing:.04em;text-transform:uppercase}
+html.elite .own li span{color:#e8c9a8}
+html.elite .own .sign{color:var(--lc-peach);font-family:var(--fa);text-transform:uppercase;letter-spacing:.05em}
+/* contents: LCARS pill buttons */
+html.elite .label{color:var(--lc-peri)}
+html.elite .toc ol{border:0;display:grid;gap:6px}
+html.elite .toc li{border:0}
+html.elite .toc a{background:var(--c,var(--lc-peach));color:#000;border-radius:999px 0 0 999px;padding:9px 16px;text-transform:uppercase;font-size:20px;font-weight:600;align-items:center}
+html.elite .toc li:nth-child(3n+2) a{--c:var(--lc-lilac)}
+html.elite .toc li:nth-child(3n) a{--c:var(--lc-peri)}
+html.elite .toc li a[href="#elite"]{--c:var(--lc-orange)}
+html.elite .toc a span{color:#000;opacity:.6;width:1.8em}
+/* chapters: an elbow rail down the left */
+html.elite .ch{border:0;position:relative;padding-left:26px;margin-top:30px;padding-block:0 26px}
+html.elite .ch::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;background:var(--rail,var(--lc-lilac));border-radius:12px 0 0 12px}
+html.elite .ch::after{content:"";position:absolute;left:0;top:0;width:min(170px,40%);height:12px;background:var(--rail,var(--lc-lilac));border-top-left-radius:12px}
+html.elite .ch:nth-of-type(3n+2){--rail:var(--lc-peri)}
+html.elite .ch:nth-of-type(3n){--rail:var(--lc-orange)}
+html.elite .ch#elite{--rail:var(--lc-gold)}
+html.elite .ch .num{color:var(--rail,var(--lc-lilac));padding-top:22px;font-size:16px;letter-spacing:.18em}
+html.elite .ch h2{text-transform:uppercase;color:var(--lc-peach);font-weight:600;letter-spacing:.03em}
+html.elite .ch h2 em{font-style:normal;color:var(--lc-orange)}
+html.elite .ch h3{text-transform:uppercase;color:var(--lc-orange);font-weight:600;font-size:21px}
+html.elite .lead{color:#e8c9a8}
+html.elite .steps li::before{background:var(--lc-orange);color:#000;border-radius:999px;width:32px;font-family:var(--fa)}
+html.elite .path{color:var(--lc-peach)}
+html.elite .key{background:#20203a;border:0;border-radius:999px;color:var(--lc-peach);padding:0 .6em}
+html.elite .note{background:#000;border:2px solid var(--lc-peri);border-left:14px solid var(--lc-peri);border-radius:18px 0 0 18px;color:#e8c9a8}
+html.elite .note b{color:var(--lc-peri)}
+html.elite dl.terms div{border-bottom-color:var(--rule)}
+html.elite dl.terms dt{color:var(--lc-peri);text-transform:uppercase;font-weight:600;font-size:19px}
+html.elite dl.terms dd{color:#f3dcc4}
+html.elite figcaption{color:var(--lc-peri);text-transform:uppercase;font-size:16px}
+/* little screens become Starship Consoles */
+html.elite .lcd:not(.classic):not(.dark){background:#000;border-color:#2a2e35;color:var(--lc-peach);font-family:var(--fa);text-transform:uppercase;letter-spacing:.04em;
+  box-shadow:0 0 0 1px #5b616a,0 10px 30px -14px rgba(0,0,0,.8);position:relative}
+html.elite .lcd:not(.classic):not(.dark) .lcd-bar{background:var(--lc-lilac);color:#000;border:0;border-top-left-radius:14px;margin:6px 6px 4px}
+html.elite .lcd:not(.classic):not(.dark) .lcd-bar i{color:#000}
+html.elite .lcd:not(.classic):not(.dark) .lcd-row{margin:2px 6px 2px 22px;border-radius:999px}
+html.elite .lcd:not(.classic):not(.dark) .lcd-row.sel{background:var(--lc-orange);color:#000}
+html.elite .lcd:not(.classic):not(.dark) .lcd-row span{color:var(--lc-peri)}
+html.elite .lcd:not(.classic):not(.dark) .lcd-row.sel span{color:#000}
+html.elite .lcd:not(.classic):not(.dark) .lcd-strip{background:#000;border-top:3px solid var(--lc-peri);color:var(--lc-peach)}
+html.elite .lcd:not(.classic):not(.dark) .lcd-strip b{color:var(--lc-orange)}
+html.elite .lcd.classic,html.elite .lcd.dark{border-color:#2a2e35}
+/* the wheel diagram: Away Mission gunmetal with a gold ring */
+html.elite .wheelfig circle:nth-of-type(1){fill:#2a2e35;stroke:var(--lc-gold)}
+html.elite .wheelfig circle:nth-of-type(2){fill:#1f2227;stroke:var(--lc-gold)}
+html.elite .wheelfig svg>text,html.elite .wheelfig svg>path[fill="#9a9da2"]{fill:var(--lc-gold)}
+html.elite .wheelfig g text{fill:var(--lc-peach)}
+html.elite .wheelfig g text[fill]{fill:var(--lc-peri)}
+html.elite .wheelfig path[stroke="#2f6fd2"]{stroke:var(--lc-orange)}html.elite .wheelfig path[fill="#2f6fd2"]{fill:var(--lc-orange)}
+html.elite .wheelfig g text[x="170"][y="155"]{fill:var(--lc-gold)}
+html.elite .modes div{border-color:var(--rule);border-radius:999px 999px 18px 18px;font-family:var(--fa);text-transform:uppercase;color:var(--lc-peach)}
+html.elite .modes b{color:var(--lc-peri)}
+html.elite .modes i u{border-color:var(--lc-peri)}html.elite .modes i u.on{background:var(--lc-orange);border-color:var(--lc-orange)}
+html.elite .swatches li{color:#e8c9a8}
+html.elite .rotate svg [fill="#1d1d1f"]{fill:var(--lc-peach)}
+html.elite .backbar{background:var(--lc-orange);color:#000;text-transform:uppercase;font-weight:600}
+html.elite footer{color:var(--lc-peri)}
+html.elite footer .mark{color:var(--lc-peach);text-transform:uppercase;font-weight:600}
+html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-transform:uppercase;letter-spacing:.05em}
 </style>
 
 </head>
@@ -140,11 +250,25 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
 <header class="hero">
   <div class="wrap">
     <div>
-      <p class="kicker">User’s Guide</p>
-      <h1>myPod.</h1>
-      <p class="sub">Own your media. Hold it in one hand.</p>
+      <p class="kicker"><span class="std-only">User’s Guide</span><span class="el-only">User’s Guide · Musaka Edition</span></p>
+      <h1><span class="std-only">myPod.</span><span class="el-only">myPod Elite</span></h1>
+      <p class="sub"><span class="std-only">Own your media. Hold it in one hand.</span><span class="el-only">Own your media. Make it so.</span></p>
     </div>
-    <svg viewBox="0 0 180 300" role="img" aria-label="A white iPod with earbud cord">
+    <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="A gunmetal myPod Elite with a Starship Console screen">
+      <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#9aa0a7" stroke-width="4" stroke-linecap="round"/>
+      <rect x="40" y="92" width="120" height="208" rx="14" fill="#2a2e35" stroke="#5b616a" stroke-width="1.5"/>
+      <rect x="54" y="108" width="92" height="70" rx="3" fill="#050506"/>
+      <path d="M59 118 a7 7 0 0 1 7 -7 h75 v8 h-68 v52 h-14z" fill="#cc99cc"/>
+      <rect x="77" y="124" width="62" height="9" rx="4.5" fill="#ff9966"/>
+      <rect x="77" y="137" width="46" height="7" rx="3.5" fill="#ffcc99" opacity=".9"/>
+      <rect x="77" y="148" width="54" height="7" rx="3.5" fill="#ffcc99" opacity=".9"/>
+      <rect x="77" y="159" width="38" height="7" rx="3.5" fill="#9999ff"/>
+      <rect x="78" y="190" width="44" height="4" rx="2" fill="#ff9966"/>
+      <circle cx="100" cy="246" r="38" fill="#1f2227" stroke="#e7b24a" stroke-width="2"/>
+      <circle cx="100" cy="246" r="14" fill="#2f333a" stroke="#e7b24a" stroke-width="1.5"/>
+      <path d="M140 92 C140 92 140 96 136 100" stroke="#9aa0a7" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <svg class="std-only" viewBox="0 0 180 300" role="img" aria-label="A white iPod with earbud cord">
       <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
       <rect x="40" y="92" width="120" height="208" rx="14" fill="#fff"/>
       <rect x="54" y="108" width="92" height="70" rx="3" fill="#1d1d1f"/>
@@ -156,6 +280,7 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
       <path d="M140 92 C140 92 140 96 136 100" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
     </svg>
   </div>
+  <div class="bars el-only" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </header>
 
 <section class="own" aria-labelledby="own-h">
@@ -374,7 +499,7 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
     <p><b>Minesweeper.</b> Open every square that isn’t a mine. A number tells you how many mines touch that square. Tap to open, press and hold to plant a flag. Prefer the wheel? Turn it to move the box, use ⏮ and ⏭ to jump a row, press the center to open, and ⏯ to flag.</p>
     <div class="note"><b>While you play Stack or Minesweeper,</b> the ⏮ ⏭ ⏯ buttons control the game instead of the music. Press Menu to leave, and they work on music again.</div>
     <h3>Flip it over</h3>
-    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myPod turns over to show its polished steel back, a few stickers, and an engraving. Swipe again to flip it back. The music keeps playing.</p>
+    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myPod turns over to show its <span class="std-only">polished steel back, a few stickers, and an engraving</span><span class="el-only">dark gunmetal back, engraved myPod Elite · Musaka Edition</span>. Swipe again to flip it back. The music keeps playing.</p>
     <h3>Sleep Timer</h3>
     <p>Choose 15, 30, 45, or 60 minutes, or <b>End of Song</b>. A small moon appears in the top bar while it’s set.</p>
     <div class="note"><b>Falling asleep to Plexamp in another room?</b> The timer works most reliably when music is playing on your phone itself.</div>
@@ -461,17 +586,19 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
   </section>
 
   <footer>
-    <div class="mark">myPod.</div>
+    <div class="mark"><span class="std-only">myPod.</span><span class="el-only">myPod Elite</span></div>
     <p class="own-line">Own your media.</p>
     <p>Built by BC Gordon.</p>
   </footer>
 </main>
-<a class="backbar" id="backbar" href="./" hidden>‹ Back to myPod</a>
+<a class="backbar" id="backbar" href="./" hidden>‹ Back to myPod<span class="el-only"> Elite</span></a>
 <script>
 (() => {
   const inFrame = window.self !== window.top;
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-  if (!inFrame && standalone) document.getElementById('backbar').hidden = false;
+  const bb = document.getElementById('backbar');
+  if (document.documentElement.classList.contains('elite')) bb.href = '/elite/';
+  if (!inFrame && standalone) bb.hidden = false;
 })();
 </script>
 
