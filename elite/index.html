@@ -9,8 +9,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="myPod Elite">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="elite-apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="elite-favicon-32.png">
 <link rel="manifest" href="manifest-elite.webmanifest">
 <meta name="theme-color" content="#16181c">
 <style>body{margin:0}</style>
@@ -220,10 +220,9 @@ html.redback.showback body{background-color:#8f0b12}
 .podback.eliteback .engrave::first-line{font-weight:600}
 /* Away Mission case: dark starship hull, command-gold wheel ring, three division stripes */
 .pod.trek{box-shadow:0 0 0 1px #0b0c0e,0 0 0 2px #5b616a,0 0 0 3px #2b2f35,0 0 0 4px #0b0c0e,0 34px 60px -24px rgba(0,0,0,.6),0 10px 22px -10px rgba(0,0,0,.4)}
-.pod.trek::after{content:"";position:absolute;left:0;right:0;bottom:calc(var(--w)*.045);height:calc(var(--w)*.016);pointer-events:none;
-  background:linear-gradient(90deg,#c4302b,#c4302b) calc(50% - var(--w)*.085) 0/calc(var(--w)*.075) 100% no-repeat,
-    linear-gradient(90deg,#e7b24a,#e7b24a) 50% 0/calc(var(--w)*.075) 100% no-repeat,
-    linear-gradient(90deg,#3d7fc4,#3d7fc4) calc(50% + var(--w)*.085) 0/calc(var(--w)*.075) 100% no-repeat}
+.pod.trek::after{content:"";order:1;flex:none;margin:auto 0;width:calc(var(--w)*.255);height:calc(var(--w)*.018);pointer-events:none;
+  background:linear-gradient(90deg,#c4302b 0 30%,transparent 30% 35%,#e7b24a 35% 65%,transparent 65% 70%,#3d7fc4 70%)}
+.pod.trek .wheel{order:2;margin-top:0;margin-bottom:calc(var(--w)*.075)}
 .pod.trek .wheel{box-shadow:0 0 0 calc(var(--w)*.006) #e7b24a,0 0 calc(var(--w)*.03) rgba(231,178,74,.35)}
 
 /* Starship Console screen */
