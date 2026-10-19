@@ -1007,6 +1007,45 @@ html.desk.dk-mini .dk-lcd{overflow:hidden}html.dk-pip .dk-lcd{overflow:hidden}
 .fb-dev input{margin-top:5px;width:18px;height:18px;flex:none}
 .fb-to{color:var(--muted);font-size:15px}
 html.ed-elite .dk-side .dk-i{font-size:18px;letter-spacing:.04em}.dk-side .dk-i span{overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- LG Edition (myPod Elite): a laser-sword hilt. Chrome emitter, black ridged grip, activation plate ---------- */
+.pod.saber{box-shadow:0 0 0 1px #2c2f33,0 0 0 2px #c9ced3,0 0 0 3px #6f757c,0 0 0 4px #1b1d20,0 34px 60px -24px rgba(0,0,0,.6),0 10px 22px -10px rgba(0,0,0,.4)}
+.pod.saber .bezel{box-shadow:0 0 0 calc(var(--w)*.006) #9aa0a6,0 0 calc(var(--w)*.05) rgba(95,208,255,.45)}
+.pod.saber::after{content:"";order:1;flex:none;margin:auto 0;width:calc(var(--w)*.42);height:calc(var(--w)*.075);pointer-events:none;border-radius:calc(var(--w)*.02);
+  background:
+    radial-gradient(circle at 50% 50%,#ff6b5e 0,#d4271b 28%,#7d0f08 42%,transparent 44%) 12% 50%/calc(var(--w)*.075) 100% no-repeat,
+    radial-gradient(circle,#7dff9a 0 35%,transparent 40%) 62% 50%/calc(var(--w)*.03) calc(var(--w)*.03) no-repeat,
+    radial-gradient(circle,#7dff9a 0 35%,transparent 40%) 72% 50%/calc(var(--w)*.03) calc(var(--w)*.03) no-repeat,
+    radial-gradient(circle,#ffd25e 0 35%,transparent 40%) 82% 50%/calc(var(--w)*.03) calc(var(--w)*.03) no-repeat,
+    linear-gradient(#26282c,#0e0f11);
+  box-shadow:0 0 0 calc(var(--w)*.004) #9aa0a6,inset 0 1px 0 rgba(255,255,255,.15)}
+.pod.saber .wheel{order:2;margin-top:0;margin-bottom:calc(var(--w)*.075);box-shadow:0 0 0 calc(var(--w)*.008) #c9ced3,0 0 0 calc(var(--w)*.014) #0b0c0e}
+.pod.saber .center{box-shadow:0 0 calc(var(--w)*.025) rgba(95,208,255,.55)}
+/* the Blade screen: glowing text, and the chosen row lights up like an ignited blade */
+.screen.saber{background:radial-gradient(ellipse at 50% 30%,#07141a,#020406 70%);color:#d6efff;letter-spacing:.06em}
+.saber .bar{background:#020406;border-bottom:1px solid #12313d;box-shadow:0 1px 0 rgba(95,208,255,.35);color:#eaf9ff;text-transform:uppercase;letter-spacing:.05em}
+.saber .bar svg{filter:drop-shadow(0 0 .6cqw #5fd0ff)}
+.saber .bar-r,.saber .crn-clock{color:#bfe6f5}.saber .crn-eq i{background:#7fdcff;border-radius:0}
+.saber .row{text-transform:uppercase;letter-spacing:.07em;color:#c9e6f2}
+.saber .row.sel{background:linear-gradient(180deg,#d7f6ff 0%,#ffffff 50%,#d7f6ff 100%);color:#03222e;border-radius:99cqw;margin:0 2cqw;
+  box-shadow:0 0 .8cqw .3cqw #8fe2ff,0 0 3.6cqw 1cqw rgba(60,190,255,.55)}
+.saber .row .r,.saber .row .v{color:#7fcde6}.saber .row.sel .r,.saber .row.sel .v{color:#03222e}
+.saber .row.dim{color:#4d6a76}
+.saber .sb{background:#0b1a20;border:0;border-radius:99cqw}.saber .sb i{background:#7fdcff;border-radius:99cqw;box-shadow:0 0 1cqw #5fd0ff}
+.saber .note,.saber .page{color:#c9e6f2}.saber .page h3{color:#fff}
+.saber .npstrip{background:#020406;border-top:1px solid #12313d;color:#c9e6f2;text-transform:uppercase}
+.saber .npstrip .go{color:#7fdcff}
+.saber .np-pos{color:#7fcde6}
+.saber .np-title{color:#fff;text-transform:uppercase;text-shadow:0 0 1.4cqw #5fd0ff}
+.saber .np-artist,.saber .np-album{color:#c9e6f2}
+.saber .np-art{box-shadow:0 0 0 1px #12313d,0 0 3cqw rgba(60,190,255,.35)}
+.saber .trk{background:#0b1a20;border:0;border-radius:99cqw;overflow:hidden}
+.saber .fill{background:linear-gradient(#d7f6ff,#fff,#d7f6ff);box-shadow:0 0 1.4cqw #5fd0ff}
+.saber .knob{background:#fff;border:0;box-shadow:0 0 1.4cqw #5fd0ff}
+.saber .seg{background:#0b1a20;border:0}.saber .seg button{color:#c9e6f2}.saber .seg button.on{background:#eaf9ff;color:#03222e;box-shadow:0 0 1.4cqw #5fd0ff}
+.saber .stars button{color:#25414c}.saber .stars button.on,.saber .np-stars{color:#7fdcff}
+.saber .sbox{background:#020406;border-bottom:1px solid #12313d}.saber .sbox input{background:#0b1a20;color:#eaf9ff;border:1px solid #12313d}
+html.desk .saber .row:hover:not(.sel){background:rgba(95,208,255,.12)}
 </style>
 
 </head>
@@ -2721,11 +2760,12 @@ const CASES = [
   { id: 'zune', name: 'Zune Brown', base: '#3b281d', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(170deg,#7a5843 0%,#5a3f2e 42%,#3f2a1e 100%)', 'case-edge': '#2b1c13', wheel: 'radial-gradient(circle at 50% 38%,#6a4b38,#4a3324)', 'wheel-edge': '#2a1b12', 'wheel-ink': '#d8c3a8', 'wheel-press': '#fff3e2', center: 'linear-gradient(#7e5c46,#5b3f2d)', 'center-edge': '#2f1f15', bezel: '#0d0a08' } },
   { id: 'bc', name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
   { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
-  { id: 'elite', name: 'Elite White', eliteOnly: true, base: '#e9ecef', v: { case: 'linear-gradient(160deg,#ffffff 0%,#fdfdfd 30%,#f1f3f5 62%,#e3e6ea 100%)', 'case-edge': '#c4c9cf', wheel: 'radial-gradient(circle at 50% 35%,#ffffff,#eceef1 70%,#e1e4e8)', 'wheel-edge': '#c7ccd2', 'wheel-ink': '#9ba1a8', 'wheel-press': '#4f555c', center: 'radial-gradient(circle at 50% 30%,#ffffff,#eef0f3 70%,#dfe2e6)', 'center-edge': '#c3c8ce', bezel: '#1d1f22' } },
+  { id: 'lg', name: 'LG Edition', eliteOnly: true, base: '#2a2c30', v: { case: 'repeating-linear-gradient(180deg,#3b3d42 0 calc(var(--w)*.012),#0d0e10 calc(var(--w)*.012) calc(var(--w)*.04)) 0 86%/100% 40% no-repeat,linear-gradient(90deg,#7d838a 0%,#e6e9ec 16%,#aeb3b9 30%,#fafbfc 48%,#a7acb2 64%,#dde0e3 80%,#7a8087 100%)', 'case-edge': '#4d5258', wheel: 'radial-gradient(circle at 50% 38%,#26282c,#0b0c0e)', 'wheel-edge': '#c9ced3', 'wheel-ink': '#d9e8f0', 'wheel-press': '#7fdcff', center: 'radial-gradient(circle at 50% 30%,#ffffff,#d5d9dd 55%,#9aa0a6)', 'center-edge': '#7a8087', bezel: '#030405' } },
   { id: 'trek', name: 'Away Mission', base: '#1e2126', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
+if (cfg.caseColor === 'elite') { cfg.caseColor = 'trek'; try { save(); } catch {} }
 /* wheel and center button colors: [id, name, light, dark, edge, ink, press] */
 const WHEELS = [
   ['white', 'White', '#f1f1f2', '#e3e4e6', '#cfd1d4', '#a2a5aa', '#5f6368'],
@@ -2770,10 +2810,10 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('squircle', c.id === 'zune');
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
-  pod.classList.toggle('elite', c.id === 'elite'); pod.classList.toggle('trek', c.id === 'trek');
+  pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('saber', c.id === 'lg');
   const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myPod Elite, whatever the case */
   $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
-  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? 'myPod Elite\nMusaka Edition' : 'Built by BC';
+  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myPod Elite\nLG Edition' : 'myPod Elite\nMusaka Edition') : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
   const red = c.id === 'bc' && !eliteBack;
   $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
@@ -3662,15 +3702,16 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console']];
+const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
-const screenList = () => SCREENS;
+const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
 function screenStyle(id = cfg.screen) {
   const w95 = $('#pod').classList.contains('jled');
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
   screenEl.classList.toggle('console', !w95 && id === 'console');
+  screenEl.classList.toggle('saber', !w95 && ELITE && id === 'saber');
   screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
 }
 function applyScreen() { screenStyle(); render(); }
@@ -4658,6 +4699,11 @@ w95ov.addEventListener('pointerdown', e => e.stopPropagation());
 w95ov.addEventListener('pointerup', e => e.stopPropagation());
 /* old Elite preview links (?ed=elite) now go to the real myPod Elite */
 if (!ELITE && new URLSearchParams(location.search).get('ed') === 'elite') location.replace('/elite/');
+/* the LG gift link: /elite/?ed=lg opens straight into Leif's edition (case + Blade screen), once */
+(() => {
+  if (!ELITE || new URLSearchParams(location.search).get('ed') !== 'lg') return;
+  if (!LS.get('edLG', false)) { LS.set('edLG', true); cfg.caseColor = 'lg'; cfg.screen = 'saber'; save(); }
+})();
 /* the gift link: myPod/?ed=jl opens straight into the JL Edition, and remembers it on the home screen too */
 (() => {
   const ed = new URLSearchParams(location.search).get('ed');
