@@ -1884,7 +1884,7 @@ async function loadIndex(i, autoplay) {
   if (tr.local) { if (!Local.loaded) await Local.load(); tr = Local.byId.get(tr.rk) || tr; }
   const seq = P.loadSeq = (P.loadSeq || 0) + 1;
   P.index = i; P.track = tr; P.time = 0; P.dur = (tr.dur || 0) / 1000; P.tx = false;
-  P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false;
+  P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false; P.started = false; P.kicked = false; P.loadAt = performance.now();
   if (tr.demo) { audio.pause(); P.demoMode = true; P.playing = autoplay; }
   else if (tr.local) {   /* a song saved on this phone */
     P.demoMode = false;
@@ -1930,8 +1930,9 @@ function endWatch() {
 }
 async function playFrom(v, i) {
   jlJoke();
-  const isLocal = !!(v.get?.(i)?.track?.local || v.get?.(i)?.track?.dav);
-  if (isLocal) unlockLocalAudio();
+  const t0 = v.get?.(i)?.track, isLocal = !!(t0?.local || t0?.dav);
+  /* unlock sound while we still have the tap, for every kind of song (iPhones block the first song otherwise) */
+  if (isLocal || (!remoteActive() && !t0?.demo && !isDemo())) unlockLocalAudio();
   if (remoteActive() && !isLocal) return remotePlay(v, i);
   P.view = v;
   if (await loadIndex(i, true)) { buildOrder(); openNowPlaying(); }
@@ -1996,9 +1997,17 @@ function toggle() {
     updateBar(); if (cur().kind === 'np') updateNP(); else render(); return;
   }
   if (P.demoMode) { P.playing = !P.playing; updateBar(); if (cur().kind === 'np') updateNP(); else render(); return; }
-  if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+  if (audio.paused) audio.play().catch(() => {});
+  else if (!P.started && !P.kicked) kickStart();   /* looks like it's playing but no sound yet: restart it instead of pausing */
+  else audio.pause();
 }
-audio.addEventListener('timeupdate', () => { P.time = audio.currentTime; if (cur().kind === 'np') updateNP(); });
+/* the first song sometimes says it's playing but never starts (iPhone, cold start): reload the stream and try again */
+function kickStart() {
+  P.kicked = true; P.loadAt = performance.now();
+  const src = audio.src; try { audio.load(); } catch {}
+  playRetry(src);
+}
+audio.addEventListener('timeupdate', () => { if (audio.currentTime > .15 && !audio.src.startsWith('data:')) P.started = true; P.time = audio.currentTime; if (cur().kind === 'np') updateNP(); });
 audio.addEventListener('durationchange', () => { if (isFinite(audio.duration)) P.dur = audio.duration; });
 audio.addEventListener('play', () => { P.playing = true; updateBar(); if (cur().kind !== 'np') render(); });
 audio.addEventListener('pause', () => { P.playing = false; updateBar(); if (cur().kind !== 'np') render(); });
@@ -2012,6 +2021,8 @@ audio.addEventListener('error', () => {
 setInterval(() => {
   if (P.demoMode && P.playing && P.track && !remoteActive()) { P.time += .25; if (P.time >= P.dur) { next(true); return; } }
   endWatch();
+  if (P.track && !P.demoMode && !P.started && !P.kicked && P.want && !audio.paused && audio.src && !audio.src.startsWith('data:') && !(remoteActive() && !P.track.local)
+      && performance.now() - P.loadAt > 4000) kickStart();
   if (cur().kind === 'np') updateNP();
   if (CF.open) cfUpdateNP();
 }, 250);
