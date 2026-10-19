@@ -2290,6 +2290,7 @@ function alphaView() {
     { label: 'Send Feedback', act: () => { document.querySelector('input[name="fbKind"][value="Bug"]').checked = true; showPanel('fb'); } },
     { label: 'Share an Idea', act: () => { document.querySelector('input[name="fbKind"][value="Idea"]').checked = true; showPanel('fb'); } },
     { label: 'What to Test', arrow: true, go: () => push(Page('What to Test', ALPHA_TEST)) },
+    { label: 'Buy BC a Record', act: () => { window.open('https://ownyourmedia.club/club/#tip', '_blank', 'noopener'); } },
     { label: 'Build', value: '1.4 Alpha' }
   ], { note: 'Thanks for testing! Your notes go straight to BC.', noteRows: 2 });
 }
