@@ -993,6 +993,20 @@ html.desk.dk-mini .dk-lcd{overflow:hidden}html.dk-pip .dk-lcd{overflow:hidden}
 
 @media (max-width:720px){html.desk.dk-mini .dk-vol{display:none}html.desk.dk-mini .dk-b{width:36px;height:36px}html.desk.dk-mini .dk-b.big{width:46px;height:46px}html.desk.dk-mini .dk-top{padding-left:12px;padding-right:12px}}
 @media (max-width:560px){html.dk-pip .dk-vol{display:none}}
+
+/* alpha feedback form */
+.panel textarea{font:inherit;padding:11px 12px;border-radius:9px;border:1px solid var(--line);background:var(--field);color:var(--ink);min-width:0;resize:vertical;min-height:120px}
+.panel textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.fb-kind{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.fb-kind label{position:relative;font-weight:600;cursor:pointer}
+.fb-kind input{position:absolute;opacity:0;pointer-events:none}
+.fb-kind span{display:inline-block;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--field)}
+.fb-kind input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.fb-kind input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.fb-dev{display:flex;gap:10px;align-items:flex-start;font-weight:400!important;color:var(--muted)}
+.fb-dev input{margin-top:5px;width:18px;height:18px;flex:none}
+.fb-to{color:var(--muted);font-size:15px}
+html.ed-elite .dk-side .dk-i{font-size:18px;letter-spacing:.04em}.dk-side .dk-i span{overflow:hidden;text-overflow:ellipsis}
 </style>
 
 </head>
@@ -1066,6 +1080,20 @@ html.desk.dk-mini .dk-lcd{overflow:hidden}html.dk-pip .dk-lcd{overflow:hidden}
       <label for="davPass">Password</label>
       <input id="davPass" type="password" autocomplete="current-password">
       <div class="btns"><button class="btn primary" type="submit">Connect</button></div>
+    </form>
+    <form id="fbForm" hidden autocomplete="off">
+      <div class="fb-kind" role="radiogroup" aria-label="What kind of feedback">
+        <label><input type="radio" name="fbKind" value="Bug" checked><span>Something broke</span></label>
+        <label><input type="radio" name="fbKind" value="Idea"><span>An idea</span></label>
+        <label><input type="radio" name="fbKind" value="Love"><span>I love this</span></label>
+      </div>
+      <label for="fbMsg" id="fbMsgL">What happened?</label>
+      <textarea id="fbMsg" rows="5" placeholder="What you were doing, what you expected, and what happened instead."></textarea>
+      <label for="fbName">Your name (optional)</label>
+      <input id="fbName" autocomplete="name">
+      <label class="fb-dev"><input type="checkbox" id="fbDev" checked><span>Include device details (phone or computer type, screen size, edition, settings)</span></label>
+      <div class="btns"><button class="btn primary" type="submit">Send to BC</button><button class="btn" type="button" id="fbCopy">Copy Note</button></div>
+      <p class="fb-to">Goes to <b>bc@runawayanchor.com</b></p>
     </form>
     <div class="btns"><button class="btn" id="pClose" type="button">Close</button></div>
   </section>
@@ -2241,11 +2269,27 @@ function mainMenu() {
       { label: 'Play On', arrow: true, go: () => push(playOnView()) },
       { label: 'Extras', arrow: true, go: () => push(extrasView()) },
       { label: 'Settings', arrow: true, go: () => push(settingsView()) },
+      { label: 'Alpha', arrow: true, go: () => push(alphaView()) },
       { label: 'Shuffle Songs', act: shuffleSongs }
     ];
     if (NPs()) a.push({ label: 'Now Playing', arrow: true, go: openNowPlaying });
     return a;
   }, { split: true });
+}
+const ALPHA_TEST = `<p>You're one of the first people using myPod. Thank you. Here's what BC most wants to hear about:</p>
+<h3>Playing music</h3><p>Does the first song start when you press play? Do songs move on by themselves, especially on a HomePod or Bluetooth speaker?</p>
+<h3>Ratings</h3><p>Rate a song here, then look for the same stars in Plexamp. Do they match?</p>
+<h3>Music on your phone</h3><p>Try Music › On This Phone › Add Music. Did your songs, names and album covers come through?</p>
+<h3>On a computer</h3><p>Try Desktop Mode, the Mini Player and the star ratings.</p>
+<h3>Anything else</h3><p>Confusing words, buttons that are hard to hit, text that's too small, things you wish it did. All of it helps.</p>
+<p>When you're ready, go back and choose <b>Send Feedback</b>.</p>`;
+function alphaView() {
+  return List('Alpha', [
+    { label: 'Send Feedback', act: () => { document.querySelector('input[name="fbKind"][value="Bug"]').checked = true; showPanel('fb'); } },
+    { label: 'Share an Idea', act: () => { document.querySelector('input[name="fbKind"][value="Idea"]').checked = true; showPanel('fb'); } },
+    { label: 'What to Test', arrow: true, go: () => push(Page('What to Test', ALPHA_TEST)) },
+    { label: 'Build', value: '1.4 Alpha' }
+  ], { note: 'Thanks for testing! Your notes go straight to BC.', noteRows: 2 });
 }
 function signInPrompt(title = 'Music') {
   return Message(title, 'Sign in to Plex to play your own music.', [
@@ -2384,15 +2428,56 @@ const panel = $('#panel'), pStatus = $('#pStatus'), pLink = $('#pLink'), pForm =
 let pinTimer = null;
 function showPanel(mode) {
   panel.hidden = false; clearInterval(pinTimer);
-  $('#pTitle').textContent = mode === 'token' ? 'Paste a Plex token' : mode === 'dav' ? 'Connect a network share' : 'Sign in to Plex';
-  pForm.hidden = mode !== 'token'; pLink.hidden = true; $('#dForm').hidden = mode !== 'dav';
+  $('#pTitle').textContent = mode === 'token' ? 'Paste a Plex token' : mode === 'dav' ? 'Connect a network share' : mode === 'fb' ? 'Alpha Feedback' : 'Sign in to Plex';
+  pForm.hidden = mode !== 'token'; pLink.hidden = true; $('#dForm').hidden = mode !== 'dav'; $('#fbForm').hidden = mode !== 'fb';
+  if (mode === 'fb') { pStatus.textContent = 'Thanks for testing! Tell BC what works, what breaks, and what you wish it did.';
+    $('#fbName').value = cfg.fbName || ''; fbKindUI(); setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30); setTimeout(() => $('#fbMsg').focus(), 80); return; }
   if (mode === 'dav') { const d = cfg.dav || {}; $('#davUrl').value = d.url || ''; $('#davUser').value = d.user || ''; $('#davPass').value = d.pass || '';
     pStatus.textContent = 'Your WebDAV server’s address, username and password. They stay on this device.'; setTimeout(() => $('#davUrl').focus(), 60); return; }
   pStatus.textContent = mode === 'token' ? 'In Plex Web, open any song’s ⋯ menu, choose Get Info, then View XML. Copy the X-Plex-Token value from the address bar.' : '';
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
   if (mode === 'token') setTimeout(() => $('#tokenIn').focus(), 60);
 }
-function hidePanel() { panel.hidden = true; clearInterval(pinTimer); $('#dForm').hidden = true; }
+function hidePanel() { panel.hidden = true; clearInterval(pinTimer); $('#dForm').hidden = true; $('#fbForm').hidden = true; }
+/* ---------- alpha feedback: written here, sent from the tester's own mail app ---------- */
+const FB_TO = 'bc@runawayanchor.com';
+function fbDevice() {
+  const ua = navigator.userAgent, s = NPs();
+  const dev = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : 'Other';
+  const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  return [`Edition: ${ELITE ? 'myPod Elite' : 'myPod'} 1.4 Alpha`, `Device: ${dev}${standalone ? ' (Home Screen app)' : ' (browser)'}`,
+    `Screen: ${screen.width}x${screen.height}, window ${innerWidth}x${innerHeight}`,
+    `View: ${typeof isDesk === 'function' && isDesk() ? 'Desktop Mode' : 'iPod'} · Case: ${caseOf(cfg.caseColor).name} · Screen style: ${screenName()}`,
+    `Music: ${isDemo() ? 'demo library' : cfg.token ? 'Plex (' + (cfg.server?.owned ? 'own server' : 'shared server') + ')' : 'not signed in'}${ELITE && DAV.on ? ' + network share' : ''}`,
+    `Playing: ${s ? (s.remote ? 'on ' + cfg.target.name : AIR.wireless ? 'AirPlay/Bluetooth' : 'this device') : 'nothing'}`,
+    `Browser: ${ua}`].join('\n');
+}
+function fbText() {
+  const kind = (document.querySelector('input[name="fbKind"]:checked') || {}).value || 'Note';
+  const msg = $('#fbMsg').value.trim(), name = $('#fbName').value.trim();
+  const subject = `myPod Alpha: ${kind === 'Bug' ? 'Something broke' : kind === 'Idea' ? 'An idea' : 'I love this'}${name ? ' (' + name + ')' : ''}`;
+  const body = msg + (name ? `\n\n— ${name}` : '') + ($('#fbDev').checked ? `\n\n---\n${fbDevice()}` : '');
+  return { subject, body, msg };
+}
+$('#fbForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = fbText(); if (!f.msg) { pStatus.textContent = 'Write a few words first, then press Send.'; $('#fbMsg').focus(); return; }
+  cfg.fbName = $('#fbName').value.trim(); save();
+  location.href = `mailto:${FB_TO}?subject=${encodeURIComponent(f.subject)}&body=${encodeURIComponent(f.body)}`;
+  pStatus.textContent = `Your mail app should open with the note ready. Press Send there. No mail app? Press Copy Note and email it to ${FB_TO}.`;
+});
+function fbKindUI() {
+  const k = (document.querySelector('input[name="fbKind"]:checked') || {}).value;
+  $('#fbMsgL').textContent = k === 'Idea' ? 'What’s your idea?' : k === 'Love' ? 'What do you love?' : 'What happened?';
+  $('#fbMsg').placeholder = k === 'Idea' ? 'What would make myPod better for you?' : k === 'Love' ? 'Tell BC what made you smile.' : 'What you were doing, what you expected, and what happened instead.';
+}
+document.querySelectorAll('input[name="fbKind"]').forEach(r => r.addEventListener('change', fbKindUI));
+$('#fbCopy').addEventListener('click', async () => {
+  const f = fbText(); if (!f.msg) { pStatus.textContent = 'Write a few words first.'; return; }
+  const txt = `To: ${FB_TO}\nSubject: ${f.subject}\n\n${f.body}`;
+  try { await navigator.clipboard.writeText(txt); pStatus.textContent = `Copied. Paste it into an email to ${FB_TO}.`; }
+  catch { $('#fbMsg').select(); pStatus.textContent = `Couldn't copy automatically. Select the text and email it to ${FB_TO}.`; }
+});
 $('#dForm').addEventListener('submit', async e => {
   e.preventDefault();
   const url = $('#davUrl').value.trim(); if (!url) return;
@@ -4591,6 +4676,7 @@ const DK_ICONS = {
   'Play On': '<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><circle cx="12" cy="14" r="3.6"/><circle cx="12" cy="6.4" r="1"/>',
   'Extras': '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
   'Settings': '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+  'Alpha': '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/>',
   'Shuffle Songs': '<path d="M3 7h4c4 0 6 10 10 10h4M3 17h4c1.6 0 2.8-1.6 3.8-3.4M14.2 10.4C15.2 8.6 16.4 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',
   'Now Playing': '<path d="M4 9v6M8 6v12M12 3v18M16 7v10M20 10v4"/>'
 };
@@ -4599,7 +4685,7 @@ const DK = { line: 0, remain: true, t: 0, mini: false, pip: null };
 const DKE = {}; ['dkItems','dkLcd','dkPP','dkL1','dkL2','dkT1','dkT2','dkFill','dkArt','dkName','dkFoot','dkTrk','dkVol','dkTop','dkSide','dkMini','dkCol','dkStars'].forEach(id => { DKE[id] = document.getElementById(id); });
 function deskItems() {
   const box = DKE.dkItems; if (!box) return;
-  const labels = ['Music', 'Videos', 'Play On', 'Extras', 'Settings', 'Shuffle Songs'];
+  const labels = ['Music', 'Videos', 'Play On', 'Extras', 'Settings', 'Alpha', 'Shuffle Songs'];
   if (NPs()) labels.push('Now Playing');
   const key = labels.join('|'); if (box.dataset.k === key) return; box.dataset.k = key;
   box.innerHTML = labels.map(l => `<button class="dk-i" type="button" data-go="${l}"><svg viewBox="0 0 24 24">${DK_ICONS[l]}</svg><span>${l}</span></button>`).join('');

@@ -91,6 +91,8 @@ dl.terms .path{white-space:normal}
 
 /* figures: little iPod screens */
 figure{margin:22px 0}
+img.shot.el-only{display:none}html.elite img.shot.el-only{display:block}html.elite img.shot.std-only{display:none}
+img.shot{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08)}
 figcaption{font-size:15px;color:var(--gray);margin-top:8px;text-align:center}
 .lcd{width:min(300px,100%);margin:0 auto;border:9px solid #26282b;border-radius:6px;background:#fff;overflow:hidden;font-weight:600;font-size:17px;box-shadow:0 1px 0 #fff,0 10px 30px -14px rgba(0,0,0,.45)}
 .lcd-bar{display:grid;grid-template-columns:1.6em 1fr 1.6em;align-items:center;padding:4px 8px;background:linear-gradient(#fefefe,#d5d8dd);border-bottom:1px solid #8c939b;font-weight:700;text-align:center}
@@ -310,8 +312,10 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <li><a href="#playon"><span>7</span>Play On Another Speaker</a></li>
       <li><a href="#extras"><span>8</span>Extras</a></li>
       <li><a href="#settings"><span>9</span>Settings</a></li>
-      <li><a href="#elite"><span>10</span>myPod Elite</a></li>
-      <li><a href="#help"><span>11</span>Tips and Troubleshooting</a></li>
+      <li><a href="#desktop"><span>10</span>Desktop Mode</a></li>
+      <li><a href="#elite"><span>11</span>myPod Elite</a></li>
+      <li><a href="#alpha"><span>12</span>Alpha Testing</a></li>
+      <li><a href="#help"><span>13</span>Tips and Troubleshooting</a></li>
     </ol>
   </nav>
 
@@ -509,7 +513,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p class="num">Chapter 9</p>
     <h2>Settings</h2>
     <h3>Desktop Mode</h3>
-    <p>On a computer, choose <b>Switch to Desktop Mode</b> under myPod, or <span class="path">Settings › Desktop Mode</span>. myPod becomes a jukebox window made for a mouse: play, pause and skip buttons at the top, a display that shows the song, lets you click the bar to jump ahead, and has five stars to rate the song with one click, a volume slider, and a Library list down the side. Click any row to open it, and scroll with your mouse. The arrow at the top of the Library list hides it for a wider view. The <b>Mini Player</b> button (or the yellow button in the corner) shrinks myPod to just the controls, the song display and volume. In Chrome and Edge it floats in its own small window above everything else. Click the red button in the corner to go back to the iPod. Desktop Mode needs a large window, so it never shows on a phone.</p>
+    <p>On a computer, myPod can become a jukebox window built for a mouse. See <a href="#desktop">Chapter 10</a>.</p>
     <h3>Case</h3>
     <p>Fourteen finishes, including a Zune-style brown with a rounded-square pad the <b>BC Edition</b> (a clear amber-to-red shell, black wheel, red center and a polished red back), and the <b>JL Edition</b>, a beige 1995 desktop PC in your hand. Scroll the list to preview each one on your myPod, press the center to keep it.</p>
     <ul class="swatches">
@@ -550,8 +554,41 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     </dl>
   </section>
 
-  <section class="ch" id="elite">
+  <section class="ch" id="desktop">
     <p class="num">Chapter 10</p>
+    <h2>Desktop Mode</h2>
+    <p class="lead">On a computer, myPod turns into a jukebox window built for a mouse. There’s no click wheel to drag. Everything is a click.</p>
+    <figure><img class="shot el-only" src="guide-desktop-elite.jpg" alt="myPod Elite in Desktop Mode, in starship colors"><img class="shot std-only" src="guide-desktop.jpg" alt="myPod in Desktop Mode: play controls and song display across the top, the Library list on the left, songs in the middle"><figcaption><span class="std-only">Desktop Mode. Elite gets the same window in starship colors.</span><span class="el-only">Desktop Mode, Starship edition.</span></figcaption></figure>
+    <h3>Turn it on</h3>
+    <ol class="steps">
+      <li>Open myPod in a browser on your computer.</li>
+      <li>Click <b>Switch to Desktop Mode</b> under the iPod, or go to <span class="path">Settings › Desktop Mode</span>.</li>
+      <li>myPod remembers your choice. Next time it opens straight to the jukebox.</li>
+    </ol>
+    <h3>What’s on the screen</h3>
+    <dl class="terms">
+      <div><dt>Play buttons</dt><dd>Previous, play or pause, and next, at the top left.</dd></div>
+      <div><dt>Song display</dt><dd>The song, artist and a progress bar. Click the bar to jump ahead. Click the artist to switch to the album name. Click the time to switch between time left and total time.</dd></div>
+      <div><dt>Stars</dt><dd>Five stars at the right end of the song display. Click one to rate the song. Click the same star again to take one away.</dd></div>
+      <div><dt>Volume</dt><dd>The slider at the top right.</dd></div>
+      <div><dt>Library</dt><dd>Music, Videos, Play On, Extras, Settings, Alpha and Shuffle Songs down the left side. The album cover at the bottom opens Now Playing.</dd></div>
+      <div><dt>Hide the Library</dt><dd>Click the arrow next to LIBRARY to fold the list away for a wider view. Click it again to bring it back.</dd></div>
+      <div><dt>Lists</dt><dd>Click any row to open it. Scroll with your mouse. Click the title bar to go back.</dd></div>
+    </dl>
+    <h3>The Mini Player</h3>
+    <figure><img class="shot el-only" src="guide-mini-elite.png" alt="The Elite Mini Player"><img class="shot std-only" src="guide-mini.png" alt="The Mini Player: play controls, song display with stars, and volume in one small bar"><figcaption>Just the controls, the song and the volume.</figcaption></figure>
+    <p>Click the <b>Mini Player</b> button next to the volume slider, or the yellow button in the corner. In Chrome and Edge, the Mini Player floats in its own small window above everything else. Close it, or click <b>Bring it back</b>, to return to the full window. In Safari and Firefox, the window shrinks to just the control bar. Click the button again for the full player.</p>
+    <h3>Corner buttons</h3>
+    <dl class="terms">
+      <div><dt>Red</dt><dd>Back to the iPod.</dd></div>
+      <div><dt>Yellow</dt><dd>Mini Player.</dd></div>
+      <div><dt>Green</dt><dd>Full screen.</dd></div>
+    </dl>
+    <div class="note"><b>Good to know:</b> Desktop Mode works in any window bigger than about a quarter of a large monitor. Make the window too small and myPod switches back to the iPod on its own, then returns when there’s room again. The Mini Player can go as small as you like.</div>
+  </section>
+
+  <section class="ch" id="elite">
+    <p class="num">Chapter 11</p>
     <h2>myPod <em>Elite</em></h2>
     <p class="lead">Want extras like playing music straight from your own network share? myPod Elite is for you. It’s the same myPod with features that take a little setup, for people who like to tinker.</p>
     <dl class="terms">
@@ -575,8 +612,23 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <div class="note"><b>Good to know:</b> each song downloads fully before it plays, which is quick on a home network. Folders laid out as Artist › Album, with a cover.jpg in each album folder, look best. Elite’s <span class="path">Network Share › Setup Help</span> has the details for other servers.</div>
   </section>
 
+  <section class="ch" id="alpha">
+    <p class="num">Chapter 12</p>
+    <h2>Alpha Testing</h2>
+    <p class="lead">myPod is brand new, and you’re one of its first testers. Thank you. Your notes go straight to BC.</p>
+    <h3>Send feedback</h3>
+    <ol class="steps">
+      <li>Go to <span class="path">Alpha › Send Feedback</span>, or <span class="path">Alpha › Share an Idea</span>.</li>
+      <li>Pick <b>Something broke</b>, <b>An idea</b> or <b>I love this</b>, and write a few words.</li>
+      <li>Press <b>Send to BC</b>. Your mail app opens with the note ready. Press Send there.</li>
+    </ol>
+    <div class="note"><b>No mail app on your computer?</b> Press <b>Copy Note</b> and paste it into an email to bc@runawayanchor.com. Leave <b>Include device details</b> checked when something breaks. It tells BC what you were using, which makes the problem much easier to find.</div>
+    <h3>What to test</h3>
+    <p><span class="path">Alpha › What to Test</span> lists what BC most wants to hear about right now.</p>
+  </section>
+
   <section class="ch" id="help">
-    <p class="num">Chapter 11</p>
+    <p class="num">Chapter 13</p>
     <h2>Tips and Troubleshooting</h2>
     <dl class="terms">
       <div><dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex. Then try <span class="path">Settings › Plex › Reconnect</span>.</dd></div>
