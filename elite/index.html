@@ -931,6 +931,43 @@ html.ed-elite .dk-art{background:#14161a;box-shadow:0 0 0 2px #e7b24a;color:#999
 html.desk.ed-elite .bezel{background:#5b616a}
 html.ed-elite .dk-foot{color:#9999ff;text-shadow:none;font-family:Antonio,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.18em}
 @media (max-height:640px),(max-width:980px){html.desk .stage{padding:8px}html.desk .podwrap{width:calc(100vw - 16px);height:calc(100vh - 16px)}html.desk .dk-top{padding:2px 14px 10px;gap:14px}html.desk .dk-foot{display:none}html.desk .dk-side{margin-bottom:14px}html.desk .bezel{margin-bottom:14px}html.desk .pod{grid-template-columns:210px minmax(0,1fr)}html.desk .dk-art{display:none}html.desk .dk-side .dk-i{font-size:17px;padding:8px 14px}html.desk.ed-elite .dk-side .dk-i{font-size:17px;padding:5px 12px;margin-bottom:5px}html.desk .dk-b{width:40px;height:40px}html.desk .dk-b.big{width:50px;height:50px}html.desk .dk-lcd{height:66px;padding-top:6px}}
+
+/* hide the Library list */
+.dk-h{display:flex;align-items:center;justify-content:space-between}
+.dk-col{display:grid;place-items:center;width:30px;height:30px;margin:-6px -8px -6px 0;border:0;border-radius:50%;background:none;cursor:pointer;color:#5a6573}
+.dk-col:hover{background:rgba(61,115,201,.14)}
+.dk-col svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+html.desk.dk-noside .pod{grid-template-columns:48px minmax(0,1fr)}
+html.dk-noside .dk-side .dk-h{padding:10px 0;justify-content:center}
+html.dk-noside .dk-side .dk-h span,html.dk-noside #dkItems,html.dk-noside .dk-art{display:none}
+html.dk-noside .dk-col{margin:0}
+html.dk-noside .dk-col svg{transform:rotate(180deg)}
+html.ed-elite .dk-col{color:#9999ff}html.ed-elite .dk-col:hover{background:rgba(153,153,255,.18)}
+/* mini player button */
+.dk-b.sm{width:38px;height:38px}.dk-b.sm svg{width:20px;height:20px}
+/* Mini Player inside the page (browsers without a floating mini window) */
+html.desk.dk-mini .podwrap{height:auto;width:min(760px,calc(100vw - 32px))}
+html.desk.dk-mini .pod{position:relative;grid-template-rows:auto auto}
+html.desk.dk-mini .dk-side,html.desk.dk-mini .bezel,html.desk.dk-mini .dk-foot{display:none}
+html.desk.dk-mini .dk-top{padding-bottom:14px}
+html.desk.dk-mini .stage{justify-content:flex-start}
+/* the floating mini window (Chrome and Edge) */
+html.dk-pip,html.dk-pip body{margin:0;height:100%;overflow:hidden}
+html.dk-pip body{background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,.035) 1px 2px,rgba(255,255,255,0) 2px 4px),linear-gradient(#e4e7ea,#c3c8ce 60%,#b4bac1)}
+html.dk-pip.ed-elite body{background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(170deg,#41464f,#2a2e35 45%,#17191d)}
+html.dk-pip .dk-top{display:grid;height:100%;box-sizing:border-box;padding:10px 14px;gap:12px;align-content:center}
+html.dk-pip .dk-b{width:38px;height:38px}html.dk-pip .dk-b.big{width:48px;height:48px}html.dk-pip .dk-b svg{width:18px;height:18px}
+html.dk-pip .dk-lcd{height:64px;padding-top:6px}
+html.dk-pip .dk-vol input{width:80px}
+.dk-pipnote{display:none}
+html.desk.dk-pipon .dk-pipnote{display:flex;grid-column:1/3;align-items:center;justify-content:center;gap:12px;height:74px;margin:0 20px 16px;border-radius:14px;
+  font:600 17px var(--f-ui);color:#3b4148;background:rgba(255,255,255,.35);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+html.desk.ed-elite.dk-pipon .dk-pipnote{color:#ffcc99;background:rgba(0,0,0,.35);font-family:Antonio,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.dk-pipnote button{font:inherit;font-size:15px;padding:6px 14px;border-radius:999px;border:1px solid currentColor;background:none;color:inherit;cursor:pointer}
+
+/* Now Playing stays a comfortable size in a wide window */
+html.desk .screen .np{container-type:size;left:0;right:0;margin:0 auto;width:min(100%,640px);padding:18px 26px 22px}
+html.desk .console .np{left:86px}
 </style>
 
 </head>
@@ -938,14 +975,15 @@ html.ed-elite .dk-foot{color:#9999ff;text-shadow:none;font-family:Antonio,"Arial
 <main class="stage">
   <div class="podwrap" id="podwrap"><div class="podflip" id="podflip">
   <div class="pod white" id="pod">
-    <div class="dk-title" id="dkTitle"><span class="dk-lights"><button class="r" type="button" data-dk="exit" title="Back to the iPod" aria-label="Leave Desktop Mode"></button><button class="y" type="button" data-dk="mini" title="Back to the iPod" aria-label="Leave Desktop Mode"></button><button class="g" type="button" data-dk="full" title="Full screen" aria-label="Full screen"></button></span><b id="dkName">myPod</b><span></span></div>
+    <div class="dk-title" id="dkTitle"><span class="dk-lights"><button class="r" type="button" data-dk="exit" title="Back to the iPod" aria-label="Leave Desktop Mode"></button><button class="y" type="button" data-dk="mini" title="Mini Player" aria-label="Mini Player"></button><button class="g" type="button" data-dk="full" title="Full screen" aria-label="Full screen"></button></span><b id="dkName">myPod</b><span></span></div>
     <div class="dk-top" id="dkTop">
       <div class="dk-tp"><button class="dk-b" type="button" data-dk="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button class="dk-b big" type="button" data-dk="play" id="dkPP" aria-label="Play or pause"></button><button class="dk-b" type="button" data-dk="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button></div>
       <div class="dk-lcd idle" id="dkLcd"><div class="dk-l1" id="dkL1">myPod</div><div class="dk-l2" id="dkL2" title="Click to switch artist and album">Pick something to play</div>
         <div class="dk-prog"><span id="dkT1">0:00</span><div class="dk-trk" id="dkTrk" title="Click to jump"><i id="dkFill"></i></div><span id="dkT2" title="Click to switch time left and total time">-0:00</span></div></div>
-      <div class="dk-rt"><label class="dk-vol"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="range" id="dkVol" min="0" max="1" step="0.02" aria-label="Volume"></label></div>
+      <div class="dk-rt"><button class="dk-b sm" type="button" data-dk="mini" id="dkMini" title="Mini Player" aria-label="Mini Player"><svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11.5" y="11.5" width="8" height="6" rx="1"/></svg></button><label class="dk-vol"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="range" id="dkVol" min="0" max="1" step="0.02" aria-label="Volume"></label></div>
     </div>
-    <nav class="dk-side" id="dkSide" aria-label="Library"><div class="dk-h">LIBRARY</div><div id="dkItems"></div><div class="dk-sp"></div><div class="dk-art" id="dkArt" title="Now Playing">No song playing</div></nav>
+    <div class="dk-pipnote" id="dkPipNote">Playing in the Mini Player<button type="button" data-dk="unpip">Bring it back</button></div>
+    <nav class="dk-side" id="dkSide" aria-label="Library"><div class="dk-h"><span>LIBRARY</span><button class="dk-col" type="button" data-dk="side" id="dkCol" title="Hide the Library list" aria-label="Hide the Library list"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="dkItems"></div><div class="dk-sp"></div><div class="dk-art" id="dkArt" title="Now Playing">No song playing</div></nav>
     <div class="bezel">
       <div class="screen big" id="screen" role="application" aria-label="iPod screen">
         <div class="bar"><span class="bar-l" id="barL"></span><span class="bar-t" id="barT">myPod</span><span class="bar-r" id="barR"></span></div>
@@ -4532,9 +4570,10 @@ const DK_ICONS = {
   'Now Playing': '<path d="M4 9v6M8 6v12M12 3v18M16 7v10M20 10v4"/>'
 };
 const DK_PLAY = '<svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></svg>', DK_PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"/></svg>';
-const DK = { line: 0, remain: true, t: 0 };
+const DK = { line: 0, remain: true, t: 0, mini: false, pip: null };
+const DKE = {}; ['dkItems','dkLcd','dkPP','dkL1','dkL2','dkT1','dkT2','dkFill','dkArt','dkName','dkFoot','dkTrk','dkVol','dkTop','dkSide','dkMini','dkCol'].forEach(id => { DKE[id] = document.getElementById(id); });
 function deskItems() {
-  const box = $('#dkItems'); if (!box) return;
+  const box = DKE.dkItems; if (!box) return;
   const labels = ['Music', 'Videos', 'Play On', 'Extras', 'Settings', 'Shuffle Songs'];
   if (NPs()) labels.push('Now Playing');
   const key = labels.join('|'); if (box.dataset.k === key) return; box.dataset.k = key;
@@ -4557,58 +4596,99 @@ function deskSeek(frac) {
   deskTick();
 }
 function deskTick() {
-  if (!isDesk()) return;
+  if (!isDesk() && !DK.pip) return;
   deskItems();
-  const s = NPs(), lcd = $('#dkLcd');
-  $('#dkPP').innerHTML = s && s.playing ? DK_PAUSE : DK_PLAY;
+  const s = NPs(), lcd = DKE.dkLcd;
+  DKE.dkPP.innerHTML = s && s.playing ? DK_PAUSE : DK_PLAY;
   lcd.classList.toggle('idle', !s);
-  if (!s) { $('#dkL1').textContent = ELITE ? 'myPod Elite' : 'myPod'; $('#dkL2').textContent = 'Pick something to play'; }
+  if (!s) { DKE.dkL1.textContent = ELITE ? 'myPod Elite' : 'myPod'; DKE.dkL2.textContent = 'Pick something to play'; }
   else {
-    const t = s.track; $('#dkL1').textContent = t.title || '';
-    const alt = [t.artist, t.album].filter(Boolean); $('#dkL2').textContent = (alt.length ? alt[DK.line % alt.length] : '') + (s.remote ? `  ·  on ${cfg.target.name}` : '');
+    const t = s.track; DKE.dkL1.textContent = t.title || '';
+    const alt = [t.artist, t.album].filter(Boolean); DKE.dkL2.textContent = (alt.length ? alt[DK.line % alt.length] : '') + (s.remote ? `  ·  on ${cfg.target.name}` : '');
     const d = s.dur || 0, tm = Math.min(s.time || 0, d || Infinity);
-    $('#dkT1').textContent = fmt(tm); $('#dkT2').textContent = DK.remain ? '-' + fmt(Math.max(0, d - tm)) : fmt(d);
-    $('#dkFill').style.width = (d ? tm / d * 100 : 0) + '%';
+    DKE.dkT1.textContent = fmt(tm); DKE.dkT2.textContent = DK.remain ? '-' + fmt(Math.max(0, d - tm)) : fmt(d);
+    DKE.dkFill.style.width = (d ? tm / d * 100 : 0) + '%';
   }
-  const artEl = $('#dkArt'), a = s ? art(s.track.thumb, 400) : null;
+  const artEl = DKE.dkArt, a = s ? art(s.track.thumb, 400) : null;
   if (artEl.dataset.src !== (a || '')) { artEl.dataset.src = a || '';
     artEl.innerHTML = a ? `<img alt="" src="${esc(a)}" onerror="this.remove()">` : (s ? '' : 'No song playing'); }
   const v = cur(), top = stack[1];
   const on = v?.kind === 'np' ? 'Now Playing' : top ? top.title : '';
-  document.querySelectorAll('.dk-i').forEach(b => b.classList.toggle('on', b.dataset.go === on));
+  DKE.dkItems.querySelectorAll('.dk-i').forEach(b => b.classList.toggle('on', b.dataset.go === on));
 }
 function applyDesk() {
-  const on = !!cfg.desk && deskOK(), root = document.documentElement;
+  const on = !!cfg.desk && (deskOK() || DK.mini), root = document.documentElement;
   root.classList.toggle('ed-elite', ELITE);
   $('#dkOn').hidden = on || !deskOK();
   if (on === isDesk()) { deskTick(); return; }
   if (on && isFlipped()) flipPod(1);
   if (on && CF.open) cfClose();
+  if (!on && DK.mini) { DK.mini = false; root.classList.remove('dk-mini'); miniIcon(); }
   root.classList.toggle('desk', on);
-  $('#dkName').textContent = ELITE ? 'myPod Elite · Musaka Edition' : 'myPod';
-  $('#dkFoot').textContent = ELITE ? 'Own your media. Make it so.' : 'Own your media.';
-  $('#dkItems').dataset.k = '';
+  DKE.dkName.textContent = ELITE ? 'myPod Elite · Musaka Edition' : 'myPod';
+  DKE.dkFoot.textContent = ELITE ? 'Own your media. Make it so.' : 'Own your media.';
+  DKE.dkItems.dataset.k = '';
   layout(); vPlace(); deskTick();
 }
 function setDesk(on) { cfg.desk = on; save(); applyDesk(); if (cur()?.title === 'Settings') render(); }
 $('#dkOn').addEventListener('click', e => { e.currentTarget.blur(); setDesk(true); });
-$('#pod').addEventListener('click', e => {
-  if (!isDesk()) return;
+function deskClick(e) {
+  if (!isDesk() && !DK.pip) return;
   const g = e.target.closest('[data-go]'); if (g) { g.blur(); deskGo(g.dataset.go); deskTick(); return; }
   const b = e.target.closest('[data-dk]'); if (!b) return; b.blur();
   const k = b.dataset.dk;
-  if (k === 'exit' || k === 'mini') { click(); setDesk(false); return; }
-  if (k === 'full') { click(); try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch {} return; }
+  if (k === 'exit') { click(); if (DK.pip) DK.pip.close(); setMini(false); setDesk(false); return; }
+  if (k === 'mini') { click(); if (DK.pip) DK.pip.close(); else setMini(!DK.mini); return; }
+  if (k === 'unpip') { click(); if (DK.pip) DK.pip.close(); return; }
+  if (k === 'side') { click(); cfg.dkSide = cfg.dkSide === false; save(); applySide(); return; }
+  if (k === 'full') { click(); if (DK.mini) { setMini(false); return; } try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch {} return; }
   if (k === 'play' || k === 'next' || k === 'prev') { if (cur().kind === 'game' || cur().kind === 'video') { press(k); } else { click(); if (k === 'play') toggle(); else if (k === 'next') next(); else prev(); } setTimeout(deskTick, 60); }
-});
-$('#dkTrk').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); deskSeek((e.clientX - r.left) / r.width); });
-$('#dkT2').addEventListener('click', () => { DK.remain = !DK.remain; deskTick(); });
-$('#dkL2').addEventListener('click', () => { DK.line++; deskTick(); });
-$('#dkArt').addEventListener('click', () => { if (NPs()) { click(); openNowPlaying(); deskTick(); } });
-{ const vol = $('#dkVol'); const v0 = cfg.vol == null ? 1 : cfg.vol; vol.value = v0; try { audio.volume = v0; } catch {}
+}
+$('#pod').addEventListener('click', deskClick);
+function applySide() {
+  const off = cfg.dkSide === false;
+  document.documentElement.classList.toggle('dk-noside', off);
+  const t = off ? 'Show the Library list' : 'Hide the Library list'; DKE.dkCol.title = t; DKE.dkCol.setAttribute('aria-label', t);
+  layout();
+}
+function miniIcon() {
+  const on = DK.mini || !!DK.pip;
+  DKE.dkMini.title = on ? 'Full Player' : 'Mini Player'; DKE.dkMini.setAttribute('aria-label', DKE.dkMini.title);
+  DKE.dkMini.innerHTML = on ? '<svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/></svg>'
+    : '<svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11.5" y="11.5" width="8" height="6" rx="1"/></svg>';
+}
+/* Mini Player: a small always-on-top window where the browser allows it (Chrome, Edge); otherwise the window shrinks to its top bar */
+async function setMini(on) {
+  if (on && !DK.mini && !DK.pip && 'documentPictureInPicture' in window) {
+    try {
+      const pip = await documentPictureInPicture.requestWindow({ width: 640, height: 112 });
+      const d = pip.document;
+      document.querySelectorAll('style,link[rel="stylesheet"]').forEach(n => d.head.appendChild(n.cloneNode(true)));
+      d.title = ELITE ? 'myPod Elite' : 'myPod';
+      d.documentElement.className = 'desk dk-pip' + (ELITE ? ' ed-elite' : '');
+      d.body.appendChild(DKE.dkTop);
+      d.addEventListener('click', deskClick);
+      d.addEventListener('keydown', e => { if (e.key === ' ' && !e.target.closest('input')) { e.preventDefault(); toggle(); deskTick(); } });
+      DK.pip = pip; document.documentElement.classList.add('dk-pipon'); miniIcon();
+      pip.addEventListener('pagehide', () => {
+        DKE.dkSide.parentNode.insertBefore(DKE.dkTop, DKE.dkSide.previousElementSibling);
+        DK.pip = null; document.documentElement.classList.remove('dk-pipon'); miniIcon(); deskTick();
+      });
+      deskTick(); return;
+    } catch {}
+  }
+  DK.mini = !!on && !DK.pip;
+  document.documentElement.classList.toggle('dk-mini', DK.mini);
+  miniIcon(); applyDesk(); layout(); deskTick();
+}
+DKE.dkTrk.addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); deskSeek((e.clientX - r.left) / r.width); });
+DKE.dkT2.addEventListener('click', () => { DK.remain = !DK.remain; deskTick(); });
+DKE.dkL2.addEventListener('click', () => { DK.line++; deskTick(); });
+DKE.dkArt.addEventListener('click', () => { if (NPs()) { click(); openNowPlaying(); deskTick(); } });
+{ const vol = DKE.dkVol; const v0 = cfg.vol == null ? 1 : cfg.vol; vol.value = v0; try { audio.volume = v0; } catch {}
   vol.addEventListener('input', () => { const x = +vol.value; try { audio.volume = x; if (typeof vEl !== 'undefined') vEl.volume = x; } catch {} cfg.vol = x; save(); }); }
 try { deskQ.addEventListener('change', applyDesk); } catch { try { deskQ.addListener(applyDesk); } catch {} }
-setInterval(() => { if (isDesk() && !document.hidden) deskTick(); }, 250);
+setInterval(() => { if ((isDesk() && !document.hidden) || DK.pip) deskTick(); }, 250);
 
 /* ---------- start ---------- */
 applyCase();
@@ -4618,6 +4698,7 @@ Local.load().then(() => render()).catch(() => {});
 if (!LS.get('seenHelp', false)) { stack.push(Page('How to Use', HELP)); LS.set('seenHelp', true); }
 new ResizeObserver(() => layout()).observe(screenEl);
 layout();
+applySide();
 applyDesk();
 if (JL.bootOnStart) w95boot();
 if (cfg.token && !cfg.server) discover().then(() => render()).catch(() => {});
