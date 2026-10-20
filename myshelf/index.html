@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myShelf</title>
+<meta name="theme-color" content="#141c2e">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* APP_VERSION: 2.4.7 — TV GUIDE SCROLL FIX */
+
+  /* ── TOKENS ── */
+  :root {
+    /* Light mode — warm linen */
+    --bg:         #ede8df;
+    --bg-mid:     #e4ddd3;
+    --bg-soft:    #d9d2c7;
+    --bg-card:    #f5f1eb;
+    --bg-header:  #141c2e;
+    --navy:       #141c2e;
+    --navy-mid:   #1e2d44;
+    --blue:       #4a7fa5;
+    --blue-light: #6b9fc0;
+    --blue-dim:   #3a6480;
+    --amber:      #c4935a;
+    --amber-dim:  #a07040;
+    --text:       #1a2035;
+    --text-mid:   #4a4538;
+    --text-muted: #8a7f72;
+    --text-dim:   #b0a898;
+    --border:     #d4cdc2;
+    --border-mid: #c4bcb0;
+    --shadow:     rgba(26,32,53,0.08);
+    --shadow-md:  rgba(26,32,53,0.14);
+    /* Format colors — muted to match warm palette */
+    --c-vinyl:   #b85c5c;
+    --c-cd:      #4a7fa5;
+    --c-bluray:  #3a8a7a;
+    --c-dvd:     #7a5a9a;
+    --c-vhs:     #4a8a5a;
+    --c-books:   #c4935a;
+    --c-orange:  #c4935a;
+    --c-red:     #b85c5c;
+    --c-blue:    #4a7fa5;
+    --c-teal:    #3a8a7a;
+    --c-purple:  #7a5a9a;
+    --c-green:   #4a8a5a;
+    --radius:    6px;
+    --radius-lg: 10px;
+    --transition: 0.18s ease;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  :root.dark {
+    --bg:         #141c2e;
+    --bg-mid:     #1a2438;
+    --bg-soft:    #1e2d44;
+    --bg-card:    #1e2d44;
+    --bg-header:  #0f1520;
+    --blue:       #6b9fc0;
+    --blue-light: #8ab8d0;
+    --blue-dim:   #4a7fa5;
+    --text:       #e8e4de;
+    --text-mid:   #b8b0a4;
+    --text-muted: #8a8278;
+    --text-dim:   #5a5650;
+    --border:     #2a3a52;
+    --border-mid: #344460;
+    --shadow:     rgba(0,0,0,0.3);
+    --shadow-md:  rgba(0,0,0,0.5);
+  }
+
+  /* ── RESET ── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 200%; }
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: clip;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ── GATE (sign in / set up) ── */
+  #gate {
+    position: fixed; inset: 0;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: flex-start;
+    flex-direction: column; gap: 1.1em;
+    z-index: 1000; overflow-y: auto; padding: 2em 1.25em;
+    transition: opacity 0.5s ease;
+    font-size: 18px;
+  }
+  #gate.hidden { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s ease, visibility 0s linear 0.5s; }
+  #gate > :first-child { margin-top: auto; }
+  #gate > :last-child { margin-bottom: auto; }
+  .gate-logo { width: 112px; height: 112px; border-radius: 50%; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .gate-title {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 2.6em; color: #e8e4de; letter-spacing: -0.01em;
+    text-align: center; line-height: 1.1;
+  }
+  .gate-sub {
+    font-family: var(--font-body); font-size: 0.8em;
+    color: rgba(232,228,222,0.7); letter-spacing: 0.18em;
+    text-transform: uppercase; text-align: center;
+  }
+  .gate-form { display: flex; flex-direction: column; gap: 0.7em; width: min(320px, 100%); margin-top: 0.5em; }
+  .gate-form[hidden] { display: none; }
+  .gate-head { font-family: var(--font-display); font-size: 1.35em; color: #e8e4de; text-align: center; margin: 0 0 0.2em; }
+  .gate-note { font-size: 0.9em; color: rgba(232,228,222,0.78); text-align: center; line-height: 1.45; margin: 0; }
+  .gate-label { font-size: 0.85em; color: rgba(232,228,222,0.85); margin-bottom: -0.35em; }
+  .gate-input {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: var(--radius);
+    color: #e8e4de; font-family: var(--font-body);
+    font-size: 1em; padding: 0.8em 0.9em; width: 100%; box-sizing: border-box;
+    outline: none; transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .gate-input::placeholder { color: rgba(232,228,222,0.45); }
+  .gate-input:focus { border-color: var(--blue-light); box-shadow: 0 0 0 3px rgba(107,159,192,0.25); }
+  .gate-enter-btn {
+    background: var(--blue); color: #fff; border: none;
+    font-family: var(--font-body); font-size: 1em; font-weight: 600;
+    min-height: 50px; padding: 0 1.5em; border-radius: var(--radius);
+    cursor: pointer; width: 100%; transition: background var(--transition);
+  }
+  .gate-enter-btn:hover { background: var(--blue-light); }
+  .gate-enter-btn:disabled { opacity: .6; cursor: default; }
+  .gate-error { font-size: 0.9em; color: #f0a0a0; text-align: center; min-height: 1.2em; line-height: 1.4; }
+  .gate-error.ok { color: #a8d8b0; }
+  .gate-links { display: flex; flex-direction: column; align-items: center; gap: 0.2em; margin-top: 0.2em; }
+  .gate-link {
+    background: none; border: none; color: var(--amber); font-family: var(--font-body);
+    font-size: 0.95em; text-decoration: underline; text-underline-offset: 3px;
+    cursor: pointer; padding: 0.6em 0.5em; min-height: 44px;
+  }
+  .gate-link.big { font-size: 1.05em; font-weight: 600; }
+  .gate-ornament { color: rgba(232,228,222,0.3); font-size: 0.85em; letter-spacing: 0.5em; }
+  .account-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;
+    padding: 0.9rem 0; margin-top: 0.25rem; border-top: 1px solid var(--border); font-size: 0.85rem; }
+  .account-row b { word-break: break-all; }
+  .btn-signout { background: none; border: 1px solid var(--border); color: inherit; font-family: var(--font-body);
+    font-size: 0.85rem; padding: 0.5rem 0.9rem; border-radius: var(--radius); cursor: pointer; min-height: 40px; }
+
+  /* ── APP SHELL ── */
+  #app { }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--bg-header);
+    padding: 0.75rem 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .header-left { display: flex; flex-direction: column; gap: 0.1rem; }
+  .app-title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: #e8e4de;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .app-title:hover { color: var(--amber); }
+  .app-count {
+    font-size: 0.38rem;
+    color: rgba(232,228,222,0.4);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-family: var(--font-body);
+  }
+  .header-right { display: flex; gap: 0.4rem; align-items: center; }
+
+  /* Icon buttons in header */
+  .icon-toggle {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(232,228,222,0.6);
+    width: 32px; height: 32px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+    flex-shrink: 0;
+  }
+  .icon-toggle:hover {
+    background: rgba(255,255,255,0.12);
+    color: #e8e4de;
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* Primary add button */
+  .btn-add {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background var(--transition);
+    white-space: nowrap;
+  }
+  .btn-add:hover { background: var(--blue-light); }
+
+  /* ── CONTROLS ── */
+  .controls {
+    padding: 0.5rem 1rem;
+    display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+  .search-wrap { position: relative; flex: 1; min-width: 160px; }
+  .search-wrap svg {
+    position: absolute; left: 0.65rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim); pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.5rem;
+    padding: 0.5rem 0.75rem 0.5rem 2rem;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(74,127,165,0.12);
+  }
+
+  /* Filter pills */
+  .filter-group { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-mid);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.42rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .filter-btn.active        { background: var(--blue);    border-color: var(--blue);    color: #fff; }
+  .filter-btn.vinyl.active  { background: var(--c-vinyl); border-color: var(--c-vinyl); color: #fff; }
+  .filter-btn.cd.active     { background: var(--c-cd);    border-color: var(--c-cd);    color: #fff; }
+  .filter-btn.bluray.active { background: var(--c-bluray);border-color: var(--c-bluray);color: #fff; }
+  .filter-btn.dvd.active    { background: var(--c-dvd);   border-color: var(--c-dvd);   color: #fff; }
+  .filter-btn.vhs.active    { background: var(--c-vhs);   border-color: var(--c-vhs);   color: #fff; }
+  .filter-btn.books.active  { background: var(--c-books); border-color: var(--c-books); color: #fff; }
+
+  /* ── SUB NAV ── */
+  #subNav {
+    padding: 0.6rem 1.5rem;
+    display: flex; gap: 1.5rem;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  #subNav button {
+    background: none; border: none;
+    font-family: var(--font-body);
+    font-size: 0.52rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer; padding: 0.2rem 0;
+    transition: color var(--transition);
+    border-bottom: 2px solid transparent;
+  }
+  #subNav button:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* ── GRID ── */
+  .grid-wrap { padding: 0.75rem 1rem; }
+  .empty-state {
+    text-align: center; padding: 4rem 2rem; color: var(--text-dim);
+  }
+  .empty-state p:first-child {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem; color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+  .empty-state p:last-child { font-size: 0.55rem; letter-spacing: 0.08em; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.5rem;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 0.6rem 0.85rem 0.6rem 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex; flex-direction: column; gap: 0.15rem;
+    position: relative;
+    box-shadow: 0 1px 3px var(--shadow);
+    border-left: 3px solid transparent;
+  }
+  .card:hover {
+    box-shadow: 0 4px 12px var(--shadow-md);
+    transform: translateY(-1px);
+    border-color: var(--border-mid);
+  }
+  .card.fmt-vinyl:hover  { border-left-color: var(--c-vinyl); }
+  .card.fmt-cd:hover     { border-left-color: var(--c-cd); }
+  .card.fmt-bluray:hover { border-left-color: var(--c-bluray); }
+  .card.fmt-dvd:hover    { border-left-color: var(--c-dvd); }
+  .card.fmt-vhs:hover    { border-left-color: var(--c-vhs); }
+  .card.fmt-books:hover  { border-left-color: var(--c-books); }
+
+  .card-format {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.36rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: var(--font-body);
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  .format-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .format-dot.vinyl   { background: var(--c-vinyl); }
+  .format-dot.cd      { background: var(--c-cd); }
+  .format-dot.bluray  { background: var(--c-bluray); }
+  .format-dot.dvd     { background: var(--c-dvd); }
+  .format-dot.vhs     { background: var(--c-vhs); }
+  .format-dot.books   { background: var(--c-books); }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .card-artist {
+    font-size: 0.55rem;
+    color: var(--text-mid);
+    font-weight: 400;
+  }
+  /* card-genre now inline in card-format */
+  .card-actions {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    display: flex; gap: 0.25rem;
+    opacity: 0; transition: opacity var(--transition);
+  }
+  .card:hover .card-actions { opacity: 1; }
+  .icon-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 28px; height: 28px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .icon-btn.del:hover { border-color: var(--c-vinyl); color: var(--c-vinyl); }
+
+  /* ── PLAY TRACKING ── */
+  .card-play-btn {
+    position: absolute; bottom: 0.65rem; right: 0.65rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.36rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex; align-items: center; gap: 0.25rem;
+    white-space: nowrap;
+  }
+  .card-play-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .card-play-btn.played { border-color: var(--amber); color: var(--amber); }
+  .card-play-count {
+    font-size: 0.32rem;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    margin-top: 0.1rem;
+    font-family: var(--font-body);
+  }
+
+  /* ── LOADING ── */
+  .loading-row {
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem; color: var(--text-dim);
+    font-size: 0.5rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(20,28,46,0.6);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 50; padding: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    width: 100%; max-width: 460px; max-height: 90vh;
+    display: flex; flex-direction: column;
+    transform: translateY(10px) scale(0.99);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+    box-shadow: 0 20px 60px var(--shadow-md);
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-inner {
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    overflow-y: auto; flex: 1; min-height: 0;
+  }
+  .modal-footer {
+    padding: 0.85rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 0.6rem;
+    flex-shrink: 0; background: var(--bg-card);
+  }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Modal tabs */
+  .modal-tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .modal-tab {
+    flex: 1; padding: 0.6rem;
+    font-family: var(--font-body);
+    font-size: 0.38rem; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500;
+    border: none; cursor: pointer;
+    transition: all var(--transition);
+    color: var(--text-muted);
+    background: transparent;
+    border-bottom: 2px solid transparent;
+  }
+  .modal-tab.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--bg-card); }
+
+  /* Form elements */
+  .form-row { display: flex; flex-direction: column; gap: 0.3rem; }
+  .form-row label {
+    font-size: 0.36rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-family: var(--font-body);
+  }
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.5rem;
+    padding: 0.5rem 0.65rem;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    width: 100%;
+  }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(74,127,165,0.12);
+  }
+  .form-row select option { background: var(--bg-card); }
+  .form-row textarea { resize: vertical; min-height: 70px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  /* Buttons */
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid var(--border-mid);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.45rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-cancel:hover { border-color: var(--text-mid); color: var(--text); }
+  .btn-save {
+    background: var(--blue);
+    border: none; color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.45rem; font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background var(--transition);
+  }
+  .btn-save:hover { background: var(--blue-light); }
+  .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-bulk {
+    background: transparent;
+    border: 1px solid var(--border-mid);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.42rem; font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-bulk:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 1.5rem; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--navy);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e8e4de;
+    font-family: var(--font-body);
+    font-size: 0.45rem;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 1.25rem;
+    border-radius: 100px;
+    opacity: 0; transition: all 0.3s ease;
+    pointer-events: none; white-space: nowrap; z-index: 200;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── BULK ENTRY ── */
+  #bulkPanel {
+    display: none; position: relative; z-index: 1;
+    padding: 1rem 1.5rem;
+    flex-direction: column; gap: 0.75rem;
+  }
+  #bulkPanel.open { display: flex; }
+  .bulk-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .bulk-title {
+    font-family: var(--font-display);
+    font-size: 0.9rem; color: var(--text); letter-spacing: -0.01em;
+  }
+  .bulk-hint {
+    font-size: 0.4rem; color: var(--text-muted); line-height: 1.6;
+  }
+  .bulk-hint code {
+    background: var(--bg-soft); padding: 0.1em 0.4em;
+    color: var(--blue); font-size: 0.9em; border-radius: 3px;
+  }
+  .bulk-format-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .bulk-format-label { font-size: 0.4rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+  .bulk-format-select {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-body);
+    font-size: 0.5rem; padding: 0.4rem 0.65rem;
+    outline: none; cursor: pointer; border-radius: var(--radius);
+    transition: border-color var(--transition);
+  }
+  .bulk-format-select:focus { border-color: var(--blue); }
+  .bulk-format-select option { background: var(--bg-card); }
+  .bulk-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; flex: 1; }
+  @media (max-width: 700px) { .bulk-body { grid-template-columns: 1fr; } }
+  .bulk-col-label { font-size: 0.38rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.4rem; }
+  .bulk-textarea {
+    width: 100%; height: 380px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-body);
+    font-size: 0.5rem; line-height: 1.7;
+    padding: 0.75rem; outline: none; resize: vertical;
+    transition: border-color var(--transition); border-radius: var(--radius);
+  }
+  .bulk-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(74,127,165,0.12); }
+  .bulk-textarea::placeholder { color: var(--text-dim); }
+  .bulk-preview {
+    height: 380px; overflow-y: auto;
+    border: 1px solid var(--border); background: var(--bg); border-radius: var(--radius);
+  }
+  .preview-item {
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 0.15s ease;
+  }
+  .preview-item:last-child { border-bottom: none; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .preview-num { font-size: 0.36rem; color: var(--text-dim); min-width: 1.4rem; padding-top: 0.1rem; text-align: right; flex-shrink: 0; }
+  .preview-info { display: flex; flex-direction: column; gap: 0.1rem; }
+  .preview-title { font-family: var(--font-display); font-size: 0.55rem; color: var(--text); line-height: 1.3; }
+  .preview-meta { font-size: 0.36rem; color: var(--text-muted); }
+  .preview-empty { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 0.42rem; color: var(--text-dim); letter-spacing: 0.08em; }
+  .bulk-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+  .bulk-count-label { font-size: 0.42rem; color: var(--text-dim); }
+  .bulk-actions { display: flex; gap: 0.75rem; }
+
+  /* ── WISH LIST ── */
+  #wishPanel {
+    display: none; position: relative; z-index: 1;
+    padding: 1rem 1.5rem;
+    flex-direction: column; gap: 0.75rem;
+  }
+  #wishPanel.open { display: flex; }
+  .wish-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .wish-title { font-family: var(--font-display); font-size: 0.9rem; color: var(--text); letter-spacing: -0.01em; }
+  .wish-subtitle { font-size: 0.38rem; color: var(--text-muted); letter-spacing: 0.06em; margin-top: 0.25rem; }
+  .wish-add-form {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  .wish-add-title { font-size: 0.38rem; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; }
+  .wish-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .wish-form-row.full { grid-template-columns: 1fr; }
+  .wish-input {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-body);
+    font-size: 0.5rem; padding: 0.5rem 0.65rem;
+    outline: none; transition: border-color var(--transition);
+    width: 100%; border-radius: var(--radius);
+  }
+  .wish-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(74,127,165,0.12); }
+  .wish-input::placeholder { color: var(--text-dim); }
+  .wish-select {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-body);
+    font-size: 0.5rem; padding: 0.5rem 0.65rem;
+    outline: none; cursor: pointer; width: 100%; border-radius: var(--radius);
+  }
+  .wish-select:focus { border-color: var(--blue); }
+  .wish-select option { background: var(--bg-card); }
+  .wish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+  .wish-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 0.85rem 1rem;
+    display: flex; flex-direction: column; gap: 0.3rem;
+    position: relative; transition: all var(--transition);
+    box-shadow: 0 1px 3px var(--shadow);
+    border-left: 3px solid var(--amber);
+  }
+  .wish-card:hover { box-shadow: 0 4px 12px var(--shadow-md); transform: translateY(-1px); }
+  .wish-card-format { font-size: 0.34rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 0.3rem; }
+  .wish-card-title { font-family: var(--font-display); font-size: 0.8rem; color: var(--text); line-height: 1.25; }
+  .wish-card-artist { font-size: 0.5rem; color: var(--text-mid); }
+  .wish-card-notes { font-size: 0.36rem; color: var(--text-dim); font-style: italic; margin-top: 0.1rem; }
+  .wish-card-actions { position: absolute; top: 0.6rem; right: 0.6rem; display: flex; gap: 0.3rem; opacity: 0; transition: opacity var(--transition); }
+  .wish-card:hover .wish-card-actions { opacity: 1; }
+  .wish-found-btn {
+    background: var(--amber); border: none; color: #fff;
+    font-family: var(--font-body); font-size: 0.34rem; font-weight: 500;
+    padding: 0.25rem 0.6rem; border-radius: 100px; cursor: pointer;
+    transition: all var(--transition); white-space: nowrap;
+  }
+  .wish-found-btn:hover { background: var(--amber-dim); }
+  .wish-empty { text-align: center; padding: 3rem 2rem; color: var(--text-dim); }
+  .wish-empty p:first-child { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+  .wish-empty p:last-child { font-size: 0.45rem; }
+  .wish-count { font-size: 0.36rem; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* ── TV GUIDE ── */
+  #tvPanel {
+    display: none;
+    padding: 1rem 1.5rem;
+    flex-direction: column; gap: 0.75rem;
+  }
+  #tvPanel.open { display: flex; }
+  .tv-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+  .tv-title { font-family: var(--font-display); font-size: 0.9rem; color: var(--text); letter-spacing: -0.01em; }
+  .tv-subtitle { font-size: 0.38rem; color: var(--text-muted); letter-spacing: 0.06em; margin-top: 0.2rem; }
+  .tv-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .tv-shuffle-btn {
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    color: var(--text-mid); font-family: var(--font-body);
+    font-size: 0.4rem; font-weight: 500; letter-spacing: 0.06em;
+    padding: 0.45rem 0.9rem; border-radius: var(--radius); cursor: pointer;
+    transition: all var(--transition);
+  }
+  .tv-shuffle-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .tv-grid-wrap { overflow-x: auto; }
+  .tv-grid {
+    display: grid; grid-template-columns: 100px repeat(7, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    overflow: hidden; min-width: 900px;
+  }
+  .tv-cell {
+    background: var(--bg-card); padding: 0.45rem 0.55rem;
+    display: flex; flex-direction: column; gap: 0.15rem; min-height: 60px;
+  }
+  .tv-cell.header { background: var(--navy); align-items: center; justify-content: center; min-height: auto; padding: 0.65rem 0.4rem; }
+  .tv-cell.time-label { background: var(--bg-mid); align-items: center; justify-content: center; min-height: auto; padding: 0.5rem 0.4rem; }
+  .tv-day-label { font-family: var(--font-body); font-weight: 700; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em; color: #e8e4de; text-align: center; line-height: 1.3; }
+  .tv-time-label { font-size: 0.45rem; font-weight: 600; color: var(--text-mid); text-align: center; line-height: 1.5; letter-spacing: 0.03em; }
+  .tv-slot { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; }
+  .tv-slot-format { font-size: 0.3rem; letter-spacing: 0.12em; text-transform: uppercase; display: flex; align-items: center; gap: 0.2rem; color: var(--text-dim); }
+  .tv-slot-title { font-family: var(--font-display); font-size: 0.48rem; color: var(--text); line-height: 1.2; flex: 1; }
+  .tv-slot-note { font-size: 0.3rem; color: var(--text-dim); font-style: italic; }
+  .tv-watched-btn {
+    background: transparent; border: 1px solid var(--border-mid);
+    color: var(--text-dim); font-family: var(--font-body);
+    font-size: 0.3rem; font-weight: 500; padding: 0.2rem 0.45rem;
+    border-radius: 100px; cursor: pointer; transition: all var(--transition);
+    align-self: flex-start; margin-top: 0.15rem;
+  }
+  .tv-watched-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .tv-cell.watched { opacity: 0.45; }
+  .tv-cell.watched .tv-watched-btn { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .tv-reading-slot { font-size: 0.38rem; color: var(--text-dim); font-style: italic; margin: auto 0; text-align: center; }
+  .tv-loading { font-size: 0.5rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; text-align: center; padding: 3rem; }
+
+  /* ── EARN IT RULES ── */
+  .rules-overlay {
+    position: fixed; inset: 0; background: rgba(20,28,46,0.6);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 50; padding: 1rem; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .rules-overlay.open { opacity: 1; pointer-events: all; }
+  .rules-panel {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 90vh;
+    display: flex; flex-direction: column;
+    transform: translateY(10px); transition: transform 0.2s ease;
+    box-shadow: 0 20px 60px var(--shadow-md); overflow: hidden;
+  }
+  .rules-overlay.open .rules-panel { transform: translateY(0); }
+  .rules-inner { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem; overflow-y: auto; flex: 1; }
+  .rules-footer { padding: 0.85rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; flex-shrink: 0; background: var(--bg-card); }
+  .rules-title { font-family: var(--font-display); font-size: 0.9rem; color: var(--text); letter-spacing: -0.01em; }
+  .rules-subtitle { font-size: 0.38rem; color: var(--text-muted); letter-spacing: 0.06em; margin-top: 0.25rem; }
+  .rule-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .rule-card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .rule-card-left { display: flex; align-items: center; gap: 0.5rem; }
+  .rule-format-label { font-family: var(--font-body); font-size: 0.55rem; font-weight: 600; color: var(--text); }
+  .rule-status { font-size: 0.38rem; color: var(--text-muted); letter-spacing: 0.04em; }
+  .rule-status.earned { color: var(--amber); font-weight: 600; }
+  .progress-bar-wrap { width: 100%; height: 5px; background: var(--bg-soft); border-radius: 3px; overflow: hidden; }
+  .progress-bar { height: 100%; border-radius: 3px; transition: width 0.4s ease; min-width: 3px; }
+  .rule-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .rule-input { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 0.45rem; padding: 0.3rem 0.5rem; width: 60px; text-align: center; border-radius: var(--radius); outline: none; }
+  .rule-input:focus { border-color: var(--blue); }
+  .rule-label { font-size: 0.36rem; color: var(--text-dim); letter-spacing: 0.06em; }
+  .rule-save-btn { background: var(--blue); border: none; color: #fff; font-family: var(--font-body); font-size: 0.38rem; font-weight: 500; padding: 0.3rem 0.7rem; border-radius: var(--radius); cursor: pointer; transition: all var(--transition); }
+  .rule-save-btn:hover { background: var(--blue-light); }
+  .rule-reset-btn { background: transparent; border: 1px solid var(--border-mid); color: var(--text-dim); font-family: var(--font-body); font-size: 0.34rem; padding: 0.25rem 0.5rem; border-radius: var(--radius); cursor: pointer; transition: all var(--transition); }
+  .rule-reset-btn:hover { border-color: var(--c-vinyl); color: var(--c-vinyl); }
+  .no-rules-msg { font-size: 0.45rem; color: var(--text-dim); letter-spacing: 0.08em; text-align: center; padding: 1rem 0; }
+  .new-rule-section { border-top: 1px solid var(--border); padding-top: 1rem; }
+  .new-rule-label { font-size: 0.38rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .new-rule-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .new-rule-select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 0.45rem; padding: 0.4rem 0.6rem; border-radius: var(--radius); outline: none; cursor: pointer; }
+  .new-rule-select:focus { border-color: var(--blue); }
+  .new-rule-select option { background: var(--bg-card); }
+
+  /* ── SETTINGS ── */
+  .settings-overlay {
+    position: fixed; inset: 0; background: rgba(20,28,46,0.6);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 50; padding: 1rem; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .settings-overlay.open { opacity: 1; pointer-events: all; }
+  .settings-panel {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); width: 100%; max-width: 380px;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem;
+    transform: translateY(10px); transition: transform 0.2s ease;
+    box-shadow: 0 20px 60px var(--shadow-md);
+  }
+  .settings-overlay.open .settings-panel { transform: translateY(0); }
+  .settings-title { font-family: var(--font-display); font-size: 0.9rem; color: var(--text); margin-bottom: 0.2rem; }
+  .settings-subtitle { font-size: 0.38rem; color: var(--text-muted); letter-spacing: 0.06em; }
+  .format-toggles { display: flex; flex-direction: column; gap: 0.5rem; }
+  .format-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.55rem 0.75rem; background: var(--bg);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    cursor: pointer; transition: all var(--transition);
+  }
+  .format-toggle:hover { border-color: var(--blue-dim); }
+  .format-toggle-left { display: flex; align-items: center; gap: 0.6rem; }
+  .format-toggle-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .format-toggle-name { font-family: var(--font-body); font-size: 0.5rem; font-weight: 500; color: var(--text); }
+  .toggle-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: var(--border-mid); border-radius: 20px; transition: all 0.2s ease; cursor: pointer; }
+  .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s ease; }
+  .toggle-switch input:checked + .toggle-slider { background: var(--blue); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
+  .settings-footer { display: flex; justify-content: flex-end; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+
+  /* ── SCANNER ── */
+  #scannerStatus2, #scannerResult2 { font-size: 0.42rem; color: var(--text-muted); text-align: center; letter-spacing: 0.06em; }
+
+  /* ── INLINE BULK ── */
+  .bulk-textarea { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 0.5rem; padding: 0.65rem; border-radius: var(--radius); outline: none; resize: vertical; width: 100%; transition: border-color var(--transition); }
+  .bulk-textarea:focus { border-color: var(--blue); }
+  .bulk-textarea::placeholder { color: var(--text-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header, .controls, .grid-wrap, #bulkPanel, #wishPanel, #tvPanel { padding-left: 1rem; padding-right: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GATE: sign in, or set up a new library -->
+<div id="gate">
+  <img class="gate-logo" src="icon-512.jpg" alt="">
+  <div class="gate-title">myShelf</div>
+  <div class="gate-sub">physical media library · Own Your Media Club</div>
+
+  <form class="gate-form" id="formSignIn" onsubmit="authSignIn(event)">
+    <label class="gate-label" for="siEmail">Email</label>
+    <input class="gate-input" id="siEmail" type="email" autocomplete="username" inputmode="email" required>
+    <label class="gate-label" for="siPass">Password</label>
+    <input class="gate-input" id="siPass" type="password" autocomplete="current-password" required>
+    <div class="gate-error" id="siMsg" role="status"></div>
+    <button class="gate-enter-btn" type="submit">Open my library</button>
+    <div class="gate-links">
+      <button class="gate-link big" type="button" onclick="gateMode('signup')">New here? Set up your library</button>
+      <button class="gate-link" type="button" onclick="gateMode('reset')">Forgot password?</button>
+    </div>
+  </form>
+
+  <form class="gate-form" id="formSignUp" onsubmit="authSignUp(event)" hidden>
+    <p class="gate-head">Set up your library</p>
+    <p class="gate-note">Your shelf is private to you. Use it on any phone or computer by signing in.</p>
+    <label class="gate-label" for="suEmail">Email</label>
+    <input class="gate-input" id="suEmail" type="email" autocomplete="username" inputmode="email" required>
+    <label class="gate-label" for="suPass">Password (at least 8 characters)</label>
+    <input class="gate-input" id="suPass" type="password" autocomplete="new-password" minlength="8" required>
+    <label class="gate-label" for="suPass2">Password again</label>
+    <input class="gate-input" id="suPass2" type="password" autocomplete="new-password" minlength="8" required>
+    <div class="gate-error" id="suMsg" role="status"></div>
+    <button class="gate-enter-btn" type="submit">Create my library</button>
+    <div class="gate-links"><button class="gate-link" type="button" onclick="gateMode('signin')">I already have a library</button></div>
+  </form>
+
+  <form class="gate-form" id="formReset" onsubmit="authReset(event)" hidden>
+    <p class="gate-head">Reset your password</p>
+    <p class="gate-note">We'll email you a link to choose a new one.</p>
+    <label class="gate-label" for="rsEmail">Email</label>
+    <input class="gate-input" id="rsEmail" type="email" autocomplete="username" inputmode="email" required>
+    <div class="gate-error" id="rsMsg" role="status"></div>
+    <button class="gate-enter-btn" type="submit">Send reset link</button>
+    <div class="gate-links"><button class="gate-link" type="button" onclick="gateMode('signin')">Back to sign in</button></div>
+  </form>
+
+  <form class="gate-form" id="formNewPass" onsubmit="authNewPass(event)" hidden>
+    <p class="gate-head">Choose a new password</p>
+    <label class="gate-label" for="npPass">New password (at least 8 characters)</label>
+    <input class="gate-input" id="npPass" type="password" autocomplete="new-password" minlength="8" required>
+    <div class="gate-error" id="npMsg" role="status"></div>
+    <button class="gate-enter-btn" type="submit">Save and open my library</button>
+  </form>
+
+  <div class="gate-ornament">— ✦ —</div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <header>
+    <div class="header-left">
+      <div class="app-title" onclick="goHome()" style="cursor:pointer" title="Back to library">myShelf</div>
+      <div class="app-count" id="countLabel">— items</div>
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <button class="icon-toggle" onclick="openRules()" title="Earn It Rules">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      </button>
+      <button class="icon-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark">
+        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="icon-toggle" onclick="openSettings()" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="btn-add" onclick="openModal()">+ Add Item</button>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" id="searchInput" placeholder="Search titles, artists, genres…" oninput="renderGrid()">
+    </div>
+    <div class="filter-group" id="filterGroup">
+      <button class="filter-btn active" data-format="All" onclick="setFilter('All',this)">All</button>
+      <button class="filter-btn vinyl" data-format="Vinyl" onclick="setFilter('Vinyl',this)">Vinyl</button>
+      <button class="filter-btn cd" data-format="CD" onclick="setFilter('CD',this)">CD</button>
+      <button class="filter-btn bluray" data-format="Blu-ray" onclick="setFilter('Blu-ray',this)">Blu-ray</button>
+      <button class="filter-btn dvd" data-format="DVD" onclick="setFilter('DVD',this)">DVD</button>
+      <button class="filter-btn vhs" data-format="VHS" onclick="setFilter('VHS',this)">VHS</button>
+      <button class="filter-btn books" data-format="Books" onclick="setFilter('Books',this)">Books</button>
+    </div>
+  </div>
+
+  <div id="subNav" style="padding:0.4rem 1.5rem;display:flex;gap:1rem;border-bottom:1px solid var(--bg-soft);background:var(--bg-mid)">
+    <button id="btnWishNav" onclick="openWish()" style="background:none;border:none;font-family:var(--font-mono);font-size:0.38rem;color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;padding:0;transition:color var(--transition)" onmouseover="this.style.color='var(--neon)'" onmouseout="this.style.color='var(--text-dim)'">★ Wish List</button>
+    <button id="btnTVGuide" onclick="openTVGuide()" style="background:none;border:none;font-family:var(--font-mono);font-size:0.38rem;color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;padding:0;transition:color var(--transition)" onmouseover="this.style.color='var(--neon)'" onmouseout="this.style.color='var(--text-dim)'">📺 TV Guide</button>
+  </div>
+
+  <div class="grid-wrap" id="gridWrap">
+    <div class="loading-row">Loading…</div>
+  </div>
+
+  <!-- BULK ENTRY PANEL -->
+  <div id="bulkPanel">
+    <div class="bulk-header">
+      <div>
+        <div class="bulk-title">Bulk Entry</div>
+        <div class="bulk-hint" style="margin-top:0.35rem">
+          One item per line. Optionally add artist, genre, and year with pipes:<br>
+          <code>Kind of Blue</code> &nbsp;or&nbsp; <code>Kind of Blue | Miles Davis | Jazz | 1959</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="bulk-format-row">
+      <span class="bulk-format-label">Format for this batch:</span>
+      <select class="bulk-format-select" id="bulkFormat">
+        <option value="">Select format…</option>
+        <option>Vinyl</option>
+        <option>CD</option>
+        <option>Blu-ray</option>
+        <option>DVD</option>
+        <option>VHS</option>
+        <option>Books</option>
+      </select>
+    </div>
+
+    <div class="bulk-body">
+      <div>
+        <div class="bulk-col-label">Enter titles</div>
+        <textarea class="bulk-textarea" id="bulkTextarea" placeholder="Kind of Blue&#10;Rumours | Fleetwood Mac | Rock | 1977&#10;The Godfather | Francis Ford Coppola | Drama | 1972&#10;Dark Side of the Moon | Pink Floyd | Rock | 1973" oninput="parseBulk()"></textarea>
+      </div>
+      <div>
+        <div class="bulk-col-label">Preview — <span id="bulkCountLabel">0 items</span></div>
+        <div class="bulk-preview" id="bulkPreview">
+          <div class="preview-empty">Start typing to see a preview</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bulk-footer">
+      <div class="bulk-count-label" id="bulkStatusLabel"></div>
+      <div class="bulk-actions">
+        <button class="btn-bulk" onclick="closeBulk()">Cancel</button>
+        <button class="btn-save" id="btnBulkSave" onclick="saveBulk()" disabled>Import Items</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RULES -->
+<div class="rules-overlay" id="rulesOverlay" onclick="handleRulesOverlayClick(event)">
+  <div class="rules-panel">
+    <div class="rules-inner" id="rulesInner">
+      <div>
+        <div class="rules-title">Earn It</div>
+        <div class="rules-subtitle">Play your collection to earn the right to buy more</div>
+      </div>
+      <div id="rulesList"></div>
+      <div class="new-rule-section">
+        <div class="new-rule-label">Add a new rule</div>
+        <div class="new-rule-row">
+          <span class="rule-label">Before buying</span>
+          <select class="new-rule-select" id="newRuleFormat">
+            <option value="">format…</option>
+            <option>Vinyl</option>
+            <option>CD</option>
+            <option>Blu-ray</option>
+            <option>DVD</option>
+            <option>VHS</option>
+            <option>Books</option>
+          </select>
+          <span class="rule-label">I must play/use</span>
+          <input class="rule-input" id="newRulePlays" type="number" min="1" max="999" placeholder="20">
+          <span class="rule-label">I own</span>
+          <button class="rule-save-btn" onclick="addRule()">Add Rule</button>
+        </div>
+      </div>
+    </div>
+    <div class="rules-footer">
+      <button class="btn-cancel" onclick="closeRules()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TV GUIDE -->
+<div id="tvPanel">
+  <div class="tv-header">
+    <div>
+      <div class="tv-title">📺 TV Guide</div>
+      <div class="tv-subtitle">7 nights · 7pm – 11pm · your collection, scheduled</div>
+    </div>
+    <div class="tv-actions">
+      <button class="tv-shuffle-btn" onclick="generateGuide()">⟳ Shuffle</button>
+      <button class="btn-cancel" onclick="closeTVGuide()">✕ Close</button>
+    </div>
+  </div>
+  <div class="tv-grid-wrap">
+    <div id="tvGrid" class="tv-loading">Generating your guide…</div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="settings-overlay" id="settingsOverlay" onclick="handleSettingsOverlayClick(event)">
+  <div class="settings-panel">
+    <div style="display:flex;flex-direction:column;gap:0.3rem;padding-bottom:0.25rem;border-bottom:1px solid var(--bg-soft)">
+      <div class="settings-title">Settings</div>
+      <div class="settings-subtitle">Choose which formats appear in your library</div>
+    </div>
+    <div class="format-toggles">
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--red)"></div>
+          <div class="format-toggle-name">Vinyl</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-vinyl" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--blue)"></div>
+          <div class="format-toggle-name">CD</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-cd" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--teal)"></div>
+          <div class="format-toggle-name">Blu-ray</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-bluray" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--purple)"></div>
+          <div class="format-toggle-name">DVD</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-dvd" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--green)"></div>
+          <div class="format-toggle-name">VHS</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-vhs" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="format-toggle">
+        <div class="format-toggle-left">
+          <div class="format-toggle-dot" style="background:var(--orange)"></div>
+          <div class="format-toggle-name">Books</div>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="tog-books" checked onchange="saveFormatSettings()">
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+    </div>
+    <div class="account-row">
+      <span>Signed in as <b id="acctEmail"></b></span>
+      <button class="btn-signout" type="button" onclick="authSignOut()">Sign out</button>
+    </div>
+    <div class="settings-footer">
+      <button class="btn-save" onclick="closeSettings()">Done</button>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- WISH LIST -->
+  <div id="wishPanel">
+    <div class="wish-header">
+      <div>
+        <div class="wish-title">★ Wish List</div>
+        <div class="wish-subtitle">Physical media you're hunting for</div>
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <div class="wish-count" id="wishCount">— items</div>
+        <button class="btn-cancel" onclick="closeWish()">✕ Close</button>
+      </div>
+    </div>
+
+    <!-- Add form -->
+    <div class="wish-add-form">
+      <div class="wish-add-title">Add to wish list</div>
+      <div class="wish-form-row full">
+        <input class="wish-input" id="wTitle" type="text" placeholder="Title *">
+      </div>
+      <div class="wish-form-row">
+        <select class="wish-select" id="wFormat">
+          <option value="">Format…</option>
+          <option>Vinyl</option>
+          <option>CD</option>
+          <option>Blu-ray</option>
+          <option>DVD</option>
+          <option>VHS</option>
+          <option>Books</option>
+        </select>
+        <input class="wish-input" id="wArtist" type="text" placeholder="Artist / Director / Author">
+      </div>
+      <div class="wish-form-row full">
+        <input class="wish-input" id="wNotes" type="text" placeholder="Notes — e.g. original pressing, max $20, signed copy…">
+      </div>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn-save" onclick="addWishItem()">+ Add</button>
+      </div>
+    </div>
+
+    <!-- Wish items grid -->
+    <div id="wishGrid"></div>
+  </div>
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <!-- Mode tabs -->
+    <div class="modal-tabs">
+      <button id="tabSingle" class="modal-tab active" onclick="setModalTab('single')">Single</button>
+      <button id="tabBulk"   class="modal-tab"        onclick="setModalTab('bulk')">Bulk</button>
+      <button id="tabScan"   class="modal-tab"        onclick="setModalTab('scan')">⬛ Scan</button>
+    </div>
+
+    <!-- SINGLE tab -->
+    <div id="modalPaneSingle" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden">
+      <div class="modal-inner">
+        <div class="modal-title" id="modalTitle">Add Item</div>
+        <div class="form-row">
+          <label>Title *</label>
+          <input id="fTitle" type="text" placeholder="Album, film, or series title">
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Format *</label>
+            <select id="fFormat">
+              <option value="">Select…</option>
+              <option>Vinyl</option>
+              <option>CD</option>
+              <option>Blu-ray</option>
+              <option>DVD</option>
+              <option>VHS</option>
+              <option>Books</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Genre</label>
+            <input id="fGenre" type="text" placeholder="Jazz, Horror, Sci-fi…">
+          </div>
+        </div>
+        <div class="form-row" id="fTypeRow" style="display:none">
+          <label>Type</label>
+          <div style="display:flex;gap:0.5rem">
+            <button type="button" id="fTypeMovie" onclick="setMediaType('Movie')"
+              style="flex:1;padding:0.45rem;font-family:var(--font-body);font-size:0.45rem;font-weight:500;border:1px solid var(--border-mid);border-radius:var(--radius);cursor:pointer;background:var(--blue);color:#fff;transition:all var(--transition)">
+              🎬 Movie
+            </button>
+            <button type="button" id="fTypeTV" onclick="setMediaType('TV')"
+              style="flex:1;padding:0.45rem;font-family:var(--font-body);font-size:0.45rem;font-weight:500;border:1px solid var(--border-mid);border-radius:var(--radius);cursor:pointer;background:var(--bg);color:var(--text-muted);transition:all var(--transition)">
+              📺 TV Series
+            </button>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Artist / Director / Author</label>
+          <input id="fArtist" type="text" placeholder="Who made it">
+        </div>
+        <div class="form-row">
+          <label>Year</label>
+          <input id="fYear" type="number" placeholder="e.g. 1973" min="1888" max="2099">
+        </div>
+        <div class="form-row">
+          <label>Notes</label>
+          <textarea id="fNotes" placeholder="Edition, condition, anything else…"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" id="btnSave" onclick="saveItem()">Save</button>
+      </div>
+    </div>
+
+    <!-- BULK tab -->
+    <div id="modalPaneBulk" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
+      <div class="modal-inner">
+        <div class="bulk-format-row" style="margin-bottom:0.5rem">
+          <span class="bulk-format-label">Format:</span>
+          <select class="bulk-format-select" id="bulkFormat2">
+            <option value="">Select format…</option>
+            <option>Vinyl</option>
+            <option>CD</option>
+            <option>Blu-ray</option>
+            <option>DVD</option>
+            <option>VHS</option>
+            <option>Books</option>
+          </select>
+        </div>
+        <div class="bulk-hint" style="margin-bottom:0.5rem">
+          One per line. Optional: <span style="font-family:var(--font-mono);font-size:0.85em;color:var(--text-dim)">Title | Artist | Genre | Year</span>
+        </div>
+        <textarea class="bulk-textarea" id="bulkTextarea2" style="height:220px" placeholder="Kind of Blue&#10;Rumours | Fleetwood Mac | Rock | 1977&#10;The Godfather | Coppola | Drama | 1972" oninput="parseBulk2()"></textarea>
+        <div id="bulkPreview2" style="margin-top:0.5rem;font-family:var(--font-mono);font-size:0.38rem;color:var(--text-dim);letter-spacing:0.08em" id="bulkCountLabel2"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" id="btnBulkSave2" onclick="saveBulk2()" disabled>Import</button>
+      </div>
+    </div>
+
+    <!-- SCAN tab -->
+    <div id="modalPaneScan" style="display:none;flex-direction:column;flex:1">
+      <div class="modal-inner" style="align-items:center;gap:0.75rem">
+        <div id="scannerStatus2" style="font-family:var(--font-mono);font-size:0.42rem;color:var(--text-dim);letter-spacing:0.1em;text-align:center">
+          Point camera at barcode
+        </div>
+        <div style="position:relative;width:100%;max-width:380px;border:2px solid var(--neon-dim);border-radius:var(--radius);overflow:hidden;background:#000">
+          <video id="scannerVideo" style="width:100%;display:block;max-height:260px;object-fit:cover" playsinline autoplay muted></video>
+          <div style="position:absolute;top:50%;left:10%;right:10%;height:2px;background:rgba(245,230,66,0.6);transform:translateY(-50%);pointer-events:none"></div>
+        </div>
+        <div id="scannerResult2" style="font-family:var(--font-mono);font-size:0.4rem;color:var(--text-dim);letter-spacing:0.08em;text-align:center;min-height:1rem"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://pknnhharadotkdvvkdoh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_2Fw-nRJT74bovs1JSTBx_Q_zR-DgCPm';
+const TABLE        = 'shelf_items';
+
+
+let items = [];
+let activeFilter = 'All';
+let editingId = null;
+
+// ── ACCOUNTS (Supabase Auth) ──────────────────────────────
+// Each person signs in with email + password. The database only hands back rows that belong to them.
+const AUTH_URL = `${SUPABASE_URL}/auth/v1`;
+const SESSION_KEY = 'rao-session';
+let session = null;
+try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch (e) { session = null; }
+
+function saveSession(s) {
+  if (!s || !s.access_token) { session = null; try { localStorage.removeItem(SESSION_KEY); } catch (e) {} return; }
+  session = {
+    access_token: s.access_token,
+    refresh_token: s.refresh_token,
+    expires_at: s.expires_at || (Math.floor(Date.now() / 1000) + (s.expires_in || 3600)),
+    email: (s.user && s.user.email) || (session && session.email) || ''
+  };
+  try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) {}
+}
+
+async function authCall(path, body, token) {
+  const res = await fetch(`${AUTH_URL}/${path}`, {
+    method: body === undefined ? 'GET' : (path === 'user' ? 'PUT' : 'POST'),
+    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+    body: body === undefined ? undefined : JSON.stringify(body)
+  });
+  const text = await res.text();
+  let data = null; try { data = text ? JSON.parse(text) : null; } catch (e) {}
+  if (!res.ok) {
+    const msg = (data && (data.error_description || data.msg || data.message || data.error)) || `Error ${res.status}`;
+    const err = new Error(msg); err.status = res.status; throw err;
+  }
+  return data;
+}
+
+let refreshing = null;
+async function refreshSession() {
+  if (!session || !session.refresh_token) throw new Error('signed out');
+  if (!refreshing) {
+    refreshing = authCall('token?grant_type=refresh_token', { refresh_token: session.refresh_token })
+      .then(saveSession)
+      .finally(() => { refreshing = null; });
+  }
+  return refreshing;
+}
+async function accessToken() {
+  if (!session) throw new Error('signed out');
+  if (session.expires_at - 60 < Date.now() / 1000) await refreshSession();
+  return session.access_token;
+}
+
+function friendlyAuthError(e) {
+  const m = (e && e.message || '').toLowerCase();
+  if (m.includes('invalid login')) return 'That email and password don’t match.';
+  if (m.includes('already registered') || m.includes('already exists')) return 'That email already has a library. Try signing in.';
+  if (m.includes('not confirmed')) return 'Check your email and tap the confirmation link first.';
+  if (m.includes('password') && m.includes('characters')) return 'Use a password with at least 8 characters.';
+  if (m.includes('rate limit') || (e && e.status === 429)) return 'Too many tries. Wait a minute and try again.';
+  if (m.includes('failed to fetch') || m.includes('network')) return 'Can’t reach the library. Check your connection.';
+  return e && e.message ? e.message : 'Something went wrong. Try again.';
+}
+function setMsg(id, text, ok) { const el = document.getElementById(id); el.textContent = text || ''; el.classList.toggle('ok', !!ok); }
+function busy(form, on) { const b = form.querySelector('button[type=submit]'); if (b) b.disabled = on; }
+
+window.gateMode = function(mode) {
+  const forms = { signin: 'formSignIn', signup: 'formSignUp', reset: 'formReset', newpass: 'formNewPass' };
+  Object.entries(forms).forEach(([k, id]) => { document.getElementById(id).hidden = k !== mode; });
+  ['siMsg','suMsg','rsMsg','npMsg'].forEach(id => setMsg(id, ''));
+  const carry = document.getElementById('siEmail').value || document.getElementById('suEmail').value;
+  if (mode === 'signup' && carry) document.getElementById('suEmail').value = carry;
+  if (mode === 'reset' && carry) document.getElementById('rsEmail').value = carry;
+  const first = document.querySelector(`#${forms[mode]} input`); if (first) first.focus();
+};
+
+window.authSignIn = async function(e) {
+  e.preventDefault(); const form = e.target; busy(form, true); setMsg('siMsg', '');
+  try {
+    const s = await authCall('token?grant_type=password', {
+      email: document.getElementById('siEmail').value.trim(), password: document.getElementById('siPass').value });
+    saveSession(s); unlockApp();
+  } catch (err) { setMsg('siMsg', friendlyAuthError(err)); }
+  busy(form, false);
+};
+
+window.authSignUp = async function(e) {
+  e.preventDefault(); const form = e.target; setMsg('suMsg', '');
+  const email = document.getElementById('suEmail').value.trim();
+  const p1 = document.getElementById('suPass').value, p2 = document.getElementById('suPass2').value;
+  if (p1 !== p2) { setMsg('suMsg', 'Those passwords don’t match.'); return; }
+  busy(form, true);
+  try {
+    const s = await authCall('signup', { email, password: p1 });
+    if (s && s.access_token) { saveSession(s); unlockApp(true); }
+    else {
+      gateMode('signin'); document.getElementById('siEmail').value = email;
+      setMsg('siMsg', 'Almost there. Check your email and tap the link to finish setting up.', true);
+    }
+  } catch (err) { setMsg('suMsg', friendlyAuthError(err)); }
+  busy(form, false);
+};
+
+window.authReset = async function(e) {
+  e.preventDefault(); const form = e.target; busy(form, true); setMsg('rsMsg', '');
+  try {
+    const back = location.origin + location.pathname;
+    await authCall(`recover?redirect_to=${encodeURIComponent(back)}`, { email: document.getElementById('rsEmail').value.trim() });
+    setMsg('rsMsg', 'If that email has a library, a reset link is on its way.', true);
+  } catch (err) { setMsg('rsMsg', friendlyAuthError(err)); }
+  busy(form, false);
+};
+
+window.authNewPass = async function(e) {
+  e.preventDefault(); const form = e.target; busy(form, true); setMsg('npMsg', '');
+  try {
+    await authCall('user', { password: document.getElementById('npPass').value }, await accessToken());
+    unlockApp();
+  } catch (err) { setMsg('npMsg', friendlyAuthError(err)); }
+  busy(form, false);
+};
+
+window.authSignOut = async function() {
+  try { if (session) await authCall('logout', {}, session.access_token); } catch (e) {}
+  saveSession(null);
+  try { sessionStorage.removeItem('rao-auth'); } catch (e) {}
+  location.replace(location.pathname);
+};
+
+function showGate(msg) {
+  closeSettings && document.getElementById('settingsOverlay') && closeSettings();
+  const gate = document.getElementById('gate');
+  if (!gate) { location.replace(location.pathname); return; }
+  gate.classList.remove('hidden'); document.getElementById('app').style.display = 'none';
+  gateMode('signin'); if (msg) setMsg('siMsg', msg);
+}
+
+let appUnlocked = false;
+function unlockApp(isNew) {
+  const gate = document.getElementById('gate');
+  const app  = document.getElementById('app');
+  document.getElementById('acctEmail').textContent = (session && session.email) || '';
+  gate.classList.add('hidden');
+  app.style.display = 'block';
+  if (appUnlocked) { loadItems(); loadRules(); loadWishItems(); return; }
+  appUnlocked = true;
+  loadItems();
+  loadRules();
+  loadWishItems();
+  applyFormatSettings();
+  if (isNew) setTimeout(() => showToast('Your library is ready. Add your first item!'), 400);
+}
+
+// Start (after the whole script has loaded): links from emails (confirm or reset) arrive with tokens after the #
+document.addEventListener('DOMContentLoaded', async function() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get('access_token')) {
+    saveSession({ access_token: h.get('access_token'), refresh_token: h.get('refresh_token'),
+      expires_in: +h.get('expires_in') || 3600, expires_at: +h.get('expires_at') || 0 });
+    history.replaceState(null, '', location.pathname + location.search);
+    try { const u = await authCall('user', undefined, session.access_token); session.email = u.email; saveSession(session); } catch (e) {}
+    if (h.get('type') === 'recovery') { gateMode('newpass'); return; }
+    unlockApp(h.get('type') === 'signup'); return;
+  }
+  if (h.get('error_description')) {
+    history.replaceState(null, '', location.pathname + location.search);
+    gateMode('signin'); setMsg('siMsg', h.get('error_description').replace(/\+/g, ' ')); return;
+  }
+  if (session) { unlockApp(); return; }
+  gateMode('signin');
+});
+
+// ── SUPABASE ─────────────────────────────────────────────
+async function sb(path, opts={}, retried) {
+  let token;
+  try { token = await accessToken(); }
+  catch (e) { showGate('Please sign in again.'); throw e; }
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Prefer': opts.prefer || 'return=representation',
+      ...opts.headers
+    }
+  });
+  if (res.status === 401 && !retried) {
+    try { await refreshSession(); } catch (e) { saveSession(null); showGate('Please sign in again.'); throw e; }
+    return sb(path, opts, true);
+  }
+  if (!res.ok) throw new Error(await res.text());
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function loadItems() {
+  try {
+    items = await sb(`${TABLE}?order=title.asc&select=*`);
+    renderGrid();
+  } catch(e) {
+    showToast('Error loading items');
+    console.error(e);
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────
+function formatClass(fmt) {
+  if (!fmt) return '';
+  return fmt.toLowerCase().replace(/[^a-z]/g, '');
+}
+
+function renderGrid() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let filtered = items.filter(it => {
+    const matchFormat = activeFilter === 'All' || it.format === activeFilter;
+    const matchSearch = !q ||
+      (it.title || '').toLowerCase().includes(q) ||
+      (it.artist_director || '').toLowerCase().includes(q) ||
+      (it.genre || '').toLowerCase().includes(q) ||
+      (it.notes || '').toLowerCase().includes(q);
+    return matchFormat && matchSearch;
+  });
+
+  document.getElementById('countLabel').textContent =
+    activeFilter === 'All'
+      ? `${items.length} item${items.length !== 1 ? 's' : ''}`
+      : `${filtered.length} ${activeFilter} item${filtered.length !== 1 ? 's' : ''}`;
+
+  const wrap = document.getElementById('gridWrap');
+  if (!filtered.length) {
+    wrap.innerHTML = `<div class="empty-state"><p>The shelf is bare.</p><p>${items.length ? 'Try a different search or filter.' : 'Add your first item to begin.'}</p></div>`;
+    return;
+  }
+
+  wrap.innerHTML = `<div class="grid">${filtered.map(it => `
+    <div class="card fmt-${formatClass(it.format)}" onclick="editItem('${it.id}')">
+      <div class="card-actions">
+        <button class="icon-btn del" title="Delete" onclick="deleteItem(event,'${it.id}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        </button>
+      </div>
+      <div class="card-format">
+        <span class="format-dot ${formatClass(it.format)}"></span>
+        <span style="color:var(--text-dim)">${it.format || ''}${it.year ? ` · ${it.year}` : ''}${it.genre ? ` · ${esc(it.genre)}` : ''}</span>
+      </div>
+      <div class="card-title">${esc(it.title)}</div>
+      ${it.artist_director ? `<div class="card-artist">${esc(it.artist_director)}</div>` : ''}
+      ${rules[it.format] ? `
+        <div class="card-play-count">${it.play_count > 0 ? `▶ played ${it.play_count}×${it.last_played ? ' · ' + it.last_played : ''}` : '▶ not yet played'}</div>
+        <button class="card-play-btn${it.play_count > 0 ? ' played' : ''}" onclick="logPlay(event,'${it.id}')" title="Log a play">
+          ▶ Play
+        </button>` : ''}
+    </div>
+  `).join('')}</div>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function setFilter(fmt, btn) {
+  activeFilter = fmt;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+// ── MODAL TABS ────────────────────────────────────────────
+function setModalTab(tab) {
+  document.getElementById('modalPaneSingle').style.display = tab === 'single' ? 'flex' : 'none';
+  document.getElementById('modalPaneBulk').style.display   = tab === 'bulk'   ? 'flex' : 'none';
+  document.getElementById('modalPaneScan').style.display   = tab === 'scan'   ? 'flex' : 'none';
+  ['single','bulk','scan'].forEach(t => {
+    const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+    btn.classList.toggle('active', t === tab);
+  });
+  if (tab === 'scan') {
+    startScannerInModal();
+  } else {
+    stopScannerInModal();
+  }
+  if (tab === 'single') setTimeout(() => document.getElementById('fTitle').focus(), 100);
+}
+
+function startScannerInModal() {
+  scannerActive = true;
+  document.getElementById('scannerStatus2').textContent = 'Starting camera…';
+  if (!window.ZXing) {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@zxing/library@0.19.1/umd/index.min.js';
+    script.onload = () => initModalScanner();
+    script.onerror = () => { document.getElementById('scannerStatus2').textContent = 'Failed to load scanner.'; };
+    document.head.appendChild(script);
+  } else {
+    initModalScanner();
+  }
+}
+
+function initModalScanner() {
+  if (!scannerActive) return;
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    .then(stream => {
+      stream.getTracks().forEach(t => t.stop());
+      document.getElementById('scannerStatus2').textContent = 'Point camera at barcode…';
+      const video = document.getElementById('scannerVideo');
+      const codeReader = new ZXing.BrowserMultiFormatReader();
+      window._codeReader = codeReader;
+      codeReader.decodeFromVideoDevice(null, video, (result, err) => {
+        if (result && scannerActive) {
+          scannerActive = false;
+          codeReader.reset();
+          const upc = result.getText();
+          document.getElementById('scannerStatus2').textContent = `Detected: ${upc}`;
+          document.getElementById('scannerResult2').textContent = 'Looking up…';
+          lookupUPCInModal(upc);
+        }
+      });
+    })
+    .catch(() => { document.getElementById('scannerStatus2').textContent = 'Camera access denied.'; });
+}
+
+function stopScannerInModal() {
+  scannerActive = false;
+  if (window._codeReader) { window._codeReader.reset(); window._codeReader = null; }
+  const video = document.getElementById('scannerVideo');
+  if (video && video.srcObject) { video.srcObject.getTracks().forEach(t => t.stop()); video.srcObject = null; }
+}
+
+async function lookupUPCInModal(upc) {
+  // reuse the same lookup but switch to single tab when found
+  document.getElementById('scannerResult2').textContent = 'Searching…';
+  let found = null;
+  try {
+    const res = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${upc}&format=json&jscmd=data`);
+    const data = await res.json();
+    const key = `ISBN:${upc}`;
+    if (data[key]) {
+      const book = data[key];
+      const authors = book.authors ? book.authors.map(a => a.name).join(', ') : '';
+      const year = book.publish_date ? book.publish_date.match(/\d{4}/) : null;
+      found = { title: book.title||'', artist: authors, format: 'Books', genre: book.subjects?.[0]?.name||'', year: year?parseInt(year[0]):null };
+    }
+  } catch(e) {}
+  if (!found) {
+    try {
+      const res = await fetch(`https://musicbrainz.org/ws/2/release?query=barcode:${upc}&fmt=json&limit=1`, { headers: { 'User-Agent': 'myShelf/1.0' } });
+      const data = await res.json();
+      if (data.releases?.length) {
+        const r = data.releases[0];
+        const artist = r['artist-credit']?.map(a => a.name||a.artist?.name).join(', ')||'';
+        const year = r.date ? r.date.substring(0,4) : null;
+        found = { title: r.title||'', artist, format: 'CD', genre: '', year: year?parseInt(year):null };
+      }
+    } catch(e) {}
+  }
+  if (!found) {
+    try {
+      const res = await fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`);
+      const data = await res.json();
+      if (data.items?.length) {
+        const item = data.items[0];
+        const cat = (item.category||'').toLowerCase();
+        let format = '';
+        if (cat.includes('vinyl')) format='Vinyl'; else if (cat.includes('blu')) format='Blu-ray';
+        else if (cat.includes('dvd')) format='DVD'; else if (cat.includes('cd')) format='CD';
+        else if (cat.includes('book')) format='Books';
+        found = { title: item.title||'', artist: item.brand||'', format, genre: '', year: null };
+      }
+    } catch(e) {}
+  }
+
+  if (!found) {
+    document.getElementById('scannerResult2').textContent = 'Not found — enter manually.';
+    setTimeout(() => setModalTab('single'), 1500);
+    return;
+  }
+
+  const titleLower = found.title.toLowerCase();
+  const duplicate = items.find(i => titleLower.includes(i.title.toLowerCase()) || i.title.toLowerCase().includes(titleLower));
+  if (duplicate) {
+    document.getElementById('scannerResult2').textContent = '';
+    document.getElementById('scannerStatus2').textContent = `Already on your shelf: ${duplicate.title}`;
+    setTimeout(() => closeModal(), 2500);
+    return;
+  }
+
+  document.getElementById('scannerResult2').textContent = `Found: ${found.title}`;
+  setTimeout(() => {
+    stopScannerInModal();
+    setModalTab('single');
+    document.getElementById('modalTitle').textContent = 'Add Item';
+    document.getElementById('fTitle').value  = found.title;
+    document.getElementById('fArtist').value = found.artist||'';
+    document.getElementById('fFormat').value = found.format||'';
+    document.getElementById('fGenre').value  = found.genre||'';
+    if (found.year) document.getElementById('fYear').value = found.year;
+  }, 800);
+}
+
+// Inline bulk
+function parseBulk2() {
+  const raw = document.getElementById('bulkTextarea2').value;
+  const parsed = raw.split('\n').map(l=>l.trim()).filter(l=>l).map(line => {
+    const p = line.split('|').map(s=>s.trim());
+    const yr = parseInt(p[3]);
+    return { title:p[0]||'', artist_director:p[1]||null, genre:p[2]||null, year:(yr>=1888&&yr<=2099)?yr:null };
+  }).filter(i=>i.title);
+  const format = document.getElementById('bulkFormat2').value;
+  const btn = document.getElementById('btnBulkSave2');
+  btn.disabled = parsed.length === 0 || !format;
+  document.getElementById('bulkPreview2').textContent = parsed.length ? `${parsed.length} item${parsed.length!==1?'s':''} ready` : '';
+}
+document.getElementById('bulkFormat2').addEventListener('change', parseBulk2);
+
+async function saveBulk2() {
+  const raw = document.getElementById('bulkTextarea2').value;
+  const format = document.getElementById('bulkFormat2').value;
+  const parsed = raw.split('\n').map(l=>l.trim()).filter(l=>l).map(line => {
+    const p = line.split('|').map(s=>s.trim());
+    const yr = parseInt(p[3]);
+    return { title:p[0]||'', artist_director:p[1]||null, genre:p[2]||null, year:(yr>=1888&&yr<=2099)?yr:null };
+  }).filter(i=>i.title);
+  if (!parsed.length || !format) { showToast('Add titles and select a format'); return; }
+  const btn = document.getElementById('btnBulkSave2');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const payload = parsed.map(i => ({ ...i, format, notes: null }));
+  try {
+    const created = await sb(TABLE, { method: 'POST', body: JSON.stringify(payload) });
+    if (created) items.push(...created);
+    items.sort((a,b) => a.title.localeCompare(b.title));
+    showToast(`${payload.length} item${payload.length!==1?'s':''} added`);
+    closeModal();
+    renderGrid();
+  } catch(e) {
+    showToast('Error saving');
+    btn.disabled = false; btn.textContent = 'Import';
+  }
+}
+
+// ── MEDIA TYPE ───────────────────────────────────────────
+const VIDEO_FORMATS = ['Blu-ray','DVD','VHS'];
+let currentMediaType = 'Movie';
+
+function setMediaType(type) {
+  currentMediaType = type;
+  const isMovie = type === 'Movie';
+  document.getElementById('fTypeMovie').style.background = isMovie ? 'var(--blue)' : 'var(--bg)';
+  document.getElementById('fTypeMovie').style.color      = isMovie ? '#fff' : 'var(--text-muted)';
+  document.getElementById('fTypeTV').style.background    = !isMovie ? 'var(--blue)' : 'var(--bg)';
+  document.getElementById('fTypeTV').style.color         = !isMovie ? '#fff' : 'var(--text-muted)';
+}
+
+function updateTypeRowVisibility() {
+  const fmt = document.getElementById('fFormat').value;
+  const show = VIDEO_FORMATS.includes(fmt);
+  document.getElementById('fTypeRow').style.display = show ? '' : 'none';
+}
+
+// ── MODAL ────────────────────────────────────────────────
+function openModal(item=null) {
+  editingId = item ? item.id : null;
+  setModalTab('single');
+  document.getElementById('modalTitle').textContent = item ? 'Edit Item' : 'Add Item';
+  document.getElementById('fTitle').value  = item?.title || '';
+  document.getElementById('fFormat').value = item?.format || '';
+  document.getElementById('fGenre').value  = item?.genre || '';
+  document.getElementById('fArtist').value = item?.artist_director || '';
+  document.getElementById('fYear').value   = item?.year || '';
+  document.getElementById('fNotes').value  = item?.notes || '';
+  document.getElementById('btnSave').disabled = false;
+  setMediaType(item?.media_type || 'Movie');
+  updateTypeRowVisibility();
+  document.getElementById('fFormat').onchange = updateTypeRowVisibility;
+  // hide bulk/scan tabs when editing
+  document.getElementById('tabBulk').style.display = item ? 'none' : '';
+  document.getElementById('tabScan').style.display = item ? 'none' : '';
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('fTitle').focus(), 100);
+}
+
+function closeModal() {
+  stopScannerInModal();
+  document.getElementById('modalOverlay').classList.remove('open');
+  editingId = null;
+  window._foundWishId = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function editItem(id) {
+  const item = items.find(i => i.id === id);
+  if (item) openModal(item);
+}
+
+async function saveItem() {
+  const title  = document.getElementById('fTitle').value.trim();
+  const format = document.getElementById('fFormat').value;
+  if (!title || !format) { showToast('Title and format are required'); return; }
+
+  const payload = {
+    title,
+    format,
+    genre: document.getElementById('fGenre').value.trim() || null,
+    artist_director: document.getElementById('fArtist').value.trim() || null,
+    year: parseInt(document.getElementById('fYear').value) || null,
+    notes: document.getElementById('fNotes').value.trim() || null,
+    media_type: VIDEO_FORMATS.includes(format) ? currentMediaType : null,
+  };
+
+  document.getElementById('btnSave').disabled = true;
+  try {
+    if (editingId) {
+      const updated = await sb(`${TABLE}?id=eq.${editingId}`, {
+        method: 'PATCH', body: JSON.stringify(payload)
+      });
+      const idx = items.findIndex(i => i.id === editingId);
+      if (idx > -1) items[idx] = { ...items[idx], ...payload };
+      showToast('Item updated');
+    } else {
+      const created = await sb(TABLE, { method: 'POST', body: JSON.stringify(payload) });
+      if (created && created[0]) items.push(created[0]);
+      items.sort((a,b) => a.title.localeCompare(b.title));
+      showToast('Item added');
+    }
+    closeModal();
+    renderGrid();
+  } catch(e) {
+    showToast('Error saving — check console');
+    console.error(e);
+    document.getElementById('btnSave').disabled = false;
+  }
+}
+
+async function deleteItem(e, id) {
+  e.stopPropagation();
+  if (!confirm('Remove this item from the shelf?')) return;
+  try {
+    await sb(`${TABLE}?id=eq.${id}`, { method: 'DELETE', prefer: 'return=minimal' });
+    items = items.filter(i => i.id !== id);
+    renderGrid();
+    showToast('Item removed');
+  } catch(err) {
+    showToast('Error removing item');
+    console.error(err);
+  }
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── THEME ─────────────────────────────────────────────────
+const moonSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const sunSVG  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+    document.getElementById('themeToggle').innerHTML = sunSVG;
+    document.querySelector('meta[name="theme-color"]').content = '#141c2e';
+  } else {
+    document.documentElement.classList.remove('dark');
+    document.getElementById('themeToggle').innerHTML = moonSVG;
+    document.querySelector('meta[name="theme-color"]').content = '#ede8df';
+  }
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const next = isDark ? 'light' : 'dark';
+  localStorage.setItem('rao-theme', next);
+  applyTheme(next);
+}
+
+applyTheme(localStorage.getItem('rao-theme') || 'light');
+// ── BULK ENTRY ────────────────────────────────────────────
+function openBulk() {
+  hideLibraryUI();
+  document.getElementById('bulkPanel').classList.add('open');
+  document.getElementById('bulkTextarea').focus();
+}
+
+function closeBulk() {
+  document.getElementById('bulkPanel').classList.remove('open');
+  document.getElementById('bulkTextarea').value = '';
+  document.getElementById('bulkFormat').value = '';
+  document.getElementById('bulkPreview').innerHTML = '<div class="preview-empty">Start typing to see a preview</div>';
+  document.getElementById('bulkCountLabel').textContent = '0 items';
+  document.getElementById('bulkStatusLabel').textContent = '';
+  document.getElementById('btnBulkSave').disabled = true;
+  showLibraryUI();
+}
+
+function parseBulkLines() {
+  const raw = document.getElementById('bulkTextarea').value;
+  return raw.split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0)
+    .map(line => {
+      const parts = line.split('|').map(p => p.trim());
+      const yr = parseInt(parts[3]);
+      return { title: parts[0] || '', artist_director: parts[1] || null, genre: parts[2] || null, year: (yr >= 1888 && yr <= 2099) ? yr : null };
+    })
+    .filter(item => item.title.length > 0);
+}
+
+function parseBulk() {
+  const parsed = parseBulkLines();
+  const format = document.getElementById('bulkFormat').value;
+  const count = parsed.length;
+  document.getElementById('bulkCountLabel').textContent = `${count} item${count !== 1 ? 's' : ''}`;
+  document.getElementById('btnBulkSave').disabled = count === 0 || !format;
+  const preview = document.getElementById('bulkPreview');
+  if (!count) {
+    preview.innerHTML = '<div class="preview-empty">Start typing to see a preview</div>';
+    return;
+  }
+  preview.innerHTML = parsed.map((item, i) => `
+    <div class="preview-item">
+      <div class="preview-num">${i + 1}</div>
+      <div class="preview-info">
+        <div class="preview-title">${esc(item.title)}</div>
+        ${item.artist_director || item.genre || item.year ? `<div class="preview-meta">${[item.artist_director, item.genre, item.year].filter(Boolean).map(esc).join(' · ')}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+document.getElementById('bulkFormat').addEventListener('change', parseBulk);
+
+async function saveBulk() {
+  const parsed = parseBulkLines();
+  const format = document.getElementById('bulkFormat').value;
+  if (!parsed.length || !format) { showToast('Add some titles and select a format'); return; }
+  const btn = document.getElementById('btnBulkSave');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  const payload = parsed.map(item => ({
+    title: item.title, format,
+    artist_director: item.artist_director || null,
+    genre: item.genre || null,
+    year: item.year || null,
+    notes: null,
+  }));
+  try {
+    const created = await sb(TABLE, { method: 'POST', body: JSON.stringify(payload) });
+    if (created) items.push(...created);
+    items.sort((a, b) => a.title.localeCompare(b.title));
+    showToast(`${payload.length} item${payload.length !== 1 ? 's' : ''} added`);
+    closeBulk();
+    renderGrid();
+  } catch(e) {
+    showToast('Error saving — check console');
+    console.error(e);
+    btn.disabled = false;
+    btn.textContent = 'Import Items';
+  }
+}
+
+// ── BARCODE SCANNER ──────────────────────────────────────
+let scannerStream = null;
+let scannerInterval = null;
+let scannerActive = false;
+
+async function openScanner() {
+  document.getElementById('scannerOverlay').classList.add('open');
+  document.getElementById('scannerStatus').textContent = 'Starting camera…';
+  document.getElementById('scannerResult').textContent = '';
+  scannerActive = true;
+
+  // Load ZXing library dynamically
+  if (!window.ZXing) {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@zxing/library@0.19.1/umd/index.min.js';
+    script.onload = startCamera;
+    script.onerror = () => {
+      document.getElementById('scannerStatus').textContent = 'Failed to load scanner library. Check your connection.';
+    };
+    document.head.appendChild(script);
+  } else {
+    startCamera();
+  }
+}
+
+async function startCamera() {
+  try {
+    // Request camera permission first
+    scannerStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' }
+    });
+    // Stop the test stream — ZXing will open its own
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+    document.getElementById('scannerStatus').textContent = 'Point camera at barcode…';
+    startDecoding();
+  } catch(e) {
+    document.getElementById('scannerStatus').textContent = 'Camera access denied. Please allow camera permission and try again.';
+    console.error(e);
+  }
+}
+
+function startDecoding() {
+  const video = document.getElementById('scannerVideo');
+  const codeReader = new ZXing.BrowserMultiFormatReader();
+  codeReader.decodeFromVideoDevice(null, video, (result, err) => {
+    if (result && scannerActive) {
+      scannerActive = false;
+      codeReader.reset();
+      const upc = result.getText();
+      document.getElementById('scannerStatus').textContent = `Barcode detected: ${upc}`;
+      document.getElementById('scannerResult').textContent = 'Looking up…';
+      lookupUPC(upc);
+    }
+    // err is normal when no barcode in frame — ignore
+  });
+  // Store reader for cleanup
+  window._codeReader = codeReader;
+}
+
+async function lookupUPC(upc) {
+  document.getElementById('scannerResult').textContent = 'Searching databases…';
+
+  let found = null;
+
+  // 1. Try Open Library (great for books via ISBN)
+  try {
+    const res = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${upc}&format=json&jscmd=data`);
+    const data = await res.json();
+    const key = `ISBN:${upc}`;
+    if (data[key]) {
+      const book = data[key];
+      const authors = book.authors ? book.authors.map(a => a.name).join(', ') : '';
+      const year = book.publish_date ? book.publish_date.match(/\d{4}/) : null;
+      found = {
+        title: book.title || '',
+        artist: authors,
+        format: 'Books',
+        genre: book.subjects ? book.subjects[0]?.name || '' : '',
+        year: year ? parseInt(year[0]) : null,
+      };
+    }
+  } catch(e) { console.log('Open Library miss:', e); }
+
+  // 2. Try MusicBrainz (great for CDs)
+  if (!found) {
+    try {
+      const res = await fetch(`https://musicbrainz.org/ws/2/release?query=barcode:${upc}&fmt=json&limit=1`, {
+        headers: { 'User-Agent': 'myShelf/1.0 (personal media library)' }
+      });
+      const data = await res.json();
+      if (data.releases && data.releases.length > 0) {
+        const release = data.releases[0];
+        const artist = release['artist-credit'] ? release['artist-credit'].map(a => a.name || a.artist?.name).join(', ') : '';
+        const year = release.date ? release.date.substring(0, 4) : null;
+        found = {
+          title: release.title || '',
+          artist,
+          format: 'CD',
+          genre: '',
+          year: year ? parseInt(year) : null,
+        };
+      }
+    } catch(e) { console.log('MusicBrainz miss:', e); }
+  }
+
+  // 3. Try UPC Item DB as final fallback
+  if (!found) {
+    try {
+      const res = await fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`);
+      const data = await res.json();
+      if (data.items && data.items.length > 0) {
+        const item = data.items[0];
+        const cat = (item.category || '').toLowerCase();
+        const desc = (item.description || '').toLowerCase();
+        let format = '';
+        if (cat.includes('vinyl') || desc.includes('vinyl')) format = 'Vinyl';
+        else if (cat.includes('blu') || desc.includes('blu-ray')) format = 'Blu-ray';
+        else if (cat.includes('dvd') || desc.includes('dvd')) format = 'DVD';
+        else if (cat.includes('cd') || desc.includes('audio cd')) format = 'CD';
+        else if (cat.includes('book') || desc.includes('book')) format = 'Books';
+        const yearMatch = (item.description || '').match(/\b(19|20)\d{2}\b/);
+        found = {
+          title: item.title || '',
+          artist: item.brand || '',
+          format,
+          genre: '',
+          year: yearMatch ? parseInt(yearMatch[0]) : null,
+        };
+      }
+    } catch(e) { console.log('UPC Item DB miss:', e); }
+  }
+
+  if (!found) {
+    document.getElementById('scannerResult').textContent = 'Not found in any database — enter manually.';
+    setTimeout(() => { closeScanner(); openModal(); }, 1800);
+    return;
+  }
+
+  // Duplicate check — partial case-insensitive match
+  const titleLower = found.title.toLowerCase();
+  const duplicate = items.find(i =>
+    titleLower.includes(i.title.toLowerCase()) ||
+    i.title.toLowerCase().includes(titleLower)
+  );
+
+  if (duplicate) {
+    document.getElementById('scannerResult').textContent = '';
+    document.getElementById('scannerStatus').textContent = `Already on your shelf: ${duplicate.title}`;
+    setTimeout(closeScanner, 2500);
+    return;
+  }
+
+  // Pre-fill form
+  document.getElementById('scannerResult').textContent = `Found: ${found.title}`;
+  setTimeout(() => {
+    closeScanner();
+    openModal();
+    document.getElementById('fTitle').value = found.title;
+    document.getElementById('fArtist').value = found.artist || '';
+    document.getElementById('fFormat').value = found.format || '';
+    if (found.year) document.getElementById('fYear').value = found.year;
+    if (found.genre) document.getElementById('fGenre').value = found.genre;
+  }, 800);
+}
+
+function closeScanner() {
+  scannerActive = false;
+  clearInterval(scannerInterval);
+  if (window._codeReader) {
+    window._codeReader.reset();
+    window._codeReader = null;
+  }
+  if (scannerStream) {
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+  }
+  document.getElementById('scannerVideo').srcObject = null;
+  document.getElementById('scannerOverlay').classList.remove('open');
+  document.getElementById('scannerStatus').textContent = 'Point camera at barcode on CD, Blu-ray, DVD, or vinyl sleeve';
+  document.getElementById('scannerResult').textContent = '';
+}
+
+// ── SETTINGS ─────────────────────────────────────────────
+const ALL_FORMATS = [
+  { id: 'tog-vinyl',  format: 'Vinyl' },
+  { id: 'tog-cd',     format: 'CD' },
+  { id: 'tog-bluray', format: 'Blu-ray' },
+  { id: 'tog-dvd',    format: 'DVD' },
+  { id: 'tog-vhs',    format: 'VHS' },
+  { id: 'tog-books',  format: 'Books' },
+];
+
+function loadFormatSettings() {
+  const saved = localStorage.getItem('rao-formats');
+  if (saved) {
+    const enabled = JSON.parse(saved);
+    ALL_FORMATS.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (el) el.checked = enabled.includes(f.format);
+    });
+  }
+  applyFormatSettings();
+}
+
+function saveFormatSettings() {
+  const enabled = ALL_FORMATS.filter(f => document.getElementById(f.id)?.checked).map(f => f.format);
+  localStorage.setItem('rao-formats', JSON.stringify(enabled));
+  applyFormatSettings();
+}
+
+function getEnabledFormats() {
+  const saved = localStorage.getItem('rao-formats');
+  if (saved) return JSON.parse(saved);
+  return ALL_FORMATS.map(f => f.format);
+}
+
+function applyFormatSettings() {
+  const enabled = getEnabledFormats();
+
+  ALL_FORMATS.forEach(f => {
+    const btn = document.querySelector(`.filter-btn[data-format="${f.format}"]`);
+    if (btn) btn.style.display = enabled.includes(f.format) ? '' : 'none';
+  });
+
+  const fFormat = document.getElementById('fFormat');
+  if (fFormat) {
+    Array.from(fFormat.options).forEach(opt => {
+      if (opt.value === '') return;
+      opt.style.display = enabled.includes(opt.value) ? '' : 'none';
+    });
+  }
+
+  const bulkFormat = document.getElementById('bulkFormat');
+  if (bulkFormat) {
+    Array.from(bulkFormat.options).forEach(opt => {
+      if (opt.value === '') return;
+      opt.style.display = enabled.includes(opt.value) ? '' : 'none';
+    });
+  }
+
+  renderGrid();
+}
+
+function openSettings() {
+  loadFormatSettings();
+  document.getElementById('settingsOverlay').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settingsOverlay').classList.remove('open');
+}
+
+function handleSettingsOverlayClick(e) {
+  if (e.target === document.getElementById('settingsOverlay')) closeSettings();
+}
+
+// ── EARN IT RULES ─────────────────────────────────────────
+let rules = {};
+
+async function loadRules() {
+  try {
+    const data = await sb(`shelf_rules?select=*`);
+    rules = {};
+    if (data) data.forEach(r => { rules[r.format] = r; });
+  } catch(e) { console.error('Error loading rules:', e); }
+}
+
+async function addRule() {
+  const format = document.getElementById('newRuleFormat').value;
+  const plays  = parseInt(document.getElementById('newRulePlays').value);
+  if (!format || !plays || plays < 1) { showToast('Pick a format and number of plays'); return; }
+  if (rules[format]) { showToast(`A rule for ${format} already exists — edit it below`); return; }
+  try {
+    const created = await sb('shelf_rules', { method: 'POST', body: JSON.stringify({ format, plays_required: plays }) });
+    if (created && created[0]) rules[created[0].format] = created[0];
+    document.getElementById('newRuleFormat').value = '';
+    document.getElementById('newRulePlays').value  = '';
+    renderRules();
+    renderGrid();
+    showToast(`Rule added for ${format}`);
+  } catch(e) { showToast('Error saving rule'); console.error(e); }
+}
+
+async function updateRule(format, plays) {
+  const rule = rules[format];
+  if (!rule) return;
+  try {
+    await sb(`shelf_rules?id=eq.${rule.id}`, { method: 'PATCH', body: JSON.stringify({ plays_required: plays }) });
+    rules[format].plays_required = plays;
+    renderRules();
+    showToast('Rule updated');
+  } catch(e) { showToast('Error updating rule'); console.error(e); }
+}
+
+async function deleteRule(format) {
+  const rule = rules[format];
+  if (!rule) return;
+  if (!confirm(`Remove the ${format} rule?`)) return;
+  try {
+    await sb(`shelf_rules?id=eq.${rule.id}`, { method: 'DELETE', prefer: 'return=minimal' });
+    delete rules[format];
+    renderRules();
+    renderGrid();
+    showToast(`${format} rule removed`);
+  } catch(e) { showToast('Error removing rule'); console.error(e); }
+}
+
+async function logPlay(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  const newCount = (item.play_count || 0) + 1;
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    await sb(`shelf_items?id=eq.${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ play_count: newCount, last_played: today })
+    });
+    item.play_count = newCount;
+    item.last_played = today;
+    renderGrid();
+    showToast(`▶ Logged — ${esc(item.title)}`);
+    if (rules[item.format]) renderRules();
+  } catch(e) { showToast('Error logging play'); console.error(e); }
+}
+
+function getPlaysSinceReset(format) {
+  return items.filter(i => i.format === format && (i.play_count || 0) > 0)
+              .reduce((sum, i) => sum + (i.play_count || 0), 0);
+}
+
+function renderRules() {
+  const list = document.getElementById('rulesList');
+  if (!list) return;
+  const ruleFormats = Object.keys(rules);
+  if (ruleFormats.length === 0) {
+    list.innerHTML = '<div class="no-rules-msg">No rules yet — add one below</div>';
+    return;
+  }
+  const formatColors = {
+    'Vinyl':'var(--red)','CD':'var(--blue)','Blu-ray':'var(--teal)',
+    'DVD':'var(--purple)','VHS':'var(--green)','Books':'var(--orange)'
+  };
+  list.innerHTML = ruleFormats.map(format => {
+    const rule   = rules[format];
+    const played = getPlaysSinceReset(format);
+    const total  = rule.plays_required;
+    const pct    = Math.min(100, Math.round((played / total) * 100));
+    const earned = played >= total;
+    const color  = formatColors[format] || 'var(--neon)';
+    return `
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <div class="rule-card-left">
+          <div style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0"></div>
+          <div class="rule-format-label">${format}</div>
+        </div>
+        <div class="rule-status ${earned ? 'earned' : ''}">
+          ${earned ? '✓ EARNED — go buy one!' : `${played} / ${total} plays`}
+        </div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div class="rule-actions">
+        <span class="rule-label">plays needed:</span>
+        <input class="rule-input" type="number" min="1" max="999" value="${total}" id="rule-input-${format}">
+        <button class="rule-save-btn" onclick="updateRule('${format}', parseInt(document.getElementById('rule-input-${format}').value))">Save</button>
+        <button class="rule-reset-btn" onclick="resetRuleProgress('${format}')">Reset</button>
+        <button class="rule-reset-btn" onclick="deleteRule('${format}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function resetRuleProgress(format) {
+  if (!confirm(`Reset all play counts for ${format}? This cannot be undone.`)) return;
+  const toReset = items.filter(i => i.format === format);
+  try {
+    await Promise.all(toReset.map(i =>
+      sb(`shelf_items?id=eq.${i.id}`, { method: 'PATCH', body: JSON.stringify({ play_count: 0, last_played: null }) })
+    ));
+    toReset.forEach(i => { i.play_count = 0; i.last_played = null; });
+    renderRules();
+    renderGrid();
+    showToast(`${format} play counts reset`);
+  } catch(e) { showToast('Error resetting'); console.error(e); }
+}
+
+function openRules() {
+  renderRules();
+  document.getElementById('rulesOverlay').classList.add('open');
+}
+
+function closeRules() {
+  document.getElementById('rulesOverlay').classList.remove('open');
+}
+
+function handleRulesOverlayClick(e) {
+  if (e.target === document.getElementById('rulesOverlay')) closeRules();
+}
+
+// ── WISH LIST ─────────────────────────────────────────────
+let wishItems = [];
+
+async function loadWishItems() {
+  try {
+    wishItems = await sb(`wish_items?order=format.asc,title.asc&select=*`) || [];
+  } catch(e) { console.error('Error loading wish list:', e); }
+}
+
+function openWish() {
+  hideLibraryUI();
+  document.getElementById('wishPanel').classList.add('open');
+  loadWishItems().then(renderWishGrid);
+}
+
+function closeWish() {
+  document.getElementById('wishPanel').classList.remove('open');
+  showLibraryUI();
+  document.getElementById('wTitle').value = '';
+  document.getElementById('wFormat').value = '';
+  document.getElementById('wArtist').value = '';
+  document.getElementById('wNotes').value = '';
+}
+
+async function addWishItem() {
+  const title = document.getElementById('wTitle').value.trim();
+  if (!title) { showToast('Title is required'); return; }
+  const payload = {
+    title,
+    format: document.getElementById('wFormat').value || null,
+    artist_director: document.getElementById('wArtist').value.trim() || null,
+    notes: document.getElementById('wNotes').value.trim() || null,
+  };
+  try {
+    const created = await sb('wish_items', { method: 'POST', body: JSON.stringify(payload) });
+    if (created && created[0]) wishItems.push(created[0]);
+    wishItems.sort((a,b) => (a.format||'').localeCompare(b.format||'') || a.title.localeCompare(b.title));
+    document.getElementById('wTitle').value = '';
+    document.getElementById('wFormat').value = '';
+    document.getElementById('wArtist').value = '';
+    document.getElementById('wNotes').value = '';
+    renderWishGrid();
+    showToast('Added to wish list');
+  } catch(e) { showToast('Error adding item'); console.error(e); }
+}
+
+async function deleteWishItem(id) {
+  if (!confirm('Remove from wish list?')) return;
+  try {
+    await sb(`wish_items?id=eq.${id}`, { method: 'DELETE', prefer: 'return=minimal' });
+    wishItems = wishItems.filter(i => i.id !== id);
+    renderWishGrid();
+    showToast('Removed from wish list');
+  } catch(e) { showToast('Error removing item'); console.error(e); }
+}
+
+function foundWishItem(id) {
+  const item = wishItems.find(i => i.id === id);
+  if (!item) return;
+  // Pre-fill the Add Item modal and offer to delete from wish list after saving
+  closeWish();
+  openModal();
+  document.getElementById('fTitle').value  = item.title || '';
+  document.getElementById('fFormat').value = item.format || '';
+  document.getElementById('fArtist').value = item.artist_director || '';
+  document.getElementById('fNotes').value  = item.notes || '';
+  // Store wish id so we can remove it after save
+  window._foundWishId = id;
+  showToast('Fill in the details and save to add to your library');
+}
+
+// Hook into saveItem to remove from wish list if this came from "Found it"
+const _origSaveItem = saveItem;
+window.saveItem = async function() {
+  await _origSaveItem();
+  if (window._foundWishId) {
+    const wishId = window._foundWishId;
+    window._foundWishId = null;
+    try {
+      await sb(`wish_items?id=eq.${wishId}`, { method: 'DELETE', prefer: 'return=minimal' });
+      wishItems = wishItems.filter(i => i.id !== wishId);
+      showToast('Moved from wish list to your library ✓');
+    } catch(e) { console.error('Error removing from wish list:', e); }
+  }
+};
+
+function renderWishGrid() {
+  const count = wishItems.length;
+  document.getElementById('wishCount').textContent = `${count} item${count !== 1 ? 's' : ''}`;
+
+  const formatColors = {
+    'Vinyl':'var(--red)','CD':'var(--blue)','Blu-ray':'var(--teal)',
+    'DVD':'var(--purple)','VHS':'var(--green)','Books':'var(--orange)'
+  };
+
+  const grid = document.getElementById('wishGrid');
+  if (!count) {
+    grid.innerHTML = `<div class="wish-empty"><p>The wish list is empty.</p><p>Add something you're hunting for above.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = `<div class="wish-grid">${wishItems.map(it => `
+    <div class="wish-card" style="border-left-color:${formatColors[it.format] || 'var(--neon-dim)'}">
+      <div class="wish-card-actions">
+        <button class="wish-found-btn" onclick="foundWishItem('${it.id}')" title="Found it — add to library">✓ Found it</button>
+        <button class="icon-btn del" onclick="deleteWishItem('${it.id}')" title="Remove">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        </button>
+      </div>
+      <div class="wish-card-format">
+        <span class="format-dot ${formatClass(it.format)}"></span>
+        ${it.format || 'Any format'}
+      </div>
+      <div class="wish-card-title">${esc(it.title)}</div>
+      ${it.artist_director ? `<div class="wish-card-artist">${esc(it.artist_director)}</div>` : ''}
+      ${it.notes ? `<div class="wish-card-notes">${esc(it.notes)}</div>` : ''}
+    </div>`).join('')}</div>`;
+}
+
+// ── TV GUIDE ──────────────────────────────────────────────
+const TV_SLOTS = ['7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM'];
+const TV_SLOT_LABELS = { '7:00 PM': '7pm · Music', '8:00 PM': '8pm · TV', '9:00 PM': '9pm · Movie', '10:00 PM': '10pm · Reading' };
+const TV_TABLE = 'tv_guide';
+let tvSchedule = []; // flat array of slot objects from Supabase
+
+const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function getWeekDates() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  return Array.from({length:7}, (_,i) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    return d;
+  });
+}
+
+function dateStr(d) {
+  return d.toISOString().split('T')[0];
+}
+
+function formatDateLabel(d) {
+  return `${DAYS_SHORT[d.getDay()]}\n${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickItems(pool, count) {
+  if (!pool.length) return [];
+  // Divide into tertiles by play count so least-played are favoured
+  // but within each tertile items are fully shuffled — breaks alphabetical clustering
+  const sorted = [...pool].sort((a,b) => (a.play_count||0) - (b.play_count||0));
+  const third = Math.ceil(sorted.length / 3);
+  const t1 = shuffle(sorted.slice(0, third));
+  const t2 = shuffle(sorted.slice(third, third * 2));
+  const t3 = shuffle(sorted.slice(third * 2));
+  // Draw from tertiles in 3:2:1 ratio, cycling
+  const weighted = [];
+  const maxLen = Math.max(t1.length, t2.length, t3.length);
+  for (let i = 0; i < maxLen; i++) {
+    if (i < t1.length) weighted.push(t1[i]);
+    if (i < t1.length) weighted.push(t1[(i + Math.floor(t1.length/2)) % t1.length]); // double-weight t1
+    if (i < t2.length) weighted.push(t2[i]);
+    if (i < t3.length) weighted.push(t3[i]);
+  }
+  // Deduplicate while preserving order
+  const seen = new Set();
+  const deduped = weighted.filter(item => {
+    if (seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+  // Cycle if needed
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(deduped[i % deduped.length]);
+  }
+  return result;
+}
+
+function isSeriesItem(item) {
+  // Heuristic: title contains "Season", "Series", "Complete", "Collection"
+  const t = (item.title||'').toLowerCase();
+  return t.includes('season') || t.includes('series') || t.includes('complete') || t.includes('collection') || item.format === 'VHS';
+}
+
+async function generateGuide() {
+  document.getElementById('tvGrid').className = 'tv-loading';
+  document.getElementById('tvGrid').textContent = 'Generating your guide…';
+
+  const dates = getWeekDates();
+
+  // Delete existing schedule for these 7 days
+  try {
+    const startDate = dateStr(dates[0]);
+    const endDate   = dateStr(dates[6]);
+    await sb(`${TV_TABLE}?slot_date=gte.${startDate}&slot_date=lte.${endDate}`, {
+      method: 'DELETE', prefer: 'return=minimal'
+    });
+  } catch(e) { console.error('Error clearing old guide:', e); }
+
+  // Build pools
+  const musicPool = items.filter(i => ['Vinyl','CD'].includes(i.format));
+  // Use media_type if set, fall back to keyword detection for legacy items
+  const tvPool    = items.filter(i => ['Blu-ray','DVD','VHS'].includes(i.format) &&
+    (i.media_type === 'TV' || (!i.media_type && isSeriesItemByTitle(i.title))));
+  const moviePool = items.filter(i => ['Blu-ray','DVD','VHS'].includes(i.format) &&
+    (i.media_type === 'Movie' || (!i.media_type && !isSeriesItemByTitle(i.title))));
+
+  const musicPicked = pickItems(musicPool, 7);
+  const tvPicked    = pickItems(tvPool, 7);
+  const moviePicked = pickItems(moviePool, 7);
+
+  // Build insert payload
+  const rows = [];
+  dates.forEach((date, dayIdx) => {
+    const ds = dateStr(date);
+
+    // 7pm — music
+    const music = musicPicked[dayIdx % (musicPicked.length || 1)];
+    rows.push(music
+      ? { slot_date: ds, slot_time: '7:00 PM', item_id: music.id, item_title: music.title, item_format: music.format, watched: false }
+      : { slot_date: ds, slot_time: '7:00 PM', item_id: null, item_title: null, item_format: null, watched: false });
+
+    // 8pm — TV series
+    const tv = tvPicked[dayIdx % (tvPicked.length || 1)];
+    rows.push(tv
+      ? { slot_date: ds, slot_time: '8:00 PM', item_id: tv.id, item_title: tv.title, item_format: tv.format, watched: false }
+      : { slot_date: ds, slot_time: '8:00 PM', item_id: null, item_title: null, item_format: null, watched: false });
+
+    // 9pm — movie
+    const movie = moviePicked[dayIdx % (moviePicked.length || 1)];
+    rows.push(movie
+      ? { slot_date: ds, slot_time: '9:00 PM', item_id: movie.id, item_title: movie.title, item_format: movie.format, watched: false }
+      : { slot_date: ds, slot_time: '9:00 PM', item_id: null, item_title: null, item_format: null, watched: false });
+
+    // 10pm — reading hour
+    rows.push({ slot_date: ds, slot_time: '10:00 PM', item_id: null, item_title: null, item_format: 'reading', watched: false });
+  });
+
+  try {
+    const created = await sb(TV_TABLE, { method: 'POST', body: JSON.stringify(rows) });
+    tvSchedule = created || rows;
+    renderTVGrid();
+  } catch(e) {
+    document.getElementById('tvGrid').textContent = 'Error generating guide — try again.';
+    console.error(e);
+  }
+}
+
+async function loadTVGuide() {
+  const dates = getWeekDates();
+  const startDate = dateStr(dates[0]);
+  const endDate   = dateStr(dates[6]);
+  try {
+    const data = await sb(`${TV_TABLE}?slot_date=gte.${startDate}&slot_date=lte.${endDate}&order=slot_date.asc,slot_time.asc&select=*`);
+    tvSchedule = data || [];
+  } catch(e) { tvSchedule = []; }
+}
+
+async function markWatched(id) {
+  try {
+    await sb(`${TV_TABLE}?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ watched: true }) });
+    const slot = tvSchedule.find(s => s.id === id);
+    if (slot) {
+      slot.watched = true;
+      // Also log a play on the library item
+      if (slot.item_id) {
+        const libItem = items.find(i => i.id === slot.item_id);
+        if (libItem) {
+          const newCount = (libItem.play_count||0) + 1;
+          const today = new Date().toISOString().split('T')[0];
+          await sb(`shelf_items?id=eq.${slot.item_id}`, { method: 'PATCH', body: JSON.stringify({ play_count: newCount, last_played: today }) });
+          libItem.play_count = newCount;
+          libItem.last_played = today;
+        }
+      }
+    }
+    renderTVGrid();
+    showToast('Marked as watched ✓');
+  } catch(e) { showToast('Error marking watched'); console.error(e); }
+}
+
+const FORMAT_COLORS = {
+  'Vinyl':'var(--red)','CD':'var(--blue)','Blu-ray':'var(--teal)',
+  'DVD':'var(--purple)','VHS':'var(--green)','Books':'var(--orange)'
+};
+
+function renderTVGrid() {
+  const dates = getWeekDates();
+  const grid = document.getElementById('tvGrid');
+  grid.className = 'tv-grid';
+
+  // Build lookup: date+time -> slot
+  const lookup = {};
+  tvSchedule.forEach(s => { lookup[`${s.slot_date}_${s.slot_time}`] = s; });
+
+  let html = '';
+
+  // Header row — blank corner + 7 day labels
+  html += `<div class="tv-cell header"></div>`;
+  dates.forEach(d => {
+    const parts = formatDateLabel(d).split('\n');
+    html += `<div class="tv-cell header"><div class="tv-day-label">${parts[0]}<br>${parts[1]}</div></div>`;
+  });
+
+  // Time slot rows
+  TV_SLOTS.forEach(time => {
+    html += `<div class="tv-cell time-label"><div class="tv-time-label">${TV_SLOT_LABELS[time] || time}</div></div>`;
+    dates.forEach(d => {
+      const key = `${dateStr(d)}_${time}`;
+      const slot = lookup[key];
+      if (!slot) {
+        html += `<div class="tv-cell"><div class="tv-slot-title" style="color:var(--text-dim)">—</div></div>`;
+        return;
+      }
+      const isReading = slot.item_format === 'reading';
+      const isWatched = slot.watched;
+      html += `<div class="tv-cell${isWatched ? ' watched' : ''}">`;
+      if (isReading) {
+        html += `<div class="tv-reading-slot">📖 Reading Hour</div>`;
+      } else {
+        const color = FORMAT_COLORS[slot.item_format] || 'var(--text-dim)';
+        const isSeries = slot.item_title && isSeriesItemByTitle(slot.item_title);
+        html += `<div class="tv-slot">
+          <div class="tv-slot-format">
+            <span class="format-dot ${formatClass(slot.item_format)}"></span>
+            <span style="color:${color}">${slot.item_format||''}</span>
+          </div>
+          <div class="tv-slot-title">${esc(slot.item_title || '—')}</div>
+          ${isSeries ? `<div class="tv-slot-note">next episode</div>` : ''}
+          ${!isWatched ? `<button class="tv-watched-btn" onclick="markWatched('${slot.id}')">✓ Watched</button>` : `<div class="tv-slot-note" style="color:var(--neon-dim)">✓ done</div>`}
+        </div>`;
+      }
+      html += `</div>`;
+    });
+  });
+
+  grid.innerHTML = html;
+}
+
+function isSeriesItemByTitle(title) {
+  const t = (title||'').toLowerCase();
+  return t.includes('season') || t.includes('series') || t.includes('complete') || t.includes('collection');
+}
+
+function goHome() {
+  ['tvPanel','wishPanel','bulkPanel'].forEach(id => document.getElementById(id)?.classList.remove('open'));
+  showLibraryUI();
+}
+
+function hideLibraryUI() {
+  document.getElementById('gridWrap').style.display = 'none';
+  document.querySelector('.controls').style.display = 'none';
+  document.getElementById('subNav').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+
+function showLibraryUI() {
+  document.getElementById('gridWrap').style.display = '';
+  document.querySelector('.controls').style.display = '';
+  document.getElementById('subNav').style.display = '';
+}
+
+async function openTVGuide() {
+  hideLibraryUI();
+  document.getElementById('tvPanel').classList.add('open');
+  document.getElementById('tvGrid').className = 'tv-loading';
+  document.getElementById('tvGrid').textContent = 'Loading guide…';
+  await loadTVGuide();
+  if (tvSchedule.length > 0) {
+    renderTVGrid();
+  } else {
+    await generateGuide();
+  }
+}
+
+function closeTVGuide() {
+  document.getElementById('tvPanel').classList.remove('open');
+  showLibraryUI();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('rulesOverlay').classList.contains('open')) closeRules();
+    else if (document.getElementById('settingsOverlay').classList.contains('open')) closeSettings();
+    else if (document.getElementById('tvPanel').classList.contains('open')) closeTVGuide();
+    else if (document.getElementById('wishPanel').classList.contains('open')) closeWish();
+    else if (document.getElementById('bulkPanel').classList.contains('open')) closeBulk();
+    else closeModal();
+  }
+});
+</script>
+</body>
+</html>
