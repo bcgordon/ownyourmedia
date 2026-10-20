@@ -81,7 +81,12 @@ h2{margin:0;font-weight:800;font-size:clamp(36px,5vw,56px);letter-spacing:-.03em
 footer.wrap{padding-block:40px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px}
 footer span{display:block}
 footer .muted{color:var(--muted);font-size:18px}
-.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px;align-items:stretch}
+.way.top{background:#121212;color:#EDE8DE;border-color:#121212;box-shadow:8px 8px 0 #C9A45C}
+.way.top .eyebrow{color:#C9A45C}.way.top small,.way.top .price span,.way.top .alt-price{color:#b9b2a6}
+.way.top .btn.solid{background:#C9A45C;border-color:#C9A45C;color:#121212}
+.alt-price{margin:-8px 0 0;font:600 16px var(--mono);color:var(--muted)}
+.fine{margin:20px 0 0;font:500 15px var(--mono);color:var(--muted)}
 .way{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .way.alt{box-shadow:8px 8px 0 var(--blue)}
 .way .price,.way .eyebrow{margin:0}.way .price{flex-wrap:wrap}
@@ -104,10 +109,10 @@ footer .muted{color:var(--muted);font-size:18px}
     <div>
       <p class="eyebrow">Membership · Est. 2026</p>
       <h1>Join the club.</h1>
-      <p class="lead">A real card in the mail, perks at local shops, and a say in what we build. Two ways in: pay once, or subscribe and get the letters too.</p>
+      <p class="lead">A real card in the mail, perks at local shops, and a say in what we build. Three ways in: pay once, subscribe, or go all the way backstage.</p>
       <div class="price"><b>$20</b><span>a year · no auto-renew</span></div>
       <div class="ctas">
-        <a class="btn solid" href="#join">Two ways to join</a>
+        <a class="btn solid" href="#join">Ways to join</a>
         <a class="btn" href="#perks">What you get</a>
       </div>
     </div>
@@ -143,22 +148,33 @@ footer .muted{color:var(--muted);font-size:18px}
   </section>
 
   <section id="join" class="wrap">
-    <div class="rule"><h2>Two ways to join</h2><p>Same card, same perks</p></div>
+    <div class="rule"><h2>Pick your pass</h2><p>Every pass gets the card</p></div>
     <div class="ways">
       <div class="way">
         <p class="eyebrow">Card only</p>
         <div class="price"><b>$20</b><span>one time · for the year</span></div>
-        <ul><li>The card, stickers and every perk</li><li>No auto-renew, ever. Want another year? Join again.</li><li>For people who are done with subscriptions</li></ul>
+        <ul><li>The membership card in the mail</li><li>Stickers and local shop perks</li><li>No auto-renew, ever. Want another year? Join again.</li></ul>
         <a class="btn solid" href="mailto:bc@runawayanchor.com?subject=Own%20Your%20Media%20Club%20membership&amp;body=Put%20me%20on%20the%20list%20for%20a%20membership%20card.%0A%0AName%3A%20%0ACity%3A%20">Get on the list</a>
+        <small>For people who are done with subscriptions.</small>
       </div>
       <div class="way alt">
-        <p class="eyebrow">Card + Letters</p>
-        <div class="price"><b id="subPrice">$[PRICE]</b><span>a year · renews, cancel anytime</span></div>
-        <ul><li>Everything in Card only</li><li>A paid subscription to <b>Letters from BC Gordon</b>, BC’s essays by email</li><li>Your card renews with your subscription, so you never miss a year</li></ul>
-        <a class="btn solid" id="subBtn" href="#join" aria-disabled="true">Opening soon</a>
-        <small>Handled by Substack. Cancel there anytime.</small>
+        <p class="eyebrow">Member</p>
+        <div class="price"><b>$50</b><span>a year · two months free</span></div>
+        <p class="alt-price">or $5 a month</p>
+        <ul><li>Everything in Card only</li><li><b>Letters from BC Gordon</b>, BC’s essays by email</li><li><b>Crate Digs:</b> a monthly post on what BC found, where, and why it’s good</li><li><b>Liner Notes:</b> your name in the credits inside myPod and myShelf</li><li><b>Early access</b> to new features, weeks before everyone else</li><li>The members’ chat, for collecting talk and help</li></ul>
+        <a class="btn solid sub" data-tier="member" href="#join" aria-disabled="true">Opening soon</a>
+        <small>Monthly members get their card after three paid months.</small>
+      </div>
+      <div class="way top">
+        <p class="eyebrow">Backstage</p>
+        <div class="price"><b>$75</b><span>a year</span></div>
+        <p class="alt-price">or $10 a month</p>
+        <ul><li>Everything in Member</li><li><b>Your name engraved</b> on the back of your myPod</li><li><b>Seasonal looks:</b> a new case and screen each season, four a year</li><li><b>The yearly gathering:</b> a listening party or record swap, in person</li><li><b>[X]% off</b> a custom myPod edition</li></ul>
+        <a class="btn solid sub" data-tier="backstage" href="#join" aria-disabled="true">Opening soon</a>
+        <small>Monthly members get their card after three paid months.</small>
       </div>
     </div>
+    <p class="fine">Member and Backstage are handled by Substack. Cancel there anytime.</p>
   </section>
 
   <section id="editions" class="wrap">
@@ -193,7 +209,7 @@ footer .muted{color:var(--muted);font-size:18px}
     <div class="rule"><h2>Fair questions</h2></div>
     <div class="faq">
       <div><h3>Do I need to join to use myPod?</h3><p>No. myPod, myPod Elite and myShelf stay free for everyone. Membership is for people who want the card and the perks.</p></div>
-      <div><h3>Will it renew on its own?</h3><p>Card only never renews. Card + Letters renews with your Substack subscription, and you can cancel there anytime.</p></div>
+      <div><h3>Will it renew on its own?</h3><p>Card only never renews. Member and Backstage renew through Substack, and you can cancel there anytime.</p></div>
       <div><h3>New to owning music?</h3><p>Read <a href="/start/">Start here</a>. It’s easier than you think, and you don’t have to quit streaming.</p></div>
       <div><h3>Where does the money go?</h3><p>Printing cards, stickers, postage, keeping the sites running, and the occasional record.</p></div>
       <div><h3>Which shops?</h3><p>We’re talking with Twin Cities places we already love and send people to. We’ll list them here when it’s official.</p></div>
@@ -209,17 +225,17 @@ footer .muted{color:var(--muted);font-size:18px}
 <script>
 /* Tip jar: paste your Ko-fi (or Buy Me a Coffee) link here and the button switches on. */
 const TIP_URL = '';
-/* Card + Letters: paste the Substack subscribe link and the yearly price (numbers only) here. */
-const SUB_URL = '';
-const SUB_PRICE = '';
+/* Member and Backstage: paste each Substack checkout link here and its button switches on. */
+const SUB_URLS = { member: '', backstage: '' };
 (() => {
   const b = document.getElementById('tipBtn');
   if (TIP_URL) { b.href = TIP_URL; b.target = '_blank'; b.rel = 'noopener'; b.removeAttribute('aria-disabled'); b.textContent = 'Leave a tip'; }
   else b.addEventListener('click', e => e.preventDefault());
-  const s = document.getElementById('subBtn');
-  if (SUB_PRICE) document.getElementById('subPrice').textContent = '$' + SUB_PRICE;
-  if (SUB_URL) { s.href = SUB_URL; s.target = '_blank'; s.rel = 'noopener'; s.removeAttribute('aria-disabled'); s.textContent = 'Subscribe on Substack'; }
-  else s.addEventListener('click', e => e.preventDefault());
+  document.querySelectorAll('a.sub').forEach(x => {
+    const u = SUB_URLS[x.dataset.tier];
+    if (u) { x.href = u; x.target = '_blank'; x.rel = 'noopener'; x.removeAttribute('aria-disabled'); x.textContent = 'Join on Substack'; }
+    else x.addEventListener('click', e => e.preventDefault());
+  });
 })();
 </script>
 </body>
