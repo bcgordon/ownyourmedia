@@ -1046,6 +1046,58 @@ html.ed-elite .dk-side .dk-i{font-size:18px;letter-spacing:.04em}.dk-side .dk-i 
 .saber .stars button{color:#25414c}.saber .stars button.on,.saber .np-stars{color:#7fdcff}
 .saber .sbox{background:#020406;border-bottom:1px solid #12313d}.saber .sbox input{background:#0b1a20;color:#eaf9ff;border:1px solid #12313d}
 html.desk .saber .row:hover:not(.sel){background:rgba(95,208,255,.12)}
+
+/* ---------- Receiver look: a stereo faceplate with a big display, a turn-and-press knob and real buttons ---------- */
+.rx-keys,.rx-tx,.rx-dial{display:none}
+.pod.recv{border-radius:calc(var(--w)*.035)}
+.pod.recv .bezel{order:1;margin-top:calc(var(--w)*.05);padding:calc(var(--w)*.016);border-radius:calc(var(--w)*.022)}
+.pod.recv .screen{width:calc(var(--w)*.88);height:calc(var(--w)*.64)}
+.pod.recv .lbl{display:none}
+.pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
+.rx-src,.rx-modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--w)*.016)}
+.rx-modes{display:none}.pod.recv.rx-np .rx-modes{display:grid}.pod.recv.rx-np .rx-src{display:none}
+.rx-keys button,.rx-tx button{min-height:44px;border:0;border-radius:calc(var(--w)*.02);background:var(--rx-key);color:var(--rx-ink);
+  font:700 calc(var(--w)*.032)/1 var(--f-ui,system-ui);letter-spacing:.06em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--w)*.012);
+  box-shadow:inset 0 calc(var(--w)*-.009) 0 rgba(0,0,0,.28);cursor:pointer;padding:calc(var(--w)*.018) 0;-webkit-tap-highlight-color:transparent}
+.rx-keys button:active,.rx-tx button:active{transform:translateY(1px);box-shadow:inset 0 calc(var(--w)*-.004) 0 rgba(0,0,0,.28)}
+.rx-keys i{width:calc(var(--w)*.022);height:calc(var(--w)*.022);border-radius:50%;background:rgba(0,0,0,.35)}
+.rx-keys button.lit i{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
+.rx-keys b{font-size:calc(var(--w)*.05);line-height:.6}
+.pod.recv .wheel{isolation:isolate;order:3;width:calc(var(--w)*.46);margin-block:auto;background:var(--wheel);
+  box-shadow:0 0 0 calc(var(--w)*.006) var(--wheel-edge),0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.4)}
+.pod.recv .wheel::before{content:'';position:absolute;inset:-11%;border-radius:50%;z-index:-1;pointer-events:none;
+  background:repeating-conic-gradient(var(--rx-ink) 0 1.4deg,transparent 1.4deg 18deg);
+  -webkit-mask:radial-gradient(circle closest-side,transparent 85%,#000 86%,#000 96%,transparent 97%);mask:radial-gradient(circle closest-side,transparent 85%,#000 86%,#000 96%,transparent 97%);opacity:.8}
+.pod.recv .rx-dial{display:block;position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:rotate(var(--rx-a,0rad))}
+.pod.recv .rx-dial i{position:absolute;top:6%;left:50%;width:7%;height:7%;margin-left:-3.5%;border-radius:50%;background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
+.pod.recv .center{z-index:1;display:grid;place-items:center;color:#f1f2f3;font:700 calc(var(--w)*.03)/1 var(--f-ui,system-ui);letter-spacing:.12em}
+.pod.recv .center::after{content:'SELECT'}.pod.recv.rx-np .center::after{content:'MODE'}.pod.recv.rx-vid .center::after{content:'PLAY'}
+.pod.recv .rx-tx{order:4;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--w)*.02);width:calc(var(--w)*.91);margin-bottom:calc(var(--w)*.05)}
+.rx-tx svg{width:calc(var(--w)*.07);height:calc(var(--w)*.07);fill:currentColor}
+.pod.recv .jl-bay{display:none}
+html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
+@media (display-mode: standalone),(max-width:600px) and (pointer:coarse){
+  .pod.recv .screen{width:100%;height:calc(var(--w)*.72)}
+  .pod.recv .wheel{width:min(calc(var(--w)*.6),300px)}
+  .pod.recv .rx-keys,.pod.recv .rx-tx{width:calc(100% - 24px)}
+}
+/* Receiver displays: glowing amber or teal text on black */
+.screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
+.vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
+.vfd .bar svg{fill:var(--vfd);color:var(--vfd)}.vfd .bar svg *{stroke:var(--vfd)}
+.vfd .bar-r,.vfd .crn-clock{color:var(--vfd)}.vfd .crn-eq i{background:var(--vfd)}
+.vfd .row{text-transform:uppercase;color:var(--vfd);text-shadow:0 0 .8cqw color-mix(in srgb,var(--vfd) 60%,transparent)}
+.vfd .row.sel{background:var(--vfd);color:#0b0a07;text-shadow:none}
+.vfd .row .r,.vfd .row .v{color:var(--vfd)}.vfd .row.sel .r,.vfd .row.sel .v{color:#0b0a07}
+.vfd .row.dim{opacity:.55}
+.vfd .sb{background:#1d1709;border:0}.vfd .sb i{background:var(--vfd)}
+.vfd .note,.vfd .page{color:var(--vfd)}.vfd .page h3{color:var(--vfd)}
+.vfd .np-pos,.vfd .np-artist,.vfd .np-album{color:color-mix(in srgb,var(--vfd) 75%,#000)}.vfd .np-title{color:var(--vfd);text-transform:uppercase}
+.vfd .np-art{box-shadow:none}.vfd .trk{border:0;background:#1d1709}.vfd .fill{background:var(--vfd)}.vfd .knob{background:var(--vfd);border:0}
+.vfd .seg{border:0;background:#1d1709}.vfd .seg button{color:var(--vfd);text-transform:uppercase}.vfd .seg button.on{background:var(--vfd);color:#0b0a07}
+.vfd .stars button{color:color-mix(in srgb,var(--vfd) 30%,#000)}.vfd .stars button.on,.vfd .np-stars{color:var(--vfd)}
+.vfd .sbox{background:#0b0a07;border-bottom:0}.vfd .sbox input{background:#1d1709;color:var(--vfd);border:0}
+.vfd .npstrip{background:#0b0a07;border-top:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
 </style>
 
 </head>
@@ -1079,7 +1131,13 @@ html.desk .saber .row:hover:not(.sel){background:rgba(95,208,255,.12)}
       <span class="lbl next" data-b="next"><svg viewBox="0 0 24 12"><path d="M20 1h2v10h-2zM12 1v10l7.4-5zM3 1v10l7.4-5z"/></svg></span>
       <span class="lbl play" data-b="play"><svg viewBox="0 0 24 12"><path d="M2 1v10l8-5zM14 1h3v10h-3zM19 1h3v10h-3z"/></svg></span>
       <button class="center" id="center" aria-label="Select"></button>
+      <div class="rx-dial" aria-hidden="true"><i></i></div>
     </div>
+    <div class="rx-keys" id="rxKeys">
+      <div class="rx-src"><button type="button" data-rx="back" aria-label="Back"><b>‹</b>BACK</button><button type="button" data-rx="music"><i></i>MUSIC</button><button type="button" data-rx="videos"><i></i>VIDEO</button><button type="button" data-rx="extras"><i></i>EXTRAS</button><button type="button" data-rx="settings"><i></i>SETUP</button></div>
+      <div class="rx-modes"><button type="button" data-rx="back" aria-label="Back"><b>‹</b>BACK</button><button type="button" data-rxm="scrub"><i></i>SCRUB</button><button type="button" data-rxm="rating"><i></i>RATE</button><button type="button" data-rxm="shuffle"><i></i>SHUFFLE</button><button type="button" data-rxm="repeat"><i></i>REPEAT</button></div>
+    </div>
+    <div class="rx-tx" id="rxTx"><button type="button" data-rx="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button type="button" data-rx="play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M3 5v14l9-7zM14 5h3v14h-3zM19 5h3v14h-3z"/></svg></button><button type="button" data-rx="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button></div>
     <div class="dk-foot" id="dkFoot">Own your media.</div>
   </div>
   <div class="podback" id="podback" aria-label="The back of your myPod">
@@ -2655,6 +2713,7 @@ function rowHTML(it, sel, i) {
   return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${esc(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
 }
 function render(anim) {
+  setTimeout(() => { try { rxSync(); } catch {} });
   const v = cur(); if (!v) return;
   const jlc = v === stack[0] && isJL();
   barT.textContent = jlc ? jlTitle() : v.title; barT.classList.toggle('jlcount', jlc); updateBar();
@@ -2724,6 +2783,7 @@ const SHUF = [[false, 'Off'], [true, 'Songs']];
 const REP = [['off', 'Off'], ['one', 'Track'], ['all', 'Album']];
 const segs = (opts, curv, kind) => opts.map(([val, lab]) => `<button type="button" class="${val === curv ? 'on' : ''}" data-opt="${kind}" data-val="${val}">${lab}</button>`).join('');
 function updateNP() {
+  try { rxSync(); } catch {}
   const v = cur(); if (!v || v.kind !== 'np') return;
   const s = NPs(); const bar = $('#npBar'); if (!s || !bar) return;
   $('#npPos').textContent = (s.pos && s.total ? `${s.pos} of ${s.total}` : '') + (s.remote ? `${s.pos && s.total ? ' · ' : ''}on ${cfg.target.name}` : '');
@@ -2747,6 +2807,9 @@ function updateNP() {
 let toastT = null;
 function flash(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
 const CASES = [
+  { id: 'rx-silver', name: 'Receiver · Silver', base: '#c9cdd2', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(180deg,#dfe2e5,#b9bdc2)', wheel: 'radial-gradient(circle at 40% 30%,#f4f5f6,#a9adb3 62%,#6b6f75)', 'rx-key': 'linear-gradient(#f1f2f3,#c9ccd0)', 'rx-ink': '#1c1d1f', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-black', name: 'Receiver · Black', base: '#1a1a1c', v: { case: 'linear-gradient(180deg,#26262a,#141416)', wheel: 'radial-gradient(circle at 40% 30%,#5a5a60,#2a2a2d 60%,#101012)', 'rx-key': '#2c2c30', 'rx-ink': '#ece8df', 'rx-glow': '#5FE3C6', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-walnut', name: 'Receiver · Walnut', base: '#6e4426', v: { case: 'linear-gradient(90deg,#4a2c17,#6e4426 50%,#4a2c17)', wheel: 'radial-gradient(circle at 40% 30%,#f3e3b8,#b89a58 60%,#7a5f2a)', 'rx-key': '#2a1a0e', 'rx-ink': '#e9dcc0', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
   { id: 'white', name: 'White', base: '#e6e7e9', v: { case: 'linear-gradient(165deg,#ffffff 0%,#f6f6f6 45%,#e4e5e7 100%)', 'case-edge': '#d2d5d9', wheel: 'radial-gradient(circle at 50% 40%,#f1f1f2,#e3e4e6)', 'wheel-edge': '#cfd1d4', 'wheel-ink': '#a2a5aa', 'wheel-press': '#5f6368', center: 'linear-gradient(#ffffff,#e9eaec)', 'center-edge': '#c9cbcf', bezel: '#26282b' } },
   { id: 'black', name: 'Black', base: '#2c2d30', v: { case: 'linear-gradient(170deg,#55575b 0%,#3f4044 40%,#2f3033 100%)', 'case-edge': '#1d1e20', wheel: 'radial-gradient(circle at 50% 40%,#2a2b2d,#1c1d1f)', 'wheel-edge': '#141516', 'wheel-ink': '#d9dadc', 'wheel-press': '#ffffff', center: 'linear-gradient(#56585c,#36373a)', 'center-edge': '#1a1b1d', bezel: '#0c0c0d' } },
   { id: 'silver', name: 'Silver', base: '#b8bdc3', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(165deg,#eef0f2 0%,#d3d7dc 50%,#b7bcc3 100%)', 'case-edge': '#a9aeb5', wheel: 'radial-gradient(circle at 50% 40%,#f7f7f8,#e6e7e9)', 'wheel-edge': '#c3c6ca', 'wheel-ink': '#9aa0a7', 'wheel-press': '#50555b', center: 'linear-gradient(#e8eaed,#c9cdd2)', 'center-edge': '#a8adb3', bezel: '#26282b' } },
@@ -2811,6 +2874,7 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
   pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('saber', c.id === 'lg');
+  pod.classList.toggle('recv', c.id.startsWith('rx-')); if (typeof rxSync === 'function') rxSync();
   const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myPod Elite, whatever the case */
   $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
   $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myPod Elite\nLG Edition' : 'myPod Elite\nMusaka Edition') : 'Built by BC';
@@ -2956,6 +3020,25 @@ bodyEl.addEventListener('pointerup', endSdrag);
 bodyEl.addEventListener('pointercancel', endSdrag);
 document.querySelector('.bar').addEventListener('click', () => { if (stack.length > 1) press('menu'); });
 const wheel = $('#wheel'), center = $('#center');
+/* Receiver look: the knob's marker turns with your thumb, and real buttons do what the wheel's ring used to */
+const RX = { ang: 0, on: () => $('#pod').classList.contains('recv') };
+function rxSync() {
+  const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
+  const v = typeof cur === 'function' ? cur() : null; if (!v) return;
+  pod.classList.toggle('rx-np', v.kind === 'np'); pod.classList.toggle('rx-vid', v.kind === 'video');
+  const root = stack[1], sec = !root ? '' : root.title === 'Music' ? 'music' : root.title === 'Videos' ? 'videos' : root.title === 'Extras' ? 'extras' : root.title === 'Settings' ? 'settings' : '';
+  document.querySelectorAll('#rxKeys [data-rx]').forEach(b => b.classList.toggle('lit', b.dataset.rx === sec));
+  document.querySelectorAll('#rxKeys [data-rxm]').forEach(b => b.classList.toggle('lit', v.kind === 'np' && v.mode === b.dataset.rxm));
+}
+const RX_GO = { music: () => musicMenu(), videos: () => videosView(), extras: () => extrasView(), settings: () => settingsView() };
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#rxKeys [data-rx],#rxTx [data-rx],#rxKeys [data-rxm]'); if (!b) return;
+  const k = b.dataset.rx, m = b.dataset.rxm;
+  if (m) { const v = cur(); if (v.kind === 'np' && NPs()) { click(); v.mode = v.mode === m ? 'play' : m; npIdle(v); updateNP(); rxSync(); } return; }
+  if (k === 'back') return press('menu');
+  if (k === 'prev' || k === 'play' || k === 'next') return press(k);
+  if (RX_GO[k]) { click(); while (stack.length > 1) { const v = stack.pop(); if (v.onLeave) try { v.onLeave(); } catch {} } push(RX_GO[k]()); rxSync(); }
+});
 let drag = null;
 wheel.addEventListener('pointerdown', e => {
   const r = wheel.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -2972,6 +3055,7 @@ wheel.addEventListener('pointermove', e => {
   const a = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
   let d = a - drag.last; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI;
   drag.last = a; drag.acc += d; drag.moved += Math.abs(d);
+  if (!drag.onCenter && RX.on()) { RX.ang += d; wheel.style.setProperty('--rx-a', RX.ang + 'rad'); }
   drag.dist = Math.max(drag.dist, Math.hypot(e.clientX - drag.x, e.clientY - drag.y));
   if (drag.onCenter) { if (drag.dist > 14) { center.classList.remove('on'); clearTimeout(JL.holdT); } return; }
   const step = Math.PI / 10;
@@ -2983,7 +3067,7 @@ const endDrag = e => {
   const tap = drag.moved < .28 && drag.dist < 14 && e.type === 'pointerup';
   center.classList.remove('on'); clearTimeout(JL.holdT);
   if (drag.onCenter) { if (!drag.held && drag.dist < 14 && e.type === 'pointerup') { click(); select(); } drag = null; return; }
-  if (tap) { const dx = e.clientX - drag.cx, dy = e.clientY - drag.cy;
+  if (tap && !RX.on()) { const dx = e.clientX - drag.cx, dy = e.clientY - drag.cy;
     press(Math.abs(dy) > Math.abs(dx) ? (dy < 0 ? 'menu' : 'play') : (dx < 0 ? 'prev' : 'next')); }
   drag = null;
 };
@@ -3702,7 +3786,7 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
+const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true], ['amber', 'Receiver Amber'], ['teal', 'Receiver Teal']];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
@@ -3713,6 +3797,8 @@ function screenStyle(id = cfg.screen) {
   screenEl.classList.toggle('console', !w95 && id === 'console');
   screenEl.classList.toggle('saber', !w95 && ELITE && id === 'saber');
   screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
+  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal'));
+  screenEl.style.setProperty('--vfd', id === 'teal' ? '#5FE3C6' : '#F2B84B');
 }
 function applyScreen() { screenStyle(); render(); }
 try { darkQ.addEventListener('change', () => { if (cfg.screen === 'auto') applyScreen(); }); } catch {}
