@@ -1049,13 +1049,13 @@ html.desk .saber .row:hover:not(.sel){background:rgba(95,208,255,.12)}
 
 /* ---------- Receiver look: a stereo faceplate with a big display, a turn-and-press knob and real buttons ---------- */
 .rx-keys,.rx-tx,.rx-dial{display:none}
-.pod.recv{border-radius:calc(var(--w)*.035)}
-.pod.recv .bezel{order:1;margin-top:calc(var(--w)*.05);padding:calc(var(--w)*.016);border-radius:calc(var(--w)*.022)}
-.pod.recv .screen{width:calc(var(--w)*.88);height:calc(var(--w)*.64)}
-.pod.recv .lbl{display:none}
-.pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
+html:not(.desk) .pod.recv{border-radius:calc(var(--w)*.035)}
+html:not(.desk) .pod.recv .bezel{order:1;margin-top:calc(var(--w)*.05);padding:calc(var(--w)*.016);border-radius:calc(var(--w)*.022)}
+html:not(.desk) .pod.recv .screen{width:calc(var(--w)*.88);height:calc(var(--w)*.64)}
+html:not(.desk) .pod.recv .lbl{display:none}
+html:not(.desk) .pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
 .rx-src,.rx-modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--w)*.016)}
-.rx-modes{display:none}.pod.recv.rx-np .rx-modes{display:grid}.pod.recv.rx-np .rx-src{display:none}
+.rx-modes{display:none}html:not(.desk) .pod.recv.rx-np .rx-modes{display:grid}html:not(.desk) .pod.recv.rx-np .rx-src{display:none}
 .rx-keys button,.rx-tx button{min-height:44px;border:0;border-radius:calc(var(--w)*.02);background:var(--rx-key);color:var(--rx-ink);
   font:700 calc(var(--w)*.032)/1 var(--f-ui,system-ui);letter-spacing:.06em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--w)*.012);
   box-shadow:inset 0 calc(var(--w)*-.009) 0 rgba(0,0,0,.28);cursor:pointer;padding:calc(var(--w)*.018) 0;-webkit-tap-highlight-color:transparent}
@@ -1063,24 +1063,41 @@ html.desk .saber .row:hover:not(.sel){background:rgba(95,208,255,.12)}
 .rx-keys i{width:calc(var(--w)*.022);height:calc(var(--w)*.022);border-radius:50%;background:rgba(0,0,0,.35)}
 .rx-keys button.lit i{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
 .rx-keys b{font-size:calc(var(--w)*.05);line-height:.6}
-.pod.recv .wheel{isolation:isolate;order:3;width:calc(var(--w)*.46);margin-block:auto;background:var(--wheel);
+html:not(.desk) .pod.recv .wheel{isolation:isolate;order:3;width:calc(var(--w)*.46);margin-block:auto;background:var(--wheel);
   box-shadow:0 0 0 calc(var(--w)*.006) var(--wheel-edge),0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.4)}
-.pod.recv .wheel::before{content:'';position:absolute;inset:-11%;border-radius:50%;z-index:-1;pointer-events:none;
+html:not(.desk) .pod.recv .wheel::before{content:'';position:absolute;inset:-11%;border-radius:50%;z-index:-1;pointer-events:none;
   background:repeating-conic-gradient(var(--rx-ink) 0 1.4deg,transparent 1.4deg 18deg);
   -webkit-mask:radial-gradient(circle closest-side,transparent 85%,#000 86%,#000 96%,transparent 97%);mask:radial-gradient(circle closest-side,transparent 85%,#000 86%,#000 96%,transparent 97%);opacity:.8}
-.pod.recv .rx-dial{display:block;position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:rotate(var(--rx-a,0rad))}
-.pod.recv .rx-dial i{position:absolute;top:6%;left:50%;width:7%;height:7%;margin-left:-3.5%;border-radius:50%;background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
-.pod.recv .center{z-index:1;display:grid;place-items:center;color:#f1f2f3;font:700 calc(var(--w)*.03)/1 var(--f-ui,system-ui);letter-spacing:.12em}
-.pod.recv .center::after{content:'SELECT'}.pod.recv.rx-np .center::after{content:'MODE'}.pod.recv.rx-vid .center::after{content:'PLAY'}
-.pod.recv .rx-tx{order:4;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--w)*.02);width:calc(var(--w)*.91);margin-bottom:calc(var(--w)*.05)}
+html:not(.desk) .pod.recv .rx-dial{display:block;position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:rotate(var(--rx-a,0rad))}
+html:not(.desk) .pod.recv .rx-dial i{position:absolute;top:6%;left:50%;width:7%;height:7%;margin-left:-3.5%;border-radius:50%;background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
+html:not(.desk) .pod.recv .center{z-index:1;display:grid;place-items:center;color:#f1f2f3;font:700 calc(var(--w)*.03)/1 var(--f-ui,system-ui);letter-spacing:.12em}
+html:not(.desk) .pod.recv .center::after{content:'SELECT'}html:not(.desk) .pod.recv.rx-np .center::after{content:'MODE'}html:not(.desk) .pod.recv.rx-vid .center::after{content:'PLAY'}
+html:not(.desk) .pod.recv .rx-tx{order:4;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--w)*.02);width:calc(var(--w)*.91);margin-bottom:calc(var(--w)*.05)}
 .rx-tx svg{width:calc(var(--w)*.07);height:calc(var(--w)*.07);fill:currentColor}
-.pod.recv .jl-bay{display:none}
+html:not(.desk) .pod.recv .jl-bay{display:none}
 html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
 @media (display-mode: standalone),(max-width:600px) and (pointer:coarse){
-  .pod.recv .screen{width:100%;height:calc(var(--w)*.72)}
-  .pod.recv .wheel{width:min(calc(var(--w)*.6),300px)}
-  .pod.recv .rx-keys,.pod.recv .rx-tx{width:calc(100% - 24px)}
+  html:not(.desk) .pod.recv .screen{width:100%;height:calc(var(--w)*.72)}
+  html:not(.desk) .pod.recv .wheel{width:min(calc(var(--w)*.6),300px)}
+  html:not(.desk) .pod.recv .rx-keys,html:not(.desk) .pod.recv .rx-tx{width:calc(100% - 24px)}
 }
+/* Receiver LCD: dark text on a pale gray-green panel, like an old stereo or car radio */
+.screen.lcd{background:linear-gradient(180deg,#d3dac2,#bfc8ac);color:#1f2419;letter-spacing:.04em}
+.lcd .bar{background:transparent;border-bottom:1px solid rgba(31,36,25,.35);color:#1f2419;text-transform:uppercase}
+.lcd .bar svg{fill:#1f2419;color:#1f2419}.lcd .bar svg *{stroke:#1f2419}
+.lcd .bar-r,.lcd .crn-clock{color:#1f2419}.lcd .crn-eq i{background:#1f2419}
+.lcd .row{text-transform:uppercase;color:#1f2419}
+.lcd .row.sel{background:#1f2419;color:#d3dac2}
+.lcd .row .r,.lcd .row .v{color:#3e4733}.lcd .row.sel .r,.lcd .row.sel .v{color:#d3dac2}
+.lcd .row.dim{opacity:.55}
+.lcd .sb{background:rgba(31,36,25,.15);border:0}.lcd .sb i{background:#1f2419}
+.lcd .note,.lcd .page,.lcd .page h3{color:#1f2419}
+.lcd .npstrip{background:transparent;border-top:1px solid rgba(31,36,25,.35);color:#1f2419;text-transform:uppercase}
+.lcd .np-pos,.lcd .np-artist,.lcd .np-album{color:#3e4733}.lcd .np-title{color:#1f2419;text-transform:uppercase}
+.lcd .np-art{box-shadow:none}.lcd .trk{border:0;background:rgba(31,36,25,.18)}.lcd .fill{background:#1f2419}.lcd .knob{background:#1f2419;border:0}
+.lcd .seg{border:0;background:rgba(31,36,25,.15)}.lcd .seg button{color:#1f2419;text-transform:uppercase}.lcd .seg button.on{background:#1f2419;color:#d3dac2}
+.lcd .stars button{color:rgba(31,36,25,.3)}.lcd .stars button.on,.lcd .np-stars{color:#1f2419}
+.lcd .sbox{background:transparent;border-bottom:0}.lcd .sbox input{background:rgba(31,36,25,.12);color:#1f2419;border:0}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -2887,7 +2904,10 @@ const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
 function caseView() {
   const CASES = caseList();
   const v = List('Case', CASES.map(c => ({ label: c.name, get check() { return cfg.caseColor === c.id; },
-    act: () => { cfg.caseColor = c.id; save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
+    act: () => { cfg.caseColor = c.id; const rxS = ['rxauto', 'lcd', 'amber', 'teal'];
+      if (c.id.startsWith('rx-') && ['color', 'dark', 'auto'].includes(cfg.screen || 'color')) cfg.screen = 'rxauto';
+      else if (!c.id.startsWith('rx-') && rxS.includes(cfg.screen)) cfg.screen = 'auto';
+      save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
     { onSel() { applyCase(CASES[this.sel].id); }, onLeave() { applyCase(); } });
   v.sel = Math.max(0, CASES.findIndex(c => c.id === cfg.caseColor));
   return v;
@@ -3786,7 +3806,7 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true], ['amber', 'Receiver Amber'], ['teal', 'Receiver Teal']];
+const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true], ['rxauto', 'Receiver Auto'], ['lcd', 'Receiver LCD'], ['amber', 'Receiver Amber'], ['teal', 'Receiver Teal']];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
@@ -3797,11 +3817,13 @@ function screenStyle(id = cfg.screen) {
   screenEl.classList.toggle('console', !w95 && id === 'console');
   screenEl.classList.toggle('saber', !w95 && ELITE && id === 'saber');
   screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
-  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal'));
+  const rxDark = id === 'rxauto' && darkQ.matches;
+  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || rxDark));
+  screenEl.classList.toggle('lcd', !w95 && (id === 'lcd' || (id === 'rxauto' && !rxDark)));
   screenEl.style.setProperty('--vfd', id === 'teal' ? '#5FE3C6' : '#F2B84B');
 }
 function applyScreen() { screenStyle(); render(); }
-try { darkQ.addEventListener('change', () => { if (cfg.screen === 'auto') applyScreen(); }); } catch {}
+try { darkQ.addEventListener('change', () => { if (cfg.screen === 'auto' || cfg.screen === 'rxauto') applyScreen(); }); } catch {}
 function screenView() {
   const SCREENS = screenList();
   const v = List('Screen', SCREENS.map(([id, name]) => ({ label: name, get check() { return (cfg.screen || 'color') === id; },
