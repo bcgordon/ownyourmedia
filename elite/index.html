@@ -1104,6 +1104,57 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
 .lcd .seg{border:0;background:rgba(31,36,25,.15)}.lcd .seg button{color:#1f2419;text-transform:uppercase}.lcd .seg button.on{background:#1f2419;color:#d3dac2}
 .lcd .stars button{color:rgba(31,36,25,.3)}.lcd .stars button.on,.lcd .np-stars{color:#1f2419}
 .lcd .sbox{background:transparent;border-bottom:0}.lcd .sbox input{background:rgba(31,36,25,.12);color:#1f2419;border:0}
+/* Light: a white panel with black receiver lettering */
+.screen.rxl{background:linear-gradient(180deg,#ffffff,#eeeeec);color:#141414;letter-spacing:.04em}
+.rxl .bar{background:transparent;border-bottom:1px solid rgba(20,20,20,.35);color:#141414;text-transform:uppercase}
+.rxl .bar svg{fill:#141414;color:#141414}.rxl .bar svg *{stroke:#141414}
+.rxl .bar-r,.rxl .crn-clock{color:#141414}.rxl .crn-eq i{background:#141414}
+.rxl .row{text-transform:uppercase;color:#141414}
+.rxl .row.sel{background:#141414;color:#ffffff}
+.rxl .row .r,.rxl .row .v{color:#555555}.rxl .row.sel .r,.rxl .row.sel .v{color:#ffffff}
+.rxl .row.dim{opacity:.55}
+.rxl .sb{background:rgba(20,20,20,.15);border:0}.rxl .sb i{background:#141414}
+.rxl .note,.rxl .page,.rxl .page h3{color:#141414}
+.rxl .npstrip{background:transparent;border-top:1px solid rgba(20,20,20,.35);color:#141414;text-transform:uppercase}
+.rxl .np-pos,.rxl .np-artist,.rxl .np-album{color:#555555}.rxl .np-title{color:#141414;text-transform:uppercase}
+.rxl .np-art{box-shadow:none}.rxl .trk{border:0;background:rgba(20,20,20,.18)}.rxl .fill{background:#141414}.rxl .knob{background:#141414;border:0}
+.rxl .seg{border:0;background:rgba(20,20,20,.15)}.rxl .seg button{color:#141414;text-transform:uppercase}.rxl .seg button.on{background:#141414;color:#ffffff}
+.rxl .stars button{color:rgba(20,20,20,.3)}.rxl .stars button.on,.rxl .np-stars{color:#141414}
+.rxl .sbox{background:transparent;border-bottom:0}.rxl .sbox input{background:rgba(20,20,20,.12);color:#141414;border:0}
+/* Dark: white receiver lettering on black */
+.screen.rxd{background:linear-gradient(180deg,#121214,#070708);color:#f2f2f2;letter-spacing:.04em}
+.rxd .bar{background:transparent;border-bottom:1px solid rgba(242,242,242,.35);color:#f2f2f2;text-transform:uppercase}
+.rxd .bar svg{fill:#f2f2f2;color:#f2f2f2}.rxd .bar svg *{stroke:#f2f2f2}
+.rxd .bar-r,.rxd .crn-clock{color:#f2f2f2}.rxd .crn-eq i{background:#f2f2f2}
+.rxd .row{text-transform:uppercase;color:#f2f2f2}
+.rxd .row.sel{background:#f2f2f2;color:#0b0b0c}
+.rxd .row .r,.rxd .row .v{color:#a9a9ad}.rxd .row.sel .r,.rxd .row.sel .v{color:#0b0b0c}
+.rxd .row.dim{opacity:.55}
+.rxd .sb{background:rgba(242,242,242,.15);border:0}.rxd .sb i{background:#f2f2f2}
+.rxd .note,.rxd .page,.rxd .page h3{color:#f2f2f2}
+.rxd .npstrip{background:transparent;border-top:1px solid rgba(242,242,242,.35);color:#f2f2f2;text-transform:uppercase}
+.rxd .np-pos,.rxd .np-artist,.rxd .np-album{color:#a9a9ad}.rxd .np-title{color:#f2f2f2;text-transform:uppercase}
+.rxd .np-art{box-shadow:none}.rxd .trk{border:0;background:rgba(242,242,242,.18)}.rxd .fill{background:#f2f2f2}.rxd .knob{background:#f2f2f2;border:0}
+.rxd .seg{border:0;background:rgba(242,242,242,.15)}.rxd .seg button{color:#f2f2f2;text-transform:uppercase}.rxd .seg button.on{background:#f2f2f2;color:#0b0b0c}
+.rxd .stars button{color:rgba(242,242,242,.3)}.rxd .stars button.on,.rxd .np-stars{color:#f2f2f2}
+.rxd .sbox{background:transparent;border-bottom:0}.rxd .sbox input{background:rgba(242,242,242,.12);color:#f2f2f2;border:0}
+/* Mini LCD: dark ink on a cool blue-gray panel */
+.screen.mini{background:linear-gradient(180deg,#c3d1dc,#a9bac8);color:#132230;letter-spacing:.04em}
+.mini .bar{background:transparent;border-bottom:1px solid rgba(19,34,48,.35);color:#132230;text-transform:uppercase}
+.mini .bar svg{fill:#132230;color:#132230}.mini .bar svg *{stroke:#132230}
+.mini .bar-r,.mini .crn-clock{color:#132230}.mini .crn-eq i{background:#132230}
+.mini .row{text-transform:uppercase;color:#132230}
+.mini .row.sel{background:#132230;color:#c3d1dc}
+.mini .row .r,.mini .row .v{color:#2f4659}.mini .row.sel .r,.mini .row.sel .v{color:#c3d1dc}
+.mini .row.dim{opacity:.55}
+.mini .sb{background:rgba(19,34,48,.15);border:0}.mini .sb i{background:#132230}
+.mini .note,.mini .page,.mini .page h3{color:#132230}
+.mini .npstrip{background:transparent;border-top:1px solid rgba(19,34,48,.35);color:#132230;text-transform:uppercase}
+.mini .np-pos,.mini .np-artist,.mini .np-album{color:#2f4659}.mini .np-title{color:#132230;text-transform:uppercase}
+.mini .np-art{box-shadow:none}.mini .trk{border:0;background:rgba(19,34,48,.18)}.mini .fill{background:#132230}.mini .knob{background:#132230;border:0}
+.mini .seg{border:0;background:rgba(19,34,48,.15)}.mini .seg button{color:#132230;text-transform:uppercase}.mini .seg button.on{background:#132230;color:#c3d1dc}
+.mini .stars button{color:rgba(19,34,48,.3)}.mini .stars button.on,.mini .np-stars{color:#132230}
+.mini .sbox{background:transparent;border-bottom:0}.mini .sbox input{background:rgba(19,34,48,.12);color:#132230;border:0}
 
 /* ---------- Desktop Mode as a stereo receiver: wood cheeks, a brushed faceplate, a glowing display and hardware keys.
    Standard: silver and amber. Elite: black and brass with a teal display. ---------- */
@@ -1148,7 +1199,7 @@ html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-art{background:#000;box
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .bezel{background:#000;padding:3px 3px 3px 0}
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .screen{border-radius:0 4px 4px 0}
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-foot{color:var(--dk-sub);text-shadow:none;font:700 12px var(--f-ui);letter-spacing:.34em;text-transform:uppercase}
-.lcd .bar-t,.vfd .bar-t{letter-spacing:0;font-size:.9em}
+.lcd .bar-t,.vfd .bar-t,.rxl .bar-t,.rxd .bar-t,.mini .bar-t{letter-spacing:0;font-size:.9em}
 html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-base)}
 @media (max-width: 540px) and (max-aspect-ratio: 3/4){
   /* keep the bottom buttons clear of the iPhone's home bar */
@@ -1169,8 +1220,9 @@ html:not(.desk) .pod.recv.jled .rx-keys button:active,html:not(.desk) .pod.recv.
 html:not(.desk) .pod.recv.jled .rx-keys .rx-bk{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;box-shadow:var(--bv-out)}
 html:not(.desk) .pod.recv.jled .rx-keys i{border-radius:0}
 html:not(.desk) .pod.recv.jled .wheel{border-radius:50%;box-shadow:var(--bv-out),0 3px 8px rgba(0,0,0,.25)}
-html:not(.desk) .pod.recv.jled .center{border-radius:6%;box-shadow:var(--bv-out);color:#111}
-html:not(.desk) .pod.recv.jled .center::after{content:'OK';font-family:Tahoma,Verdana,var(--f-ui);font-size:calc(var(--w)*.05)}
+html:not(.desk) .pod.recv.jled .center{width:30%;height:30%;border-radius:50%;box-shadow:var(--bv-out),0 2px 6px rgba(0,0,0,.25);color:#111}
+html:not(.desk) .pod.recv.jled .center.on,html:not(.desk) .pod.recv.jled .center:active{box-shadow:var(--bv-in)}
+html:not(.desk) .pod.recv.jled .center::after{content:'OK';font-family:Tahoma,Verdana,var(--f-ui);font-size:calc(var(--w)*.042)}
 html:not(.desk) .pod.recv.jled.rx-np .center::after{content:'MODE';font-size:calc(var(--w)*.036)}
 /* Musaka Edition (Away Mission): gunmetal with starship-console pill keys */
 html:not(.desk) .pod.recv.trek .rx-keys button,html:not(.desk) .pod.recv.trek .rx-tx button{border-radius:999px;color:#000;font-family:Antonio,"Arial Narrow",var(--f-ui);letter-spacing:.08em;box-shadow:none}
@@ -1186,6 +1238,23 @@ html:not(.desk) .pod.recv.saber .rx-keys .rx-bk{background:linear-gradient(180de
 html:not(.desk) .pod.recv.saber .wheel{box-shadow:0 0 0 calc(var(--w)*.008) #c9ced3,0 0 0 calc(var(--w)*.014) #0b0c0e,0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.5)}
 html:not(.desk) .pod.recv.saber .center{box-shadow:0 0 calc(var(--w)*.03) rgba(95,208,255,.6)}
 html:not(.desk) .pod.recv .console .bar-t,html:not(.desk) .pod.recv .saber .bar-t{letter-spacing:0;font-size:.86em}html:not(.desk) .pod.recv .console .bar-t{font-size:.8em}
+
+/* ---------- fun: power-on moment, and the knob that goes to eleven ---------- */
+@keyframes rxScreenOn{0%{filter:brightness(0)}12%{filter:brightness(1.7)}20%{filter:brightness(.25)}32%{filter:brightness(1.25)}48%{filter:brightness(.8)}100%{filter:none}}
+@keyframes rxLamp{0%,100%{background:rgba(0,0,0,.35);box-shadow:none}40%{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.03) var(--rx-glow)}}
+@keyframes rxSpin{from{transform:rotate(-360deg)}to{transform:rotate(var(--rx-a,0rad))}}
+@keyframes rxPulse{0%,100%{filter:none}50%{filter:brightness(1.5)}}
+html.rx-boot .pod.recv .screen{animation:rxScreenOn 1.2s ease-out both}
+html.rx-boot .pod.recv .rx-keys i{animation:rxLamp .7s ease-in-out both}
+html.rx-boot .pod.recv .rx-src button:nth-child(1) i{animation-delay:.25s}html.rx-boot .pod.recv .rx-src button:nth-child(2) i{animation-delay:.38s}
+html.rx-boot .pod.recv .rx-src button:nth-child(4) i{animation-delay:.51s}html.rx-boot .pod.recv .rx-src button:nth-child(5) i{animation-delay:.64s}
+html.rx-boot .pod.recv .rx-bk{animation:rxPulse .6s ease-in-out .85s both}
+html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .15s both}
+@media (prefers-reduced-motion: reduce){html.rx-boot .pod.recv *{animation:none!important}}
+.rx-eleven{position:absolute;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2cqw;background:#050505;pointer-events:none}
+.rx-eleven b{font:800 46cqw/1 var(--f-ui);color:#ff5a2a;text-shadow:0 0 3cqw #ff5a2a,0 0 9cqw rgba(255,90,42,.6);letter-spacing:-.04em}
+.rx-eleven span{font:700 4.4cqw var(--f-ui);letter-spacing:.2em;color:#ffb08f}
+.rx-eleven.on{display:flex;animation:rxScreenOn .9s ease-out both}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -1225,6 +1294,7 @@ html:not(.desk) .pod.recv .console .bar-t,html:not(.desk) .pod.recv .saber .bar-
         <div class="body" id="body"></div>
         <div class="bigletter" id="bigLetter" aria-hidden="true"></div>
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div class="rx-eleven" id="rxEleven" aria-hidden="true"><b>11</b><span>THIS ONE GOES TO ELEVEN</span></div>
         <div class="nppop" id="npPop" aria-live="polite"></div>
         <div class="w95ov" id="w95ov" hidden></div>
       </div>
@@ -2564,6 +2634,7 @@ function settingsView() {
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
     { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } },
+    { label: 'Tone', value: toneOn() ? 'Custom' : 'Flat', arrow: true, go: () => push(toneView()) },
     { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } },
@@ -2935,8 +3006,7 @@ const CASES = [
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
 if (cfg.caseColor === 'elite') { cfg.caseColor = 'trek'; try { save(); } catch {} }
 /* myStereo: the click-wheel cases became receiver faceplates */
-{ const mv = { white: 'rx-white', black: 'rx-black', silver: 'rx-silver' }; if (mv[cfg.caseColor]) { cfg.caseColor = mv[cfg.caseColor]; try { save(); } catch {} }
-  if (['color', 'dark', 'auto', 'classic'].includes(cfg.screen || 'color')) { cfg.screen = 'rxauto'; try { save(); } catch {} } }
+{ const mv = { white: 'rx-white', black: 'rx-black', silver: 'rx-silver' }; if (mv[cfg.caseColor]) { cfg.caseColor = mv[cfg.caseColor]; try { save(); } catch {} } }
 /* wheel and center button colors: [id, name, light, dark, edge, ink, press] */
 const WHEELS = [
   ['white', 'White', '#f1f1f2', '#e3e4e6', '#cfd1d4', '#a2a5aa', '#5f6368'],
@@ -3159,12 +3229,69 @@ function rxFit() {
   const pr = pod.getBoundingClientRect(), cs = getComputedStyle(pod), ts = getComputedStyle(tx);
   const txTop = pr.bottom - parseFloat(cs.paddingBottom) - parseFloat(ts.marginBottom) - tx.offsetHeight;
   const room = txTop - keys.getBoundingClientRect().bottom;
-  const size = Math.floor(Math.max(120, Math.min((room - 22) / 1.26, pod.clientWidth * .78, 360)));
+  const jl = pod.classList.contains('jled');
+  const size = Math.floor(Math.max(120, Math.min((room - (jl ? 40 : 22)) / 1.26, pod.clientWidth * (jl ? .66 : .78), 360)));
   if (Math.abs((parseFloat(wh.style.width) || 0) - size) > 2) wh.style.width = size + 'px';
 }
 addEventListener('resize', () => requestAnimationFrame(rxFit));
 addEventListener('load', () => { rxFit(); setTimeout(rxFit, 400); setTimeout(rxFit, 1500); });
+/* power-on moment: the display warms up, the lamps sweep, the knob spins home */
+(() => { const r = document.documentElement; if (r.classList.contains('desk')) return; r.classList.add('rx-boot'); setTimeout(() => r.classList.remove('rx-boot'), 2200); })();
 document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(rxFit, 300); });
+/* Tone controls: bass, treble and loudness through the Web Audio API. Nothing is wired in until someone moves
+   a control off flat, because on iPhone routing the music through Web Audio can stop it when the screen locks. */
+const TONE = { ctx: null, src: null, bass: null, treb: null };
+const toneOn = () => (cfg.bass || 0) !== 0 || (cfg.treble || 0) !== 0 || !!cfg.loud;
+function toneGraph() {
+  if (TONE.src) return true;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; const c = new AC();
+    /* a stream from another server needs CORS to be heard through Web Audio: reload the current song with it */
+    const cross = /^https?:/i.test(audio.src) && !audio.src.startsWith(location.origin);
+    if (cross && !audio.crossOrigin) { const t = audio.currentTime, playing = !audio.paused, u = audio.src;
+      audio.crossOrigin = 'anonymous'; audio.src = u;
+      audio.addEventListener('loadedmetadata', () => { try { audio.currentTime = t; } catch {} if (playing) audio.play().catch(() => {}); }, { once: true }); }
+    else audio.crossOrigin = 'anonymous';
+    TONE.ctx = c; TONE.src = c.createMediaElementSource(audio);
+    TONE.bass = c.createBiquadFilter(); TONE.bass.type = 'lowshelf'; TONE.bass.frequency.value = 110;
+    TONE.treb = c.createBiquadFilter(); TONE.treb.type = 'highshelf'; TONE.treb.frequency.value = 7000;
+    TONE.src.connect(TONE.bass); TONE.bass.connect(TONE.treb); TONE.treb.connect(c.destination);
+    audio.addEventListener('play', () => { try { TONE.ctx.resume(); } catch {} });
+    return true;
+  } catch { return false; }
+}
+function toneApply(b = cfg.bass || 0, t = cfg.treble || 0, loud = !!cfg.loud) {
+  if (!TONE.src && b === 0 && t === 0 && !loud) return;
+  if (!toneGraph()) { flash("Tone controls aren't available here."); return; }
+  try { TONE.ctx.resume(); } catch {}
+  TONE.bass.gain.value = b + (loud ? 6 : 0); TONE.treb.gain.value = t + (loud ? 3 : 0);
+}
+const dB = v => (v > 0 ? '+' : '') + v + ' dB';
+function toneLevelView(key, title) {
+  const vals = [-8, -6, -4, -2, 0, 2, 4, 6, 8];
+  const v = List(title, vals.map(n => ({ label: n === 0 ? 'Flat (0 dB)' : dB(n), get check() { return (cfg[key] || 0) === n; },
+    act: () => { cfg[key] = n; save(); toneApply(); pop(); } })),
+    { onSel() { if (key === 'bass') toneApply(vals[this.sel], cfg.treble || 0); else toneApply(cfg.bass || 0, vals[this.sel]); }, onLeave() { toneApply(); } });
+  v.sel = Math.max(0, vals.indexOf(cfg[key] || 0)); return v;
+}
+function toneView() {
+  return List('Tone', () => [
+    { label: 'Bass', value: dB(cfg.bass || 0), arrow: true, go: () => push(toneLevelView('bass', 'Bass')) },
+    { label: 'Treble', value: dB(cfg.treble || 0), arrow: true, go: () => push(toneLevelView('treble', 'Treble')) },
+    { label: 'Loudness', value: cfg.loud ? 'On' : 'Off', act: () => { cfg.loud = !cfg.loud; save(); toneApply(); } },
+    { label: 'Reset to Flat', act: () => { cfg.bass = 0; cfg.treble = 0; cfg.loud = false; save(); toneApply(); flash('Tone is flat. Reopen the app to switch it off fully.'); } }
+  ]);
+}
+if (toneOn()) addEventListener('pointerdown', () => toneApply(), { once: true });
+/* ten full turns in one direction without stopping: this one goes to eleven */
+let rxSpinAcc = 0, rxSpinT = 0;
+function rxSpinCount(d) {
+  const now = performance.now();
+  if (now - rxSpinT > 1200 || Math.sign(d) !== Math.sign(rxSpinAcc)) rxSpinAcc = 0;
+  rxSpinT = now; rxSpinAcc += d;
+  if (Math.abs(rxSpinAcc) >= Math.PI * 20) { rxSpinAcc = 0; const el = $('#rxEleven'); el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+    if (navigator.vibrate) try { navigator.vibrate([30, 40, 30]); } catch {} setTimeout(() => el.classList.remove('on'), 3200); }
+}
 const RX = { ang: 0, on: () => $('#pod').classList.contains('recv') };
 function rxSync() {
   const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
@@ -3199,7 +3326,7 @@ wheel.addEventListener('pointermove', e => {
   const a = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
   let d = a - drag.last; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI;
   drag.last = a; drag.acc += d; drag.moved += Math.abs(d);
-  if (!drag.onCenter && RX.on()) { RX.ang += d; wheel.style.setProperty('--rx-a', RX.ang + 'rad'); }
+  if (!drag.onCenter && RX.on()) { RX.ang += d; wheel.style.setProperty('--rx-a', RX.ang + 'rad'); rxSpinCount(d); }
   drag.dist = Math.max(drag.dist, Math.hypot(e.clientX - drag.x, e.clientY - drag.y));
   if (drag.onCenter) { if (drag.dist > 14) { center.classList.remove('on'); clearTimeout(JL.holdT); } return; }
   const step = Math.PI / 10;
@@ -3932,18 +4059,21 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
+const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['auto', 'Auto (Light or Dark)'], ['color', 'Light'], ['dark', 'Dark'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['classic', 'Classic LCD'], ['mini', 'Mini LCD'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
 function screenStyle(id = cfg.screen) {
-  if (!id || ['color', 'dark', 'auto', 'classic'].includes(id)) id = 'rxauto';
+  if (!id) id = 'rxauto';
   const w95 = $('#pod').classList.contains('jled');
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
   screenEl.classList.toggle('console', !w95 && id === 'console');
   screenEl.classList.toggle('saber', !w95 && ELITE && id === 'saber');
-  screenEl.classList.toggle('dark', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
+  screenEl.classList.toggle('dark', false);
+  screenEl.classList.toggle('rxd', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
+  screenEl.classList.toggle('rxl', !w95 && (id === 'color' || (id === 'auto' && !darkQ.matches)));
+  screenEl.classList.toggle('mini', !w95 && id === 'mini');
   const rxDark = id === 'rxauto' && darkQ.matches;
   screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || rxDark));
   screenEl.classList.toggle('lcd', !w95 && (id === 'lcd' || (id === 'rxauto' && !rxDark)));
