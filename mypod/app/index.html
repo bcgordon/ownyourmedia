@@ -1147,6 +1147,9 @@ html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .bezel{background:#000;padd
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .screen{border-radius:0 4px 4px 0}
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-foot{color:var(--dk-sub);text-shadow:none;font:700 12px var(--f-ui);letter-spacing:.34em;text-transform:uppercase}
 .lcd .bar-t,.vfd .bar-t{letter-spacing:0;font-size:.9em}
+html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-fill)}
+@media (max-width: 540px) and (max-aspect-ratio: 3/4){ html.shortvp .pod{padding-bottom:6px} }
+html:not(.desk) .pod.recv .wheel{max-width:none}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -1361,7 +1364,7 @@ const PRODUCT = 'myStereo';
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
-  caseColor: ELITE ? 'trek' : 'white', bigText: true, clicker: true, demo: null, shuffle: false, repeat: 'off', ...(ELITE ? { screen: 'console' } : {}) }, LS.get('cfg', {}));
+  caseColor: 'rx-black', screen: 'rxauto', bigText: true, clicker: true, demo: null, shuffle: false, repeat: 'off' }, LS.get('cfg', {}));
 delete cfg.sp; delete cfg.spClientId; delete cfg.spTarget;
 const save = () => LS.set('cfg', cfg);
 const isDemo = () => cfg.demo ?? !cfg.token;
@@ -2874,8 +2877,10 @@ function updateNP() {
 let toastT = null;
 function flash(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
 const CASES = [
-  { id: 'rx-silver', name: 'Receiver · Silver', base: '#c9cdd2', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(180deg,#dfe2e5,#b9bdc2)', wheel: 'radial-gradient(circle at 40% 30%,#f4f5f6,#a9adb3 62%,#6b6f75)', 'rx-key': 'linear-gradient(#f1f2f3,#c9ccd0)', 'rx-ink': '#1c1d1f', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
-  { id: 'rx-black', name: 'Receiver · Black', base: '#1a1a1c', v: { case: 'linear-gradient(180deg,#26262a,#141416)', wheel: 'radial-gradient(circle at 40% 30%,#5a5a60,#2a2a2d 60%,#101012)', 'rx-key': '#2c2c30', 'rx-ink': '#ece8df', 'rx-glow': '#5FE3C6', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-silver', name: 'Receiver · Silver', base: '#c9cdd2', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(90deg,#bfc3c8,#dfe2e5 50%,#bfc3c8)', wheel: 'radial-gradient(circle at 40% 30%,#f4f5f6,#a9adb3 62%,#6b6f75)', 'rx-key': 'linear-gradient(#f1f2f3,#c9ccd0)', 'rx-ink': '#1c1d1f', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-white', name: 'Receiver · White', base: '#eeeff0', v: { case: 'repeating-linear-gradient(90deg,rgba(0,0,0,.018) 0 1px,rgba(255,255,255,.4) 1px 3px),linear-gradient(90deg,#e6e8ea,#fbfbfc 50%,#e6e8ea)', wheel: 'radial-gradient(circle at 40% 30%,#ffffff,#d5d8dc 62%,#9da2a8)', 'rx-key': 'linear-gradient(#ffffff,#e4e6e9)', 'rx-ink': '#1c1d1f', 'rx-glow': '#E0602A', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-auto', name: 'Receiver · Auto (white or black)', base: '#eeeff0', v: {} },
+  { id: 'rx-black', name: 'Receiver · Black', base: '#1a1a1c', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(90deg,#141416,#26262a 50%,#141416)', wheel: 'radial-gradient(circle at 40% 30%,#5a5a60,#2a2a2d 60%,#101012)', 'rx-key': '#2c2c30', 'rx-ink': '#ece8df', 'rx-glow': '#5FE3C6', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
   { id: 'rx-walnut', name: 'Receiver · Walnut', base: '#6e4426', v: { case: 'linear-gradient(90deg,#4a2c17,#6e4426 50%,#4a2c17)', wheel: 'radial-gradient(circle at 40% 30%,#f3e3b8,#b89a58 60%,#7a5f2a)', 'rx-key': '#2a1a0e', 'rx-ink': '#e9dcc0', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
   { id: 'white', name: 'White', base: '#e6e7e9', v: { case: 'linear-gradient(165deg,#ffffff 0%,#f6f6f6 45%,#e4e5e7 100%)', 'case-edge': '#d2d5d9', wheel: 'radial-gradient(circle at 50% 40%,#f1f1f2,#e3e4e6)', 'wheel-edge': '#cfd1d4', 'wheel-ink': '#a2a5aa', 'wheel-press': '#5f6368', center: 'linear-gradient(#ffffff,#e9eaec)', 'center-edge': '#c9cbcf', bezel: '#26282b' } },
   { id: 'black', name: 'Black', base: '#2c2d30', v: { case: 'linear-gradient(170deg,#55575b 0%,#3f4044 40%,#2f3033 100%)', 'case-edge': '#1d1e20', wheel: 'radial-gradient(circle at 50% 40%,#2a2b2d,#1c1d1f)', 'wheel-edge': '#141516', 'wheel-ink': '#d9dadc', 'wheel-press': '#ffffff', center: 'linear-gradient(#56585c,#36373a)', 'center-edge': '#1a1b1d', bezel: '#0c0c0d' } },
@@ -2933,6 +2938,7 @@ function wheelView(kind) {
   return v;
 }
 function applyCase(id = cfg.caseColor, over = {}) {
+  if (id === 'rx-auto') id = matchMedia('(prefers-color-scheme: dark)').matches ? 'rx-black' : 'rx-white';
   const c = caseOf(id), pod = $('#pod');
   for (const [k, val] of Object.entries(c.v)) pod.style.setProperty('--' + k, val);
   wheelVars(pod, 'wheel', 'wheel' in over ? over.wheel : cfg.wheel);
@@ -2949,7 +2955,11 @@ function applyCase(id = cfg.caseColor, over = {}) {
   const red = c.id === 'bc' && !eliteBack;
   $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
   document.documentElement.style.setProperty('--case-base', c.base);
+  document.documentElement.style.setProperty('--case-fill', c.id.startsWith('rx-') ? c.v.case : c.base);
+  document.documentElement.classList.toggle('rxcase', c.id.startsWith('rx-'));
+  if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (cfg.caseColor === 'rx-auto') applyCase(); }); } catch {}
 const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
 function caseView() {
   const CASES = caseList();
@@ -3102,6 +3112,19 @@ function npFit() {
   while ((meta.offsetHeight > m.clientHeight + 1 || t.scrollHeight > t.clientHeight + 1) && fs > base * .62) { fs *= .92; t.style.fontSize = fs + 'px'; }
   t.dataset.fit = key;
 }
+function rxFit() {
+  const pod = $('#pod'), wh = $('#wheel');
+  if (!pod || !wh) return;
+  if (!pod.classList.contains('recv') || document.documentElement.classList.contains('desk')) { wh.style.width = ''; return; }
+  const cs = getComputedStyle(pod), inner = pod.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  let used = 0;
+  for (const el of pod.children) { if (el === wh) continue; const st = getComputedStyle(el); if (st.display === 'none' || st.position === 'absolute' || st.position === 'fixed') continue;
+    used += el.offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom); }
+  const room = inner - used - 24;                       /* a little air above and below */
+  const size = Math.max(140, Math.min(room / 1.24, pod.clientWidth * .78, 360));   /* the tick ring reaches 12% past the knob */
+  wh.style.width = Math.floor(size) + 'px';
+}
+addEventListener('resize', () => requestAnimationFrame(rxFit));
 const RX = { ang: 0, on: () => $('#pod').classList.contains('recv') };
 function rxSync() {
   const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
@@ -4121,10 +4144,15 @@ function flipPod(dir) {
 function fitFull() {
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   const portrait = innerHeight > innerWidth;
-  const h = standalone && portrait ? Math.max(screen.height, screen.width, innerHeight) : 0;
+  /* size to what is actually visible: some iPhones hand a home-screen app a viewport shorter than the screen,
+     and anything below it is cut off, so the page background (matched to the faceplate) fills the rest */
+  const vh = Math.round((window.visualViewport && visualViewport.height) || innerHeight);
+  const h = standalone && portrait ? vh : 0;
   document.documentElement.style.setProperty('--fullh', h ? h + 'px' : '100%');
+  document.documentElement.classList.toggle('shortvp', !!h && vh < Math.max(screen.height, screen.width) - 20);
+  if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
-fitFull(); addEventListener('resize', fitFull); addEventListener('orientationchange', () => setTimeout(fitFull, 300));
+fitFull(); addEventListener('resize', fitFull); try { visualViewport.addEventListener('resize', fitFull); } catch {} addEventListener('orientationchange', () => setTimeout(fitFull, 300));
 podEl.addEventListener('pointerdown', e => { if (e.target === podEl) fsw = { id: e.pointerId, x: e.clientX, y: e.clientY }; });
 podback.addEventListener('pointerdown', e => { fsw = { id: e.pointerId, x: e.clientX, y: e.clientY }; });
 addEventListener('pointerup', e => {
