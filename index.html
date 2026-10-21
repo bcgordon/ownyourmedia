@@ -22,6 +22,42 @@ a{color:#191817}a:hover{color:#2549C7}
 a:focus-visible{outline:3px solid #2549C7;outline-offset:3px}
 html{-webkit-text-size-adjust:100%}
 img{max-width:100%}
+
+[data-preview][hidden]{display:none!important}
+/* join the club (from the membership page) */
+.oymj{--paper:#F1EDE4;--card:#FFFDF8;--ink:#191817;--muted:#55524C;--blue:#2549C7;--rust:#B23A12;--f:'Bricolage Grotesque',Georgia,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+  max-width:1160px;margin:0 auto;padding:56px 24px;box-sizing:border-box}
+.oymj *{box-sizing:border-box}
+.oymj .rule{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:32px}
+.oymj h2{margin:0;font-weight:800;font-size:clamp(36px,5vw,56px);letter-spacing:-.03em;line-height:1}
+.oymj .rule p{margin:0;font:500 16px var(--mono);color:var(--muted)}
+.oymj .eyebrow{font:600 15px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin:0}
+.oymj .perks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px}
+.oymj .perks li{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:22px 22px 20px;min-width:0}
+.oymj .perks b{display:block;font-size:23px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+.oymj .perks span{color:#3d3a35}
+.oymj .events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px}
+.oymj .ev{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.oymj .ev .when{font:600 14px var(--mono);letter-spacing:.12em;color:var(--rust)}
+.oymj .ev b{font-size:23px;font-weight:800}
+.oymj .ev span:last-child{color:#3d3a35}
+.oymj .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px;align-items:stretch}
+.oymj .way{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.oymj .way.alt{box-shadow:8px 8px 0 var(--blue)}
+.oymj .way.top{background:#121212;color:#EDE8DE;border-color:#121212;box-shadow:8px 8px 0 #C9A45C}
+.oymj .way.top .eyebrow{color:#C9A45C}.oymj .way.top small,.oymj .way.top .price span,.oymj .way.top .alt-price{color:#b9b2a6}
+.oymj .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:0}
+.oymj .price b{font-size:64px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.oymj .price span{font:600 16px var(--mono);color:var(--muted)}
+.oymj .alt-price{margin:-8px 0 0;font:600 16px var(--mono);color:var(--muted)}
+.oymj .way ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.oymj .way small{font:500 14px var(--mono);color:var(--muted)}
+.oymj .btn{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 26px;border:2px solid var(--ink);border-radius:999px;font:600 19px var(--f);text-decoration:none;background:none;color:var(--ink);cursor:pointer}
+.oymj .btn.solid{background:var(--ink);color:var(--paper)}
+.oymj .btn.solid:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.oymj .way.top .btn.solid{background:#C9A45C;border-color:#C9A45C;color:#121212}
+.oymj .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+.oymj .fine{margin:20px 0 0;font:500 15px var(--mono);color:var(--muted)}
 </style>
 </head>
 <body>
@@ -36,6 +72,8 @@ img{max-width:100%}
       <a href="#projects" style="padding: 10px 14px; text-decoration: none">Projects</a>
       <a href="#tools" style="padding: 10px 14px; text-decoration: none">Detox tools</a>
       <a href="#local" style="padding: 10px 14px; text-decoration: none">Go local</a>
+      <a href="#gather" style="padding: 10px 14px; text-decoration: none">Gatherings</a>
+      <a href="#join" data-preview hidden style="padding: 10px 14px; text-decoration: none">Join</a>
       <a href="#about" style="padding: 10px 14px; text-decoration: none">About</a>
       <a href="#rules" style="padding: 10px 14px; text-decoration: none">Club rules</a>
     </nav>
@@ -48,6 +86,7 @@ img{max-width:100%}
       <p style="margin: 28px 0 0; max-width: 34em; font-size: 22px; line-height: 1.5; color: #46433E">Homemade tools that work on iPhone and Android, for people who would rather own their music, movies and books than rent them <b style="color: #191817; font-weight: 800">from tech companies</b>. Plus a short list of local places where the good stuff still happens in person.</p>
       <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px">
         <a href="#projects" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #191817; color: #F1EDE4; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See the projects</a>
+        <a href="#join" data-preview hidden style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #2549C7; color: #FFFFFF; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">Join the club</a>
         <a href="#local" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #191817; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">Find a place nearby</a>
         <a href="#tools" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #191817; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See what we're testing</a>
       </div>
@@ -190,6 +229,57 @@ img{max-width:100%}
     </div>
   </section>
 
+  <section id="club" class="wrap oymj">
+    <div class="rule"><h2>What the club is</h2><p>Less screen, more company</p></div>
+    <ul class="perks">
+      <li><b>Gatherings</b><span>Listening nights, record swaps and slow evenings with people who’d rather be in the room.</span></li>
+      <li><b>Places worth the trip</b><span>A list of Twin Cities spots for records, books, typewriters and good conversation.</span></li>
+      <li><b>Letters</b><span>Essays from BC on living with less screen and more of what you love.</span></li>
+      <li><b>A real card</b><span>Wallet-sized, mailed to your door. Valid offline only.</span></li>
+      <li><b>Free tools</b><span>myStereo for your music and myShelf for your shelves. Free for everyone, members or not.</span></li>
+    </ul>
+  </section>
+
+  <section id="gather" class="wrap oymj">
+    <div class="rule"><h2>Gatherings</h2><p>Phones in pockets</p></div>
+    <div class="events">
+      <div class="ev"><span class="when">COMING SOON</span><b>Listening night</b><span>Bring one record you love. We play a side of each and talk about why.</span></div>
+      <div class="ev"><span class="when">COMING SOON</span><b>Record and book swap</b><span>Bring what you’re done with, leave with something new.</span></div>
+      <div class="ev"><span class="when">COMING SOON</span><b>The yearly gathering</b><span>The big one, for Backstage members and their plus-ones.</span></div>
+    </div>
+  </section>
+
+  <section id="join" class="wrap oymj" data-preview hidden>
+    <div class="rule"><h2>Pick your pass</h2><p>Every pass gets the card</p></div>
+    <div class="ways">
+      <div class="way">
+        <p class="eyebrow">Card only</p>
+        <div class="price"><b>$20</b><span>one time · for the year</span></div>
+        <ul><li>The membership card in the mail</li><li>Stickers</li><li>Member pricing at gatherings</li><li>No auto-renew, ever. Want another year? Join again.</li></ul>
+        <a class="btn solid" href="mailto:bc@runawayanchor.com?subject=Own%20Your%20Media%20Club%20membership&amp;body=Put%20me%20on%20the%20list%20for%20a%20membership%20card.%0A%0AName%3A%20%0ACity%3A%20">Get on the list</a>
+        <small>For people who are done with subscriptions.</small>
+      </div>
+      <div class="way alt">
+        <p class="eyebrow">Member</p>
+        <div class="price"><b>$50</b><span>a year · two months free</span></div>
+        <p class="alt-price">or $5 a month</p>
+        <ul><li>Everything in Card only</li><li><b>Letters from BC Gordon</b>, BC’s essays by email</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Liner Notes:</b> your name in the credits of the free apps</li><li>A members-only look in myStereo, as a thank-you</li></ul>
+        <a class="btn solid sub" data-tier="member" href="#join" aria-disabled="true">Opening soon</a>
+        <small>Monthly members get their card after three paid months.</small>
+      </div>
+      <div class="way top">
+        <p class="eyebrow">Backstage</p>
+        <div class="price"><b>$75</b><span>a year</span></div>
+        <p class="alt-price">or $10 a month</p>
+        <ul><li>Everything in Member</li><li><b>The yearly gathering</b>, plus a guest</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul>
+        <a class="btn solid sub" data-tier="backstage" href="#join" aria-disabled="true">Opening soon</a>
+        <small>Monthly members get their card after three paid months.</small>
+      </div>
+    </div>
+    <p class="fine">Memberships open soon. Member and Backstage are handled by Substack, and you can cancel there anytime. <a href="/club2/">Questions about membership</a></p>
+  </section>
+
+
   <section id="about" style="max-width: 1160px; margin: 0 auto; padding: 80px 24px 88px">
     <p style="margin: 0 0 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #2549C7">About us</p>
     <h2 style="margin: 0; max-width: 18em; font-weight: 800; font-size: clamp(36px, 5vw, 56px); line-height: 1.02; letter-spacing: -0.03em">It started around a table.</h2>
@@ -253,5 +343,21 @@ img{max-width:100%}
     </div>
   </footer>
 </div>
+<script>
+/* "Pick your pass" stays hidden until memberships open. To show it (for partners), add ?preview=pass to the address:
+   https://ownyourmedia.club/?preview=pass  ·  When memberships open, set SHOW_PASSES to true. */
+const SHOW_PASSES = false;
+if (SHOW_PASSES || new URLSearchParams(location.search).get('preview') === 'pass') {
+  document.querySelectorAll('[data-preview]').forEach(el => { el.hidden = false; el.style.display = el.tagName === 'A' ? 'inline-flex' : ''; });
+  if (location.hash === '#join') document.getElementById('join').scrollIntoView();
+}
+/* Member and Backstage: paste each Substack checkout link here and its button switches on. */
+const SUB_URLS = { member: '', backstage: '' };
+document.querySelectorAll('.oymj a.sub').forEach(x => {
+  const u = SUB_URLS[x.dataset.tier];
+  if (u) { x.href = u; x.target = '_blank'; x.rel = 'noopener'; x.removeAttribute('aria-disabled'); x.textContent = 'Join on Substack'; }
+  else x.addEventListener('click', e => e.preventDefault());
+});
+</script>
 </body>
 </html>
