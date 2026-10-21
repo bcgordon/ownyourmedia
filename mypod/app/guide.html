@@ -166,7 +166,8 @@ html.elite .hero .kicker{color:var(--lc-orange);font-size:15px;letter-spacing:.2
 html.elite .hero h1{color:var(--lc-peach);font-weight:600;text-transform:uppercase;font-size:clamp(46px,13vw,76px);letter-spacing:.02em;line-height:.95}
 html.elite .hero .sub{color:#f3dcc4;margin-bottom:6px}
 html.elite .hero svg{width:clamp(96px,26vw,150px)}
-html.elite .hero .wrap>div{min-width:0}html.elite .hero h1{overflow-wrap:anywhere}
+html.elite .hero .wrap>div{min-width:0}html.elite .hero h1{overflow-wrap:normal;font-size:clamp(26px,7vw,60px)}
+.hero svg.el-only{display:none}html.elite .hero svg.el-only{display:block}html.elite .hero svg.std-only{display:none}
 html.elite .hero .bars{display:flex;gap:6px;margin:0 max(20px,env(safe-area-inset-right,0px)) 0 calc(max(20px,env(safe-area-inset-left,0px)) + 40px);height:16px}
 html.elite .hero .bars i{display:block;height:100%;background:var(--lc-peri)}
 html.elite .hero .bars i:nth-child(1){flex:3;background:var(--lc-lilac);border-bottom-left-radius:30px;margin-left:-40px}
@@ -245,6 +246,7 @@ html.elite .backbar{background:var(--lc-orange);color:#000;text-transform:upperc
 html.elite footer{color:var(--lc-peri)}
 html.elite footer .mark{color:var(--lc-peach);text-transform:uppercase;font-weight:600}
 html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-transform:uppercase;letter-spacing:.05em}
+.ctlfig svg{display:block;width:min(340px,100%);margin:0 auto}
 </style>
 
 </head>
@@ -256,30 +258,32 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <h1><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></h1>
       <p class="sub"><span class="std-only">Own your media. Hold it in one hand.</span><span class="el-only">Own your media. Make it so.</span></p>
     </div>
-    <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="A gunmetal myStereo Elite with a Starship Console screen">
-      <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#9aa0a7" stroke-width="4" stroke-linecap="round"/>
-      <rect x="40" y="92" width="120" height="208" rx="14" fill="#2a2e35" stroke="#5b616a" stroke-width="1.5"/>
-      <rect x="54" y="108" width="92" height="70" rx="3" fill="#050506"/>
-      <path d="M59 118 a7 7 0 0 1 7 -7 h75 v8 h-68 v52 h-14z" fill="#cc99cc"/>
-      <rect x="77" y="124" width="62" height="9" rx="4.5" fill="#ff9966"/>
-      <rect x="77" y="137" width="46" height="7" rx="3.5" fill="#ffcc99" opacity=".9"/>
-      <rect x="77" y="148" width="54" height="7" rx="3.5" fill="#ffcc99" opacity=".9"/>
-      <rect x="77" y="159" width="38" height="7" rx="3.5" fill="#9999ff"/>
-      <rect x="78" y="190" width="44" height="4" rx="2" fill="#ff9966"/>
-      <circle cx="100" cy="246" r="38" fill="#1f2227" stroke="#e7b24a" stroke-width="2"/>
-      <circle cx="100" cy="246" r="14" fill="#2f333a" stroke="#e7b24a" stroke-width="1.5"/>
-      <path d="M140 92 C140 92 140 96 136 100" stroke="#9aa0a7" stroke-width="4" stroke-linecap="round"/>
+    <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="myStereo Elite on the Musaka faceplate: a starship console display, pill buttons and a gold-ringed knob">
+      <rect x="30" y="20" width="120" height="270" rx="10" fill="#2a2e35" stroke="#5b616a" stroke-width="1.5"/>
+      <rect x="40" y="32" width="100" height="78" rx="4" fill="#050506"/>
+      <path d="M45 42 a7 7 0 0 1 7 -7 h83 v8 h-76 v62 h-14z" fill="#cc99cc"/>
+      <rect x="63" y="50" width="70" height="10" rx="5" fill="#ff9966"/>
+      <rect x="63" y="65" width="52" height="8" rx="4" fill="#ffcc99" opacity=".9"/>
+      <rect x="63" y="78" width="60" height="8" rx="4" fill="#ffcc99" opacity=".9"/>
+      <rect x="63" y="91" width="42" height="8" rx="4" fill="#9999ff"/>
+      <g><rect x="40" y="120" width="17" height="12" rx="6" fill="#ffcc99"/><rect x="60" y="120" width="17" height="12" rx="6" fill="#cc99cc"/><rect x="80" y="120" width="20" height="12" rx="6" fill="#ff9966"/><rect x="103" y="120" width="17" height="12" rx="6" fill="#9999ff"/><rect x="123" y="120" width="17" height="12" rx="6" fill="#ffcc99"/></g>
+      <circle cx="90" cy="198" r="44" fill="#1f2227" stroke="#e7b24a" stroke-width="2.5"/>
+      <circle cx="90" cy="198" r="16" fill="#2f333a" stroke="#e7b24a" stroke-width="1.5"/>
+      <circle cx="90" cy="162" r="4" fill="#ff9966"/>
+      <g fill="#cc99cc"><rect x="40" y="262" width="30" height="14" rx="7"/><rect x="75" y="262" width="30" height="14" rx="7" fill="#ff9966"/><rect x="110" y="262" width="30" height="14" rx="7"/></g>
     </svg>
-    <svg class="std-only" viewBox="0 0 180 300" role="img" aria-label="A white iPod with earbud cord">
-      <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-      <rect x="40" y="92" width="120" height="208" rx="14" fill="#fff"/>
-      <rect x="54" y="108" width="92" height="70" rx="3" fill="#1d1d1f"/>
-      <rect x="59" y="113" width="82" height="60" fill="#e9ecef"/>
-      <rect x="59" y="121" width="82" height="9" fill="#2f6fd2"/>
-      <rect x="63" y="136" width="44" height="4" rx="2" fill="#9aa0a7"/><rect x="63" y="146" width="34" height="4" rx="2" fill="#9aa0a7"/><rect x="63" y="156" width="50" height="4" rx="2" fill="#9aa0a7"/>
-      <circle cx="100" cy="242" r="40" fill="#ececee"/>
-      <circle cx="100" cy="242" r="15" fill="#fff"/>
-      <path d="M140 92 C140 92 140 96 136 100" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <svg class="std-only" viewBox="0 0 180 300" role="img" aria-label="myStereo on the black faceplate: a glowing display, a row of buttons, a big knob and play buttons">
+      <rect x="30" y="20" width="120" height="270" rx="10" fill="#1d1d20" stroke="#000" stroke-width="1.5"/>
+      <rect x="40" y="32" width="100" height="78" rx="4" fill="#0b0a07"/>
+      <rect x="44" y="40" width="92" height="12" fill="#F2B84B"/>
+      <rect x="48" y="58" width="56" height="7" rx="2" fill="#F2B84B" opacity=".9"/><rect x="48" y="71" width="44" height="7" rx="2" fill="#F2B84B" opacity=".9"/><rect x="48" y="84" width="62" height="7" rx="2" fill="#F2B84B" opacity=".9"/><rect x="48" y="97" width="38" height="7" rx="2" fill="#F2B84B" opacity=".9"/>
+      <g fill="#2c2c30"><rect x="40" y="120" width="17" height="12" rx="2"/><rect x="60" y="120" width="17" height="12" rx="2"/><rect x="103" y="120" width="17" height="12" rx="2"/><rect x="123" y="120" width="17" height="12" rx="2"/></g>
+      <rect x="80" y="120" width="20" height="12" rx="2" fill="#5FE3C6"/>
+      <g stroke="#d9d9dd" stroke-width="2" stroke-linecap="round"><path d="M90 146v6" transform="rotate(-150 90 198)"/><path d="M90 146v6" transform="rotate(-120 90 198)"/><path d="M90 146v6" transform="rotate(-90 90 198)"/><path d="M90 146v6" transform="rotate(-60 90 198)"/><path d="M90 146v6" transform="rotate(-30 90 198)"/><path d="M90 146v6" transform="rotate(0 90 198)"/><path d="M90 146v6" transform="rotate(30 90 198)"/><path d="M90 146v6" transform="rotate(60 90 198)"/><path d="M90 146v6" transform="rotate(90 90 198)"/><path d="M90 146v6" transform="rotate(120 90 198)"/><path d="M90 146v6" transform="rotate(150 90 198)"/></g>
+      <circle cx="90" cy="198" r="44" fill="#3a3a40" stroke="#000" stroke-width="1.5"/>
+      <circle cx="90" cy="198" r="16" fill="#16171a"/>
+      <circle cx="90" cy="162" r="4" fill="#5FE3C6"/>
+      <g fill="#2c2c30"><rect x="40" y="262" width="30" height="14" rx="2"/><rect x="75" y="262" width="30" height="14" rx="2"/><rect x="110" y="262" width="30" height="14" rx="2"/></g>
     </svg>
   </div>
   <div class="bars el-only" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -293,9 +297,9 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <ul>
       <li><b>Yours to keep.</b><span>No subscription to cancel, no license that can expire, no album that disappears overnight.</span></li>
       <li><b>Nothing in between.</b><span>No ads between songs, no feed, no algorithm guessing what you want next.</span></li>
-      <li><b>Every play is a choice.</b><span>You pick the album or the movie. You turn the wheel. You press play.</span></li>
+      <li><b>Every play is a choice.</b><span>You pick the album or the movie. You turn the knob. You press play.</span></li>
     </ul>
-    <p class="sign">Your library. Your server. Your click wheel.</p>
+    <p class="sign">Your library. Your server. Your stereo.</p>
   </div>
 </section>
 
@@ -304,7 +308,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p class="label">Contents</p>
     <ol>
       <li><a href="#start"><span>1</span>Getting Started</a></li>
-      <li><a href="#wheel"><span>2</span>The Click Wheel</a></li>
+      <li><a href="#wheel"><span>2</span>The Knob and Buttons</a></li>
       <li><a href="#music"><span>3</span>Finding Music</a></li>
       <li><a href="#playing"><span>4</span>Now Playing</a></li>
       <li><a href="#coverflow"><span>5</span>Cover Flow</a></li>
@@ -347,36 +351,42 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
 
   <section class="ch" id="wheel">
     <p class="num">Chapter 2</p>
-    <h2>The Click Wheel</h2>
-    <p class="lead">Drag your thumb around the wheel to scroll. Press a part of it to act.</p>
-    <figure class="wheelfig">
-      <svg viewBox="0 0 340 300" role="img" aria-label="Click wheel with MENU at top, previous at left, next at right, play and pause at bottom, and select in the center">
-        <circle cx="170" cy="150" r="104" fill="#ececee" stroke="#cfd1d4" stroke-width="2"/>
-        <circle cx="170" cy="150" r="40" fill="#fff" stroke="#c9cbcf" stroke-width="2"/>
-        <text x="170" y="74" text-anchor="middle" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1" fill="#9a9da2">MENU</text>
-        <path d="M92 144h3v12h-3zM107 144v12l-10-6zM117 144v12l-10-6z" fill="#9a9da2"/>
-        <path d="M248 144h-3v12h3zM233 144v12l10-6zM223 144v12l10-6z" fill="#9a9da2"/>
-        <path d="M157 224v12l9-6zM170 224h3v12h-3zM177 224h3v12h-3z" fill="#9a9da2"/>
-        <path d="M232 62a110 110 0 0 1 32 40" fill="none" stroke="#2f6fd2" stroke-width="3" stroke-linecap="round"/>
-        <path d="M268 96l-1 11-9-6z" fill="#2f6fd2"/>
-        <g font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="14" fill="#1d1d1f">
-          <text x="170" y="22" text-anchor="middle" font-weight="700">Go back</text>
-          <text x="4" y="88" font-weight="700">Previous</text><text x="4" y="105" fill="#6e6e73">or restart</text>
-          <text x="330" y="190" text-anchor="end" font-weight="700">Next</text>
-          <text x="170" y="290" text-anchor="middle" font-weight="700">Play / Pause</text>
-          <text x="170" y="155" text-anchor="middle" font-weight="700" font-size="13">Select</text>
-          <text x="330" y="52" text-anchor="end" fill="#2f6fd2" font-weight="700">Turn to scroll</text>
+    <h2>The Knob and Buttons</h2>
+    <p class="lead">Turn the knob to scroll. Press its center to choose. The buttons around it do the rest.</p>
+    <figure class="ctlfig">
+      <svg viewBox="0 0 340 360" role="img" aria-label="myStereo controls: a row of five buttons with Back in the middle, the knob below it with Select in the center, and previous, play or pause, and next along the bottom">
+        <g font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-weight="700" font-size="11" text-anchor="middle">
+          <rect x="20" y="20" width="56" height="34" rx="5" fill="#2c2c30"/><text x="48" y="43" fill="#ece8df">MUSIC</text>
+          <rect x="82" y="20" width="56" height="34" rx="5" fill="#2c2c30"/><text x="110" y="43" fill="#ece8df">VIDEO</text>
+          <rect x="144" y="20" width="56" height="34" rx="5" fill="#5FE3C6"/><text x="172" y="43" fill="#141414">‹ BACK</text>
+          <rect x="206" y="20" width="56" height="34" rx="5" fill="#2c2c30"/><text x="234" y="43" fill="#ece8df">EXTRAS</text>
+          <rect x="268" y="20" width="56" height="34" rx="5" fill="#2c2c30"/><text x="296" y="43" fill="#ece8df">SETUP</text>
         </g>
-        <path d="M170 28v26" stroke="#c7c7cc" stroke-width="1.5"/>
-        <path d="M170 254v20" stroke="#c7c7cc" stroke-width="1.5"/>
+        <g stroke="#9a9da2" stroke-width="3" stroke-linecap="round"><path d="M172 92v12" transform="rotate(-150 172 186)"/><path d="M172 92v12" transform="rotate(-125 172 186)"/><path d="M172 92v12" transform="rotate(-100 172 186)"/><path d="M172 92v12" transform="rotate(-75 172 186)"/><path d="M172 92v12" transform="rotate(-50 172 186)"/><path d="M172 92v12" transform="rotate(-25 172 186)"/><path d="M172 92v12" transform="rotate(0 172 186)"/><path d="M172 92v12" transform="rotate(25 172 186)"/><path d="M172 92v12" transform="rotate(50 172 186)"/><path d="M172 92v12" transform="rotate(75 172 186)"/><path d="M172 92v12" transform="rotate(100 172 186)"/><path d="M172 92v12" transform="rotate(125 172 186)"/><path d="M172 92v12" transform="rotate(150 172 186)"/></g>
+        <circle cx="172" cy="186" r="76" fill="#3a3a40" stroke="#000" stroke-width="2"/>
+        <circle cx="172" cy="186" r="28" fill="#16171a"/>
+        <circle cx="172" cy="124" r="7" fill="#5FE3C6"/>
+        <path d="M262 132a104 104 0 0 1 14 44" fill="none" stroke="#2f6fd2" stroke-width="3" stroke-linecap="round"/><path d="M279 172l-6 10-6-10z" fill="#2f6fd2"/>
+        <g font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-weight="700" text-anchor="middle">
+          <text x="172" y="190" font-size="11" fill="#f1f2f3" letter-spacing="1">SELECT</text>
+          <text x="300" y="120" font-size="13" fill="#2f6fd2">Turn to</text><text x="300" y="136" font-size="13" fill="#2f6fd2">scroll</text>
+        </g>
+        <g fill="#2c2c30"><rect x="20" y="300" width="96" height="40" rx="5"/><rect x="122" y="300" width="96" height="40" rx="5"/><rect x="224" y="300" width="96" height="40" rx="5"/></g>
+        <g fill="#ece8df"><path d="M58 312h3v16h-3zM78 312v16l-14-8z"/><path d="M159 312v16l11-8zM172 312h3v16h-3zM178 312h3v16h-3z"/><path d="M285 312h-3v16h3zM265 312v16l14-8z"/></g>
       </svg>
-      <figcaption>Clockwise moves down a list. Counterclockwise moves up.</figcaption>
+      <figcaption>Clockwise moves down a list. Counterclockwise moves up. The dot on the knob turns with your thumb.</figcaption>
     </figure>
+    <dl class="terms">
+      <div><dt>Back</dt><dd>The lit button in the middle of the row. It’s the same reach for a left or right thumb.</dd></div>
+      <div><dt>Music, Video, Extras, Setup</dt><dd>Jump straight to that part of myStereo from anywhere. The one you’re in lights up.</dd></div>
+      <div><dt>Select</dt><dd>Press the center of the knob to choose what’s highlighted.</dd></div>
+      <div><dt>Previous, Play / Pause, Next</dt><dd>The three buttons along the bottom. Previous restarts the song first, then goes back a song.</dd></div>
+    </dl>
     <h3>Or just touch the screen</h3>
     <dl class="terms">
       <div><dt>Choose</dt><dd>Tap any item.</dd></div>
       <div><dt>Scroll</dt><dd>Drag the list up or down.</dd></div>
-      <div><dt>Go back</dt><dd>Tap the title bar. Look for the blue <b>‹</b>.</dd></div>
+      <div><dt>Go back</dt><dd>Tap the title bar, or press Back.</dd></div>
     </dl>
     <div class="note"><b>Fast scrolling.</b> Spin quickly through a long list and a big letter appears so you know where you are. “The Beatles” shows under B.</div>
   </section>
@@ -413,7 +423,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="playing">
     <p class="num">Chapter 4</p>
     <h2>Now Playing</h2>
-    <p class="lead">Press the center button to change what the wheel does. A small pop-up at the bottom of the screen shows where you are.</p>
+    <p class="lead">On Now Playing, the button row becomes <b>Scrub · Rate · Back · Shuffle · Repeat</b>. Tap one and the knob controls it, or press <b>Mode</b> in the knob’s center to step through them. A light shows which one the knob is set to.</p>
     <div class="modes" role="list">
       <div role="listitem"><b>1</b><i><u class="on"></u><u></u><u></u><u></u><u></u></i>Normal</div>
       <div role="listitem"><b>2</b><i><u></u><u class="on"></u><u></u><u></u><u></u></i>Scrub</div>
@@ -422,13 +432,13 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div role="listitem"><b>5</b><i><u></u><u></u><u></u><u></u><u class="on"></u></i>Repeat</div>
     </div>
     <dl class="terms">
-      <div><dt>Scrub</dt><dd>Turn the wheel to move through the song.</dd></div>
-      <div><dt>Rating</dt><dd>Turn the wheel or tap a star to give the song 1 to 5 stars. Turn all the way down to clear it. The stars then show under the album name.</dd></div>
+      <div><dt>Scrub</dt><dd>Turn the knob to move through the song.</dd></div>
+      <div><dt>Rating</dt><dd>Turn the knob or tap a star to give the song 1 to 5 stars. Turn all the way down to clear it. The stars then show under the album name.</dd></div>
       <div><dt>Shuffle</dt><dd>Off, or Songs. Starts with the song you picked, then mixes the rest.</dd></div>
       <div><dt>Repeat</dt><dd>Off, Track (this song again), or Album (the whole list again).</dd></div>
     </dl>
-    <p>You can also tap a dot in the pop-up, or a choice right on the screen. After a few seconds myStereo goes back to Normal on its own.</p>
-    <div class="note"><b>Volume</b> lives on your iPhone’s side buttons.</div>
+    <p>You can also tap a choice right on the screen. Tap the lit button again, or wait a few seconds, and the knob goes back to Normal.</p>
+    <div class="note"><b>Volume</b> lives on your iPhone’s side buttons. For more bass or clearer voices, see <b>Tone</b> in <a href="#settings">Chapter 9</a>.</div>
     <h3>Ratings and rated playlists</h3>
     <p><b>Music › Ratings</b> turns your stars into playlists that update themselves: <b>My Top Rated</b> (4 and 5 stars), one list for each star count, and <b>Recently Rated</b>. Each list starts with <b>Shuffle</b>, and they play on Plexamp too.</p>
     <p>Your ratings are yours alone. They live on this myStereo, not in Plex, so nobody else on your server sees them.</p>
@@ -463,17 +473,17 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="videos">
     <p class="num">Chapter 6</p>
     <h2>Videos</h2>
-    <p class="lead">Your movies and TV shows, just like the iPod with video.</p>
+    <p class="lead">Your movies and TV shows, right on the big display.</p>
     <ol class="steps">
       <li>Choose <span class="path">Videos</span> on the main menu, then <b>Movies</b>, <b>TV Shows</b>, or <b>Continue Watching</b>.</li>
-      <li>Pick something. It starts playing right on the iPod screen.</li>
+      <li>Pick something. It starts playing right on the display.</li>
       <li>Turn your iPhone sideways to watch full screen. Tap the video to show the controls.</li>
     </ol>
     <dl class="terms">
-      <div><dt>Play / Pause</dt><dd><span class="key">▶❙❙</span> or the center button.</dd></div>
+      <div><dt>Play / Pause</dt><dd><span class="key">▶❙❙</span> or the center of the knob.</dd></div>
       <div><dt>Title &amp; time</dt><dd>The video fills the screen. Tap the picture to show the title bar and how far along you are. They tuck away after a few seconds.</dd></div>
-      <div><dt>Skip</dt><dd>Turn the wheel to move 10 seconds. <span class="key">⏮</span> <span class="key">⏭</span> jump 30.</dd></div>
-      <div><dt>Stop</dt><dd><span class="key">MENU</span>, or <b>Done</b> when you’re watching sideways.</dd></div>
+      <div><dt>Skip</dt><dd>Turn the knob to move 10 seconds. <span class="key">⏮</span> <span class="key">⏭</span> jump 30.</dd></div>
+      <div><dt>Stop</dt><dd><span class="key">BACK</span>, or <b>Done</b> when you’re watching sideways.</dd></div>
     </dl>
     <div class="note"><b>Picks up where you left off.</b> myStereo tells Plex how far you got, so your other Plex apps know too. Files your iPhone can’t play directly are converted by your Plex server on the fly.</div>
   </section>
@@ -497,13 +507,16 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <h2>Extras</h2>
     <h3>Games</h3>
     <p>Choose <b>Extras › Games</b>. There are four, and myStereo remembers your best score in each.</p>
-    <p><b>Brick.</b> The classic. Turn the wheel or drag on the screen to move the paddle. Press the center to launch the ball.</p>
+    <p><b>Brick.</b> The classic. Turn the knob or drag on the screen to move the paddle. Press the center to launch the ball.</p>
     <p><b>Music Quiz.</b> myStereo plays a few seconds from a random song in your library. Pick its name from four choices. The faster you answer, the more points you get. Ten songs a round. It plays on your phone, so it needs your Plex library, not the demo.</p>
-    <p><b>Stack.</b> Falling blocks. Turn the wheel or drag sideways to move the block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
-    <p><b>Minesweeper.</b> Open every square that isn’t a mine. A number tells you how many mines touch that square. Tap to open, press and hold to plant a flag. Prefer the wheel? Turn it to move the box, use ⏮ and ⏭ to jump a row, press the center to open, and ⏯ to flag.</p>
-    <div class="note"><b>While you play Stack or Minesweeper,</b> the ⏮ ⏭ ⏯ buttons control the game instead of the music. Press Menu to leave, and they work on music again.</div>
+    <p><b>Stack.</b> Falling blocks. Turn the knob or drag sideways to move the block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
+    <p><b>Minesweeper.</b> Open every square that isn’t a mine. A number tells you how many mines touch that square. Tap to open, press and hold to plant a flag. Prefer the knob? Turn it to move the box, use ⏮ and ⏭ to jump a row, press the center to open, and ⏯ to flag.</p>
+    <div class="note"><b>While you play Stack or Minesweeper,</b> the ⏮ ⏭ ⏯ buttons control the game instead of the music. Press Back to leave, and they work on music again.</div>
+    <p><b>Steering with the knob.</b> In games, tap the top, bottom, left or right edge of the knob to use it like a direction pad.</p>
     <h3>Flip it over</h3>
-    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myStereo turns over to show its <span class="std-only">polished steel back, a few stickers, and an engraving</span><span class="el-only">dark gunmetal back, engraved myStereo Elite · Musaka Edition</span>. Swipe again to flip it back. The music keeps playing.</p>
+    <p>Swipe sideways on the empty part of the case, like the space around the knob, and myStereo turns over to show its <span class="std-only">polished steel back, a few stickers, and an engraving</span><span class="el-only">dark gunmetal back, engraved myStereo Elite · Musaka Edition</span>. Swipe again to flip it back. The music keeps playing.</p>
+    <h3>Secrets</h3>
+    <p>Two surprises are hidden in the controls: one in the knob, one in the Back button. Patience helps with both.</p>
     <h3>Sleep Timer</h3>
     <p>Choose 15, 30, 45, or 60 minutes, or <b>End of Song</b>. A small moon appears in the top bar while it’s set.</p>
     <div class="note"><b>Falling asleep to Plexamp in another room?</b> The timer works most reliably when music is playing on your phone itself.</div>
@@ -514,12 +527,26 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <h2>Settings</h2>
     <h3>Desktop Mode</h3>
     <p>On a computer, myStereo can become a jukebox window built for a mouse. See <a href="#desktop">Chapter 10</a>.</p>
-    <h3>Case</h3>
-    <p>Fourteen finishes, including a Zune-style brown with a rounded-square pad the <b>BC Edition</b> (a clear amber-to-red shell, black wheel, red center and a polished red back), and the <b>JL Edition</b>, a beige 1995 desktop PC in your hand. Scroll the list to preview each one on your myStereo, press the center to keep it.</p>
+    <h3>Tone</h3>
+    <p>Make it sound the way you like. <b>Presets</b> are the easy way: pick one and you hear it right away while you scroll.</p>
+    <dl class="terms">
+      <div><dt>Phone Speaker</dt><dd>Fills out tiny speakers.</dd></div>
+      <div><dt>Earbuds</dt><dd>A little more punch.</dd></div>
+      <div><dt>Car</dt><dd>Cuts through road noise.</dd></div>
+      <div><dt>Quiet Listening</dt><dd>Full sound at low volume.</dd></div>
+      <div><dt>Warm · Bright</dt><dd>Softer like a record, or crisp vocals and cymbals.</dd></div>
+      <div><dt>Talk &amp; Podcasts</dt><dd>Clearer voices.</dd></div>
+    </dl>
+    <p>Prefer to fine-tune? <b>Bass</b> and <b>Treble</b> go from −8 to +8, and <b>Loudness</b> adds body at low volume, like the button on an old receiver. <b>Reset to Flat</b> puts it all back.</p>
+    <div class="note"><b>On iPhone:</b> while the tone isn’t flat, music may pause when the screen locks. After going back to Flat, close and reopen myStereo to get lock-screen playback back.</div>
+    <h3>Faceplate</h3>
+    <p>Choose the finish. Scroll the list to preview each one, press the center to keep it. The buttons and lights change to match.</p>
     <ul class="swatches">
-      <li style="--c:linear-gradient(165deg,#fff,#e4e5e7)">White</li>
-      <li style="--c:linear-gradient(165deg,#34363a,#050506)">Black</li>
-      <li style="--c:linear-gradient(165deg,#eef0f2,#b7bcc3)">Silver</li>
+      <li style="--c:linear-gradient(90deg,#141416,#26262a 50%,#141416)">Black</li>
+      <li style="--c:linear-gradient(90deg,#e6e8ea,#fbfbfc 50%,#e6e8ea)">White</li>
+      <li style="--c:linear-gradient(90deg,#e6e8ea 50%,#141416 50%)">Auto</li>
+      <li style="--c:linear-gradient(90deg,#bfc3c8,#dfe2e5 50%,#bfc3c8)">Silver</li>
+      <li style="--c:linear-gradient(90deg,#4a2c17,#6e4426 50%,#4a2c17)">Walnut</li>
       <li style="--c:linear-gradient(165deg,#f8cada,#d97c9e)">Pink</li>
       <li style="--c:linear-gradient(165deg,#b3d4f5,#4f88c8)">Blue</li>
       <li style="--c:linear-gradient(165deg,#d3edb2,#7fb54f)">Green</li>
@@ -532,22 +559,23 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <li style="--c:linear-gradient(180deg,#f2ad2e,#ea5a1e 40%,#dc171c 78%)">BC Edition</li>
       <li style="--c:linear-gradient(170deg,#e6dcbe,#c7b88e)">JL Edition</li>
     </ul>
-    <h3>Screen</h3>
-    <p><b>Light</b> is the 5th-generation look. <b>Dark</b> flips the screen to white text on black, easier on the eyes at night. <b>Match iPhone</b> follows your phone’s own Light or Dark setting. <b>Classic</b> brings back the original black-and-white display.</p>
+    <p><b>Auto</b> is white when your phone is in light mode and black in dark mode. The <b>JL Edition</b> is a beige 1995 desktop PC, floppy drive and all.</p>
+    <h3>Display</h3>
+    <p>The screen’s look, separate from the faceplate. <b>Light</b> is black lettering on white, <b>Dark</b> is white on black. <b>LCD</b> is the pale green of an old car stereo, <b>Amber</b> and <b>Teal</b> glow like a hi-fi display. <b>Classic LCD</b> and <b>Mini LCD</b> are throwbacks to small players. The two <b>Auto</b> choices follow your phone’s light or dark setting.</p>
     <figure>
       <div class="pair" aria-hidden="true">
-        <div class="lcd"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
-        <div class="lcd dark"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd"><div class="lcd-bar"><i></i>MYSTEREO<i></i></div><div class="lcd-row sel" style="background:#141414;color:#fff">MUSIC<span>›</span></div><div class="lcd-row">PLAY ON<span>›</span></div><div class="lcd-row">EXTRAS<span>›</span></div></div>
+        <div class="lcd" style="background:#0b0a07;color:#F2B84B"><div class="lcd-bar" style="color:#F2B84B;background:#0b0a07"><i></i>MYSTEREO<i></i></div><div class="lcd-row sel" style="background:#F2B84B;color:#0b0a07">MUSIC<span>›</span></div><div class="lcd-row">PLAY ON<span>›</span></div><div class="lcd-row">EXTRAS<span>›</span></div></div>
         <div class="lcd classic"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
       </div>
-      <figcaption>Light, Dark, and Classic.</figcaption>
+      <figcaption>Light, Amber, and Classic LCD.</figcaption>
     </figure>
     <dl class="terms">
       <div><dt>Server</dt><dd>Switch between Plex servers. Each one remembers its music library.</dd></div>
       <div><dt>Corner</dt><dd>What shows in the top-right corner of the screen: the time, a little equalizer that dances while music plays, both (the clock that turns into the equalizer while music plays), the phone or Plexamp player the music is going to, or nothing.</dd></div>
-      <div><dt>Wheel Color</dt><dd>Give the click wheel its own color, or leave it on Match Case. Scroll the list to preview.</dd></div>
-      <div><dt>Center Color</dt><dd>Same idea for the center button. Mix and match: a red wheel with a white center on a black case, say.</dd></div>
-      <div><dt>Menu Art</dt><dd>Album art drifting beside the main and Music menus, like the iPod Classic. On from the start.</dd></div>
+      <div><dt>Knob Color</dt><dd>Give the knob its own color, or leave it on Match Case. Scroll the list to preview.</dd></div>
+      <div><dt>Knob Center</dt><dd>Same idea for the knob’s center button. Mix and match: a gold knob with a black center on a blue faceplate, say.</dd></div>
+      <div><dt>Menu Art</dt><dd>Album art drifting beside the main and Music menus. On from the start.</dd></div>
       <div><dt>Large Text</dt><dd>Bigger, easier-to-read menus. On from the start.</dd></div>
       <div><dt>Clicker</dt><dd>The little tick you hear as you scroll.</dd></div>
       <div><dt>How to Use</dt><dd>A short version of this guide, right on your myStereo.</dd></div>
@@ -557,12 +585,12 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="desktop">
     <p class="num">Chapter 10</p>
     <h2>Desktop Mode</h2>
-    <p class="lead">On a computer, myStereo turns into a jukebox window built for a mouse. There’s no click wheel to drag. Everything is a click.</p>
+    <p class="lead">On a computer, myStereo turns into a stereo receiver built for a mouse: wood side panels, a glowing display and real-looking keys. There’s no knob to turn. Everything is a click.</p>
     <figure><img class="shot el-only" src="guide-desktop-elite.jpg" alt="myStereo Elite in Desktop Mode, in starship colors"><img class="shot std-only" src="guide-desktop.jpg" alt="myStereo in Desktop Mode: play controls and song display across the top, the Library list on the left, songs in the middle"><figcaption><span class="std-only">Desktop Mode. Elite gets the same window in starship colors.</span><span class="el-only">Desktop Mode, Starship edition.</span></figcaption></figure>
     <h3>Turn it on</h3>
     <ol class="steps">
       <li>Open myStereo in a browser on your computer.</li>
-      <li>Click <b>Switch to Desktop Mode</b> under the iPod, or go to <span class="path">Settings › Desktop Mode</span>.</li>
+      <li>Click <b>Switch to Desktop Mode</b> under the player, or go to <span class="path">Settings › Desktop Mode</span>.</li>
       <li>myStereo remembers your choice. Next time it opens straight to the jukebox.</li>
     </ol>
     <h3>What’s on the screen</h3>
@@ -580,11 +608,11 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p>Click the <b>Mini Player</b> button next to the volume slider, or the yellow button in the corner. In Chrome and Edge, the Mini Player floats in its own small window above everything else. Close it, or click <b>Bring it back</b>, to return to the full window. In Safari and Firefox, the window shrinks to just the control bar. Click the button again for the full player.</p>
     <h3>Corner buttons</h3>
     <dl class="terms">
-      <div><dt>Red</dt><dd>Back to the iPod.</dd></div>
+      <div><dt>Red</dt><dd>Back to the handheld player.</dd></div>
       <div><dt>Yellow</dt><dd>Mini Player.</dd></div>
       <div><dt>Green</dt><dd>Full screen.</dd></div>
     </dl>
-    <div class="note"><b>Good to know:</b> Desktop Mode works in any window bigger than about a quarter of a large monitor. Make the window too small and myStereo switches back to the iPod on its own, then returns when there’s room again. The Mini Player can go as small as you like.</div>
+    <div class="note"><b>Good to know:</b> Desktop Mode works in any window bigger than about a quarter of a large monitor. Make the window too small and myStereo switches back to the handheld player on its own, then returns when there’s room again. The Mini Player can go as small as you like.</div>
   </section>
 
   <section class="ch" id="elite">
@@ -593,8 +621,8 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p class="lead">Want extras like playing music straight from your own network share? myStereo Elite is for you. It’s the same myStereo with features that take a little setup, for people who like to tinker.</p>
     <dl class="terms">
       <div><dt>Network Share</dt><dd>Play music from your own WebDAV server, with no Plex needed. Browse its folders under <span class="path">Music › Network Share</span>.</dd></div>
-      <div><dt>Starship looks</dt><dd>Elite opens in the Away Mission case with the Starship Console screen. (Both are in regular myStereo’s Settings too.)</dd></div>
-      <div><dt>LG Edition</dt><dd>A laser-sword hilt: a chrome case, a black ridged grip and an activation switch, with the glowing <b>Blade</b> screen. Pick it under <span class="path">Settings › Case</span> and <span class="path">Settings › Screen</span>, or open <b>ownyourmedia.club/lg</b>.</dd></div>
+      <div><dt>Starship looks</dt><dd>The Away Mission faceplate, with starship-console pill buttons, and the Starship Console display. (Both are in regular myStereo’s Settings too.)</dd></div>
+      <div><dt>LG Edition</dt><dd>A laser-sword hilt: a chrome faceplate with a black ridged grip, keys that glow blue, and the <b>Blade</b> display. Pick it under <span class="path">Settings › Faceplate</span> and <span class="path">Settings › Display</span>, or open <b>ownyourmedia.club/lg</b>.</dd></div>
       <div><dt>Musaka back</dt><dd>Flip it over: a dark gunmetal back engraved <b>myStereo Elite · Musaka Edition</b>.</dd></div>
       <div><dt>Its own space</dt><dd>Elite keeps its own settings, Plex sign-in, ratings and music, so you can keep both on your Home Screen.</dd></div>
     </dl>
@@ -636,6 +664,8 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Song won’t play</dt><dd>myStereo tries a second, converted stream automatically. If it still won’t play, the file may be damaged on your server.</dd></div>
       <div><dt>Plexamp ignores myStereo</dt><dd>Open Plexamp on that device, then pick it again in <span class="path">Play On</span>.</dd></div>
       <div><dt>Icon looks old</dt><dd>Delete myStereo from your Home Screen and add it again from Safari. Your sign-in and settings stay.</dd></div>
+      <div><dt>Black strip at the bottom</dt><dd>Some iPhones keep a strip at the bottom of Home Screen apps for themselves. myStereo fits its buttons above it.</dd></div>
+      <div><dt>Music stops when the screen locks</dt><dd>Set <span class="path">Settings › Tone</span> to Flat, then close and reopen myStereo.</dd></div>
       <div><dt>Start fresh</dt><dd><span class="path">Settings › Plex › Sign Out</span>, then sign in again.</dd></div>
     </dl>
   </section>

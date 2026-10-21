@@ -1373,7 +1373,7 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
     <div class="btns"><button class="btn" id="pClose" type="button">Close</button></div>
   </section>
 
-  <p class="hint">Drag your thumb around the wheel to scroll. Tap the center to select, MENU to go back.
+  <p class="hint">Turn the knob to scroll. Press its center to select, Back to go back.
     Settings › How to Use has the rest. On a keyboard: <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Enter</kbd>, <kbd>Esc</kbd>, and <kbd>Space</kbd> to play or pause.</p>
   <button class="dk-on" id="dkOn" type="button" hidden>Switch to Desktop Mode</button>
   <div class="cf" id="cf" hidden aria-label="Cover Flow">
@@ -2796,30 +2796,32 @@ async function onSignedIn() {
 const Page = (title, html) => ({ kind: 'page', title, html, scroll: 0 });
 const HELP = `
 <h3>Choose something</h3>
-<p>Tap it on the screen. Or turn the wheel to highlight it and press the center button.</p>
+<p>Tap it on the screen. Or turn the knob to highlight it and press the knob's center.</p>
 <h3>Scroll</h3>
-<p>Drag the list with your finger, or turn the wheel. Clockwise moves down.</p>
+<p>Drag the list with your finger, or turn the knob. Clockwise moves down.</p>
 <h3>Go back</h3>
-<p>Tap the title bar at the top of the screen (look for the blue <b>‹</b>), or press <span class="k">MENU</span> on the wheel.</p>
+<p>Press <span class="k">BACK</span>, the lit button in the middle of the row under the screen. Or tap the title bar at the top of the screen.</p>
+<h3>Jump around</h3>
+<p>The buttons beside Back go straight to <b>Music</b>, <b>Video</b>, <b>Extras</b> and <b>Setup</b> from anywhere.</p>
 <h3>Play and pause</h3>
-<p>Press <span class="k">▶❙❙</span> at the bottom of the wheel. <span class="k">⏮</span> and <span class="k">⏭</span> change songs.</p>
+<p>Press <span class="k">▶❙❙</span> along the bottom. <span class="k">⏮</span> and <span class="k">⏭</span> change songs.</p>
 <h3>Get back to your song</h3>
 <p>While music plays, a bar at the bottom of every menu shows the song. Tap it to open Now Playing.</p>
 <h3>On Now Playing</h3>
-<p>Press the center button to change what the wheel does:</p>
+<p>The button row becomes Scrub, Rate, Back, Shuffle and Repeat. Tap one and the knob controls it, or press <b>Mode</b> in the knob's center to step through:</p>
 <ol><li><b>Scrub</b>: move through the song</li><li><b>Rating</b>: give the song 1 to 5 stars</li><li><b>Shuffle</b>: Off or Songs</li><li><b>Repeat</b>: Off, Track, or Album</li><li>Back to normal</li></ol>
-<p>A small pop-up shows which one you're on. You can also tap a dot in it, or a choice on screen. After a few seconds it goes back to normal by itself.</p>
+<p>A light shows which one the knob is set to. After a few seconds it goes back to normal by itself.</p>
 <h3>Volume</h3>
-<p>Use your iPhone's volume buttons.</p>
+<p>Use your iPhone's volume buttons. For more bass or clearer voices, try <b>Settings › Tone</b>.</p>
 <h3>AirPlay and Bluetooth</h3>
 <p><b>Play On › AirPlay &amp; Bluetooth</b> opens your iPhone's speaker list. Pick a HomePod, Apple TV, AirPlay speaker, or Bluetooth headphones.</p>
 <h3>Ratings</h3>
-<p>Rate a song on Now Playing: press the center until you see <b>Rating</b>, then turn the wheel or tap a star. <b>Music › Ratings</b> makes playlists from them, like My Top Rated. Ratings stay on this myStereo only. Save a copy under <b>Settings › Ratings Backup</b>.</p>
+<p>Rate a song on Now Playing: tap <b>Rate</b> under the screen, then turn the knob or tap a star. <b>Music › Ratings</b> makes playlists from them, like My Top Rated. Ratings stay on this myStereo only. Save a copy under <b>Settings › Ratings Backup</b>.</p>
 <h3>Play on another speaker</h3>
 <p>Go to <b>Play On</b> in the main menu and pick a Plexamp player. Choose <b>This myStereo</b> to play here again.</p>
 <h3>Videos</h3>
-<p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the iPod screen. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
-<p>On the iPod screen, <span class="k">▶❙❙</span> or the center button plays and pauses, the wheel skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">MENU</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
+<p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the display. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
+<p>On the display, <span class="k">▶❙❙</span> or the knob's center plays and pauses, the knob skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">BACK</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
 <h3>Cover Flow</h3>
 <p>Turn your iPhone sideways, or choose <b>Music › Cover Flow</b>. Swipe through your albums. Tap the middle one to flip it over and see its songs, then tap a song to play it. Turn the phone upright or tap <b>Done</b> to go back.</p>
 <p>Turning sideways only works when Portrait Orientation Lock is off in Control Center.</p>
@@ -2831,16 +2833,16 @@ const HELP = `
 <p><b>Extras › Sleep Timer</b> stops the music after the time you pick, or at the end of the song. A moon shows in the top bar while it's set.</p>
 <h3>Games</h3>
 <p><b>Extras › Games</b> has four games. Each one remembers your best score.</p>
-<p><b>Brick.</b> Turn the wheel or drag to move the paddle. Press the center to launch the ball.</p>
+<p><b>Brick.</b> Turn the knob or drag to move the paddle. Press the center to launch the ball.</p>
 <p><b>Music Quiz.</b> Hear a few seconds of a song from your library and pick its name. Faster answers score more.</p>
-<p><b>Stack.</b> Turn the wheel or drag sideways to move the falling block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
-<p><b>Minesweeper.</b> Tap a square to open it. Press and hold to place a flag. With the wheel: turn to move the box, ⏮ and ⏭ move up and down a row, the center opens a square, and ⏯ places a flag.</p>
+<p><b>Stack.</b> Turn the knob or drag sideways to move the falling block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
+<p><b>Minesweeper.</b> Tap a square to open it. Press and hold to place a flag. With the knob: turn to move the box, ⏮ and ⏭ move up and down a row, the center opens a square, and ⏯ places a flag.</p>
 <h3>Flip it over</h3>
-<p>Swipe sideways on the empty part of the case, like the space around the wheel, to turn myStereo over and see the back. Swipe again to flip it back. The music keeps playing.</p>
+<p>Swipe sideways on the empty part of the faceplate, like the space around the knob, to turn myStereo over and see the back. Swipe again to flip it back. The music keeps playing.</p>
 <h3>More than one Plex server</h3>
 <p>Go to <b>Settings › Server</b> and pick one. Each server remembers which music library you chose.</p>
 <h3>Make it yours</h3>
-<p>In Settings you can turn <b>Menu Art</b> on or off (album art beside the main and Music menus), change the case color, pick a <b>Wheel Color</b> and <b>Center Color</b> of your own, set the Screen to Light, Dark, Match iPhone, or the original black-and-white Classic, choose what shows in the top-right <b>Corner</b> (a clock, a little equalizer, or where the music is playing), turn Large Text on or off, and turn the click sound on or off.</p>
+<p>In Settings you can turn <b>Menu Art</b> on or off (album art beside the main and Music menus), pick a <b>Faceplate</b>, a <b>Knob Color</b> and <b>Knob Center</b> of your own, set the <b>Display</b> (Light, Dark, LCD, Amber, Teal and more), adjust the <b>Tone</b>, choose what shows in the top-right <b>Corner</b> (a clock, a little equalizer, or where the music is playing), turn Large Text on or off, and turn the click sound on or off.</p>
 <h3>The full guide</h3>
 <p><a href="guide.html" data-guide style="color:inherit;font-weight:700">Open the ${ELITE ? 'myStereo Elite' : 'myStereo'} User’s Guide ›</a></p>`;
 function renderPage(v, anim) {
@@ -2972,14 +2974,14 @@ function updateNP() {
   const rs = $('#npStars'); if (rs) { const r = ratingOf(s.track); rs.textContent = r && v.mode !== 'rating' ? starsTxt(r) : ''; }
   if (v.mode === 'rating') {
     const r = ratingOf(s.track);
-    bar.innerHTML = `<div class="opt"><div class="opt-h">Rating<span>Turn the wheel</span></div><div class="stars">${[1, 2, 3, 4, 5].map(i => `<button type="button" data-star="${i}" class="${i <= r ? 'on' : ''}" aria-label="${i} star${i > 1 ? 's' : ''}">${i <= r ? '★' : '☆'}</button>`).join('')}</div></div>`;
+    bar.innerHTML = `<div class="opt"><div class="opt-h">Rating<span>Turn the knob</span></div><div class="stars">${[1, 2, 3, 4, 5].map(i => `<button type="button" data-star="${i}" class="${i <= r ? 'on' : ''}" aria-label="${i} star${i > 1 ? 's' : ''}">${i <= r ? '★' : '☆'}</button>`).join('')}</div></div>`;
   } else if (v.mode === 'shuffle') {
-    bar.innerHTML = `<div class="opt"><div class="opt-h">Shuffle<span>Turn the wheel</span></div><div class="seg">${segs(SHUF, cfg.shuffle, 'shuffle')}</div></div>`;
+    bar.innerHTML = `<div class="opt"><div class="opt-h">Shuffle<span>Turn the knob</span></div><div class="seg">${segs(SHUF, cfg.shuffle, 'shuffle')}</div></div>`;
   } else if (v.mode === 'repeat') {
-    bar.innerHTML = `<div class="opt"><div class="opt-h">Repeat<span>Turn the wheel</span></div><div class="seg">${segs(REP, cfg.repeat, 'repeat')}</div></div>`;
+    bar.innerHTML = `<div class="opt"><div class="opt-h">Repeat<span>Turn the knob</span></div><div class="seg">${segs(REP, cfg.repeat, 'repeat')}</div></div>`;
   } else {
     const pct = s.dur ? clamp(s.time / s.dur, 0, 1) * 100 : 0;
-    bar.innerHTML = (v.mode === 'scrub' ? `<div class="opt-h" style="margin-bottom:1.4cqw">Scrub<span>Turn the wheel</span></div>` : '') + `<div class="trk">${v.mode === 'scrub' ? `<div class="knob" style="left:${pct}%"></div>` : `<div class="fill" style="width:${pct}%"></div>`}</div>
+    bar.innerHTML = (v.mode === 'scrub' ? `<div class="opt-h" style="margin-bottom:1.4cqw">Scrub<span>Turn the knob</span></div>` : '') + `<div class="trk">${v.mode === 'scrub' ? `<div class="knob" style="left:${pct}%"></div>` : `<div class="fill" style="width:${pct}%"></div>`}</div>
       <div class="times"><span>${fmt(s.time)}</span><span>-${fmt(Math.max(0, (s.dur || 0) - s.time))}</span></div>`;
   }
   updateBar();
