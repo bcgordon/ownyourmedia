@@ -1151,9 +1151,8 @@ html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-foot{color:var(--dk-sub
 .lcd .bar-t,.vfd .bar-t{letter-spacing:0;font-size:.9em}
 html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-base)}
 @media (max-width: 540px) and (max-aspect-ratio: 3/4){
-  html.shortvp,html.shortvp body{height:var(--fullh);overflow:hidden}
-  html.shortvp .podwrap{position:absolute}
-  html.shortvp .pod{padding-bottom:calc(var(--padfix) + 6px)}
+  /* keep the bottom buttons clear of the iPhone's home bar */
+  html:not(.desk) .pod.recv{padding-bottom:max(env(safe-area-inset-bottom,0px),22px)}
 }
 html:not(.desk) .pod.recv .wheel{max-width:none}
 /* Receiver displays: glowing amber or teal text on black */
@@ -3122,12 +3121,13 @@ function rxFit() {
   const pod = $('#pod'), wh = $('#wheel'), keys = $('#rxKeys'), tx = $('#rxTx');
   if (!pod || !wh) return;
   if (!pod.classList.contains('recv') || document.documentElement.classList.contains('desk') || !keys || !tx) { wh.style.width = ''; return; }
-  /* the knob sits between the button row and the transport row; measure that gap as laid out, then fill it.
-     The tick ring reaches 12% past the knob on each side, and we leave a little air. */
-  wh.style.width = '120px';
-  const room = tx.getBoundingClientRect().top - keys.getBoundingClientRect().bottom;
-  const size = Math.max(120, Math.min((room - 20) / 1.26, pod.clientWidth * .8, 380));
-  wh.style.width = Math.floor(size) + 'px';
+  /* room between the button row and the bottom row, worked out from the case itself so the answer never
+     depends on the knob's current size (no flicker, no back-and-forth). The tick ring adds 12% on each side. */
+  const pr = pod.getBoundingClientRect(), cs = getComputedStyle(pod), ts = getComputedStyle(tx);
+  const txTop = pr.bottom - parseFloat(cs.paddingBottom) - parseFloat(ts.marginBottom) - tx.offsetHeight;
+  const room = txTop - keys.getBoundingClientRect().bottom;
+  const size = Math.floor(Math.max(120, Math.min((room - 36) / 1.26, pod.clientWidth * .78, 360)));
+  if (Math.abs((parseFloat(wh.style.width) || 0) - size) > 2) wh.style.width = size + 'px';
 }
 addEventListener('resize', () => requestAnimationFrame(rxFit));
 addEventListener('load', () => { rxFit(); setTimeout(rxFit, 400); setTimeout(rxFit, 1500); });
@@ -4151,13 +4151,9 @@ function flipPod(dir) {
 function fitFull() {
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   const portrait = innerHeight > innerWidth;
-  /* Some iPhones give a home-screen app a layout area shorter than the screen. Stretch the case to the real
-     bottom of the screen, and pad its bottom by the difference so the buttons stay inside the part that is laid out. */
-  const vh = Math.round(innerHeight), full = Math.max(screen.height, screen.width);
-  const short = standalone && portrait && full - vh > 20;
-  document.documentElement.style.setProperty('--fullh', standalone && portrait ? (short ? full : vh) + 'px' : '100%');
-  document.documentElement.style.setProperty('--padfix', short ? (full - vh) + 'px' : '0px');
-  document.documentElement.classList.toggle('shortvp', short);
+  /* size to the area the iPhone actually lays out; never taller, so nothing can scroll or bounce */
+  const vh = Math.round(innerHeight);
+  document.documentElement.style.setProperty('--fullh', standalone && portrait ? vh + 'px' : '100%');
   if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
 fitFull(); addEventListener('resize', fitFull); try { visualViewport.addEventListener('resize', fitFull); } catch {} addEventListener('orientationchange', () => setTimeout(fitFull, 300));
