@@ -1157,6 +1157,35 @@ html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-base)}
   html.shortvp:not(.desk) .pod.recv .rx-tx{margin-bottom:0}
 }
 html:not(.desk) .pod.recv .wheel{max-width:none}
+
+/* any faceplate: the knob takes the chosen knob color with a soft highlight, the center label stays readable */
+html:not(.desk) .pod.recv .wheel{background:radial-gradient(circle at 38% 30%,rgba(255,255,255,.35),transparent 55%),var(--wheel)}
+html:not(.desk) .pod.recv .center{color:var(--rx-cink,#f1f2f3);background:var(--center);box-shadow:0 0 0 calc(var(--w)*.004) var(--center-edge),0 calc(var(--w)*.01) calc(var(--w)*.03) rgba(0,0,0,.35)}
+html:not(.desk) .pod.recv::after{display:none}
+/* JL Edition: beige 1995 PC plastic, gray bevel buttons, a blue title-bar Back, the floppy bay under the screen */
+html:not(.desk) .pod.recv.jled .jl-bay{display:flex;order:1;width:calc(100% - 24px);margin-top:calc(var(--w)*.03)}
+html:not(.desk) .pod.recv.jled .rx-keys button,html:not(.desk) .pod.recv.jled .rx-tx button{border-radius:0;box-shadow:var(--bv-out);font-family:Tahoma,Verdana,var(--f-ui);letter-spacing:.02em}
+html:not(.desk) .pod.recv.jled .rx-keys button:active,html:not(.desk) .pod.recv.jled .rx-tx button:active{box-shadow:var(--bv-in);transform:none}
+html:not(.desk) .pod.recv.jled .rx-keys .rx-bk{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;box-shadow:var(--bv-out)}
+html:not(.desk) .pod.recv.jled .rx-keys i{border-radius:0}
+html:not(.desk) .pod.recv.jled .wheel{border-radius:50%;box-shadow:var(--bv-out),0 3px 8px rgba(0,0,0,.25)}
+html:not(.desk) .pod.recv.jled .center{border-radius:6%;box-shadow:var(--bv-out);color:#111}
+html:not(.desk) .pod.recv.jled .center::after{content:'OK';font-family:Tahoma,Verdana,var(--f-ui);font-size:calc(var(--w)*.05)}
+html:not(.desk) .pod.recv.jled.rx-np .center::after{content:'MODE';font-size:calc(var(--w)*.036)}
+/* Musaka Edition (Away Mission): gunmetal with starship-console pill keys */
+html:not(.desk) .pod.recv.trek .rx-keys button,html:not(.desk) .pod.recv.trek .rx-tx button{border-radius:999px;color:#000;font-family:Antonio,"Arial Narrow",var(--f-ui);letter-spacing:.08em;box-shadow:none}
+html:not(.desk) .pod.recv.trek .rx-keys button:nth-child(1){background:#ffcc99}html:not(.desk) .pod.recv.trek .rx-keys button:nth-child(2){background:#cc99cc}
+html:not(.desk) .pod.recv.trek .rx-keys button:nth-child(4){background:#9999ff}html:not(.desk) .pod.recv.trek .rx-keys button:nth-child(5){background:#ffcc99}
+html:not(.desk) .pod.recv.trek .rx-keys .rx-bk{background:#ff9966}
+html:not(.desk) .pod.recv.trek .rx-tx button{background:#cc99cc}html:not(.desk) .pod.recv.trek .rx-tx button:nth-child(2){background:#ff9966}
+html:not(.desk) .pod.recv.trek .rx-keys i{background:rgba(0,0,0,.35)}html:not(.desk) .pod.recv.trek .rx-keys button.lit i{background:#000;box-shadow:none}
+html:not(.desk) .pod.recv.trek .wheel{box-shadow:0 0 0 calc(var(--w)*.008) #e7b24a,0 0 calc(var(--w)*.04) rgba(231,178,74,.35)}
+/* LG Edition: the chrome hilt, black grip keys, and a Back that glows like the blade */
+html:not(.desk) .pod.recv.saber .rx-keys button,html:not(.desk) .pod.recv.saber .rx-tx button{box-shadow:0 0 0 1px #c9ced3,inset 0 1px 0 rgba(255,255,255,.12);text-shadow:0 0 6px rgba(95,208,255,.6)}
+html:not(.desk) .pod.recv.saber .rx-keys .rx-bk{background:linear-gradient(180deg,#d7f6ff 0%,#ffffff 50%,#d7f6ff 100%);color:#03222e;text-shadow:none;box-shadow:0 0 calc(var(--w)*.02) calc(var(--w)*.005) #8fe2ff,0 0 calc(var(--w)*.06) rgba(60,190,255,.55)}
+html:not(.desk) .pod.recv.saber .wheel{box-shadow:0 0 0 calc(var(--w)*.008) #c9ced3,0 0 0 calc(var(--w)*.014) #0b0c0e,0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.5)}
+html:not(.desk) .pod.recv.saber .center{box-shadow:0 0 calc(var(--w)*.03) rgba(95,208,255,.6)}
+html:not(.desk) .pod.recv .console .bar-t,html:not(.desk) .pod.recv .saber .bar-t{letter-spacing:0;font-size:.86em}html:not(.desk) .pod.recv .console .bar-t{font-size:.8em}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -2535,13 +2564,13 @@ function settingsView() {
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
     { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } },
-    { label: 'Case', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
+    { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } },
-    { label: 'Screen', value: screenName(), arrow: true, go: () => push(screenView()) },
+    { label: 'Display', value: screenName(), arrow: true, go: () => push(screenView()) },
     { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
-    { label: 'Wheel Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
-    { label: 'Center Color', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
+    { label: 'Knob Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
+    { label: 'Knob Center', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
     { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
   ]);
 }
@@ -2884,14 +2913,11 @@ function updateNP() {
 let toastT = null;
 function flash(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
 const CASES = [
-  { id: 'rx-silver', name: 'Receiver · Silver', base: '#c9cdd2', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(90deg,#bfc3c8,#dfe2e5 50%,#bfc3c8)', wheel: 'radial-gradient(circle at 40% 30%,#f4f5f6,#a9adb3 62%,#6b6f75)', 'rx-key': 'linear-gradient(#f1f2f3,#c9ccd0)', 'rx-ink': '#1c1d1f', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
-  { id: 'rx-white', name: 'Receiver · White', base: '#eeeff0', v: { case: 'repeating-linear-gradient(90deg,rgba(0,0,0,.018) 0 1px,rgba(255,255,255,.4) 1px 3px),linear-gradient(90deg,#e6e8ea,#fbfbfc 50%,#e6e8ea)', wheel: 'radial-gradient(circle at 40% 30%,#ffffff,#d5d8dc 62%,#9da2a8)', 'rx-key': 'linear-gradient(#ffffff,#e4e6e9)', 'rx-ink': '#1c1d1f', 'rx-glow': '#E0602A', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
-  { id: 'rx-auto', name: 'Receiver · Auto (white or black)', base: '#eeeff0', v: {} },
-  { id: 'rx-black', name: 'Receiver · Black', base: '#1a1a1c', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(90deg,#141416,#26262a 50%,#141416)', wheel: 'radial-gradient(circle at 40% 30%,#5a5a60,#2a2a2d 60%,#101012)', 'rx-key': '#2c2c30', 'rx-ink': '#ece8df', 'rx-glow': '#5FE3C6', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
-  { id: 'rx-walnut', name: 'Receiver · Walnut', base: '#6e4426', v: { case: 'linear-gradient(90deg,#4a2c17,#6e4426 50%,#4a2c17)', wheel: 'radial-gradient(circle at 40% 30%,#f3e3b8,#b89a58 60%,#7a5f2a)', 'rx-key': '#2a1a0e', 'rx-ink': '#e9dcc0', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
-  { id: 'white', name: 'White', base: '#e6e7e9', v: { case: 'linear-gradient(165deg,#ffffff 0%,#f6f6f6 45%,#e4e5e7 100%)', 'case-edge': '#d2d5d9', wheel: 'radial-gradient(circle at 50% 40%,#f1f1f2,#e3e4e6)', 'wheel-edge': '#cfd1d4', 'wheel-ink': '#a2a5aa', 'wheel-press': '#5f6368', center: 'linear-gradient(#ffffff,#e9eaec)', 'center-edge': '#c9cbcf', bezel: '#26282b' } },
-  { id: 'black', name: 'Black', base: '#2c2d30', v: { case: 'linear-gradient(170deg,#55575b 0%,#3f4044 40%,#2f3033 100%)', 'case-edge': '#1d1e20', wheel: 'radial-gradient(circle at 50% 40%,#2a2b2d,#1c1d1f)', 'wheel-edge': '#141516', 'wheel-ink': '#d9dadc', 'wheel-press': '#ffffff', center: 'linear-gradient(#56585c,#36373a)', 'center-edge': '#1a1b1d', bezel: '#0c0c0d' } },
-  { id: 'silver', name: 'Silver', base: '#b8bdc3', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(165deg,#eef0f2 0%,#d3d7dc 50%,#b7bcc3 100%)', 'case-edge': '#a9aeb5', wheel: 'radial-gradient(circle at 50% 40%,#f7f7f8,#e6e7e9)', 'wheel-edge': '#c3c6ca', 'wheel-ink': '#9aa0a7', 'wheel-press': '#50555b', center: 'linear-gradient(#e8eaed,#c9cdd2)', 'center-edge': '#a8adb3', bezel: '#26282b' } },
+  { id: 'rx-black', name: 'Black', base: '#1a1a1c', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(90deg,#141416,#26262a 50%,#141416)', wheel: 'radial-gradient(circle at 40% 30%,#5a5a60,#2a2a2d 60%,#101012)', 'rx-key': '#2c2c30', 'rx-ink': '#ece8df', 'rx-glow': '#5FE3C6', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-white', name: 'White', base: '#eeeff0', v: { case: 'repeating-linear-gradient(90deg,rgba(0,0,0,.018) 0 1px,rgba(255,255,255,.4) 1px 3px),linear-gradient(90deg,#e6e8ea,#fbfbfc 50%,#e6e8ea)', wheel: 'radial-gradient(circle at 40% 30%,#ffffff,#d5d8dc 62%,#9da2a8)', 'rx-key': 'linear-gradient(#ffffff,#e4e6e9)', 'rx-ink': '#1c1d1f', 'rx-glow': '#E0602A', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-auto', name: 'Auto (white or black)', base: '#eeeff0', v: {} },
+  { id: 'rx-silver', name: 'Silver', base: '#c9cdd2', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(90deg,#bfc3c8,#dfe2e5 50%,#bfc3c8)', wheel: 'radial-gradient(circle at 40% 30%,#f4f5f6,#a9adb3 62%,#6b6f75)', 'rx-key': 'linear-gradient(#f1f2f3,#c9ccd0)', 'rx-ink': '#1c1d1f', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
+  { id: 'rx-walnut', name: 'Walnut', base: '#6e4426', v: { case: 'linear-gradient(90deg,#4a2c17,#6e4426 50%,#4a2c17)', wheel: 'radial-gradient(circle at 40% 30%,#f3e3b8,#b89a58 60%,#7a5f2a)', 'rx-key': '#2a1a0e', 'rx-ink': '#e9dcc0', 'rx-glow': '#F2B84B', 'case-edge': '#8d9197', 'wheel-edge': 'rgba(0,0,0,.35)', 'wheel-ink': 'transparent', 'wheel-press': 'transparent', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#16171a)', 'center-edge': '#000', bezel: '#050505' } },
   { id: 'pink', name: 'Pink', base: '#d97c9e', v: { case: 'linear-gradient(165deg,#f8cada 0%,#ec9ab6 50%,#d97c9e 100%)', 'case-edge': '#c96d8f', wheel: 'radial-gradient(circle at 50% 40%,#fbf0f4,#f1dde5)', 'wheel-edge': '#dcbfca', 'wheel-ink': '#c47a95', 'wheel-press': '#8d3d5b', center: 'linear-gradient(#f3b9cd,#df8eab)', 'center-edge': '#c96d8f', bezel: '#26282b' } },
   { id: 'blue', name: 'Blue', base: '#4f88c8', v: { case: 'linear-gradient(165deg,#b3d4f5 0%,#74a9e2 50%,#4f88c8 100%)', 'case-edge': '#3f77b6', wheel: 'radial-gradient(circle at 50% 40%,#f0f5fb,#dde8f4)', 'wheel-edge': '#bccfe3', 'wheel-ink': '#6f95bd', 'wheel-press': '#264e7c', center: 'linear-gradient(#9cc4ee,#5f97d6)', 'center-edge': '#3f77b6', bezel: '#26282b' } },
   { id: 'green', name: 'Green', base: '#7fb54f', v: { case: 'linear-gradient(165deg,#d3edb2 0%,#a3d274 50%,#7fb54f 100%)', 'case-edge': '#6ea042', wheel: 'radial-gradient(circle at 50% 40%,#f3f8ec,#e3eed6)', 'wheel-edge': '#c6d9b0', 'wheel-ink': '#86a865', 'wheel-press': '#3f5f22', center: 'linear-gradient(#bfe194,#8fc35d)', 'center-edge': '#6ea042', bezel: '#26282b' } },
@@ -2901,13 +2927,16 @@ const CASES = [
   { id: 'u2', name: 'Black & Red', base: '#060607', v: { case: 'linear-gradient(165deg,#34363a 0%,#141517 45%,#050506 100%)', 'case-edge': '#000', wheel: 'radial-gradient(circle at 50% 40%,#d8232f,#a90f1b)', 'wheel-edge': '#6e0911', 'wheel-ink': '#2a0507', 'wheel-press': '#000000', center: 'linear-gradient(#2b2d30,#17181a)', 'center-edge': '#0a0a0b', bezel: '#000' } },
   { id: 'zune', name: 'Zune Brown', base: '#3b281d', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(170deg,#7a5843 0%,#5a3f2e 42%,#3f2a1e 100%)', 'case-edge': '#2b1c13', wheel: 'radial-gradient(circle at 50% 38%,#6a4b38,#4a3324)', 'wheel-edge': '#2a1b12', 'wheel-ink': '#d8c3a8', 'wheel-press': '#fff3e2', center: 'linear-gradient(#7e5c46,#5b3f2d)', 'center-edge': '#2f1f15', bezel: '#0d0a08' } },
   { id: 'bc', name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
-  { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
-  { id: 'lg', name: 'LG Edition', eliteOnly: true, base: '#2a2c30', v: { case: 'repeating-linear-gradient(180deg,#3b3d42 0 calc(var(--w)*.012),#0d0e10 calc(var(--w)*.012) calc(var(--w)*.04)) 0 86%/100% 40% no-repeat,linear-gradient(90deg,#7d838a 0%,#e6e9ec 16%,#aeb3b9 30%,#fafbfc 48%,#a7acb2 64%,#dde0e3 80%,#7a8087 100%)', 'case-edge': '#4d5258', wheel: 'radial-gradient(circle at 50% 38%,#26282c,#0b0c0e)', 'wheel-edge': '#c9ced3', 'wheel-ink': '#d9e8f0', 'wheel-press': '#7fdcff', center: 'radial-gradient(circle at 50% 30%,#ffffff,#d5d9dd 55%,#9aa0a6)', 'center-edge': '#7a8087', bezel: '#030405' } },
-  { id: 'trek', name: 'Away Mission', base: '#1e2126', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
+  { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { 'rx-key': 'linear-gradient(#e2ddcc,#cbc4ad)', 'rx-ink': '#111111', 'rx-glow': '#2fbf3a', case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
+  { id: 'lg', name: 'LG Edition', eliteOnly: true, base: '#2a2c30', v: { 'rx-key': 'linear-gradient(#2a2c30,#0b0c0e)', 'rx-ink': '#d9e8f0', 'rx-glow': '#7fdcff', case: 'repeating-linear-gradient(180deg,#3b3d42 0 calc(var(--w)*.012),#0d0e10 calc(var(--w)*.012) calc(var(--w)*.04)) 0 86%/100% 40% no-repeat,linear-gradient(90deg,#7d838a 0%,#e6e9ec 16%,#aeb3b9 30%,#fafbfc 48%,#a7acb2 64%,#dde0e3 80%,#7a8087 100%)', 'case-edge': '#4d5258', wheel: 'radial-gradient(circle at 50% 38%,#26282c,#0b0c0e)', 'wheel-edge': '#c9ced3', 'wheel-ink': '#d9e8f0', 'wheel-press': '#7fdcff', center: 'radial-gradient(circle at 50% 30%,#ffffff,#d5d9dd 55%,#9aa0a6)', 'center-edge': '#7a8087', bezel: '#030405' } },
+  { id: 'trek', name: 'Away Mission', base: '#1e2126', v: { 'rx-key': '#ffcc99', 'rx-ink': '#000000', 'rx-glow': '#ff9966', case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
 if (cfg.caseColor === 'elite') { cfg.caseColor = 'trek'; try { save(); } catch {} }
+/* myStereo: the click-wheel cases became receiver faceplates */
+{ const mv = { white: 'rx-white', black: 'rx-black', silver: 'rx-silver' }; if (mv[cfg.caseColor]) { cfg.caseColor = mv[cfg.caseColor]; try { save(); } catch {} }
+  if (['color', 'dark', 'auto', 'classic'].includes(cfg.screen || 'color')) { cfg.screen = 'rxauto'; try { save(); } catch {} } }
 /* wheel and center button colors: [id, name, light, dark, edge, ink, press] */
 const WHEELS = [
   ['white', 'White', '#f1f1f2', '#e3e4e6', '#cfd1d4', '#a2a5aa', '#5f6368'],
@@ -2954,7 +2983,13 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
   pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('saber', c.id === 'lg');
-  pod.classList.toggle('recv', c.id.startsWith('rx-')); if (typeof rxSync === 'function') rxSync();
+  pod.classList.add('recv'); if (typeof rxSync === 'function') rxSync();
+  { const lum = h => { const m = /#([0-9a-f]{6})/i.exec(h || ''); if (!m) return .5; const n = parseInt(m[1], 16); return ((n >> 16 & 255) * .299 + (n >> 8 & 255) * .587 + (n & 255) * .114) / 255; };
+    if (!c.v['rx-key']) { const light = lum(c.base) > .55;
+      pod.style.setProperty('--rx-key', light ? 'linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.4))' : 'linear-gradient(rgba(255,255,255,.16),rgba(255,255,255,.05))');
+      pod.style.setProperty('--rx-ink', light ? '#1c1d1f' : '#f3f0ea'); pod.style.setProperty('--rx-glow', light ? '#E0602A' : '#F2B84B'); }
+    const cw = wheelOf('center' in over ? over.center : cfg.center), cc = cw ? cw[2] : c.v.center;
+    pod.style.setProperty('--rx-cink', lum(cc) > .6 ? '#1c1d1f' : '#f1f2f3'); }
   const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myStereo Elite, whatever the case */
   $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
   $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myStereo Elite\nLG Edition' : 'myStereo Elite\nMusaka Edition') : 'Built by BC';
@@ -2962,8 +2997,7 @@ function applyCase(id = cfg.caseColor, over = {}) {
   const red = c.id === 'bc' && !eliteBack;
   $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
   document.documentElement.style.setProperty('--case-base', c.base);
-  document.documentElement.style.setProperty('--case-fill', c.id.startsWith('rx-') ? c.v.case : c.base);
-  document.documentElement.classList.toggle('rxcase', c.id.startsWith('rx-'));
+  document.documentElement.classList.add('rxcase');
   if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (cfg.caseColor === 'rx-auto') applyCase(); }); } catch {}
@@ -2971,10 +3005,7 @@ const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
 function caseView() {
   const CASES = caseList();
   const v = List('Case', CASES.map(c => ({ label: c.name, get check() { return cfg.caseColor === c.id; },
-    act: () => { cfg.caseColor = c.id; const rxS = ['rxauto', 'lcd', 'amber', 'teal'];
-      if (c.id.startsWith('rx-') && ['color', 'dark', 'auto'].includes(cfg.screen || 'color')) cfg.screen = 'rxauto';
-      else if (!c.id.startsWith('rx-') && rxS.includes(cfg.screen)) cfg.screen = 'auto';
-      save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
+    act: () => { cfg.caseColor = c.id; save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
     { onSel() { applyCase(CASES[this.sel].id); }, onLeave() { applyCase(); } });
   v.sel = Math.max(0, CASES.findIndex(c => c.id === cfg.caseColor));
   return v;
@@ -3901,11 +3932,12 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['color', 'Light'], ['dark', 'Dark'], ['auto', 'Match iPhone'], ['classic', 'Classic'], ['console', 'Starship Console'], ['saber', 'Blade', true], ['rxauto', 'Receiver Auto'], ['lcd', 'Receiver LCD'], ['amber', 'Receiver Amber'], ['teal', 'Receiver Teal']];
+const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
 function screenStyle(id = cfg.screen) {
+  if (!id || ['color', 'dark', 'auto', 'classic'].includes(id)) id = 'rxauto';
   const w95 = $('#pod').classList.contains('jled');
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
