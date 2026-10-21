@@ -23,7 +23,31 @@ a:focus-visible{outline:3px solid #2549C7;outline-offset:3px}
 html{-webkit-text-size-adjust:100%}
 img{max-width:100%}
 
-[data-preview][hidden]{display:none!important}
+
+/* hero: three membership passes on lanyards (shown with ?preview=pass) */
+.passes{position:relative;width:min(500px,100%);height:400px;display:block}
+.pass{position:absolute;top:58px;width:31.5%;aspect-ratio:.63;border-radius:14px;text-decoration:none;display:flex;flex-direction:column;align-items:center;padding:30px 10px 14px;box-sizing:border-box;
+  box-shadow:0 18px 30px -12px rgba(0,0,0,.45),0 2px 0 rgba(0,0,0,.15);transform-origin:50% -58px;transition:transform .25s;font-family:'Bricolage Grotesque',Georgia,sans-serif}
+.pass .strap{position:absolute;left:50%;top:-58px;width:16px;margin-left:-8px;height:66px;border-radius:2px;background:var(--strap)}
+.pass .slot{position:absolute;top:12px;left:50%;width:46px;height:9px;margin-left:-23px;border-radius:6px;background:#F1EDE4;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.18)}
+.pass .pi{margin-bottom:8px;display:flex;flex-direction:column;align-items:center;gap:6px;font:600 8.5px 'IBM Plex Mono',monospace;letter-spacing:.2em;color:var(--sub);text-align:center}
+.pass .pi img{width:34px;height:34px;border-radius:8px}
+.pass .tier{margin-top:auto;font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.3em;color:var(--acc)}
+.pass .big{font-weight:300;font-size:clamp(14px,3.8vw,20px);letter-spacing:.12em;padding-left:.22em;color:var(--ink);text-align:center;line-height:1.1}
+.pass .rule{width:46px;height:2px;background:var(--acc);margin:9px 0}
+.pass .l1{font:600 8.5px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:var(--sub);text-align:center}
+.pass .foot{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;font:600 8px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:var(--sub)}
+.pass .foot b{font:700 18px 'Bricolage Grotesque',sans-serif;letter-spacing:.06em;color:var(--acc)}
+.pass .foot em{font-style:normal;color:var(--ink)}
+.p-card{--strap:#B23A12;--ink:#191817;--sub:#55524C;--acc:#B23A12;background:linear-gradient(180deg,#fffdf8,#efe8da);left:0;transform:rotate(-6deg);z-index:1;box-shadow:inset 0 0 0 1.5px #d6cdb9,0 18px 30px -12px rgba(0,0,0,.35)}
+.p-member{--strap:#2549C7;--ink:#ffffff;--sub:#c9d4f7;--acc:#F2B84B;background:linear-gradient(180deg,#2f56d8,#1d3aa6);left:34.25%;top:40px;transform:rotate(0deg);z-index:3}
+.p-back{--strap:#C9A45C;--ink:#EDE8DE;--sub:#a8a29a;--acc:#C9A45C;background:#121212;left:68.5%;transform:rotate(6deg);z-index:2;box-shadow:inset 0 0 0 1px rgba(201,164,92,.5),0 18px 30px -12px rgba(0,0,0,.55)}
+.pass:hover,.pass:focus-visible{z-index:4}
+.p-card:hover{transform:rotate(-3deg) translateY(-6px)}.p-member:hover{transform:translateY(-8px)}.p-back:hover{transform:rotate(3deg) translateY(-6px)}
+@keyframes passSway{0%,100%{rotate:0deg}50%{rotate:1.6deg}}
+@media (prefers-reduced-motion:no-preference){.p-card{animation:passSway 6s ease-in-out infinite}.p-member{animation:passSway 7s ease-in-out -2s infinite}.p-back{animation:passSway 6.5s ease-in-out -4s infinite}}
+@media (max-width:480px){.passes{height:300px}.pass{padding:24px 6px 10px}.pass .pi span{display:none}.pass .l1{font-size:7px;letter-spacing:.1em}.pass .foot{font-size:7px}.pass .foot b{font-size:15px}}
+[data-preview][hidden],[data-public][hidden]{display:none!important}
 /* join the club (from the membership page) */
 .oymj{--paper:#F1EDE4;--card:#FFFDF8;--ink:#191817;--muted:#55524C;--blue:#2549C7;--rust:#B23A12;--f:'Bricolage Grotesque',Georgia,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
   max-width:1160px;margin:0 auto;padding:56px 24px;box-sizing:border-box}
@@ -92,7 +116,40 @@ img{max-width:100%}
       </div>
     </div>
     <div style="flex: 1 1 360px; min-width: 0; display: grid; place-items: center; padding: 24px 8px">
-      <div style="position: relative; width: min(480px, 100%); aspect-ratio: 1.586">
+
+      <div class="passes" data-preview hidden aria-label="Three membership passes: Card, Member and Backstage">
+          <a class="pass p-card" href="#join" aria-label="CARD pass">
+            <i class="strap"></i>
+            <span class="slot"></span>
+            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
+            <span class="tier">TIER 1</span>
+            <b class="big">CLUB<br>CARD</b>
+            <span class="rule"></span>
+            <span class="l1">ONE YEAR</span>
+            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$20 · ONE TIME</em></span>
+          </a>
+          <a class="pass p-member" href="#join" aria-label="MEMBER pass">
+            <i class="strap"></i>
+            <span class="slot"></span>
+            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
+            <span class="tier">TIER 2</span>
+            <b class="big">MEMBER</b>
+            <span class="rule"></span>
+            <span class="l1">LETTERS + DIGS</span>
+            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$50 A YEAR</em></span>
+          </a>
+          <a class="pass p-back" href="#join" aria-label="BACKSTAGE pass">
+            <i class="strap"></i>
+            <span class="slot"></span>
+            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
+            <span class="tier">TIER 3</span>
+            <b class="big">ALL<br>ACCESS</b>
+            <span class="rule"></span>
+            <span class="l1">ALL GATHERINGS</span>
+            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$75 A YEAR</em></span>
+          </a>
+      </div>
+      <div data-public style="position: relative; width: min(480px, 100%); aspect-ratio: 1.586">
         <div aria-hidden="true" style="position: absolute; inset: 0; background: #E4DDCF; border: 2px solid #191817; border-radius: 18px; transform: rotate(5deg) translate(10px, 6px)"></div>
         <div role="img" aria-label="Own Your Media Club membership card. Member number blank, established 2026, stamped valid offline only." style="position: absolute; inset: 0; display: flex; flex-direction: column; background: #FFFDF8; border: 2px solid #191817; border-radius: 18px; box-shadow: 8px 8px 0 #191817; transform: rotate(-4deg); overflow: hidden; font-family: 'Special Elite', 'Courier New', monospace; color: #191817">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 18px 10px 18px; background: #2549C7; color: #FFFFFF; border-bottom: 2px solid #191817">
@@ -349,6 +406,7 @@ img{max-width:100%}
 const SHOW_PASSES = false;
 if (SHOW_PASSES || new URLSearchParams(location.search).get('preview') === 'pass') {
   document.querySelectorAll('[data-preview]').forEach(el => { el.hidden = false; el.style.display = el.tagName === 'A' ? 'inline-flex' : ''; });
+  document.querySelectorAll('[data-public]').forEach(el => { el.hidden = true; });
   if (location.hash === '#join') document.getElementById('join').scrollIntoView();
 }
 /* Member and Backstage: paste each Substack checkout link here and its button switches on. */
