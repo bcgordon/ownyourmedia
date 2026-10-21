@@ -1,7 +1,6 @@
 {
-  "id": "/mypod/app/",
-  "name": "myPod",
-  "short_name": "myPod",
+  "name": "myStereo",
+  "short_name": "myStereo",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

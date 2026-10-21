@@ -8,13 +8,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="myPod Elite">
+<meta name="apple-mobile-web-app-title" content="myStereo Elite">
 <link rel="apple-touch-icon" href="elite-apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="elite-favicon-32.png">
 <link rel="manifest" href="manifest-elite.webmanifest">
 <meta name="theme-color" content="#16181c">
 <style>body{margin:0}</style>
-<title>myPod Elite</title>
+<title>myStereo Elite</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -200,7 +200,7 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .podback.redback .engrave{color:rgba(255,226,226,.82);text-shadow:0 1px 0 rgba(0,0,0,.35),0 -1px 0 rgba(255,255,255,.25)}
 .podback.redback .scuff{opacity:.7}
 html.redback.showback body{background-color:#8f0b12}
-/* myPod Elite (Musaka Edition): high-gloss white front, mirror-polished chrome back, no stickers */
+/* myStereo Elite (Musaka Edition): high-gloss white front, mirror-polished chrome back, no stickers */
 .pod.elite{box-shadow:0 0 0 1px #8d939a,0 0 0 2px #f4f6f8,0 0 0 3px #b9bec4,0 0 0 4px #6f757c,0 34px 60px -24px rgba(0,0,0,.55),0 10px 22px -10px rgba(0,0,0,.35)}
 .pod.elite::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:5;
   background:
@@ -831,7 +831,7 @@ html:not(.vfull) .vctl,html:not(.vfull) .vtop{display:none}
   .jls.tag{top:6%}.jls.note{top:5%}.jls.dns{top:24%}.jls.ooo{top:23%}.jls.qs{top:40%}.jls.ticket{top:58%}.jls.void{top:56%}.jls.ra{top:69%;width:28%;left:36%}
 }
 
-/* no double-tap zoom anywhere on myPod (quick Menu, Menu presses were zooming in) */
+/* no double-tap zoom anywhere on myStereo (quick Menu, Menu presses were zooming in) */
 html,body,.stage,.podwrap,.pod,.screen,.bar{touch-action:manipulation}
 @media (prefers-reduced-motion: reduce){.rows.in,.rows.out{animation:none}.spin{animation-duration:3s}.toast{transition:none}}
 
@@ -1010,7 +1010,7 @@ html.desk.dk-mini .dk-lcd{overflow:hidden}html.dk-pip .dk-lcd{overflow:hidden}
 .fb-to{color:var(--muted);font-size:15px}
 html.ed-elite .dk-side .dk-i{font-size:18px;letter-spacing:.04em}.dk-side .dk-i span{overflow:hidden;text-overflow:ellipsis}
 
-/* ---------- LG Edition (myPod Elite): a laser-sword hilt. Chrome emitter, black ridged grip, activation plate ---------- */
+/* ---------- LG Edition (myStereo Elite): a laser-sword hilt. Chrome emitter, black ridged grip, activation plate ---------- */
 .pod.saber{box-shadow:0 0 0 1px #2c2f33,0 0 0 2px #c9ced3,0 0 0 3px #6f757c,0 0 0 4px #1b1d20,0 34px 60px -24px rgba(0,0,0,.6),0 10px 22px -10px rgba(0,0,0,.4)}
 .pod.saber .bezel{box-shadow:0 0 0 calc(var(--w)*.006) #9aa0a6,0 0 calc(var(--w)*.05) rgba(95,208,255,.45)}
 .pod.saber::after{content:"";order:1;flex:none;margin:auto 0;width:calc(var(--w)*.42);height:calc(var(--w)*.075);pointer-events:none;border-radius:calc(var(--w)*.02);
@@ -1055,16 +1055,10 @@ html:not(.desk) .pod.recv{border-radius:calc(var(--w)*.035)}
 html:not(.desk) .pod.recv .bezel{order:1;margin-top:calc(var(--w)*.05);padding:calc(var(--w)*.016);border-radius:calc(var(--w)*.022)}
 html:not(.desk) .pod.recv .screen{width:calc(var(--w)*.88);height:calc(var(--w)*.64)}
 html:not(.desk) .pod.recv .lbl{display:none}
-html:not(.desk) .pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
-.rx-src,.rx-modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--w)*.016)}
-.rx-modes{display:none}html:not(.desk) .pod.recv.rx-np .rx-modes{display:grid}html:not(.desk) .pod.recv.rx-np .rx-src{display:none}
 .rx-keys button,.rx-tx button{min-height:44px;border:0;border-radius:calc(var(--w)*.02);background:var(--rx-key);color:var(--rx-ink);
   font:700 calc(var(--w)*.032)/1 var(--f-ui,system-ui);letter-spacing:.06em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--w)*.012);
   box-shadow:inset 0 calc(var(--w)*-.009) 0 rgba(0,0,0,.28);cursor:pointer;padding:calc(var(--w)*.018) 0;-webkit-tap-highlight-color:transparent}
 .rx-keys button:active,.rx-tx button:active{transform:translateY(1px);box-shadow:inset 0 calc(var(--w)*-.004) 0 rgba(0,0,0,.28)}
-.rx-keys i{width:calc(var(--w)*.022);height:calc(var(--w)*.022);border-radius:50%;background:rgba(0,0,0,.35)}
-.rx-keys button.lit i{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
-.rx-keys b{font-size:calc(var(--w)*.05);line-height:.6}
 html:not(.desk) .pod.recv .wheel{isolation:isolate;order:3;width:calc(var(--w)*.46);margin-block:auto;background:var(--wheel);
   box-shadow:0 0 0 calc(var(--w)*.006) var(--wheel-edge),0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.4)}
 html:not(.desk) .pod.recv .wheel::before{content:'';position:absolute;inset:-11%;border-radius:50%;z-index:-1;pointer-events:none;
@@ -1074,13 +1068,23 @@ html:not(.desk) .pod.recv .rx-dial{display:block;position:absolute;inset:0;borde
 html:not(.desk) .pod.recv .rx-dial i{position:absolute;top:6%;left:50%;width:7%;height:7%;margin-left:-3.5%;border-radius:50%;background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
 html:not(.desk) .pod.recv .center{z-index:1;display:grid;place-items:center;color:#f1f2f3;font:700 calc(var(--w)*.03)/1 var(--f-ui,system-ui);letter-spacing:.12em}
 html:not(.desk) .pod.recv .center::after{content:'SELECT'}html:not(.desk) .pod.recv.rx-np .center::after{content:'MODE'}html:not(.desk) .pod.recv.rx-vid .center::after{content:'PLAY'}
+html:not(.desk) .pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
+.rx-src,.rx-modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--w)*.016)}
+.rx-modes{display:none}html:not(.desk) .pod.recv.rx-np .rx-modes{display:grid}html:not(.desk) .pod.recv.rx-np .rx-src{display:none}
+.rx-keys i{width:calc(var(--w)*.022);height:calc(var(--w)*.022);border-radius:50%;background:rgba(0,0,0,.35)}
+.rx-keys button.lit i{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
+/* Back sits dead center so it is the same reach for a left or right thumb, and it is lit so it reads as the way out */
+.rx-keys .rx-bk{background:var(--rx-glow);color:#141414;box-shadow:inset 0 calc(var(--w)*-.009) 0 rgba(0,0,0,.3)}
+.rx-keys .rx-bk svg{width:calc(var(--w)*.045);height:calc(var(--w)*.045)}
 html:not(.desk) .pod.recv .rx-tx{order:4;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--w)*.02);width:calc(var(--w)*.91);margin-bottom:calc(var(--w)*.05)}
+.rx-tx button span{font-size:calc(var(--w)*.032);letter-spacing:.08em}.rx-tx button[data-rx=back]{flex-direction:row;gap:calc(var(--w)*.01)}.rx-tx button[data-rx=back] svg{width:calc(var(--w)*.05);height:calc(var(--w)*.05)}
 .rx-tx svg{width:calc(var(--w)*.07);height:calc(var(--w)*.07);fill:currentColor}
 html:not(.desk) .pod.recv .jl-bay{display:none}
 html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
 @media (display-mode: standalone),(max-width:600px) and (pointer:coarse){
   html:not(.desk) .pod.recv .screen{width:100%;height:calc(var(--w)*.72)}
-  html:not(.desk) .pod.recv .wheel{width:min(calc(var(--w)*.6),300px)}
+  html:not(.desk) .pod.recv .wheel{width:min(calc(var(--w)*.46),220px)}
+  html:not(.desk) .pod.recv .rx-tx{margin-bottom:14px}
   html:not(.desk) .pod.recv .rx-keys,html:not(.desk) .pod.recv .rx-tx{width:calc(100% - 24px)}
 }
 /* Receiver LCD: dark text on a pale gray-green panel, like an old stereo or car radio */
@@ -1100,6 +1104,51 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
 .lcd .seg{border:0;background:rgba(31,36,25,.15)}.lcd .seg button{color:#1f2419;text-transform:uppercase}.lcd .seg button.on{background:#1f2419;color:#d3dac2}
 .lcd .stars button{color:rgba(31,36,25,.3)}.lcd .stars button.on,.lcd .np-stars{color:#1f2419}
 .lcd .sbox{background:transparent;border-bottom:0}.lcd .sbox input{background:rgba(31,36,25,.12);color:#1f2419;border:0}
+
+/* ---------- Desktop Mode as a stereo receiver: wood cheeks, a brushed faceplate, a glowing display and hardware keys.
+   Standard: silver and amber. Elite: black and brass with a teal display. ---------- */
+html:is(.desk,.dk-pip){--dk-face:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(180deg,#e2e5e8,#bcc1c6);
+  --dk-wood:linear-gradient(90deg,#3d2412,#6e4426 45%,#4a2c17);--dk-ink:#2a2c30;--dk-sub:#55595f;
+  --dk-key:linear-gradient(#f4f5f6,#cdd1d5);--dk-key-edge:#8d9197;--dk-key-ink:#1f2124;
+  --dk-vfd:#F2B84B;--dk-vfd-bg:#0b0a07;--dk-panel:#121212;--dk-trim:#8d9197}
+html:is(.desk,.dk-pip).ed-elite{--dk-face:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(180deg,#26262a,#121214);
+  --dk-wood:linear-gradient(90deg,#1a0f08,#3b2312 45%,#22140a);--dk-ink:#e8d9b4;--dk-sub:#b9a77c;
+  --dk-key:linear-gradient(#34343a,#1c1c20);--dk-key-edge:#C9A45C;--dk-key-ink:#e8d9b4;
+  --dk-vfd:#5FE3C6;--dk-vfd-bg:#050a09;--dk-panel:#08080a;--dk-trim:#C9A45C}
+html.desk body,html.desk.ed-elite body{background:#1b1714 radial-gradient(ellipse 80% 70% at 50% 30%,#3a302a,#141110)}
+html.dk-pip body,html.dk-pip.ed-elite body{background:var(--dk-face)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .pod{background:var(--dk-face);border-radius:6px;border-inline:22px solid transparent;border-image:var(--dk-wood) 1;
+  box-shadow:0 0 0 1px #000,0 30px 70px -20px rgba(0,0,0,.75),0 8px 20px -8px rgba(0,0,0,.5)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-title{color:var(--dk-ink);text-shadow:none;font:700 13px var(--f-ui);letter-spacing:.32em;text-transform:uppercase}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights{gap:6px}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights button{width:30px;height:14px;border-radius:3px;background:var(--dk-key);box-shadow:0 0 0 1px var(--dk-key-edge),0 1px 2px rgba(0,0,0,.3);position:relative}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights button::after{content:'';position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights .r::after{background:#e0443a;box-shadow:0 0 5px #e0443a}html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights .y::after{background:var(--dk-vfd);box-shadow:0 0 5px var(--dk-vfd)}html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lights .g::after{background:#6b6f75}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-b{border-radius:7px;color:var(--dk-key-ink);background:var(--dk-key);box-shadow:0 0 0 1px var(--dk-key-edge),0 3px 0 rgba(0,0,0,.35),0 4px 8px rgba(0,0,0,.25)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-b:active{transform:translateY(2px);background:var(--dk-key);box-shadow:0 0 0 1px var(--dk-key-edge),0 1px 0 rgba(0,0,0,.35)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-b.big{width:64px}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-lcd{background:var(--dk-vfd-bg);color:var(--dk-vfd);border:0;border-radius:6px;box-shadow:0 0 0 2px #000,0 0 0 4px var(--dk-trim),inset 0 0 30px rgba(0,0,0,.6);font-family:var(--f-ui)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-l1{color:var(--dk-vfd);text-transform:uppercase;letter-spacing:.08em;font:700 21px/1.2 var(--f-ui);text-shadow:0 0 8px color-mix(in srgb,var(--dk-vfd) 55%,transparent)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-l2{color:color-mix(in srgb,var(--dk-vfd) 75%,#000);text-transform:uppercase;letter-spacing:.06em;font-family:var(--f-ui)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-prog{color:var(--dk-vfd);font-family:var(--f-ui);letter-spacing:.04em}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-trk{height:8px;border-radius:0;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--dk-vfd) 18%,#000) 0 6px,transparent 6px 8px);box-shadow:none}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-trk i{border-radius:0;background:repeating-linear-gradient(90deg,var(--dk-vfd) 0 6px,transparent 6px 8px);box-shadow:0 0 6px color-mix(in srgb,var(--dk-vfd) 60%,transparent)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-stars button{color:color-mix(in srgb,var(--dk-vfd) 30%,#000)}html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-stars button.on{color:var(--dk-vfd)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-vol{color:var(--dk-ink)}html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-vol input{accent-color:var(--dk-trim)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side{background:var(--dk-panel);box-shadow:0 0 0 2px #000,0 0 0 3px var(--dk-trim);border-radius:6px 0 0 6px}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-h{color:var(--dk-sub);font:700 12px var(--f-ui);letter-spacing:.3em}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i{position:relative;margin:0 10px 6px;width:calc(100% - 20px);border-radius:6px;padding:9px 14px 9px 30px;background:var(--dk-key);color:var(--dk-key-ink);
+  font:700 15px var(--f-ui);letter-spacing:.1em;text-transform:uppercase;box-shadow:0 0 0 1px var(--dk-key-edge),0 2px 0 rgba(0,0,0,.4)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i::before{content:'';position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:rgba(0,0,0,.4)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i svg{stroke:currentColor;width:18px;height:18px}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i:hover{filter:brightness(1.06);background:var(--dk-key)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i.on{background:var(--dk-key);color:var(--dk-key-ink)}html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i.on svg{stroke:currentColor}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-side .dk-i.on::before{background:var(--dk-vfd);box-shadow:0 0 8px var(--dk-vfd)}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-art{background:#000;box-shadow:0 0 0 2px var(--dk-trim);color:var(--dk-sub);border-radius:4px}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .bezel{background:#000;padding:3px 3px 3px 0}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .screen{border-radius:0 4px 4px 0}
+html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-foot{color:var(--dk-sub);text-shadow:none;font:700 12px var(--f-ui);letter-spacing:.34em;text-transform:uppercase}
+.lcd .bar-t,.vfd .bar-t{letter-spacing:0;font-size:.9em}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -1124,18 +1173,18 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
 <main class="stage">
   <div class="podwrap" id="podwrap"><div class="podflip" id="podflip">
   <div class="pod white" id="pod">
-    <div class="dk-title" id="dkTitle"><span class="dk-lights"><button class="r" type="button" data-dk="exit" title="Back to the iPod" aria-label="Leave Desktop Mode"></button><button class="y" type="button" data-dk="mini" title="Mini Player" aria-label="Mini Player"></button><button class="g" type="button" data-dk="full" title="Full screen" aria-label="Full screen"></button></span><b id="dkName">myPod</b><span></span></div>
+    <div class="dk-title" id="dkTitle"><span class="dk-lights"><button class="r" type="button" data-dk="exit" title="Back to the player" aria-label="Leave Desktop Mode"></button><button class="y" type="button" data-dk="mini" title="Mini Player" aria-label="Mini Player"></button><button class="g" type="button" data-dk="full" title="Full screen" aria-label="Full screen"></button></span><b id="dkName">myStereo</b><span></span></div>
     <div class="dk-top" id="dkTop">
       <div class="dk-tp"><button class="dk-b" type="button" data-dk="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button class="dk-b big" type="button" data-dk="play" id="dkPP" aria-label="Play or pause"></button><button class="dk-b" type="button" data-dk="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button></div>
-      <div class="dk-lcd idle" id="dkLcd"><div class="dk-l1" id="dkL1">myPod</div><div class="dk-l2" id="dkL2" title="Click to switch artist and album">Pick something to play</div>
+      <div class="dk-lcd idle" id="dkLcd"><div class="dk-l1" id="dkL1">myStereo</div><div class="dk-l2" id="dkL2" title="Click to switch artist and album">Pick something to play</div>
         <div class="dk-prog"><span id="dkT1">0:00</span><div class="dk-trk" id="dkTrk" title="Click to jump"><i id="dkFill"></i></div><span id="dkT2" title="Click to switch time left and total time">-0:00</span><span class="dk-stars" id="dkStars" role="group" aria-label="Rating"><button type="button" data-dkstar="1" aria-label="1 star">★</button><button type="button" data-dkstar="2" aria-label="2 stars">★</button><button type="button" data-dkstar="3" aria-label="3 stars">★</button><button type="button" data-dkstar="4" aria-label="4 stars">★</button><button type="button" data-dkstar="5" aria-label="5 stars">★</button></span></div></div>
       <div class="dk-rt"><button class="dk-b sm" type="button" data-dk="mini" id="dkMini" title="Mini Player" aria-label="Mini Player"><svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11.5" y="11.5" width="8" height="6" rx="1"/></svg></button><label class="dk-vol"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="range" id="dkVol" min="0" max="1" step="0.02" aria-label="Volume"></label></div>
     </div>
     <div class="dk-pipnote" id="dkPipNote">Playing in the Mini Player<button type="button" data-dk="unpip">Bring it back</button></div>
     <nav class="dk-side" id="dkSide" aria-label="Library"><div class="dk-h"><span>LIBRARY</span><button class="dk-col" type="button" data-dk="side" id="dkCol" title="Hide the Library list" aria-label="Hide the Library list"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="dkItems"></div><div class="dk-sp"></div><div class="dk-art" id="dkArt" title="Now Playing">No song playing</div></nav>
     <div class="bezel">
-      <div class="screen big" id="screen" role="application" aria-label="iPod screen">
-        <div class="bar"><span class="bar-l" id="barL"></span><span class="bar-t" id="barT">myPod</span><span class="bar-r" id="barR"></span></div>
+      <div class="screen big" id="screen" role="application" aria-label="Player screen">
+        <div class="bar"><span class="bar-l" id="barL"></span><span class="bar-t" id="barT">myStereo</span><span class="bar-r" id="barR"></span></div>
         <div class="body" id="body"></div>
         <div class="bigletter" id="bigLetter" aria-hidden="true"></div>
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1153,13 +1202,13 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
       <div class="rx-dial" aria-hidden="true"><i></i></div>
     </div>
     <div class="rx-keys" id="rxKeys">
-      <div class="rx-src"><button type="button" data-rx="back" aria-label="Back"><b>‹</b>BACK</button><button type="button" data-rx="music"><i></i>MUSIC</button><button type="button" data-rx="videos"><i></i>VIDEO</button><button type="button" data-rx="extras"><i></i>EXTRAS</button><button type="button" data-rx="settings"><i></i>SETUP</button></div>
-      <div class="rx-modes"><button type="button" data-rx="back" aria-label="Back"><b>‹</b>BACK</button><button type="button" data-rxm="scrub"><i></i>SCRUB</button><button type="button" data-rxm="rating"><i></i>RATE</button><button type="button" data-rxm="shuffle"><i></i>SHUFFLE</button><button type="button" data-rxm="repeat"><i></i>REPEAT</button></div>
+      <div class="rx-src"><button type="button" data-rx="music"><i></i>MUSIC</button><button type="button" data-rx="videos"><i></i>VIDEO</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rx="extras"><i></i>EXTRAS</button><button type="button" data-rx="settings"><i></i>SETUP</button></div>
+      <div class="rx-modes"><button type="button" data-rxm="scrub"><i></i>SCRUB</button><button type="button" data-rxm="rating"><i></i>RATE</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rxm="shuffle"><i></i>SHUFFLE</button><button type="button" data-rxm="repeat"><i></i>REPEAT</button></div>
     </div>
     <div class="rx-tx" id="rxTx"><button type="button" data-rx="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button type="button" data-rx="play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M3 5v14l9-7zM14 5h3v14h-3zM19 5h3v14h-3z"/></svg></button><button type="button" data-rx="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button></div>
     <div class="dk-foot" id="dkFoot">Own your media.</div>
   </div>
-  <div class="podback" id="podback" aria-label="The back of your myPod">
+  <div class="podback" id="podback" aria-label="The back of your myStereo">
     <div class="scuff" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" fill="none" stroke-linecap="round"><path d="M232.5 171.0A115 115 0 0 1 218.7 192.7" stroke="#fff" stroke-opacity="0.34" stroke-width="0.85"/><path d="M90.9 153.0A84 84 0 0 1 71.7 151.9" stroke="#fff" stroke-opacity="0.40" stroke-width="0.46"/><path d="M-46.4 430.8A153 153 0 0 1 -30.8 406.8" stroke="#fff" stroke-opacity="0.19" stroke-width="0.83"/><path d="M99.6 157.7A45 45 0 0 1 87.8 151.0" stroke="#fff" stroke-opacity="0.21" stroke-width="0.69"/><path d="M-37.6 29.9A123 123 0 0 1 -22.4 3.8" stroke="#fff" stroke-opacity="0.36" stroke-width="0.61"/><path d="M98.4 553.1A89 89 0 0 1 75.0 541.5" stroke="#3a3f45" stroke-opacity="0.19" stroke-width="0.44"/><path d="M49.3 419.8A75 75 0 0 1 45.7 401.9" stroke="#fff" stroke-opacity="0.21" stroke-width="0.61"/><path d="M393.6 144.4A94 94 0 0 1 384.7 167.0" stroke="#3a3f45" stroke-opacity="0.17" stroke-width="0.84"/><path d="M31.4 504.8A107 107 0 0 1 43.7 486.9" stroke="#fff" stroke-opacity="0.44" stroke-width="0.64"/><path d="M192.5 -48.1A121 121 0 0 1 229.8 -67.2" stroke="#fff" stroke-opacity="0.26" stroke-width="0.59"/><path d="M311.8 96.4A90 90 0 0 1 302.8 100.8" stroke="#fff" stroke-opacity="0.24" stroke-width="0.54"/><path d="M146.2 321.8A149 149 0 0 1 146.9 303.2" stroke="#fff" stroke-opacity="0.33" stroke-width="0.84"/><path d="M270.7 724.9A66 66 0 0 1 265.7 714.3" stroke="#fff" stroke-opacity="0.44" stroke-width="0.48"/><path d="M10.4 191.4A60 60 0 0 1 10.8 177.0" stroke="#fff" stroke-opacity="0.26" stroke-width="0.47"/><path d="M264.2 538.5A71 71 0 0 1 246.2 551.5" stroke="#3a3f45" stroke-opacity="0.18" stroke-width="0.77"/><path d="M117.4 557.6A154 154 0 0 1 151.0 546.3" stroke="#fff" stroke-opacity="0.29" stroke-width="0.45"/><path d="M263.7 87.3A39 39 0 0 1 259.0 88.2" stroke="#fff" stroke-opacity="0.34" stroke-width="0.45"/><path d="M110.7 329.0A153 153 0 0 1 121.2 318.0" stroke="#fff" stroke-opacity="0.35" stroke-width="0.47"/><path d="M156.3 331.8A77 77 0 0 1 137.3 346.1" stroke="#fff" stroke-opacity="0.31" stroke-width="0.56"/><path d="M-67.4 616.8A126 126 0 0 1 -67.5 583.2" stroke="#3a3f45" stroke-opacity="0.10" stroke-width="0.88"/><path d="M310.5 134.3A101 101 0 0 1 304.3 155.8" stroke="#3a3f45" stroke-opacity="0.20" stroke-width="0.75"/><path d="M111.4 242.1A52 52 0 0 1 122.6 244.9" stroke="#3a3f45" stroke-opacity="0.14" stroke-width="0.51"/><path d="M372.9 655.6A141 141 0 0 1 409.9 675.9" stroke="#3a3f45" stroke-opacity="0.20" stroke-width="0.50"/><path d="M236.3 431.1A159 159 0 0 1 267.1 442.4" stroke="#fff" stroke-opacity="0.37" stroke-width="0.88"/><path d="M330.9 705.0A158 158 0 0 1 336.4 732.6" stroke="#fff" stroke-opacity="0.21" stroke-width="0.64"/><path d="M13.3 285.4A158 158 0 0 1 21.8 275.9" stroke="#3a3f45" stroke-opacity="0.14" stroke-width="0.72"/><path d="M314.4 17.8A81 81 0 0 1 325.0 15.9" stroke="#fff" stroke-opacity="0.30" stroke-width="0.72"/><path d="M-85.8 785.5A124 124 0 0 1 -89.0 751.0" stroke="#fff" stroke-opacity="0.38" stroke-width="0.49"/><path d="M101.8 -17.6A148 148 0 0 1 117.9 -10.6" stroke="#3a3f45" stroke-opacity="0.22" stroke-width="0.73"/><path d="M187.0 443.1A47 47 0 0 1 182.9 458.6" stroke="#3a3f45" stroke-opacity="0.11" stroke-width="0.77"/><path d="M94.4 749.7A55 55 0 0 1 97.7 753.3" stroke="#fff" stroke-opacity="0.26" stroke-width="0.52"/><path d="M292.0 269.4A84 84 0 0 1 269.2 284.6" stroke="#fff" stroke-opacity="0.42" stroke-width="0.73"/><path d="M424.9 317.8A138 138 0 0 1 435.3 329.9" stroke="#fff" stroke-opacity="0.32" stroke-width="0.41"/><path d="M185.3 117.4A31 31 0 0 1 188.9 118.8" stroke="#fff" stroke-opacity="0.35" stroke-width="0.46"/><path d="M-73.7 556.9A99 99 0 0 1 -72.7 528.3" stroke="#3a3f45" stroke-opacity="0.11" stroke-width="0.50"/><path d="M104.3 93.7A89 89 0 0 1 94.9 120.5" stroke="#fff" stroke-opacity="0.30" stroke-width="0.71"/><path d="M87.6 445.3A120 120 0 0 1 82.5 418.9" stroke="#fff" stroke-opacity="0.32" stroke-width="0.52"/><path d="M342.3 630.2A151 151 0 0 1 357.8 675.7" stroke="#fff" stroke-opacity="0.41" stroke-width="0.47"/><path d="M51.0 393.1A39 39 0 0 1 47.1 393.1" stroke="#3a3f45" stroke-opacity="0.14" stroke-width="0.46"/><path d="M235.1 836.4A114 114 0 0 1 223.4 824.3" stroke="#fff" stroke-opacity="0.44" stroke-width="0.51"/><path d="M474.1 312.4A93 93 0 0 1 471.7 340.6" stroke="#fff" stroke-opacity="0.37" stroke-width="0.90"/><path d="M225.4 378.8A76 76 0 0 1 217.0 389.5" stroke="#fff" stroke-opacity="0.33" stroke-width="0.62"/><path d="M-103.6 256.8A111 111 0 0 1 -102.2 246.1" stroke="#fff" stroke-opacity="0.44" stroke-width="0.45"/><path d="M89.5 161.9A131 131 0 0 1 74.7 159.1" stroke="#fff" stroke-opacity="0.41" stroke-width="0.74"/><path d="M279.1 315.7A100 100 0 0 1 283.2 294.8" stroke="#fff" stroke-opacity="0.20" stroke-width="0.43"/><path d="M311.7 325.3A39 39 0 0 1 314.3 334.8" stroke="#fff" stroke-opacity="0.20" stroke-width="0.83"/><path d="M-20.6 765.7A89 89 0 0 1 -36.5 753.0" stroke="#fff" stroke-opacity="0.35" stroke-width="0.42"/><path d="M272.3 906.1A156 156 0 0 1 252.4 903.3" stroke="#fff" stroke-opacity="0.35" stroke-width="0.67"/><path d="M67.4 473.0A117 117 0 0 1 33.9 463.5" stroke="#fff" stroke-opacity="0.19" stroke-width="0.41"/><path d="M205.0 879.3A97 97 0 0 1 185.6 877.8" stroke="#3a3f45" stroke-opacity="0.20" stroke-width="0.62"/><path d="M117.0 664.4A81 81 0 0 1 120.7 643.3" stroke="#fff" stroke-opacity="0.27" stroke-width="0.82"/><path d="M235.2 576.4A83 83 0 0 1 229.1 571.6" stroke="#fff" stroke-opacity="0.18" stroke-width="0.71"/><path d="M333.0 312.6A37 37 0 0 1 339.1 309.7" stroke="#3a3f45" stroke-opacity="0.18" stroke-width="0.54"/><path d="M146.2 309.4A90 90 0 0 1 130.3 317.7" stroke="#fff" stroke-opacity="0.28" stroke-width="0.56"/><path d="M419.4 235.5A34 34 0 0 1 422.4 239.3" stroke="#fff" stroke-opacity="0.18" stroke-width="0.59"/><path d="M133.8 400.6A56 56 0 0 1 134.1 396.1" stroke="#fff" stroke-opacity="0.40" stroke-width="0.47"/><path d="M187.3 265.1A69 69 0 0 1 192.7 260.5" stroke="#3a3f45" stroke-opacity="0.20" stroke-width="0.48"/><path d="M366.5 520.1A108 108 0 0 1 395.2 526.7" stroke="#fff" stroke-opacity="0.22" stroke-width="0.76"/><path d="M364.9 -52.3A139 139 0 0 1 383.1 -23.0" stroke="#3a3f45" stroke-opacity="0.18" stroke-width="0.65"/><path d="M403.7 506.3A104 104 0 0 1 411.7 510.0" stroke="#3a3f45" stroke-opacity="0.17" stroke-width="0.85"/><path d="M331.9 566.3A60 60 0 0 1 330.2 573.0" stroke="#fff" stroke-opacity="0.44" stroke-width="0.59"/><path d="M148.7 34.3A32 32 0 0 1 150.0 29.7" stroke="#fff" stroke-opacity="0.18" stroke-width="0.80"/><path d="M245.4 318.7A100 100 0 0 1 253.8 313.8" stroke="#3a3f45" stroke-opacity="0.16" stroke-width="0.80"/><path d="M354.0 315.2A128 128 0 0 1 321.3 315.0" stroke="#fff" stroke-opacity="0.31" stroke-width="0.59"/><path d="M95.2 460.2A130 130 0 0 1 120.1 438.8" stroke="#fff" stroke-opacity="0.34" stroke-width="0.57"/><path d="M334.7 636.6A111 111 0 0 1 315.9 650.3" stroke="#fff" stroke-opacity="0.25" stroke-width="0.74"/><path d="M209.4 533.6A68 68 0 0 1 212.2 520.0" stroke="#fff" stroke-opacity="0.39" stroke-width="0.90"/><path d="M179.1 256.4A41 41 0 0 1 178.5 249.9" stroke="#fff" stroke-opacity="0.40" stroke-width="0.88"/><path d="M233.7 195.6A57 57 0 0 1 235.8 203.1" stroke="#3a3f45" stroke-opacity="0.11" stroke-width="0.77"/><path d="M31.2 208.0A108 108 0 0 1 44.4 197.5" stroke="#fff" stroke-opacity="0.37" stroke-width="0.52"/><path d="M359.1 388.9L448.1 331.8" stroke="#2e3338" stroke-opacity="0.25" stroke-width=".7"/><path d="M359.1 389.8L448.1 332.7" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M162.2 581.7L167.4 633.3" stroke="#2e3338" stroke-opacity="0.28" stroke-width=".7"/><path d="M162.2 582.6L167.4 634.2" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M0.7 600.6L97.0 642.1" stroke="#2e3338" stroke-opacity="0.18" stroke-width=".7"/><path d="M0.7 601.5L97.0 643.0" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M4.7 591.9L60.5 574.9" stroke="#2e3338" stroke-opacity="0.30" stroke-width=".7"/><path d="M4.7 592.8L60.5 575.8" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M235.7 288.6L244.2 385.8" stroke="#2e3338" stroke-opacity="0.19" stroke-width=".7"/><path d="M235.7 289.5L244.2 386.7" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M20.6 529.6L66.2 537.0" stroke="#2e3338" stroke-opacity="0.19" stroke-width=".7"/><path d="M20.6 530.5L66.2 537.9" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M204.4 151.9L219.6 250.9" stroke="#2e3338" stroke-opacity="0.27" stroke-width=".7"/><path d="M204.4 152.8L219.6 251.8" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M252.4 730.7L326.8 774.2" stroke="#2e3338" stroke-opacity="0.16" stroke-width=".7"/><path d="M252.4 731.6L326.8 775.1" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M292.9 360.7L273.2 424.0" stroke="#2e3338" stroke-opacity="0.29" stroke-width=".7"/><path d="M292.9 361.6L273.2 424.9" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M220.0 136.6L225.2 186.7" stroke="#2e3338" stroke-opacity="0.26" stroke-width=".7"/><path d="M220.0 137.5L225.2 187.6" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M390.5 208.1L378.3 273.1" stroke="#2e3338" stroke-opacity="0.25" stroke-width=".7"/><path d="M390.5 209.0L378.3 274.0" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M47.9 514.6L83.0 577.2" stroke="#2e3338" stroke-opacity="0.22" stroke-width=".7"/><path d="M47.9 515.5L83.0 578.1" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M133.1 607.4L178.7 603.4" stroke="#2e3338" stroke-opacity="0.18" stroke-width=".7"/><path d="M133.1 608.3L178.7 604.3" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M222.3 255.4L321.5 239.6" stroke="#2e3338" stroke-opacity="0.26" stroke-width=".7"/><path d="M222.3 256.3L321.5 240.5" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M165.1 331.1L163.8 379.1" stroke="#2e3338" stroke-opacity="0.26" stroke-width=".7"/><path d="M165.1 332.0L163.8 380.0" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><path d="M199.3 459.4L231.7 453.9" stroke="#2e3338" stroke-opacity="0.28" stroke-width=".7"/><path d="M199.3 460.3L231.7 454.8" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/><circle cx="156.1" cy="513.7" r="1.2" fill="#3a3f45" fill-opacity=".22"/><circle cx="156.7" cy="514.3" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="128.6" cy="645.2" r="1.8" fill="#3a3f45" fill-opacity=".22"/><circle cx="129.2" cy="645.8" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="58.4" cy="341.7" r="1.6" fill="#3a3f45" fill-opacity=".22"/><circle cx="59.0" cy="342.3" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="315.6" cy="765.3" r="1.3" fill="#3a3f45" fill-opacity=".22"/><circle cx="316.2" cy="765.9" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="37.8" cy="735.6" r="1.7" fill="#3a3f45" fill-opacity=".22"/><circle cx="38.4" cy="736.2" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="210.6" cy="375.2" r="1.2" fill="#3a3f45" fill-opacity=".22"/><circle cx="211.2" cy="375.8" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="307.6" cy="184.6" r="1.0" fill="#3a3f45" fill-opacity=".22"/><circle cx="308.2" cy="185.2" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="379.3" cy="94.9" r="1.6" fill="#3a3f45" fill-opacity=".22"/><circle cx="379.9" cy="95.5" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="276.4" cy="670.3" r="1.7" fill="#3a3f45" fill-opacity=".22"/><circle cx="277.0" cy="670.9" r=".8" fill="#fff" fill-opacity=".6"/><circle cx="42.3" cy="616.0" r="0.8" fill="#3a3f45" fill-opacity=".22"/><circle cx="42.9" cy="616.6" r=".8" fill="#fff" fill-opacity=".6"/></svg></div>
     <div class="stk s1" style="--src:url(stickers/own-your-media.webp)"><img src="stickers/own-your-media.webp" alt="Own Your Media sticker"></div>
     <div class="stk s2" style="--src:url(stickers/present-company.webp)"><img src="stickers/present-company.webp" alt="Present Company sticker"></div>
@@ -1230,15 +1279,15 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
     <div class="vctl"><button class="vbtn round" id="vPP" type="button" aria-label="Play or pause"></button><span id="vT1">0:00</span>
       <input type="range" id="vRange" min="0" max="1000" value="0" aria-label="Position"><span id="vT2">0:00</span></div>
   </div>
-  <div class="gov" id="gov" hidden role="dialog" aria-label="myPod User’s Guide">
+  <div class="gov" id="gov" hidden role="dialog" aria-label="myStereo User’s Guide">
     <div class="gov-bar"><button class="gov-done" id="govDone" type="button">Done</button><span>User’s Guide</span><span class="gov-sp"></span></div>
-    <iframe id="govFrame" title="myPod User’s Guide"></iframe>
+    <iframe id="govFrame" title="myStereo User’s Guide"></iframe>
   </div>
 </main>
-<div class="nesbox" id="nesbox" hidden aria-label="myPod Pocket handheld">
+<div class="nesbox" id="nesbox" hidden aria-label="myStereo Pocket handheld">
   <div class="nes-spk" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
   <div class="nes-top">
-    <div class="nes-brand"><b>myPod</b><span>POCKET</span></div>
+    <div class="nes-brand"><b>myStereo</b><span>POCKET</span></div>
     <button class="nes-menu" id="nesMenuBtn" type="button">MENU</button>
   </div>
   <div class="nes-bezel" id="nesBezel">
@@ -1278,7 +1327,7 @@ html.desk .rx-keys,html.desk .rx-tx,html.desk .rx-dial{display:none!important}
         <button type="button" class="alt" data-sheet="load">Load State</button>
         <button type="button" class="alt" data-sheet="reset">Reset Game</button>
         <button type="button" class="alt" data-sheet="games">Games</button>
-        <button type="button" class="alt" data-sheet="exit">Back to myPod</button>
+        <button type="button" class="alt" data-sheet="exit">Back to myStereo</button>
         <small id="nesInfo"></small>
       </div>
       <div class="nes-cardin" id="nesShelf" hidden>
@@ -1303,14 +1352,14 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
 /* ---------- storage ---------- */
-/* which edition is this? myPod, or myPod Elite (served from /elite/ with its own settings and storage) */
+/* which edition is this? myStereo, or myStereo Elite (served from /elite/ with its own settings and storage) */
 const ELITE = window.MYPOD_EDITION === 'elite';
 const LSP = ELITE ? 'elite.' : 'pod.';
 const LS = {
   get(k, d) { try { const v = localStorage.getItem(LSP + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem(LSP + k, JSON.stringify(v)); } catch {} }
 };
-const PRODUCT = 'myPod';
+const PRODUCT = 'myStereo';
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -1497,7 +1546,7 @@ const Demo = (() => {
   };
 })();
 
-/* ---------- music on this phone: files the owner imports, kept inside myPod (IndexedDB) ---------- */
+/* ---------- music on this phone: files the owner imports, kept inside myStereo (IndexedDB) ---------- */
 const AUDIO_EXT = /\.(mp3|m4a|m4b|aac|alac|flac|wav|aif|aiff|ogg|oga|opus|caf)$/i;
 const IMG_NAME = /(^|\/)(cover|folder|front|album|albumart)[^/]*\.(jpe?g|png|webp)$/i;
 const LDB = {
@@ -1745,7 +1794,7 @@ async function importMusic(files) {
   for (const f of files) { const p = f.webkitRelativePath || ''; if (p && IMG_NAME.test(p)) covers.set(p.slice(0, p.lastIndexOf('/')), f); }
   const st = { done: 0, added: 0, skipped: 0, failed: 0, total: songs.length, now: '', finished: false };
   const v = List('Adding Music', () => st.finished ? [{ label: 'Done', act: () => { pop(); } }, { label: 'Add More', act: () => pickMusic(false) }] : []);
-  Object.defineProperty(v, 'note', { get: () => !st.total ? 'No songs found in what you picked. myPod can add MP3, M4A, AAC, ALAC, FLAC and WAV files.'
+  Object.defineProperty(v, 'note', { get: () => !st.total ? 'No songs found in what you picked. myStereo can add MP3, M4A, AAC, ALAC, FLAC and WAV files.'
     : st.finished ? `Added ${st.added} song${st.added === 1 ? '' : 's'}.` + (st.skipped ? ` ${st.skipped} already here.` : '') + (st.failed ? ` ${st.failed} couldn't be saved.` : '')
     : `Adding ${st.done + 1} of ${st.total}: ${st.now}` });
   v.noteRows = 3; push(v);
@@ -1807,7 +1856,7 @@ function localMenu() {
     ];
   });
   Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : Local.tracks.length ? null
-    : 'Add songs saved on this device, like ripped CDs or downloads. myPod keeps its own copy, no Plex needed.' });
+    : 'Add songs saved on this device, like ripped CDs or downloads. myStereo keeps its own copy, no Plex needed.' });
   v.noteRows = 4;
   if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
   return v;
@@ -1851,7 +1900,7 @@ function unlockLocalAudio() {
     audio.play().then(() => { localUnlocked = true; }).catch(() => {}); } catch {}
 }
 
-/* ---------- myPod Elite: music on a network share (WebDAV) ---------- */
+/* ---------- myStereo Elite: music on a network share (WebDAV) ---------- */
 const DAV = {
   covers: new Map(), cache: new Map(), playUrl: null, picUrls: [],
   get on() { return ELITE && !!(cfg.dav && cfg.dav.url); },
@@ -1928,12 +1977,12 @@ const DAV = {
 };
 function davErr(e) {
   const u = cfg.dav?.url || '';
-  if (/^http:/i.test(u) && location.protocol === 'https:') return 'The share’s address has to start with https:// for myPod to reach it.';
+  if (/^http:/i.test(u) && location.protocol === 'https:') return 'The share’s address has to start with https:// for myStereo to reach it.';
   if (e && (e.davStatus === 401 || e.davStatus === 403)) return 'The share turned down that username or password.';
   if (e && e.davStatus === 404) return 'That folder isn’t on the share. Check the address.';
   if (e && e.davStatus === 405) return 'That address isn’t a WebDAV share.';
   if (e && e.davStatus) return `The share answered with an error (${e.davStatus}).`;
-  return 'Can’t reach the share. Check the address, and that the server lets myPod in (see Setup Help).';
+  return 'Can’t reach the share. Check the address, and that the server lets myStereo in (see Setup Help).';
 }
 const fileTitle = n => n.replace(/\.[^.]+$/, '').replace(/^(?:\d+[-.])?\d{1,3}\s*[-._)]?\s+/, '') || n;
 function davFolder(url, title) {
@@ -1974,7 +2023,7 @@ function davFolder(url, title) {
 const DAV_HELP = `
 <h3>What you need</h3>
 <p>A WebDAV share with your music on it, reachable at an address that starts with <b>https://</b>.</p>
-<h3>Let myPod in</h3>
+<h3>Let myStereo in</h3>
 <p>Browsers only talk to servers that say a page is allowed (called CORS). The server must allow the origin <b>${location.origin}</b>, the methods <b>GET</b> and <b>PROPFIND</b>, the headers <b>Authorization</b>, <b>Depth</b> and <b>Range</b>, and answer the browser's OPTIONS check without a password.</p>
 <h3>Easiest: rclone</h3>
 <p>Use a recent version of rclone, which handles all of that with one flag:</p>
@@ -2111,7 +2160,7 @@ function setTarget(p) {
   cfg.target = p ? { id: p.id, name: p.name } : null; save();
   Object.assign(R, { track: null, state: 'stopped', time: 0, dur: 0 });
   if (p) { if (!audio.paused) audio.pause(); if (P.demoMode) P.playing = false; startPoll(); flash(`Music will play on ${p.name}`); }
-  else flash('Music will play on this myPod');
+  else flash('Music will play on this myStereo');
   updateBar();
 }
 
@@ -2189,7 +2238,7 @@ function showSpeakers() {
   if (cfg.target && !(typeof V !== 'undefined' && V.active)) setTarget(null);
   if (typeof el.webkitShowPlaybackTargetPicker === 'function') { try { el.webkitShowPlaybackTargetPicker(); return; } catch {} }
   const android = /Android/i.test(navigator.userAgent);
-  push(List('Speakers', [], { note: android ? "Pair a Bluetooth speaker or headphones in your phone's Settings. myPod plays through whatever is connected."
+  push(List('Speakers', [], { note: android ? "Pair a Bluetooth speaker or headphones in your phone's Settings. myStereo plays through whatever is connected."
     : "Can't open the speaker list here. In Control Center, press and hold the music card, then tap the AirPlay icon.", noteRows: 4 }));
 }
 const P = { view: null, index: -1, track: null, playing: false, time: 0, dur: 0, demoMode: false, tx: false, order: null, want: false, endDone: false, lastCT: -1, lastMove: 0, warmed: false };
@@ -2214,7 +2263,7 @@ async function loadIndex(i, autoplay) {
     if (!url) { flash("That song isn't on this device anymore."); return false; }
     audio.src = url; if (autoplay) playRetry(url);
   }
-  else if (tr.dav) {   /* a song on the network share (myPod Elite) */
+  else if (tr.dav) {   /* a song on the network share (myStereo Elite) */
     P.demoMode = false;
     let url; try { url = await DAV.play(tr); } catch (e) { if (seq === P.loadSeq) { P.unlocking = false; flash(davErr(e)); } return false; }
     if (seq !== P.loadSeq) return true;
@@ -2378,7 +2427,7 @@ function pop() { if (stack.length > 1) { const v = stack.pop(); if (v.onLeave) v
 function openNowPlaying() { if (cur()?.kind === 'np') { renderNP(cur(), null, true); return; } push({ kind: 'np', title: 'Now Playing', mode: 'play' }); }
 
 function mainMenu() {
-  return List(ELITE ? 'myPod Elite' : 'myPod', () => {
+  return List(ELITE ? 'myStereo Elite' : 'myStereo', () => {
     const a = [
       { label: 'Music', arrow: true, go: () => push(musicMenu()) },
       { label: 'Videos', arrow: true, go: () => push(videosView()) },
@@ -2392,7 +2441,7 @@ function mainMenu() {
     return a;
   }, { split: true });
 }
-const ALPHA_TEST = `<p>You're one of the first people using myPod. Thank you. Here's what BC most wants to hear about:</p>
+const ALPHA_TEST = `<p>You're one of the first people using myStereo. Thank you. Here's what BC most wants to hear about:</p>
 <h3>Playing music</h3><p>Does the first song start when you press play? Do songs move on by themselves, especially on a HomePod or Bluetooth speaker?</p>
 <h3>Ratings</h3><p>Rate a song here, then look for the same stars in Plexamp. Do they match?</p>
 <h3>Music on your phone</h3><p>Try Music › On This Phone › Add Music. Did your songs, names and album covers come through?</p>
@@ -2454,7 +2503,7 @@ async function shuffleSongs() {
 function playOnView() { return plexPlayOnView('Play On'); }
 function plexPlayOnView(title) {
   const v = List(title, () => {
-    const a = [{ label: 'This myPod', get check() { return !cfg.target; }, act: () => setTarget(null) },
+    const a = [{ label: 'This myStereo', get check() { return !cfg.target; }, act: () => setTarget(null) },
       { label: 'AirPlay & Bluetooth', value: AIR.wireless ? 'On' : '', arrow: true, act: showSpeakers }];
     for (const p of players) a.push({ label: p.name, get check() { return cfg.target?.id === p.id; }, act: () => setTarget(p) });
     if (playersState === 'loading') a.push({ label: 'Looking for players…', dim: true });
@@ -2485,7 +2534,7 @@ function settingsView() {
     { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
     { label: 'Wheel Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
     { label: 'Center Color', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
-    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myPod Elite' : 'myPod') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
   ]);
 }
 function plexView() {
@@ -2562,7 +2611,7 @@ function fbDevice() {
   const ua = navigator.userAgent, s = NPs();
   const dev = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : 'Other';
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-  return [`Edition: ${ELITE ? 'myPod Elite' : 'myPod'} 1.4 Alpha`, `Device: ${dev}${standalone ? ' (Home Screen app)' : ' (browser)'}`,
+  return [`Edition: ${ELITE ? 'myStereo Elite' : 'myStereo'} 1.4 Alpha`, `Device: ${dev}${standalone ? ' (Home Screen app)' : ' (browser)'}`,
     `Screen: ${screen.width}x${screen.height}, window ${innerWidth}x${innerHeight}`,
     `View: ${typeof isDesk === 'function' && isDesk() ? 'Desktop Mode' : 'iPod'} · Case: ${caseOf(cfg.caseColor).name} · Screen style: ${screenName()}`,
     `Music: ${isDemo() ? 'demo library' : cfg.token ? 'Plex (' + (cfg.server?.owned ? 'own server' : 'shared server') + ')' : 'not signed in'}${ELITE && DAV.on ? ' + network share' : ''}`,
@@ -2572,7 +2621,7 @@ function fbDevice() {
 function fbText() {
   const kind = (document.querySelector('input[name="fbKind"]:checked') || {}).value || 'Note';
   const msg = $('#fbMsg').value.trim(), name = $('#fbName').value.trim();
-  const subject = `myPod Alpha: ${kind === 'Bug' ? 'Something broke' : kind === 'Idea' ? 'An idea' : 'I love this'}${name ? ' (' + name + ')' : ''}`;
+  const subject = `myStereo Alpha: ${kind === 'Bug' ? 'Something broke' : kind === 'Idea' ? 'An idea' : 'I love this'}${name ? ' (' + name + ')' : ''}`;
   const body = msg + (name ? `\n\n— ${name}` : '') + ($('#fbDev').checked ? `\n\n---\n${fbDevice()}` : '');
   return { subject, body, msg };
 }
@@ -2586,7 +2635,7 @@ $('#fbForm').addEventListener('submit', e => {
 function fbKindUI() {
   const k = (document.querySelector('input[name="fbKind"]:checked') || {}).value;
   $('#fbMsgL').textContent = k === 'Idea' ? 'What’s your idea?' : k === 'Love' ? 'What do you love?' : 'What happened?';
-  $('#fbMsg').placeholder = k === 'Idea' ? 'What would make myPod better for you?' : k === 'Love' ? 'Tell BC what made you smile.' : 'What you were doing, what you expected, and what happened instead.';
+  $('#fbMsg').placeholder = k === 'Idea' ? 'What would make myStereo better for you?' : k === 'Love' ? 'Tell BC what made you smile.' : 'What you were doing, what you expected, and what happened instead.';
 }
 document.querySelectorAll('input[name="fbKind"]').forEach(r => r.addEventListener('change', fbKindUI));
 $('#fbCopy').addEventListener('click', async () => {
@@ -2654,12 +2703,12 @@ const HELP = `
 <h3>AirPlay and Bluetooth</h3>
 <p><b>Play On › AirPlay &amp; Bluetooth</b> opens your iPhone's speaker list. Pick a HomePod, Apple TV, AirPlay speaker, or Bluetooth headphones.</p>
 <h3>Ratings</h3>
-<p>Rate a song on Now Playing: press the center until you see <b>Rating</b>, then turn the wheel or tap a star. <b>Music › Ratings</b> makes playlists from them, like My Top Rated. Ratings stay on this myPod only. Save a copy under <b>Settings › Ratings Backup</b>.</p>
+<p>Rate a song on Now Playing: press the center until you see <b>Rating</b>, then turn the wheel or tap a star. <b>Music › Ratings</b> makes playlists from them, like My Top Rated. Ratings stay on this myStereo only. Save a copy under <b>Settings › Ratings Backup</b>.</p>
 <h3>Play on another speaker</h3>
-<p>Go to <b>Play On</b> in the main menu and pick a Plexamp player. Choose <b>This myPod</b> to play here again.</p>
+<p>Go to <b>Play On</b> in the main menu and pick a Plexamp player. Choose <b>This myStereo</b> to play here again.</p>
 <h3>Videos</h3>
 <p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the iPod screen. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
-<p>On the iPod screen, <span class="k">▶❙❙</span> or the center button plays and pauses, the wheel skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">MENU</span> stops. myPod remembers where you stopped, and so does Plex.</p>
+<p>On the iPod screen, <span class="k">▶❙❙</span> or the center button plays and pauses, the wheel skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">MENU</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
 <h3>Cover Flow</h3>
 <p>Turn your iPhone sideways, or choose <b>Music › Cover Flow</b>. Swipe through your albums. Tap the middle one to flip it over and see its songs, then tap a song to play it. Turn the phone upright or tap <b>Done</b> to go back.</p>
 <p>Turning sideways only works when Portrait Orientation Lock is off in Control Center.</p>
@@ -2676,13 +2725,13 @@ const HELP = `
 <p><b>Stack.</b> Turn the wheel or drag sideways to move the falling block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
 <p><b>Minesweeper.</b> Tap a square to open it. Press and hold to place a flag. With the wheel: turn to move the box, ⏮ and ⏭ move up and down a row, the center opens a square, and ⏯ places a flag.</p>
 <h3>Flip it over</h3>
-<p>Swipe sideways on the empty part of the case, like the space around the wheel, to turn myPod over and see the back. Swipe again to flip it back. The music keeps playing.</p>
+<p>Swipe sideways on the empty part of the case, like the space around the wheel, to turn myStereo over and see the back. Swipe again to flip it back. The music keeps playing.</p>
 <h3>More than one Plex server</h3>
 <p>Go to <b>Settings › Server</b> and pick one. Each server remembers which music library you chose.</p>
 <h3>Make it yours</h3>
 <p>In Settings you can turn <b>Menu Art</b> on or off (album art beside the main and Music menus), change the case color, pick a <b>Wheel Color</b> and <b>Center Color</b> of your own, set the Screen to Light, Dark, Match iPhone, or the original black-and-white Classic, choose what shows in the top-right <b>Corner</b> (a clock, a little equalizer, or where the music is playing), turn Large Text on or off, and turn the click sound on or off.</p>
 <h3>The full guide</h3>
-<p><a href="guide.html" data-guide style="color:inherit;font-weight:700">Open the ${ELITE ? 'myPod Elite' : 'myPod'} User’s Guide ›</a></p>`;
+<p><a href="guide.html" data-guide style="color:inherit;font-weight:700">Open the ${ELITE ? 'myStereo Elite' : 'myStereo'} User’s Guide ›</a></p>`;
 function renderPage(v, anim) {
   bodyEl.dataset.k = '';
   if (!anim && $('#page')) return;
@@ -2803,6 +2852,7 @@ const REP = [['off', 'Off'], ['one', 'Track'], ['all', 'Album']];
 const segs = (opts, curv, kind) => opts.map(([val, lab]) => `<button type="button" class="${val === curv ? 'on' : ''}" data-opt="${kind}" data-val="${val}">${lab}</button>`).join('');
 function updateNP() {
   try { rxSync(); } catch {}
+  setTimeout(npFit);
   const v = cur(); if (!v || v.kind !== 'np') return;
   const s = NPs(); const bar = $('#npBar'); if (!s || !bar) return;
   $('#npPos').textContent = (s.pos && s.total ? `${s.pos} of ${s.total}` : '') + (s.remote ? `${s.pos && s.total ? ' · ' : ''}on ${cfg.target.name}` : '');
@@ -2894,9 +2944,9 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
   pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('saber', c.id === 'lg');
   pod.classList.toggle('recv', c.id.startsWith('rx-')); if (typeof rxSync === 'function') rxSync();
-  const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myPod Elite, whatever the case */
+  const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myStereo Elite, whatever the case */
   $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
-  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myPod Elite\nLG Edition' : 'myPod Elite\nMusaka Edition') : 'Built by BC';
+  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myStereo Elite\nLG Edition' : 'myStereo Elite\nMusaka Edition') : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
   const red = c.id === 'bc' && !eliteBack;
   $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
@@ -3043,13 +3093,24 @@ bodyEl.addEventListener('pointercancel', endSdrag);
 document.querySelector('.bar').addEventListener('click', () => { if (stack.length > 1) press('menu'); });
 const wheel = $('#wheel'), center = $('#center');
 /* Receiver look: the knob's marker turns with your thumb, and real buttons do what the wheel's ring used to */
+function npFit() {
+  const m = document.querySelector('.np-main'), meta = document.querySelector('.np-meta'), t = document.querySelector('.np-title');
+  if (!m || !meta || !t) return;
+  const key = t.textContent + '|' + m.clientWidth + '|' + m.clientHeight; if (t.dataset.fit === key) return;
+  t.style.fontSize = ''; t.style.webkitLineClamp = '';
+  const base = parseFloat(getComputedStyle(t).fontSize); let fs = base;
+  /* a long title gets a third line before it gets smaller, and never drops below 60% of its size */
+  if (t.scrollHeight > t.clientHeight + 1) t.style.webkitLineClamp = '3';
+  while ((meta.offsetHeight > m.clientHeight + 1 || t.scrollHeight > t.clientHeight + 1) && fs > base * .62) { fs *= .92; t.style.fontSize = fs + 'px'; }
+  t.dataset.fit = key;
+}
 const RX = { ang: 0, on: () => $('#pod').classList.contains('recv') };
 function rxSync() {
   const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
   const v = typeof cur === 'function' ? cur() : null; if (!v) return;
   pod.classList.toggle('rx-np', v.kind === 'np'); pod.classList.toggle('rx-vid', v.kind === 'video');
   const root = stack[1], sec = !root ? '' : root.title === 'Music' ? 'music' : root.title === 'Videos' ? 'videos' : root.title === 'Extras' ? 'extras' : root.title === 'Settings' ? 'settings' : '';
-  document.querySelectorAll('#rxKeys [data-rx]').forEach(b => b.classList.toggle('lit', b.dataset.rx === sec));
+  document.querySelectorAll('#rxKeys .rx-src [data-rx]').forEach(b => b.classList.toggle('lit', b.dataset.rx === sec));
   document.querySelectorAll('#rxKeys [data-rxm]').forEach(b => b.classList.toggle('lit', v.kind === 'np' && v.mode === b.dataset.rxm));
 }
 const RX_GO = { music: () => musicMenu(), videos: () => videosView(), extras: () => extrasView(), settings: () => settingsView() };
@@ -3089,8 +3150,10 @@ const endDrag = e => {
   const tap = drag.moved < .28 && drag.dist < 14 && e.type === 'pointerup';
   center.classList.remove('on'); clearTimeout(JL.holdT);
   if (drag.onCenter) { if (!drag.held && drag.dist < 14 && e.type === 'pointerup') { click(); select(); } drag = null; return; }
-  if (tap && !RX.on()) { const dx = e.clientX - drag.cx, dy = e.clientY - drag.cy;
-    press(Math.abs(dy) > Math.abs(dx) ? (dy < 0 ? 'menu' : 'play') : (dx < 0 ? 'prev' : 'next')); }
+  if (tap) { const dx = e.clientX - drag.cx, dy = e.clientY - drag.cy;
+    const dir = Math.abs(dy) > Math.abs(dx) ? (dy < 0 ? 'menu' : 'play') : (dx < 0 ? 'prev' : 'next');
+    /* Receiver knob: its edges are a d-pad in games and still take the secret code; elsewhere a tap does nothing */
+    if (!RX.on() || cur().kind === 'game') press(dir); else { click(); codeStep(dir); } }
   drag = null;
 };
 wheel.addEventListener('pointerup', endDrag);
@@ -3189,7 +3252,7 @@ async function runSearch(v) {
   if (cur() === v) renderSearchRows(v);
 }
 
-/* ---------- ratings (kept only on this myPod) ---------- */
+/* ---------- ratings (kept only on this myStereo) ---------- */
 const RATE = { all: LS.get('ratings', {}) };
 const rateScope = t => t && t.dav ? 'dav' : t && t.local ? 'local' : t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
 const rateKey = t => rateScope(t) + ':' + t.rk;
@@ -3281,7 +3344,7 @@ function backupView() {
   return List('Ratings Backup', () => [
     { label: 'Back Up Ratings', value: String(count()), act: backupRatings },
     { label: 'Restore from Backup', act: restoreRatings }
-  ], { get note() { return cfg.server?.owned && cfg.token ? 'Ratings for your own Plex server are saved in Plex. Back up the rest (songs on this phone, network shares, shared servers) now and then.' : 'Ratings live only on this myPod. Save a backup to Files now and then.'; }, get noteRows() { return cfg.server?.owned && cfg.token ? 4 : 2; } });
+  ], { get note() { return cfg.server?.owned && cfg.token ? 'Ratings for your own Plex server are saved in Plex. Back up the rest (songs on this phone, network shares, shared servers) now and then.' : 'Ratings live only on this myStereo. Save a backup to Files now and then.'; }, get noteRows() { return cfg.server?.owned && cfg.token ? 4 : 2; } });
 }
 async function backupRatings() {
   if (!count0()) { flash('No ratings yet.'); return; }
@@ -3289,7 +3352,7 @@ async function backupRatings() {
   const blob = new Blob([JSON.stringify({ app: 'myPod', kind: 'ratings', v: 1, saved: new Date().toISOString(), ratings: RATE.all })], { type: 'application/json' });
   try {
     const file = new File([blob], name, { type: 'application/json' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'myPod ratings' }); return; }
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'myStereo ratings' }); return; }
   } catch (e) { if (e && e.name === 'AbortError') return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
@@ -3309,7 +3372,7 @@ function restoreRatings() {
         if (!RATE.all[k] || (x.at || 0) > (RATE.all[k].at || 0)) { RATE.all[k] = x; n++; }
       }
       LS.set('ratings', RATE.all); flash(`Restored ${n} rating${n === 1 ? '' : 's'}`); render();
-    } catch { flash("That file isn't a myPod ratings backup."); }
+    } catch { flash("That file isn't a myStereo ratings backup."); }
   };
   inp.click();
 }
@@ -4669,7 +4732,7 @@ async function hhAdd() {
     const f = inp.files && inp.files[0]; if (!f) return;
     try {
       const buf = new Uint8Array(await f.arrayBuffer()), sys = sysOf(buf, f.name);
-      if (!sys) { nesSheet.hidden = true; nesShowMsg('error', "That isn't a game file myPod can play. Look for a file ending in .nes, .gb, .gbc, .sfc or .smc."); return; }
+      if (!sys) { nesSheet.hidden = true; nesShowMsg('error', "That isn't a game file myStereo can play. Look for a file ending in .nes, .gb, .gbc, .sfc or .smc."); return; }
       const list = await shelf();
       let cart = list.find(c => c.name === f.name && c.sys === sys);
       if (!cart) { cart = { id: 'c' + Date.now().toString(36), name: f.name, sys, at: Date.now() }; list.push(cart); }
@@ -4795,8 +4858,8 @@ function w95dialog(title, icon, text, buttons, next) {
 function jlJoke() {   /* now and then, when a song starts */
   if (!isJL() || w95open() || Date.now() - JL.lastJoke < 10 * 60e3 || Math.random() > .18) return;
   JL.lastJoke = Date.now();
-  setTimeout(() => w95dialog('myPod', 'x', 'This program has performed an illegal operation and will be shut down.', ['Close', 'Details >>'],
-    () => w95dialog('myPod', 'i', 'Just kidding, Jeff. Nothing is broken. Enjoy the music.', ['OK'])), 600);
+  setTimeout(() => w95dialog('myStereo', 'x', 'This program has performed an illegal operation and will be shut down.', ['Close', 'Details >>'],
+    () => w95dialog('myStereo', 'i', 'Just kidding, Jeff. Nothing is broken. Enjoy the music.', ['OK'])), 600);
 }
 function jlBsod() {
   w95ov.className = 'w95ov bsod'; w95ov.hidden = false; JL.dlgNext = null;
@@ -4807,14 +4870,14 @@ function jlBsod() {
 w95ov.addEventListener('click', e => { e.stopPropagation(); click(); w95close(); });
 w95ov.addEventListener('pointerdown', e => e.stopPropagation());
 w95ov.addEventListener('pointerup', e => e.stopPropagation());
-/* old Elite preview links (?ed=elite) now go to the real myPod Elite */
+/* old Elite preview links (?ed=elite) now go to the real myStereo Elite */
 if (!ELITE && new URLSearchParams(location.search).get('ed') === 'elite') location.replace('/elite/');
 /* the LG gift link: /elite/?ed=lg opens straight into Leif's edition (case + Blade screen), once */
 (() => {
   if (!ELITE || new URLSearchParams(location.search).get('ed') !== 'lg') return;
   if (!LS.get('edLG', false)) { LS.set('edLG', true); cfg.caseColor = 'lg'; cfg.screen = 'saber'; save(); }
 })();
-/* the gift link: myPod/?ed=jl opens straight into the JL Edition, and remembers it on the home screen too */
+/* the gift link: myStereo/?ed=jl opens straight into the JL Edition, and remembers it on the home screen too */
 (() => {
   const ed = new URLSearchParams(location.search).get('ed');
   if (ed !== 'jl') return;
@@ -4869,7 +4932,7 @@ function deskTick() {
   const s = NPs(), lcd = DKE.dkLcd;
   DKE.dkPP.innerHTML = s && s.playing ? DK_PAUSE : DK_PLAY;
   lcd.classList.toggle('idle', !s);
-  if (!s) { DKE.dkL1.textContent = ELITE ? 'myPod Elite' : 'myPod'; DKE.dkL2.textContent = 'Pick something to play'; }
+  if (!s) { DKE.dkL1.textContent = ELITE ? 'myStereo Elite' : 'myStereo'; DKE.dkL2.textContent = 'Pick something to play'; }
   else {
     const t = s.track; DKE.dkL1.textContent = t.title || '';
     const alt = [t.artist, t.album].filter(Boolean); DKE.dkL2.textContent = (alt.length ? alt[DK.line % alt.length] : '') + (s.remote ? `  ·  on ${cfg.target.name}` : '');
@@ -4894,7 +4957,7 @@ function applyDesk() {
   if (on && CF.open) cfClose();
   if (!on && DK.mini) { DK.mini = false; root.classList.remove('dk-mini'); miniIcon(); }
   root.classList.toggle('desk', on);
-  DKE.dkName.textContent = ELITE ? 'myPod Elite · Musaka Edition' : 'myPod';
+  DKE.dkName.textContent = ELITE ? 'myStereo Elite · Musaka Edition' : 'myStereo';
   DKE.dkFoot.textContent = ELITE ? 'Own your media. Make it so.' : 'Own your media.';
   DKE.dkItems.dataset.k = '';
   layout(); vPlace(); deskTick();
@@ -4936,7 +4999,7 @@ async function setMini(on) {
       const pip = await documentPictureInPicture.requestWindow({ width: 640, height: 112 });
       const d = pip.document;
       document.querySelectorAll('style,link[rel="stylesheet"]').forEach(n => d.head.appendChild(n.cloneNode(true)));
-      d.title = ELITE ? 'myPod Elite' : 'myPod';
+      d.title = ELITE ? 'myStereo Elite' : 'myStereo';
       d.documentElement.className = 'desk dk-pip' + (ELITE ? ' ed-elite' : '');
       d.body.appendChild(DKE.dkTop);
       d.addEventListener('click', deskClick);

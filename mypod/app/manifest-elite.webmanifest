@@ -1,6 +1,6 @@
 {
-  "name": "myPod Elite",
-  "short_name": "myPod Elite",
+  "name": "myStereo Elite",
+  "short_name": "myStereo Elite",
   "start_url": "/elite/",
   "scope": "/elite/",
   "display": "standalone",

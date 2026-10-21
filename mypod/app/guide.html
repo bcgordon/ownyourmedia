@@ -7,12 +7,12 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <style>body{margin:0}</style>
-<title>myPod User’s Guide</title>
+<title>myStereo User’s Guide</title>
 <script>
-/* Elite: opened as guide.html?ed=elite, or from inside the myPod Elite app */
+/* Elite: opened as guide.html?ed=elite, or from inside the myStereo Elite app */
 (() => { let el = new URLSearchParams(location.search).get('ed') === 'elite';
   try { el = el || window.parent.MYPOD_EDITION === 'elite'; } catch (e) {}
-  if (el) { document.documentElement.classList.add('elite'); document.title = 'myPod Elite User’s Guide';
+  if (el) { document.documentElement.classList.add('elite'); document.title = 'myStereo Elite User’s Guide';
     const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = '#000000'; } })();
 </script>
 
@@ -144,7 +144,7 @@ footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01
 @media (max-width:380px){.pair{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
 
-/* ---------- myPod Elite: Starship Console edition of the guide (html.elite) ---------- */
+/* ---------- myStereo Elite: Starship Console edition of the guide (html.elite) ---------- */
 html.elite{--paper:#000;--ink:#ffcc99;--gray:#e8c9a8;--light:#9999ff;--rule:#2a2a44;--wash:#14142a;--blue:#9999ff;
   --lc-peach:#ffcc99;--lc-orange:#ff9966;--lc-lilac:#cc99cc;--lc-peri:#9999ff;--lc-gold:#e7b24a;--lc-red:#cc6666;
   --fa:Antonio,"Arial Narrow","Roboto Condensed",sans-serif;color-scheme:dark}
@@ -253,10 +253,10 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <div class="wrap">
     <div>
       <p class="kicker"><span class="std-only">User’s Guide</span><span class="el-only">User’s Guide · Musaka Edition</span></p>
-      <h1><span class="std-only">myPod.</span><span class="el-only">myPod Elite</span></h1>
+      <h1><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></h1>
       <p class="sub"><span class="std-only">Own your media. Hold it in one hand.</span><span class="el-only">Own your media. Make it so.</span></p>
     </div>
-    <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="A gunmetal myPod Elite with a Starship Console screen">
+    <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="A gunmetal myStereo Elite with a Starship Console screen">
       <path d="M118 0 C118 40 150 50 140 92" fill="none" stroke="#9aa0a7" stroke-width="4" stroke-linecap="round"/>
       <rect x="40" y="92" width="120" height="208" rx="14" fill="#2a2e35" stroke="#5b616a" stroke-width="1.5"/>
       <rect x="54" y="108" width="92" height="70" rx="3" fill="#050506"/>
@@ -289,7 +289,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <div class="wrap">
     <p class="label">Before you begin</p>
     <h2 id="own-h">Own your <em>media.</em></h2>
-    <p>The songs and films on myPod are yours. Ripped from the CDs and DVDs on your shelf, bought straight from the artists and studios you love, kept on your own server at the quality you chose.</p>
+    <p>The songs and films on myStereo are yours. Ripped from the CDs and DVDs on your shelf, bought straight from the artists and studios you love, kept on your own server at the quality you chose.</p>
     <ul>
       <li><b>Yours to keep.</b><span>No subscription to cancel, no license that can expire, no album that disappears overnight.</span></li>
       <li><b>Nothing in between.</b><span>No ads between songs, no feed, no algorithm guessing what you want next.</span></li>
@@ -313,7 +313,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <li><a href="#extras"><span>8</span>Extras</a></li>
       <li><a href="#settings"><span>9</span>Settings</a></li>
       <li><a href="#desktop"><span>10</span>Desktop Mode</a></li>
-      <li><a href="#elite"><span>11</span>myPod Elite</a></li>
+      <li><a href="#elite"><span>11</span>myStereo Elite</a></li>
       <li><a href="#alpha"><span>12</span>Alpha Testing</a></li>
       <li><a href="#help"><span>13</span>Tips and Troubleshooting</a></li>
     </ol>
@@ -322,25 +322,25 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="start">
     <p class="num">Chapter 1</p>
     <h2>Getting Started</h2>
-    <p class="lead">Put myPod on your Home Screen, sign in to your own Plex server, and your collection is in your pocket.</p>
-    <h3>Add myPod to your Home Screen</h3>
+    <p class="lead">Put myStereo on your Home Screen, sign in to your own Plex server, and your collection is in your pocket.</p>
+    <h3>Add myStereo to your Home Screen</h3>
     <ol class="steps">
-      <li>Open myPod’s web address in Safari on your iPhone.</li>
+      <li>Open myStereo’s web address in Safari on your iPhone.</li>
       <li>Tap the Share button, then <span class="path">Add to Home Screen</span>.</li>
-      <li>Open myPod from its new icon. It runs full screen, just like an app.</li>
+      <li>Open myStereo from its new icon. It runs full screen, just like an app.</li>
     </ol>
     <h3>Sign in to Plex</h3>
     <ol class="steps">
       <li>Go to <span class="path">Settings › Plex › Sign In with Plex</span>.</li>
       <li>Tap <b>Open Plex sign-in</b> and sign in on the Plex page.</li>
-      <li>Come back to myPod. It finds your server on its own.</li>
+      <li>Come back to myStereo. It finds your server on its own.</li>
     </ol>
-    <div class="note"><b>Just looking?</b> Until you sign in, myPod plays a small demo library with no sound, so you can try everything first.</div>
+    <div class="note"><b>Just looking?</b> Until you sign in, myStereo plays a small demo library with no sound, so you can try everything first.</div>
     <h3>No Plex? Use music on this phone</h3>
     <ol class="steps">
       <li>Go to <span class="path">Music › On This Phone › Add Music</span>. (Not signed in? It’s right on the sign-in screen as <b>Music on This Phone</b>.)</li>
       <li>Pick songs from the Files app. You can choose many at once. On a computer or Android phone, <b>Add a Folder</b> brings in a whole folder.</li>
-      <li>myPod reads each song’s name, artist, album and cover art, and keeps its own copy, so it plays even with no internet.</li>
+      <li>myStereo reads each song’s name, artist, album and cover art, and keeps its own copy, so it plays even with no internet.</li>
     </ol>
     <div class="note"><b>Good to know:</b> MP3, M4A, AAC, ALAC, FLAC and WAV all work. Songs you add live only on that device. Remove them under <span class="path">On This Phone › Manage</span>.</div>
   </section>
@@ -427,12 +427,12 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Shuffle</dt><dd>Off, or Songs. Starts with the song you picked, then mixes the rest.</dd></div>
       <div><dt>Repeat</dt><dd>Off, Track (this song again), or Album (the whole list again).</dd></div>
     </dl>
-    <p>You can also tap a dot in the pop-up, or a choice right on the screen. After a few seconds myPod goes back to Normal on its own.</p>
+    <p>You can also tap a dot in the pop-up, or a choice right on the screen. After a few seconds myStereo goes back to Normal on its own.</p>
     <div class="note"><b>Volume</b> lives on your iPhone’s side buttons.</div>
     <h3>Ratings and rated playlists</h3>
     <p><b>Music › Ratings</b> turns your stars into playlists that update themselves: <b>My Top Rated</b> (4 and 5 stars), one list for each star count, and <b>Recently Rated</b>. Each list starts with <b>Shuffle</b>, and they play on Plexamp too.</p>
-    <p>Your ratings are yours alone. They live on this myPod, not in Plex, so nobody else on your server sees them.</p>
-    <div class="note"><b>Your stars follow you.</b> On a Plex server you own, myPod saves ratings in Plex itself, so they match on your phone, your computer, myPod Elite and Plexamp, and survive a deleted app. Songs saved on this phone, songs on a network share, and songs on a server someone shares with you keep their ratings on this device only. For those, go to <b>Settings › Ratings Backup › Back Up Ratings</b> and save the file to Files. <b>Restore from Backup</b> brings them back.</div>
+    <p>Your ratings are yours alone. They live on this myStereo, not in Plex, so nobody else on your server sees them.</p>
+    <div class="note"><b>Your stars follow you.</b> On a Plex server you own, myStereo saves ratings in Plex itself, so they match on your phone, your computer, myStereo Elite and Plexamp, and survive a deleted app. Songs saved on this phone, songs on a network share, and songs on a server someone shares with you keep their ratings on this device only. For those, go to <b>Settings › Ratings Backup › Back Up Ratings</b> and save the file to Files. <b>Restore from Backup</b> brings them back.</div>
   </section>
 
   <section class="ch" id="coverflow">
@@ -475,35 +475,35 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Skip</dt><dd>Turn the wheel to move 10 seconds. <span class="key">⏮</span> <span class="key">⏭</span> jump 30.</dd></div>
       <div><dt>Stop</dt><dd><span class="key">MENU</span>, or <b>Done</b> when you’re watching sideways.</dd></div>
     </dl>
-    <div class="note"><b>Picks up where you left off.</b> myPod tells Plex how far you got, so your other Plex apps know too. Files your iPhone can’t play directly are converted by your Plex server on the fly.</div>
+    <div class="note"><b>Picks up where you left off.</b> myStereo tells Plex how far you got, so your other Plex apps know too. Files your iPhone can’t play directly are converted by your Plex server on the fly.</div>
   </section>
 
   <section class="ch" id="playon">
     <p class="num">Chapter 7</p>
     <h2>Play On Another Speaker</h2>
-    <p class="lead">Use myPod as a remote for Plexamp anywhere in the house.</p>
+    <p class="lead">Use myStereo as a remote for Plexamp anywhere in the house.</p>
     <ol class="steps">
       <li>Make sure Plexamp is open on the other device.</li>
       <li>Go to <span class="path">Play On</span> and choose it. A checkmark shows your pick.</li>
-      <li>Everything you play now plays there. Choose <b>This myPod</b> to play on your phone again.</li>
+      <li>Everything you play now plays there. Choose <b>This myStereo</b> to play on your phone again.</li>
     </ol>
     <h3>AirPlay and Bluetooth</h3>
-    <p>Choose <span class="path">Play On › AirPlay &amp; Bluetooth</span> and your iPhone’s own speaker list pops up: HomePods, Apple TVs, AirPlay speakers, Bluetooth headphones and car stereos. Pick one and myPod keeps playing there. It works for videos too.</p>
-    <div class="note"><b>Plexamp or AirPlay?</b> Plexamp sends the music from your server straight to that device, so your phone is only the remote. AirPlay and Bluetooth stream from your phone, so keep myPod open nearby.</div>
+    <p>Choose <span class="path">Play On › AirPlay &amp; Bluetooth</span> and your iPhone’s own speaker list pops up: HomePods, Apple TVs, AirPlay speakers, Bluetooth headphones and car stereos. Pick one and myStereo keeps playing there. It works for videos too.</p>
+    <div class="note"><b>Plexamp or AirPlay?</b> Plexamp sends the music from your server straight to that device, so your phone is only the remote. AirPlay and Bluetooth stream from your phone, so keep myStereo open nearby.</div>
   </section>
 
   <section class="ch" id="extras">
     <p class="num">Chapter 8</p>
     <h2>Extras</h2>
     <h3>Games</h3>
-    <p>Choose <b>Extras › Games</b>. There are four, and myPod remembers your best score in each.</p>
+    <p>Choose <b>Extras › Games</b>. There are four, and myStereo remembers your best score in each.</p>
     <p><b>Brick.</b> The classic. Turn the wheel or drag on the screen to move the paddle. Press the center to launch the ball.</p>
-    <p><b>Music Quiz.</b> myPod plays a few seconds from a random song in your library. Pick its name from four choices. The faster you answer, the more points you get. Ten songs a round. It plays on your phone, so it needs your Plex library, not the demo.</p>
+    <p><b>Music Quiz.</b> myStereo plays a few seconds from a random song in your library. Pick its name from four choices. The faster you answer, the more points you get. Ten songs a round. It plays on your phone, so it needs your Plex library, not the demo.</p>
     <p><b>Stack.</b> Falling blocks. Turn the wheel or drag sideways to move the block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
     <p><b>Minesweeper.</b> Open every square that isn’t a mine. A number tells you how many mines touch that square. Tap to open, press and hold to plant a flag. Prefer the wheel? Turn it to move the box, use ⏮ and ⏭ to jump a row, press the center to open, and ⏯ to flag.</p>
     <div class="note"><b>While you play Stack or Minesweeper,</b> the ⏮ ⏭ ⏯ buttons control the game instead of the music. Press Menu to leave, and they work on music again.</div>
     <h3>Flip it over</h3>
-    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myPod turns over to show its <span class="std-only">polished steel back, a few stickers, and an engraving</span><span class="el-only">dark gunmetal back, engraved myPod Elite · Musaka Edition</span>. Swipe again to flip it back. The music keeps playing.</p>
+    <p>Swipe sideways on the empty part of the case, like the space around the wheel, and myStereo turns over to show its <span class="std-only">polished steel back, a few stickers, and an engraving</span><span class="el-only">dark gunmetal back, engraved myStereo Elite · Musaka Edition</span>. Swipe again to flip it back. The music keeps playing.</p>
     <h3>Sleep Timer</h3>
     <p>Choose 15, 30, 45, or 60 minutes, or <b>End of Song</b>. A small moon appears in the top bar while it’s set.</p>
     <div class="note"><b>Falling asleep to Plexamp in another room?</b> The timer works most reliably when music is playing on your phone itself.</div>
@@ -513,9 +513,9 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p class="num">Chapter 9</p>
     <h2>Settings</h2>
     <h3>Desktop Mode</h3>
-    <p>On a computer, myPod can become a jukebox window built for a mouse. See <a href="#desktop">Chapter 10</a>.</p>
+    <p>On a computer, myStereo can become a jukebox window built for a mouse. See <a href="#desktop">Chapter 10</a>.</p>
     <h3>Case</h3>
-    <p>Fourteen finishes, including a Zune-style brown with a rounded-square pad the <b>BC Edition</b> (a clear amber-to-red shell, black wheel, red center and a polished red back), and the <b>JL Edition</b>, a beige 1995 desktop PC in your hand. Scroll the list to preview each one on your myPod, press the center to keep it.</p>
+    <p>Fourteen finishes, including a Zune-style brown with a rounded-square pad the <b>BC Edition</b> (a clear amber-to-red shell, black wheel, red center and a polished red back), and the <b>JL Edition</b>, a beige 1995 desktop PC in your hand. Scroll the list to preview each one on your myStereo, press the center to keep it.</p>
     <ul class="swatches">
       <li style="--c:linear-gradient(165deg,#fff,#e4e5e7)">White</li>
       <li style="--c:linear-gradient(165deg,#34363a,#050506)">Black</li>
@@ -536,9 +536,9 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <p><b>Light</b> is the 5th-generation look. <b>Dark</b> flips the screen to white text on black, easier on the eyes at night. <b>Match iPhone</b> follows your phone’s own Light or Dark setting. <b>Classic</b> brings back the original black-and-white display.</p>
     <figure>
       <div class="pair" aria-hidden="true">
-        <div class="lcd"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
-        <div class="lcd dark"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
-        <div class="lcd classic"><div class="lcd-bar"><i></i>myPod<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd dark"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
+        <div class="lcd classic"><div class="lcd-bar"><i></i>myStereo<i></i></div><div class="lcd-row sel">Music<span>›</span></div><div class="lcd-row">Play On<span>›</span></div><div class="lcd-row">Extras<span>›</span></div></div>
       </div>
       <figcaption>Light, Dark, and Classic.</figcaption>
     </figure>
@@ -550,20 +550,20 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Menu Art</dt><dd>Album art drifting beside the main and Music menus, like the iPod Classic. On from the start.</dd></div>
       <div><dt>Large Text</dt><dd>Bigger, easier-to-read menus. On from the start.</dd></div>
       <div><dt>Clicker</dt><dd>The little tick you hear as you scroll.</dd></div>
-      <div><dt>How to Use</dt><dd>A short version of this guide, right on your myPod.</dd></div>
+      <div><dt>How to Use</dt><dd>A short version of this guide, right on your myStereo.</dd></div>
     </dl>
   </section>
 
   <section class="ch" id="desktop">
     <p class="num">Chapter 10</p>
     <h2>Desktop Mode</h2>
-    <p class="lead">On a computer, myPod turns into a jukebox window built for a mouse. There’s no click wheel to drag. Everything is a click.</p>
-    <figure><img class="shot el-only" src="guide-desktop-elite.jpg" alt="myPod Elite in Desktop Mode, in starship colors"><img class="shot std-only" src="guide-desktop.jpg" alt="myPod in Desktop Mode: play controls and song display across the top, the Library list on the left, songs in the middle"><figcaption><span class="std-only">Desktop Mode. Elite gets the same window in starship colors.</span><span class="el-only">Desktop Mode, Starship edition.</span></figcaption></figure>
+    <p class="lead">On a computer, myStereo turns into a jukebox window built for a mouse. There’s no click wheel to drag. Everything is a click.</p>
+    <figure><img class="shot el-only" src="guide-desktop-elite.jpg" alt="myStereo Elite in Desktop Mode, in starship colors"><img class="shot std-only" src="guide-desktop.jpg" alt="myStereo in Desktop Mode: play controls and song display across the top, the Library list on the left, songs in the middle"><figcaption><span class="std-only">Desktop Mode. Elite gets the same window in starship colors.</span><span class="el-only">Desktop Mode, Starship edition.</span></figcaption></figure>
     <h3>Turn it on</h3>
     <ol class="steps">
-      <li>Open myPod in a browser on your computer.</li>
+      <li>Open myStereo in a browser on your computer.</li>
       <li>Click <b>Switch to Desktop Mode</b> under the iPod, or go to <span class="path">Settings › Desktop Mode</span>.</li>
-      <li>myPod remembers your choice. Next time it opens straight to the jukebox.</li>
+      <li>myStereo remembers your choice. Next time it opens straight to the jukebox.</li>
     </ol>
     <h3>What’s on the screen</h3>
     <dl class="terms">
@@ -584,29 +584,29 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Yellow</dt><dd>Mini Player.</dd></div>
       <div><dt>Green</dt><dd>Full screen.</dd></div>
     </dl>
-    <div class="note"><b>Good to know:</b> Desktop Mode works in any window bigger than about a quarter of a large monitor. Make the window too small and myPod switches back to the iPod on its own, then returns when there’s room again. The Mini Player can go as small as you like.</div>
+    <div class="note"><b>Good to know:</b> Desktop Mode works in any window bigger than about a quarter of a large monitor. Make the window too small and myStereo switches back to the iPod on its own, then returns when there’s room again. The Mini Player can go as small as you like.</div>
   </section>
 
   <section class="ch" id="elite">
     <p class="num">Chapter 11</p>
-    <h2>myPod <em>Elite</em></h2>
-    <p class="lead">Want extras like playing music straight from your own network share? myPod Elite is for you. It’s the same myPod with features that take a little setup, for people who like to tinker.</p>
+    <h2>myStereo <em>Elite</em></h2>
+    <p class="lead">Want extras like playing music straight from your own network share? myStereo Elite is for you. It’s the same myStereo with features that take a little setup, for people who like to tinker.</p>
     <dl class="terms">
       <div><dt>Network Share</dt><dd>Play music from your own WebDAV server, with no Plex needed. Browse its folders under <span class="path">Music › Network Share</span>.</dd></div>
-      <div><dt>Starship looks</dt><dd>Elite opens in the Away Mission case with the Starship Console screen. (Both are in regular myPod’s Settings too.)</dd></div>
+      <div><dt>Starship looks</dt><dd>Elite opens in the Away Mission case with the Starship Console screen. (Both are in regular myStereo’s Settings too.)</dd></div>
       <div><dt>LG Edition</dt><dd>A laser-sword hilt: a chrome case, a black ridged grip and an activation switch, with the glowing <b>Blade</b> screen. Pick it under <span class="path">Settings › Case</span> and <span class="path">Settings › Screen</span>, or open <b>ownyourmedia.club/lg</b>.</dd></div>
-      <div><dt>Musaka back</dt><dd>Flip it over: a dark gunmetal back engraved <b>myPod Elite · Musaka Edition</b>.</dd></div>
+      <div><dt>Musaka back</dt><dd>Flip it over: a dark gunmetal back engraved <b>myStereo Elite · Musaka Edition</b>.</dd></div>
       <div><dt>Its own space</dt><dd>Elite keeps its own settings, Plex sign-in, ratings and music, so you can keep both on your Home Screen.</dd></div>
     </dl>
-    <h3>Get myPod Elite</h3>
+    <h3>Get myStereo Elite</h3>
     <ol class="steps">
       <li>Open <a href="/elite/" target="_top"><b>ownyourmedia.club/elite</b></a> in Safari on your iPhone (or Chrome on Android).</li>
-      <li>Tap Share, then <span class="path">Add to Home Screen</span>. It gets its own myPod Elite icon.</li>
+      <li>Tap Share, then <span class="path">Add to Home Screen</span>. It gets its own myStereo Elite icon.</li>
     </ol>
     <h3>Set up a network share</h3>
     <ol class="steps">
       <li>Your share needs an address that starts with <b>https://</b>. Tailscale, a Cloudflare tunnel or a reverse proxy can give it one.</li>
-      <li>The server has to let myPod in. The easiest way is a recent version of rclone:<br><span class="path" style="white-space:normal;overflow-wrap:anywhere;word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:15px">rclone serve webdav /path/to/Music --user NAME --pass SECRET --allow-origin https://ownyourmedia.club</span></li>
+      <li>The server has to let myStereo in. The easiest way is a recent version of rclone:<br><span class="path" style="white-space:normal;overflow-wrap:anywhere;word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:15px">rclone serve webdav /path/to/Music --user NAME --pass SECRET --allow-origin https://ownyourmedia.club</span></li>
       <li>In Elite, go to <span class="path">Settings › Network Share › Connect a Share</span> and enter the address, username and password.</li>
       <li>Open <span class="path">Music › Network Share</span>, pick a folder, and press <b>Play All</b> or <b>Shuffle</b>.</li>
     </ol>
@@ -616,7 +616,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="alpha">
     <p class="num">Chapter 12</p>
     <h2>Alpha Testing</h2>
-    <p class="lead">myPod is brand new, and you’re one of its first testers. Thank you. Your notes go straight to BC.</p>
+    <p class="lead">myStereo is brand new, and you’re one of its first testers. Thank you. Your notes go straight to BC.</p>
     <h3>Send feedback</h3>
     <ol class="steps">
       <li>Go to <span class="path">Alpha › Send Feedback</span>, or <span class="path">Alpha › Share an Idea</span>.</li>
@@ -633,20 +633,20 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <h2>Tips and Troubleshooting</h2>
     <dl class="terms">
       <div><dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex. Then try <span class="path">Settings › Plex › Reconnect</span>.</dd></div>
-      <div><dt>Song won’t play</dt><dd>myPod tries a second, converted stream automatically. If it still won’t play, the file may be damaged on your server.</dd></div>
-      <div><dt>Plexamp ignores myPod</dt><dd>Open Plexamp on that device, then pick it again in <span class="path">Play On</span>.</dd></div>
-      <div><dt>Icon looks old</dt><dd>Delete myPod from your Home Screen and add it again from Safari. Your sign-in and settings stay.</dd></div>
+      <div><dt>Song won’t play</dt><dd>myStereo tries a second, converted stream automatically. If it still won’t play, the file may be damaged on your server.</dd></div>
+      <div><dt>Plexamp ignores myStereo</dt><dd>Open Plexamp on that device, then pick it again in <span class="path">Play On</span>.</dd></div>
+      <div><dt>Icon looks old</dt><dd>Delete myStereo from your Home Screen and add it again from Safari. Your sign-in and settings stay.</dd></div>
       <div><dt>Start fresh</dt><dd><span class="path">Settings › Plex › Sign Out</span>, then sign in again.</dd></div>
     </dl>
   </section>
 
   <footer>
-    <div class="mark"><span class="std-only">myPod.</span><span class="el-only">myPod Elite</span></div>
+    <div class="mark"><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></div>
     <p class="own-line">Own your media.</p>
     <p>Built by BC Gordon.</p>
   </footer>
 </main>
-<a class="backbar" id="backbar" href="./" hidden>‹ Back to myPod<span class="el-only"> Elite</span></a>
+<a class="backbar" id="backbar" href="./" hidden>‹ Back to myStereo<span class="el-only"> Elite</span></a>
 <script>
 (() => {
   const inFrame = window.self !== window.top;
