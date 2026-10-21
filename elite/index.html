@@ -1260,6 +1260,20 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
 .rx-motto b{font:800 14cqw/1 var(--f-ui);letter-spacing:.06em;color:var(--rx-glow,#F2B84B);text-shadow:0 0 2cqw var(--rx-glow,#F2B84B),0 0 7cqw color-mix(in srgb,var(--rx-glow,#F2B84B) 50%,transparent)}
 .rx-motto span{font:700 3.8cqw var(--f-ui);letter-spacing:.22em;color:color-mix(in srgb,var(--rx-glow,#F2B84B) 70%,#fff)}
 .rx-motto.on{display:flex;animation:rxScreenOn .9s ease-out both}
+
+/* focus layouts (One Line, Tuning Dial) */
+.screen.fx-live .body>.rows,.screen.fx-live .body>.split-r{visibility:hidden}
+.fx-ov{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4cqw;padding:2cqw 5cqw;text-align:center;z-index:5}
+.fx-ov button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;max-width:100%}
+.fx-count{font:600 3.6cqw var(--f-ui);letter-spacing:.14em;opacity:.8}
+.fx-nb{font-weight:600;font-size:5.4cqw;letter-spacing:.05em;text-transform:uppercase;opacity:.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:7cqw}
+.fx-cur{display:flex;flex-direction:column;align-items:center;gap:1cqw}
+.fx-cur b{font-weight:800;font-size:11cqw;line-height:1.02;letter-spacing:.02em;text-transform:uppercase;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.fx-cur span{font:600 3.8cqw var(--f-ui);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.fx-dial .fx-cur b{text-shadow:0 0 2.4cqw color-mix(in srgb,var(--vfd) 55%,transparent)}
+.fx-scale{position:relative;align-self:stretch;display:flex;justify-content:space-between;padding:1.4cqw 2cqw 3.6cqw;border:1px solid color-mix(in srgb,var(--vfd) 35%,transparent);border-radius:1.4cqw;font:600 3.6cqw var(--f-ui);margin-bottom:1cqw;
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--vfd) 70%,transparent) 0 .4cqw,transparent .4cqw 3.4cqw) 0 100%/100% 2.4cqw no-repeat}
+.fx-scale i{position:absolute;top:.6cqw;bottom:.6cqw;width:.7cqw;margin-left:-.35cqw;background:#ff4a2a;box-shadow:0 0 1.6cqw #ff4a2a;transition:left .15s}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -2896,6 +2910,29 @@ function rowHTML(it, sel, i) {
   else { if (it.value != null) r += `<span class="v">${esc(it.value)}</span>`; if (it.arrow) r += ICON.chev; }
   return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${esc(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
 }
+/* focus layouts: draw the current list as one big item with its neighbors, over the normal rows */
+function fxRender() {
+  if (!screenEl.classList.contains('fx')) { screenEl.classList.remove('fx-live'); const o = bodyEl.querySelector('.fx-ov'); if (o) o.remove(); return; }
+  const v = cur(); const ok = v && v.kind === 'list' && !v.err && v.count() > 0;
+  screenEl.classList.toggle('fx-live', !!ok);
+  let ov = bodyEl.querySelector('.fx-ov');
+  if (!ok) { if (ov) ov.remove(); return; }
+  if (!ov) { ov = document.createElement('div'); ov.className = 'fx-ov'; bodyEl.appendChild(ov); }
+  const st = bodyEl.querySelector('.npstrip'); ov.style.bottom = st ? st.offsetHeight + 'px' : '0';
+  const n = v.count(), i = Math.min(v.sel, n - 1), it = v.get(i) || {}, pv = i > 0 ? v.get(i - 1) : null, nx = i < n - 1 ? v.get(i + 1) : null;
+  const lab = x => x ? esc(x.label || '') : '&nbsp;';
+  const L = (it.label || '').replace(/^the\s+/i, '').charAt(0).toUpperCase(), pos = /[A-Z]/.test(L) ? (L.charCodeAt(0) - 65) / 25 : 0;
+  const dial = screenEl.classList.contains('fx-dial');
+  ov.innerHTML = (dial ? `<div class="fx-scale"><span>A</span><span>D</span><span>G</span><span>J</span><span>M</span><span>P</span><span>S</span><span>V</span><span>Z</span><i style="left:${(pos * 100).toFixed(1)}%"></i></div>` : '')
+    + `<div class="fx-count">${String(i + 1).padStart(3, '0')} / ${String(n).padStart(3, '0')}</div>`
+    + `<button type="button" class="fx-nb" data-fx="-1">${lab(pv)}</button>`
+    + `<button type="button" class="fx-cur" data-fx="0"><b>${lab(it)}</b><span>${[it.value != null && it.value !== '' ? esc(it.value) : '', it.check ? '✓ Selected' : '', it.arrow ? 'Open ›' : ''].filter(Boolean).join(' · ') || '&nbsp;'}</span></button>`
+    + `<button type="button" class="fx-nb" data-fx="1">${lab(nx)}</button>`;
+}
+bodyEl.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('.fx-ov [data-fx]'); if (!b) return;
+  e.stopPropagation(); const d = +b.dataset.fx; if (d) tick(d); else { click(); select(); }
+});
 function render(anim) {
   setTimeout(() => { try { rxSync(); } catch {} });
   const v = cur(); if (!v) return;
@@ -3217,6 +3254,7 @@ bodyEl.addEventListener('pointercancel', endSdrag);
 document.querySelector('.bar').addEventListener('click', () => { if (stack.length > 1) press('menu'); });
 const wheel = $('#wheel'), center = $('#center');
 /* Receiver look: the knob's marker turns with your thumb, and real buttons do what the wheel's ring used to */
+{ const _render = render; render = function () { const r = _render.apply(this, arguments); try { fxRender(); } catch {} return r; }; }
 function npFit() {
   const m = document.querySelector('.np-main'), meta = document.querySelector('.np-meta'), t = document.querySelector('.np-title');
   if (!m || !meta || !t) return;
@@ -4093,7 +4131,7 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['auto', 'Auto (Light or Dark)'], ['color', 'Light'], ['dark', 'Dark'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['classic', 'Classic LCD'], ['mini', 'Mini LCD'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
+const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['auto', 'Auto (Light or Dark)'], ['color', 'Light'], ['dark', 'Dark'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['oneline', 'One Line (light)'], ['dial', 'Tuning Dial (dark)'], ['classic', 'Classic LCD'], ['mini', 'Mini LCD'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
@@ -4108,9 +4146,12 @@ function screenStyle(id = cfg.screen) {
   screenEl.classList.toggle('rxd', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
   screenEl.classList.toggle('rxl', !w95 && (id === 'color' || (id === 'auto' && !darkQ.matches)));
   screenEl.classList.toggle('mini', !w95 && id === 'mini');
+  /* the two focus layouts: one big item at a time, in LCD (light) or amber dial (dark) */
+  const fxl = !w95 && id === 'oneline', fxd = !w95 && id === 'dial';
+  screenEl.classList.toggle('fx', fxl || fxd); screenEl.classList.toggle('fx-line', fxl); screenEl.classList.toggle('fx-dial', fxd);
   const rxDark = id === 'rxauto' && darkQ.matches;
-  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || rxDark));
-  screenEl.classList.toggle('lcd', !w95 && (id === 'lcd' || (id === 'rxauto' && !rxDark)));
+  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || id === 'dial' || rxDark));
+  screenEl.classList.toggle('lcd', !w95 && (id === 'lcd' || id === 'oneline' || (id === 'rxauto' && !rxDark)));
   screenEl.style.setProperty('--vfd', id === 'teal' ? '#5FE3C6' : '#F2B84B');
 }
 function applyScreen() { screenStyle(); render(); }
