@@ -1149,8 +1149,12 @@ html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .bezel{background:#000;padd
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .screen{border-radius:0 4px 4px 0}
 html:is(.desk,.dk-pip):is(.ed-elite,:not(.ed-elite)) .dk-foot{color:var(--dk-sub);text-shadow:none;font:700 12px var(--f-ui);letter-spacing:.34em;text-transform:uppercase}
 .lcd .bar-t,.vfd .bar-t{letter-spacing:0;font-size:.9em}
-html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-fill)}
-@media (max-width: 540px) and (max-aspect-ratio: 3/4){ html.shortvp .pod{padding-bottom:6px} }
+html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-base)}
+@media (max-width: 540px) and (max-aspect-ratio: 3/4){
+  html.shortvp,html.shortvp body{height:var(--fullh);overflow:hidden}
+  html.shortvp .podwrap{position:absolute}
+  html.shortvp .pod{padding-bottom:calc(var(--padfix) + 6px)}
+}
 html:not(.desk) .pod.recv .wheel{max-width:none}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
@@ -3115,18 +3119,19 @@ function npFit() {
   t.dataset.fit = key;
 }
 function rxFit() {
-  const pod = $('#pod'), wh = $('#wheel');
+  const pod = $('#pod'), wh = $('#wheel'), keys = $('#rxKeys'), tx = $('#rxTx');
   if (!pod || !wh) return;
-  if (!pod.classList.contains('recv') || document.documentElement.classList.contains('desk')) { wh.style.width = ''; return; }
-  const cs = getComputedStyle(pod), inner = pod.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-  let used = 0;
-  for (const el of pod.children) { if (el === wh) continue; const st = getComputedStyle(el); if (st.display === 'none' || st.position === 'absolute' || st.position === 'fixed') continue;
-    used += el.offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom); }
-  const room = inner - used - 24;                       /* a little air above and below */
-  const size = Math.max(140, Math.min(room / 1.24, pod.clientWidth * .78, 360));   /* the tick ring reaches 12% past the knob */
+  if (!pod.classList.contains('recv') || document.documentElement.classList.contains('desk') || !keys || !tx) { wh.style.width = ''; return; }
+  /* the knob sits between the button row and the transport row; measure that gap as laid out, then fill it.
+     The tick ring reaches 12% past the knob on each side, and we leave a little air. */
+  wh.style.width = '120px';
+  const room = tx.getBoundingClientRect().top - keys.getBoundingClientRect().bottom;
+  const size = Math.max(120, Math.min((room - 20) / 1.26, pod.clientWidth * .8, 380));
   wh.style.width = Math.floor(size) + 'px';
 }
 addEventListener('resize', () => requestAnimationFrame(rxFit));
+addEventListener('load', () => { rxFit(); setTimeout(rxFit, 400); setTimeout(rxFit, 1500); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(rxFit, 300); });
 const RX = { ang: 0, on: () => $('#pod').classList.contains('recv') };
 function rxSync() {
   const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
@@ -4146,12 +4151,13 @@ function flipPod(dir) {
 function fitFull() {
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   const portrait = innerHeight > innerWidth;
-  /* size to what is actually visible: some iPhones hand a home-screen app a viewport shorter than the screen,
-     and anything below it is cut off, so the page background (matched to the faceplate) fills the rest */
-  const vh = Math.round((window.visualViewport && visualViewport.height) || innerHeight);
-  const h = standalone && portrait ? vh : 0;
-  document.documentElement.style.setProperty('--fullh', h ? h + 'px' : '100%');
-  document.documentElement.classList.toggle('shortvp', !!h && vh < Math.max(screen.height, screen.width) - 20);
+  /* Some iPhones give a home-screen app a layout area shorter than the screen. Stretch the case to the real
+     bottom of the screen, and pad its bottom by the difference so the buttons stay inside the part that is laid out. */
+  const vh = Math.round(innerHeight), full = Math.max(screen.height, screen.width);
+  const short = standalone && portrait && full - vh > 20;
+  document.documentElement.style.setProperty('--fullh', standalone && portrait ? (short ? full : vh) + 'px' : '100%');
+  document.documentElement.style.setProperty('--padfix', short ? (full - vh) + 'px' : '0px');
+  document.documentElement.classList.toggle('shortvp', short);
   if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
 fitFull(); addEventListener('resize', fitFull); try { visualViewport.addEventListener('resize', fitFull); } catch {} addEventListener('orientationchange', () => setTimeout(fitFull, 300));
