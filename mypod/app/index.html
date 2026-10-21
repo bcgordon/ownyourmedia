@@ -1151,6 +1151,8 @@ html.rxcase:not(.desk),html.rxcase:not(.desk) body{background:var(--case-base)}
 @media (max-width: 540px) and (max-aspect-ratio: 3/4){
   /* keep the bottom buttons clear of the iPhone's home bar */
   html:not(.desk) .pod.recv{padding-bottom:max(env(safe-area-inset-bottom,0px),22px)}
+  html.shortvp:not(.desk) .pod.recv{padding-bottom:8px}
+  html.shortvp:not(.desk) .pod.recv .rx-tx{margin-bottom:0}
 }
 html:not(.desk) .pod.recv .wheel{max-width:none}
 /* Receiver displays: glowing amber or teal text on black */
@@ -3124,7 +3126,7 @@ function rxFit() {
   const pr = pod.getBoundingClientRect(), cs = getComputedStyle(pod), ts = getComputedStyle(tx);
   const txTop = pr.bottom - parseFloat(cs.paddingBottom) - parseFloat(ts.marginBottom) - tx.offsetHeight;
   const room = txTop - keys.getBoundingClientRect().bottom;
-  const size = Math.floor(Math.max(120, Math.min((room - 36) / 1.26, pod.clientWidth * .78, 360)));
+  const size = Math.floor(Math.max(120, Math.min((room - 22) / 1.26, pod.clientWidth * .78, 360)));
   if (Math.abs((parseFloat(wh.style.width) || 0) - size) > 2) wh.style.width = size + 'px';
 }
 addEventListener('resize', () => requestAnimationFrame(rxFit));
@@ -4152,6 +4154,8 @@ function fitFull() {
   /* size to the area the iPhone actually lays out; never taller, so nothing can scroll or bounce */
   const vh = Math.round(innerHeight);
   document.documentElement.style.setProperty('--fullh', standalone && portrait ? vh + 'px' : '100%');
+  /* when the iPhone has already kept the bottom strip for itself, the home bar is outside our area: no extra padding needed */
+  document.documentElement.classList.toggle('shortvp', standalone && portrait && Math.max(screen.height, screen.width) - vh > 20);
   if (typeof rxFit === 'function') requestAnimationFrame(rxFit);
 }
 fitFull(); addEventListener('resize', fitFull); try { visualViewport.addEventListener('resize', fitFull); } catch {} addEventListener('orientationchange', () => setTimeout(fitFull, 300));
