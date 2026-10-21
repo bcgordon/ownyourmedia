@@ -1253,6 +1253,10 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
 .rx-eleven b{font:800 46cqw/1 var(--f-ui);color:#ff5a2a;text-shadow:0 0 3cqw #ff5a2a,0 0 9cqw rgba(255,90,42,.6);letter-spacing:-.04em}
 .rx-eleven span{font:700 4.4cqw var(--f-ui);letter-spacing:.2em;color:#ffb08f}
 .rx-eleven.on{display:flex;animation:rxScreenOn .9s ease-out both}
+.rx-motto{position:absolute;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;gap:4cqw;background:#050505;pointer-events:none;text-align:center}
+.rx-motto b{font:800 14cqw/1 var(--f-ui);letter-spacing:.06em;color:var(--rx-glow,#F2B84B);text-shadow:0 0 2cqw var(--rx-glow,#F2B84B),0 0 7cqw color-mix(in srgb,var(--rx-glow,#F2B84B) 50%,transparent)}
+.rx-motto span{font:700 3.8cqw var(--f-ui);letter-spacing:.22em;color:color-mix(in srgb,var(--rx-glow,#F2B84B) 70%,#fff)}
+.rx-motto.on{display:flex;animation:rxScreenOn .9s ease-out both}
 /* Receiver displays: glowing amber or teal text on black */
 .screen.vfd{background:#0b0a07;color:var(--vfd);letter-spacing:.05em}
 .vfd .bar{background:#0b0a07;border-bottom:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
@@ -1293,6 +1297,7 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
         <div class="bigletter" id="bigLetter" aria-hidden="true"></div>
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
         <div class="rx-eleven" id="rxEleven" aria-hidden="true"><b>11</b><span>THIS ONE GOES TO ELEVEN</span></div>
+        <div class="rx-motto" id="rxMotto" aria-hidden="true"><b>OWN YOUR<br>MEDIA</b><span>OWNYOURMEDIA.CLUB · EST. 2026</span></div>
         <div class="nppop" id="npPop" aria-live="polite"></div>
         <div class="w95ov" id="w95ov" hidden></div>
       </div>
@@ -2632,7 +2637,7 @@ function settingsView() {
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
     { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } },
-    { label: 'Tone', value: toneOn() ? 'Custom' : 'Flat', arrow: true, go: () => push(toneView()) },
+    { label: 'Tone', value: tonePresetName(), arrow: true, go: () => push(toneView()) },
     { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } },
@@ -3233,8 +3238,6 @@ function rxFit() {
 }
 addEventListener('resize', () => requestAnimationFrame(rxFit));
 addEventListener('load', () => { rxFit(); setTimeout(rxFit, 400); setTimeout(rxFit, 1500); });
-/* power-on moment: the display warms up, the lamps sweep, the knob spins home */
-(() => { const r = document.documentElement; if (r.classList.contains('desk')) return; r.classList.add('rx-boot'); setTimeout(() => r.classList.remove('rx-boot'), 2200); })();
 document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(rxFit, 300); });
 /* Tone controls: bass, treble and loudness through the Web Audio API. Nothing is wired in until someone moves
    a control off flat, because on iPhone routing the music through Web Audio can stop it when the screen locks. */
@@ -3272,8 +3275,27 @@ function toneLevelView(key, title) {
     { onSel() { if (key === 'bass') toneApply(vals[this.sel], cfg.treble || 0); else toneApply(cfg.bass || 0, vals[this.sel]); }, onLeave() { toneApply(); } });
   v.sel = Math.max(0, vals.indexOf(cfg[key] || 0)); return v;
 }
+/* presets in plain words, for people who just want it to sound good */
+const TONE_PRESETS = [
+  ['Flat', 'No changes', 0, 0, false],
+  ['Phone Speaker', 'Fills out tiny speakers', 6, 2, false],
+  ['Earbuds', 'A little more punch', 4, 2, false],
+  ['Car', 'Cuts through road noise', 2, 4, false],
+  ['Quiet Listening', 'Full sound at low volume', 0, 0, true],
+  ['Warm', 'Softer, like a record', 2, -4, false],
+  ['Bright', 'Crisp vocals and cymbals', 0, 4, false],
+  ['Talk & Podcasts', 'Clearer voices', -4, 2, false]
+];
+const tonePresetName = () => { const p = TONE_PRESETS.find(x => x[2] === (cfg.bass || 0) && x[3] === (cfg.treble || 0) && x[4] === !!cfg.loud); return p ? p[0] : 'Custom'; };
+function tonePresetView() {
+  const v = List('Presets', TONE_PRESETS.map(x => ({ label: x[0], value: x[1], get check() { return tonePresetName() === x[0]; },
+    act: () => { cfg.bass = x[2]; cfg.treble = x[3]; cfg.loud = x[4]; save(); toneApply(); flash(`${x[0]} tone`); pop(); } })),
+    { onSel() { const x = TONE_PRESETS[this.sel]; toneApply(x[2], x[3], x[4]); }, onLeave() { toneApply(); } });
+  v.sel = Math.max(0, TONE_PRESETS.findIndex(x => x[0] === tonePresetName())); return v;
+}
 function toneView() {
   return List('Tone', () => [
+    { label: 'Presets', value: tonePresetName(), arrow: true, go: () => push(tonePresetView()) },
     { label: 'Bass', value: dB(cfg.bass || 0), arrow: true, go: () => push(toneLevelView('bass', 'Bass')) },
     { label: 'Treble', value: dB(cfg.treble || 0), arrow: true, go: () => push(toneLevelView('treble', 'Treble')) },
     { label: 'Loudness', value: cfg.loud ? 'On' : 'Off', act: () => { cfg.loud = !cfg.loud; save(); toneApply(); } },
@@ -3299,10 +3321,19 @@ function rxSync() {
   document.querySelectorAll('#rxKeys .rx-src [data-rx]').forEach(b => b.classList.toggle('lit', b.dataset.rx === sec));
   document.querySelectorAll('#rxKeys [data-rxm]').forEach(b => b.classList.toggle('lit', v.kind === 'np' && v.mode === b.dataset.rxm));
 }
+/* hold Back for five seconds: the display shows the club motto */
+document.addEventListener('pointerdown', e => {
+  const b = e.target.closest && e.target.closest('#rxKeys .rx-bk'); if (!b) return;
+  RX.held = false; clearTimeout(RX.holdT);
+  RX.holdT = setTimeout(() => { RX.held = true; const el = $('#rxMotto'); el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+    if (navigator.vibrate) try { navigator.vibrate(40); } catch {} setTimeout(() => el.classList.remove('on'), 4000); }, 5000);
+});
+['pointerup', 'pointercancel', 'pointerleave'].forEach(t => document.addEventListener(t, () => clearTimeout(RX.holdT), true));
 const RX_GO = { music: () => musicMenu(), videos: () => videosView(), extras: () => extrasView(), settings: () => settingsView() };
 document.addEventListener('click', e => {
   const b = e.target.closest && e.target.closest('#rxKeys [data-rx],#rxTx [data-rx],#rxKeys [data-rxm]'); if (!b) return;
   const k = b.dataset.rx, m = b.dataset.rxm;
+  if (k === 'back' && RX.held) { RX.held = false; return; }
   if (m) { const v = cur(); if (v.kind === 'np' && NPs()) { click(); v.mode = v.mode === m ? 'play' : m; npIdle(v); updateNP(); rxSync(); } return; }
   if (k === 'back') return press('menu');
   if (k === 'prev' || k === 'play' || k === 'next') return press(k);
