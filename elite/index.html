@@ -18,7 +18,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Pixelify+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Diplomata+SC&family=Pixelify+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
 /* Layout: one iPod (5th gen) centered on a softly lit desk; every device measurement scales from --w */
 :root{
@@ -75,6 +75,8 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 @keyframes crnEq{0%{height:18%}50%{height:100%}100%{height:42%}}
 .crn-dest{display:flex;align-items:center;gap:1cqw;max-width:21cqw;font-size:3.8cqw;font-weight:600;color:#2a5fb8}
 .crn-dest span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crn-tape{flex:none;font-size:2.9cqw;font-weight:800;letter-spacing:.1em;line-height:1.25;padding:0 .9cqw;margin-right:1.2cqw;border:.35cqw solid currentColor;border-radius:.8cqw}
+.crn-tape.rec{color:#e0412f;border-color:#e0412f}
 .crn-dest svg{height:4.4cqw;flex:none}
 .dark .crn-eq i{background:#6aa8f5}.dark .crn-dest{color:#7fb4f6}
 .classic .crn-eq i{background:var(--ink);border-radius:0}.classic .crn-dest{color:var(--ink)}
@@ -207,7 +209,7 @@ html.redback.showback body{background-color:#8f0b12}
     radial-gradient(ellipse 90% 22% at 50% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 70%),
     linear-gradient(180deg,rgba(255,255,255,0) 82%,rgba(120,128,138,.08) 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.7),inset 0 -2px 3px rgba(0,0,0,.05)}
-.podback.eliteback .stk,.podback.eliteback .scuff{display:none}
+.podback.eliteback .scuff{display:none}
 .podback.eliteback{background:
     linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 18%,rgba(255,255,255,0) 86%,rgba(255,255,255,.1) 100%),
     radial-gradient(ellipse 70% 40% at 28% 16%,rgba(200,210,224,.35),rgba(255,255,255,0) 70%),
@@ -215,7 +217,7 @@ html.redback.showback body{background-color:#8f0b12}
     linear-gradient(100deg,#2a2e34 0%,#5b626b 10%,#8a929b 18%,#4a5058 30%,#1c1f23 42%,#30343a 50%,#6e757e 60%,#9aa2ab 67%,#5a6068 78%,#2b2f35 90%,#454a51 100%);
   box-shadow:0 0 0 1px #0b0c0e,inset 0 0 0 2px rgba(255,255,255,.18),inset 0 0 calc(var(--w)*.05) rgba(0,0,0,.55),0 34px 60px -24px rgba(0,0,0,.6)}
 .podback.eliteback::before{background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 60%)}
-.podback.eliteback .engrave{top:80%;white-space:pre-line;line-height:1.35;font-size:calc(var(--w)*.062);letter-spacing:.04em;
+.podback.eliteback .engrave{top:86%;white-space:pre-line;line-height:1.35;font-size:calc(var(--w)*.062);letter-spacing:.04em;
   color:rgba(222,228,236,.78);text-shadow:0 -1px 0 rgba(0,0,0,.75),0 1px 0 rgba(255,255,255,.18)}
 .podback.eliteback .engrave::first-line{font-weight:600}
 /* Away Mission case: dark starship hull, command-gold wheel ring, three division stripes */
@@ -1237,6 +1239,50 @@ html:not(.desk) .pod.recv.trek .wheel{box-shadow:0 0 0 calc(var(--w)*.008) #e7b2
 html:not(.desk) .pod.recv.saber .rx-keys button,html:not(.desk) .pod.recv.saber .rx-tx button{box-shadow:0 0 0 1px #c9ced3,inset 0 1px 0 rgba(255,255,255,.12);text-shadow:0 0 6px rgba(95,208,255,.6)}
 html:not(.desk) .pod.recv.saber .rx-keys .rx-bk{background:linear-gradient(180deg,#d7f6ff 0%,#ffffff 50%,#d7f6ff 100%);color:#03222e;text-shadow:none;box-shadow:0 0 calc(var(--w)*.02) calc(var(--w)*.005) #8fe2ff,0 0 calc(var(--w)*.06) rgba(60,190,255,.55)}
 html:not(.desk) .pod.recv.saber .wheel{box-shadow:0 0 0 calc(var(--w)*.008) #c9ced3,0 0 0 calc(var(--w)*.014) #0b0c0e,0 calc(var(--w)*.03) calc(var(--w)*.06) rgba(0,0,0,.5)}
+html:not(.desk) .pod.recv.scan .rx-keys button,html:not(.desk) .pod.recv.scan .rx-tx button{border-radius:calc(var(--w)*.012);box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.35),0 2px 0 #0a0a0a;font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.04em}
+html:not(.desk) .pod.recv.scan .rx-keys button:nth-child(2),html:not(.desk) .pod.recv.scan .rx-keys button:nth-child(4){background:linear-gradient(#9aaa7a,#7f8f60)}
+html:not(.desk) .pod.recv.scan .rx-keys .rx-bk,html:not(.desk) .pod.recv.scan .rx-tx button:not(:nth-child(2)){background:linear-gradient(#3a3e43,#26292d);color:#ece8df}
+html:not(.desk) .pod.recv.scan .rx-keys i{border-radius:1px;width:calc(var(--w)*.04);height:calc(var(--w)*.011)}
+html:not(.desk) .pod.recv.scan .wheel{box-shadow:0 0 0 calc(var(--w)*.006) #0b0c0e,0 calc(var(--w)*.035) calc(var(--w)*.07) rgba(0,0,0,.55)}
+html:not(.desk) .pod.recv.scan .rx-dial i{background:#E8743B;box-shadow:none;border-radius:2px;width:3%;margin-left:-1.5%;height:13%;top:4%}
+.screen.scanl{background:radial-gradient(ellipse at 50% 40%,#0d1f1d,#040908 80%)!important}
+.screen.scanl::before{content:"";position:absolute;inset:0;z-index:30;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(0,0,0,.24) 0 1px,transparent 1px 3px)}
+.screen.scanl::after{content:"";position:absolute;left:0;right:0;top:-20%;height:20%;z-index:31;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(95,227,198,.07),transparent);animation:scanSweep 6s linear infinite}
+@keyframes scanSweep{to{transform:translateY(600%)}}
+@media (prefers-reduced-motion:reduce){.screen.scanl::after{display:none}}
+/* Runaway Anchor Edition: navy and gold, from the Runaway Anchor style guide */
+html:not(.desk) .pod.recv.raed .rx-keys button,html:not(.desk) .pod.recv.raed .rx-tx button{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;box-shadow:0 0 0 1px #c9a85e,inset 0 1px 0 rgba(255,255,255,.5),0 2px 0 #10263a}
+html:not(.desk) .pod.recv.raed .rx-keys .rx-bk{background:linear-gradient(#b8d0e1,#a2c0d6);color:#1e3f5c}
+html:not(.desk) .pod.recv.raed .rx-tx button{background:linear-gradient(#24496a,#183650);color:#f0d396;box-shadow:0 0 0 1px #f0d396,0 2px 0 #0c1f2f}
+html:not(.desk) .pod.recv.raed .rx-tx button:nth-child(2){background:linear-gradient(#f6e0ab,#e6c47c);color:#1e3f5c}
+html:not(.desk) .pod.recv.raed .wheel{box-shadow:0 0 0 calc(var(--w)*.007) #f0d396,0 0 0 calc(var(--w)*.016) #1e3f5c,0 0 0 calc(var(--w)*.022) #f0d396,0 calc(var(--w)*.035) calc(var(--w)*.07) rgba(0,0,0,.5)}
+html:not(.desk) .pod.recv.raed .center{color:transparent;font-size:0}
+html:not(.desk) .pod.recv.raed .rx-dial i{background:#f0d396;box-shadow:0 0 calc(var(--w)*.015) rgba(240,211,150,.8)}
+.ra-ban{display:none}
+.podback.raback .stk,.podback.raback .scuff{display:none}
+.podback.raback{background:radial-gradient(ellipse 70% 40% at 30% 18%,rgba(162,192,214,.18),rgba(162,192,214,0) 70%),linear-gradient(175deg,#27506f,#1e3f5c 50%,#162f45)!important}
+.podback.raback .ra-ban{display:block;position:absolute;left:50%;top:44%;width:76%;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 0 0 calc(var(--w)*.012) #f0d396,0 12px 28px rgba(0,0,0,.4)}
+.podback.raback .engrave{top:80%;white-space:pre-line;line-height:1.4;color:#f0d396;text-shadow:0 1px 0 rgba(0,0,0,.4);font-family:"Diplomata SC",Georgia,serif;font-size:calc(var(--w)*.042);letter-spacing:.02em}
+html.raback.showback,html.raback.showback body{background:#162f45}
+/* Runaway Anchor display */
+.screen.anchor{background:#1e3f5c;color:#f0d396;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.anchor .bar{background:#162f45;border-bottom:.5cqw solid #f0d396;color:#f0d396}
+.anchor .bar-t{font-family:"Diplomata SC",Georgia,serif;font-weight:400;letter-spacing:.02em;font-size:.86em}
+.anchor .bar svg path{stroke:#f0d396!important}.anchor .bar-r,.anchor .crn-clock{color:#f0d396}.anchor .crn-eq i{background:#aae491}
+.anchor .row{color:#fff;font-weight:700}
+.anchor .row.sel{background:#f0d396;color:#1e3f5c;box-shadow:inset 0 0 0 .5cqw #e2bd6c}
+.anchor .row .r,.anchor .row .v{color:#a2c0d6}.anchor .row.sel .r,.anchor .row.sel .v{color:#1e3f5c}
+.anchor .row.dim{color:#7e9bb3}
+.anchor .sb{background:#162f45;border:0}.anchor .sb i{background:#f0d396}
+.anchor .note,.anchor .page{color:#fff}.anchor .page h3{color:#f0d396}
+.anchor .npstrip{background:#162f45;border-top:.5cqw solid #f0d396;color:#fff}.anchor .npstrip .go{color:#f0d396}
+.anchor .np-pos{color:#a2c0d6}.anchor .np-title{color:#f0d396}.anchor .np-artist,.anchor .np-album{color:#fff}
+.anchor .np-art{box-shadow:0 0 0 .6cqw #f0d396}
+.anchor .trk{background:#162f45;border:0}.anchor .fill{background:#f0d396}.anchor .knob{background:#fff;border:0}
+.anchor .seg{background:#162f45;border:0}.anchor .seg button{color:#fff}.anchor .seg button.on{background:#f0d396;color:#1e3f5c}
+.anchor .stars button{color:#3d6385}.anchor .stars button.on,.anchor .np-stars{color:#f0d396}
+.anchor .sbox{background:#162f45}.anchor .sbox input{background:#24496a;color:#fff;border:1px solid #f0d396}
+html.desk .anchor .row:hover:not(.sel){background:rgba(240,211,150,.14)}
 html:not(.desk) .pod.recv.saber .center{box-shadow:0 0 calc(var(--w)*.03) rgba(95,208,255,.6)}
 html:not(.desk) .pod.recv .console .bar-t,html:not(.desk) .pod.recv .saber .bar-t{letter-spacing:0;font-size:.86em}html:not(.desk) .pod.recv .console .bar-t{font-size:.8em}
 
@@ -1351,6 +1397,7 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
       <div class="jls void"><span>WARRANTY VOID IF RETIRED</span></div>
       <img class="jls ra" src="stickers/runaway-anchor.webp" alt="Runaway Anchor sticker">
     </div>
+    <img class="ra-ban" src="ra-seal.png" alt="Runaway Anchor, cocktails and mocktails, est. 2023">
     <div class="engrave" id="engrave">Built by BC</div>
   </div>
   </div></div>
@@ -1860,10 +1907,10 @@ const Local = {
   },
   bytes() { return this.tracks.reduce((s, t) => s + (t.size || 0), 0); },
   /* the library, shaped like the Plex and demo ones so the same menus work */
-  groups() {
+  groups(list = this.tracks) {
     const by = (x, y) => x.localeCompare(y, undefined, { sensitivity: 'base', numeric: true });
     const artists = new Map(), albums = new Map(), genres = new Map();
-    for (const t of this.tracks) {
+    for (const t of list) {
       const an = t.albumArtist || t.artist || 'Unknown Artist';
       if (!artists.has(an)) artists.set(an, { name: an, albums: new Map(), tracks: [] });
       const ar = artists.get(an); ar.tracks.push(t);
@@ -1878,11 +1925,11 @@ const Local = {
     return { by, artists: [...artists.values()].sort((x, y) => by(x.name, y.name)), albums: [...albums.values()].sort((x, y) => by(x.title, y.title)),
       genres: [...genres.entries()].sort((x, y) => by(x[0], y[0])) };
   },
-  lib() {
-    const g = this.groups(), tk = t => ({ label: t.title, track: t });
+  lib(list = this.tracks) {
+    const g = this.groups(list), tk = t => ({ label: t.title, track: t });
     const albumItem = al => ({ label: al.title, arrow: true, go: () => push(List(al.title, al.tracks.map(tk))) });
     const artistView = a => List(a.name, [{ label: 'All Songs', arrow: true, go: () => push(List(a.name, a.tracks.map(tk))) }, ...[...a.albums.values()].map(albumItem)]);
-    const songs = () => [...this.tracks].sort((x, y) => g.by(x.title, y.title));
+    const songs = () => [...list].sort((x, y) => g.by(x.title, y.title));
     return {
       albumList: g.albums,
       artists: () => List('Artists', g.artists.map(a => ({ label: a.name, arrow: true, go: () => push(artistView(a)) }))),
@@ -1967,7 +2014,7 @@ async function importMusic(files) {
 
 function localMenu() {
   const v = List('On This Phone', () => {
-    const has = Local.tracks.length > 0, lib = has ? Local.lib() : null;
+    const mine = homeTracks(), has = mine.length > 0, lib = has ? Local.lib(mine) : null;
     return [
       { label: 'Add Music', act: () => pickMusic(false) },
       ...(canPickFolder() ? [{ label: 'Add a Folder', act: () => pickMusic(true) }] : []),
@@ -1976,22 +2023,22 @@ function localMenu() {
         { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
         { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
         { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
-        { label: 'Songs', value: String(Local.tracks.length), arrow: true, go: () => push(lib.songs()) },
-        { label: 'Search', arrow: true, go: () => push(searchView(Local.lib())) },
+        { label: 'Songs', value: String(mine.length), arrow: true, go: () => push(lib.songs()) },
+        { label: 'Search', arrow: true, go: () => push(searchView(Local.lib(homeTracks()))) },
         { label: 'Manage', arrow: true, go: () => push(localManage()) }
       ] : [])
     ];
   });
-  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : Local.tracks.length ? null
+  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : homeTracks().length ? null
     : 'Add songs saved on this device, like ripped CDs or downloads. myStereo keeps its own copy, no Plex needed.' });
   v.noteRows = 4;
   if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
   return v;
 }
 async function localShuffle() {
-  if (!Local.tracks.length) return;
+  if (!homeTracks().length) return;
   unlockLocalAudio();
-  const ts = [...Local.tracks].sort(() => Math.random() - .5);
+  const ts = [...homeTracks()].sort(() => Math.random() - .5);
   P.view = List('Shuffle Songs', ts.map(t => ({ label: t.title, track: t })));
   if (await loadIndex(0, true)) { buildOrder(); openNowPlaying(); }
 }
@@ -2008,16 +2055,245 @@ function localManage() {
     await Local.load(); flash(`Removed ${ts.length} song${ts.length === 1 ? '' : 's'}`); render();
   };
   const v = List('Manage', () => {
-    const g = Local.groups();
+    const g = Local.groups(homeTracks());
     return [
-      { label: 'Remove an Album', arrow: true, go: () => push(List('Remove an Album', () => Local.groups().albums.map(al =>
+      { label: 'Remove an Album', arrow: true, go: () => push(List('Remove an Album', () => Local.groups(homeTracks()).albums.map(al =>
           twice('al:' + al.artist + al.title, al.title, () => removeTracks(al.tracks))))) },
-      ...(g.albums.length ? [twice('all', 'Remove All Music', () => removeTracks([...Local.tracks]))] : [])
+      ...(g.albums.length ? [twice('all', 'Remove All Music', () => removeTracks([...homeTracks()]))] : [])
     ];
   });
-  Object.defineProperty(v, 'note', { get: () => `${Local.tracks.length} song${Local.tracks.length === 1 ? '' : 's'}, ${mb(Local.bytes())}, saved on this device only. Removing them here doesn't touch the originals.` });
+  Object.defineProperty(v, 'note', { get: () => `${homeTracks().length} song${homeTracks().length === 1 ? '' : 's'}, ${mb(homeTracks().reduce((a, t) => a + (t.size || 0), 0))}, saved on this device only. Removing them here doesn't touch the originals.` });
   v.noteRows = 3;
   return v;
+}
+/* ---------- Tape: albums and playlists dubbed from Plex onto this phone, so they play with no signal ---------- */
+const TQ = [['orig', 'Original', 'Full quality, the same file as on Plex'], ['high', 'High', 'MP3 at 320k. Sounds the same on earbuds and in the car'], ['saver', 'Space Saver', 'MP3 at 128k. About a third the size of High']];
+const TAPE = { q: [], busy: false, job: null, wake: null, last: null, est: null, count: 0,
+  vids: LS.get('tapeVids', []), lists: LS.get('tapeLists', {}), sets: LS.get('tapeSets', {}) };
+const tapeQ = () => cfg.tapeQ || 'high';
+const tapeQName = id => (TQ.find(x => x[0] === id) || TQ[1])[1];
+const tapeId = (rk, mid = cfg.server?.machineId) => 't' + strHash((mid || '') + ':' + rk);
+const tapeTracks = () => Local.tracks.filter(t => t.tape);
+const homeTracks = () => Local.tracks.filter(t => !t.tape);
+const tapeCopy = t => t && !t.local && !t.demo && !t.dav && cfg.tapeFirst !== false ? Local.byId.get(tapeId(t.rk)) : null;
+const tapeBytes = () => tapeTracks().reduce((s, t) => s + (t.size || 0), 0) + TAPE.vids.reduce((s, x) => s + (x.size || 0), 0);
+const tapeNow = () => !!(P.track && (P.track.tape || P.fromTape));
+const whenVisible = () => !document.hidden ? Promise.resolve() : new Promise(r => { const h = () => { if (!document.hidden) { document.removeEventListener('visibilitychange', h); r(); } }; document.addEventListener('visibilitychange', h); });
+const dubUrl = (t, q) => q === 'orig' && t.part ? `${cfg.server.uri}${t.part}?${qs({ download: 1, 'X-Plex-Token': cfg.server.token })}`
+  : `${cfg.server.uri}/music/:/transcode/universal/start.mp3?${qs({ path: '/library/metadata/' + t.rk, mediaIndex: 0, partIndex: 0, protocol: 'http', offset: 0,
+    directPlay: 0, directStream: 0, musicBitrate: q === 'saver' ? 128 : 320, session: 'dub-' + clientId + '-' + t.rk, ...baseP(), 'X-Plex-Token': cfg.server.token })}`;
+async function tapeEstimate() { try { const e = await navigator.storage?.estimate?.(); if (e && e.quota) TAPE.est = Math.max(0, e.quota - e.usage); } catch {} return TAPE.est; }
+async function tapeWake() { if (!TAPE.busy || document.hidden) return; try { if (!TAPE.wake || TAPE.wake.released) TAPE.wake = await navigator.wakeLock?.request('screen'); } catch {} }
+document.addEventListener('visibilitychange', tapeWake);
+function tapeDraw() { const v = cur(); if (v && v.tapeLive) render(); }
+
+/* queue a dub: an album, a playlist, or a handful of songs. Songs already on tape are skipped, so dubbing again fills in what's missing */
+function dub(job) {
+  if (isDemo() || !ready()) { flash('Sign in to Plex to dub music to tape.'); return; }
+  if (TAPE.q.some(x => x.key === job.key)) { push(dubbingView()); return; }
+  Object.assign(job, { done: 0, total: 0, now: '', failed: 0, skipped: 0, added: 0, mid: cfg.server.machineId, q: tapeQ() });
+  TAPE.q.push(job); if (!job.quiet) push(dubbingView());
+  tapeRun();
+}
+async function tapeRun() {
+  if (TAPE.busy) return; TAPE.busy = true;
+  try { await navigator.storage?.persist?.(); } catch {}
+  tapeWake();
+  if (!Local.loaded) await Local.load();
+  while (TAPE.q.length) {
+    const job = TAPE.job = TAPE.q[0];
+    try {
+      if (job.video) await dubVideo(job);
+      else {
+        let ms = [];
+        for (const [path, params] of job.paths) {
+          const d = await pms(path, { ...(params || {}), 'X-Plex-Container-Start': 0, 'X-Plex-Container-Size': 1000 });
+          ms.push(...(d.MediaContainer?.Metadata || []).filter(m => m.type === 'track'));
+        }
+        job.total = ms.length; tapeDraw();
+        const artDone = new Set(Local.tracks.map(t => t.artKey).filter(Boolean)), ids = [];
+        for (const m of ms) {
+          if (job.stop) break;
+          const t = trackFrom(m), id = tapeId(t.rk, job.mid); job.now = t.title; ids.push(id); tapeDraw();
+          if (Local.byId.has(id)) { job.skipped++; job.done++; continue; }
+          for (let tries = 0; tries < 3; tries++) {
+            try {
+              const r = await fetch(dubUrl(t, job.q)); if (!r.ok) throw new Error('HTTP ' + r.status);
+              const blob = await r.blob(); if (blob.size < 1024) throw new Error('empty');
+              const albumArtist = m.grandparentTitle || '', artist = t.artist || albumArtist || 'Unknown Artist', album = t.album || 'Unknown Album';
+              const artKey = 'a' + strHash((albumArtist || artist) + '\u0000' + album);
+              let artObj = null;
+              if (!artDone.has(artKey) && t.thumb) { try { const ar = await fetch(art(t.thumb, 600)); if (ar.ok) { artObj = { key: artKey, blob: await ar.blob() }; artDone.add(artKey); } } catch {} }
+              const track = { id, title: t.title, artist, albumArtist, album, genre: '', year: m.parentYear || '', trackNo: m.index || 0, discNo: m.parentIndex || 1,
+                dur: t.dur || 0, size: blob.size, type: blob.type || 'audio/mpeg', name: t.title, artKey: artDone.has(artKey) ? artKey : null, added: Date.now(),
+                tape: true, plexRk: t.rk, server: job.mid, q: job.q };
+              await LDB.addSong(blob, track, artObj);
+              const o = { ...track, rk: id, local: true }; Object.defineProperty(o, 'thumb', { get() { return Local.artUrls.get(track.artKey) || null; }, enumerable: true });
+              if (artObj && !Local.artUrls.has(artKey)) Local.artUrls.set(artKey, URL.createObjectURL(artObj.blob));
+              Local.tracks.push(o); Local.byId.set(id, o);
+              job.added++; break;
+            } catch (e) {
+              if (/quota|full/i.test(String(e && (e.name + e.message)))) { flash('This phone is out of room for more tape.'); job.stop = true; job.failed++; break; }
+              if (document.hidden) { await whenVisible(); continue; }   /* the phone slept or switched apps: pick up the same song */
+              if (tries === 2) job.failed++;
+            }
+          }
+          job.done++; TAPE.count++; tapeDraw();
+        }
+        if (job.list) { TAPE.lists[job.key] = { title: job.title, ids, at: Date.now() }; LS.set('tapeLists', TAPE.lists); }
+        if (!job.stop && !job.failed && job.set) { TAPE.sets[job.key] = Date.now(); LS.set('tapeSets', TAPE.sets); }
+      }
+    } catch (e) { job.err = errText(e); }
+    TAPE.q.shift(); TAPE.last = job; TAPE.job = null;
+    if (!job.quiet || job.failed) flash(job.err ? `Couldn't dub ${job.title}` : job.stop ? `Stopped dubbing ${job.title}` : `${job.title} is on tape` + (job.failed ? ` · ${job.failed} skipped` : ''));
+    tapeDraw();
+  }
+  TAPE.busy = false; try { TAPE.wake?.release(); } catch {} TAPE.wake = null;
+  await Local.load(); tapeEstimate(); tapeDraw(); updateBar();
+}
+const reels = () => `<span class="tp-reel"></span>`;
+function dubbingView() {
+  const v = List('Dubbing', () => TAPE.busy ? [
+      { label: 'Stop Dubbing', act: () => { if (TAPE.job) TAPE.job.stop = true; TAPE.q.splice(1); flash('Stopping after this song'); } },
+      ...TAPE.q.slice(1).map(j => ({ label: j.title, value: 'Next', dim: true })),
+      { label: 'Go to Tape', arrow: true, go: () => push(tapeMenu()) }
+    ] : [{ label: 'Go to Tape', arrow: true, go: () => push(tapeMenu()) }], { tapeLive: true });
+  Object.defineProperty(v, 'note', { get() {
+    const j = TAPE.job;
+    if (!j) { const l = TAPE.last; return l ? (l.err ? `Couldn't dub ${l.title}. ${l.err}` : l.video ? (l.stop ? `Stopped. ${l.title} wasn't saved.` : `${l.title} is on tape. Find it under Music › Tape › Videos.`) : `${l.title} is on tape. ${l.added} new song${l.added === 1 ? '' : 's'}` + (l.skipped ? `, ${l.skipped} already there` : '') + (l.failed ? `, ${l.failed} didn't come through` : '') + '.') : 'Nothing dubbing right now.'; }
+    if (j.video) return `● REC  ${j.title}\n${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}\nKeep myStereo open while it dubs.`;
+    return `● REC  COUNTER ${String(TAPE.count).padStart(3, '0')}\n${j.title}: song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}${j.now ? ' · ' + j.now : ''}\nKeep myStereo open. If you leave, it picks up where it left off.`;
+  } });
+  v.noteRows = 4;
+  return v;
+}
+/* the Dub to Tape row at the top of an album or playlist */
+function dubRow(title, key, paths, opts = {}) {
+  return { get label() { const j = TAPE.q.find(x => x.key === key); return j ? (j === TAPE.job ? `Dubbing ${j.done}/${j.total || '…'}` : 'Waiting to Dub') : TAPE.sets[key] ? 'On Tape' : 'Dub to Tape'; },
+    get value() { return TAPE.q.some(x => x.key === key) ? '' : TAPE.sets[key] ? '✓' : tapeQName(tapeQ()); },
+    arrow: true, go: () => { if (TAPE.sets[key] && !TAPE.q.some(x => x.key === key)) { push(tapeMenu()); return; } dub({ key, title, paths, set: true, ...opts }); } };
+}
+function tapeLib() { return Local.lib(tapeTracks()); }
+function tapeMenu() {
+  const v = List('Tape', () => {
+    const ts = tapeTracks(), has = ts.length > 0, lib = has ? tapeLib() : null;
+    const lists = Object.entries(TAPE.lists).map(([k, x]) => ({ k, ...x, ts: x.ids.map(id => Local.byId.get(id)).filter(Boolean) })).filter(x => x.ts.length);
+    const stars = ts.filter(t => RATE.all[t.server + ':' + t.plexRk]?.r === 5);
+    return [
+      ...(TAPE.busy ? [{ label: 'Dubbing Now', value: TAPE.job && !TAPE.job.video ? `${TAPE.job.done}/${TAPE.job.total || '…'}` : '', arrow: true, go: () => push(dubbingView()) }] : []),
+      ...(has ? [
+        { label: 'Shuffle Tape', act: () => tapeShuffle(ts) },
+        { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
+        { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
+        ...(lists.length ? [{ label: 'Playlists', value: String(lists.length), arrow: true, go: () => push(List('Playlists', lists.map(x => ({ label: x.title, arrow: true, go: () => push(List(x.title, x.ts.map(t => ({ label: t.title, track: t })))) })))) }] : []),
+        ...(stars.length ? [{ label: '5-Star Mix', value: String(stars.length), arrow: true, go: () => push(List('5-Star Mix', stars.map(t => ({ label: t.title, track: t })))) }] : []),
+        { label: 'Songs', value: String(ts.length), arrow: true, go: () => push(lib.songs()) },
+        { label: 'Search', arrow: true, go: () => push(searchView(tapeLib())) }
+      ] : []),
+      ...(ELITE && TAPE.vids.length ? [{ label: 'Videos', value: String(TAPE.vids.length), arrow: true, go: () => push(tapeVideos()) }] : []),
+      { label: 'Tape Settings', arrow: true, go: () => push(tapeSetup()) }
+    ];
+  }, { tapeLive: true });
+  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : tapeTracks().length || TAPE.vids.length ? null
+    : 'Nothing on tape yet. Open any album or playlist and choose Dub to Tape. Music on tape plays with no signal and saves your data plan.' });
+  v.noteRows = 4;
+  if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
+  return v;
+}
+async function tapeShuffle(ts) {
+  if (!ts.length) return;
+  unlockLocalAudio();
+  P.view = List('Shuffle Tape', [...ts].sort(() => Math.random() - .5).map(t => ({ label: t.title, track: t })));
+  if (await loadIndex(0, true)) { buildOrder(); openNowPlaying(); }
+}
+function tapeStars() {   /* keep 5-star songs on tape: dub any that aren't there yet */
+  if (isDemo() || !ready()) return;
+  const pre = cfg.server.machineId + ':';
+  const rks = Object.entries(RATE.all).filter(([k, x]) => k.startsWith(pre) && x.r === 5).map(([k]) => k.slice(pre.length)).filter(rk => !Local.byId.has(tapeId(rk)));
+  if (!rks.length) return;
+  const paths = []; for (let i = 0; i < rks.length; i += 100) paths.push(['/library/metadata/' + rks.slice(i, i + 100).join(',')]);
+  dub({ key: 'stars:' + Date.now(), title: '5-Star Songs', paths, quiet: true });
+}
+function tapeSetup() {
+  const arm = { k: null };
+  const twice = (key, label, run) => ({ get label() { return arm.k === key ? 'Press again to erase' : label; }, act: async () => {
+    if (arm.k !== key) { arm.k = key; render(); setTimeout(() => { if (arm.k === key) { arm.k = null; render(); } }, 4000); return; }
+    arm.k = null; await run(); } });
+  const v = List('Tape Settings', () => [
+    { label: 'Quality', value: tapeQName(tapeQ()), act: () => { const i = TQ.findIndex(x => x[0] === tapeQ()); cfg.tapeQ = TQ[(i + 1) % TQ.length][0]; save(); flash(TQ[(i + 1) % TQ.length][2]); } },
+    { label: 'Play Tape First', value: cfg.tapeFirst === false ? 'Off' : 'On', act: () => { cfg.tapeFirst = cfg.tapeFirst === false; save(); flash(cfg.tapeFirst ? 'Songs on tape play from this phone' : 'Songs stream from Plex when there is a signal'); } },
+    { label: 'Keep 5-Star Songs', value: cfg.tapeStars ? 'On' : 'Off', act: () => { cfg.tapeStars = !cfg.tapeStars; save(); if (cfg.tapeStars) tapeStars(); } },
+    { label: 'Erase an Album', arrow: true, go: () => push(List('Erase an Album', () => Local.groups(tapeTracks()).albums.map(al =>
+        twice('al:' + al.artist + al.title, al.title, () => tapeErase(al.tracks))))) },
+    ...(ELITE && TAPE.vids.length ? [{ label: 'Erase a Video', arrow: true, go: () => push(List('Erase a Video', () => TAPE.vids.map(x => twice('v:' + x.rk, x.title, () => tapeEraseVideo(x))))) }] : []),
+    ...(tapeTracks().length || TAPE.vids.length ? [twice('all', 'Erase All Tape', async () => { await tapeErase(tapeTracks()); for (const x of [...TAPE.vids]) await tapeEraseVideo(x); })] : [])
+  ], { tapeLive: true });
+  Object.defineProperty(v, 'note', { get: () => `On tape: ${mb(tapeBytes())}` + (TAPE.est != null ? ` · Room left: ${mb(TAPE.est)}` : '') + '. Tape lives on this phone only.' });
+  v.noteRows = 2; tapeEstimate().then(() => { if (cur() === v) render(); });
+  if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
+  return v;
+}
+async function tapeErase(ts) {
+  if (!ts.length) return;
+  if (P.track && ts.some(t => t.rk === P.track.rk || (P.fromTape && t.plexRk === P.track.rk))) endQueue();
+  const keep = new Set(Local.tracks.filter(t => !ts.includes(t)).map(t => t.artKey));
+  await LDB.delSongs(ts.map(t => t.rk), [...new Set(ts.map(t => t.artKey).filter(k => k && !keep.has(k)))]);
+  const gone = new Set(ts.map(t => t.rk));
+  for (const k of Object.keys(TAPE.sets)) delete TAPE.sets[k];   /* albums may now be partly erased: show Dub to Tape again */
+  LS.set('tapeSets', TAPE.sets);
+  for (const [k, x] of Object.entries(TAPE.lists)) { x.ids = x.ids.filter(id => !gone.has(id)); if (!x.ids.length) delete TAPE.lists[k]; }
+  LS.set('tapeLists', TAPE.lists);
+  await Local.load(); tapeEstimate(); flash(`Erased ${ts.length} song${ts.length === 1 ? '' : 's'} from tape`); render();
+}
+
+/* myStereo Elite: videos on tape. Only MP4 and MOV files can be saved; they go into the browser's file cache */
+const TVC = ELITE ? 'mystereo-elite-tape-video' : 'mystereo-tape-video';
+const tapeVidKey = rk => `/tape-video/${(cfg.server?.machineId || '')}/${rk}`;
+const tapeVid = m => TAPE.vids.find(x => x.rk === String(m.ratingKey) && x.mid === cfg.server?.machineId);
+function videoMenu(m) {
+  const md = m.Media?.[0], size = md?.Part?.[0]?.size || 0;
+  return List(vLabel(m), () => {
+    const on = tapeVid(m), j = TAPE.q.find(x => x.key === 'v:' + m.ratingKey);
+    return [
+      { label: m.viewOffset ? 'Resume' : 'Play', act: () => playVideo(m) },
+      on ? { label: 'Play from Tape', value: mb(on.size), act: () => playVideo({ ...m, _tape: on }) }
+        : j ? { label: j === TAPE.job ? `Dubbing ${j.pct || 0}%` : 'Waiting to Dub', arrow: true, go: () => push(dubbingView()) }
+        : { label: 'Dub to Tape', value: vDirect(m) ? (size ? mb(size) : '') : 'Not this one', act: () => {
+            if (!vDirect(m)) { flash("This video's format can't go on tape. MP4 and MOV videos can."); return; }
+            if (TAPE.est != null && size && size > TAPE.est) { flash(`Not enough room. This needs ${mb(size)}.`); return; }
+            dub({ key: 'v:' + m.ratingKey, title: vLabel(m), video: m, size }); } }
+    ];
+  }, { tapeLive: true });
+}
+async function dubVideo(job) {
+  const m = job.video, r = await fetch(vDirectUrl(m));
+  if (!r.ok || !r.body) throw new Error("The server didn't send the video.");
+  job.size = +r.headers.get('content-length') || job.size || 0; job.got = 0;
+  const [a, b] = r.body.tee();
+  const count = (async () => { const rd = b.getReader(); for (;;) { const { done, value } = await rd.read(); if (done) break; job.got += value.length;
+    const p = job.size ? Math.floor(job.got / job.size * 100) : 0; if (p !== job.pct) { job.pct = p; tapeDraw(); } if (job.stop) { try { rd.cancel(); } catch {} break; } } })();
+  const c = await caches.open(TVC);
+  await Promise.all([c.put(tapeVidKey(m.ratingKey), new Response(a, { headers: { 'Content-Type': r.headers.get('content-type') || 'video/mp4' } })), count]);
+  if (job.stop) { await c.delete(tapeVidKey(m.ratingKey)); return; }
+  TAPE.vids = TAPE.vids.filter(x => !(x.rk === String(m.ratingKey) && x.mid === job.mid));
+  TAPE.vids.push({ rk: String(m.ratingKey), mid: job.mid, title: vLabel(m), show: m.grandparentTitle || '', size: job.got, at: Date.now(),
+    m: { ratingKey: m.ratingKey, title: m.title, type: m.type, grandparentTitle: m.grandparentTitle, index: m.index, duration: m.duration, thumb: m.thumb,
+      Media: [{ container: md0(m).container, videoCodec: md0(m).videoCodec, audioCodec: md0(m).audioCodec, Part: [{ key: md0(m).Part?.[0]?.key, size: job.got }] }] } });
+  LS.set('tapeVids', TAPE.vids);
+}
+const md0 = m => m.Media?.[0] || {};
+async function tapeVidUrl(x) {
+  const c = await caches.open(TVC), r = await c.match(`/tape-video/${x.mid}/${x.rk}`);
+  if (!r) return null;
+  if (TAPE.vUrl) URL.revokeObjectURL(TAPE.vUrl);
+  return TAPE.vUrl = URL.createObjectURL(await r.blob());
+}
+async function tapeEraseVideo(x) {
+  try { const c = await caches.open(TVC); await c.delete(`/tape-video/${x.mid}/${x.rk}`); } catch {}
+  TAPE.vids = TAPE.vids.filter(y => y !== x); LS.set('tapeVids', TAPE.vids); tapeEstimate(); flash(`Erased ${x.title}`); render();
+}
+function tapeVideos() {
+  return List('Videos', () => TAPE.vids.map(x => ({ label: x.show ? `${x.show}: ${x.title}` : x.title, value: mb(x.size), arrow: true, go: () => playVideo({ ...x.m, _tape: x }) })));
 }
 /* iPhones only let a page start sound from a tap; a tiny silent clip played right away keeps the player unlocked while the song loads */
 let localUnlocked = false;
@@ -2185,8 +2461,10 @@ const Plex = {
     { pq: { path: `/library/sections/${sec()}/all?type=10&sort=titleSort` } }),
   artist: a => Lazy(a.title, paged(`/library/metadata/${a.ratingKey}/children`), Plex.albumItem, { head: [{ label: 'All Songs', arrow: true,
     go: () => push(Lazy(a.title, paged(`/library/metadata/${a.ratingKey}/allLeaves`), trackItem, { pq: { path: `/library/metadata/${a.ratingKey}` } })) }] }),
-  album: al => Lazy(al.title, paged(`/library/metadata/${al.ratingKey}/children`), trackItem, { pq: { path: `/library/metadata/${al.ratingKey}` } }),
-  playlist: p => Lazy(p.title, paged(`/playlists/${p.ratingKey}/items`), trackItem, { pq: { playlistID: p.ratingKey } }),
+  album: (al, noDub) => Lazy(al.title, paged(`/library/metadata/${al.ratingKey}/children`), trackItem, { pq: { path: `/library/metadata/${al.ratingKey}` },
+    head: noDub ? [] : [dubRow(al.title, 'al:' + cfg.server?.machineId + ':' + al.ratingKey, [[`/library/metadata/${al.ratingKey}/children`]])] }),
+  playlist: p => Lazy(p.title, paged(`/playlists/${p.ratingKey}/items`), trackItem, { pq: { playlistID: p.ratingKey },
+    head: [dubRow(p.title, 'pl:' + cfg.server?.machineId + ':' + p.ratingKey, [[`/playlists/${p.ratingKey}/items`]], { list: true })] }),
   albumItem: m => ({ label: m.title, arrow: true, go: () => push(Plex.album(m)) }),
   genreId: m => String((m.fastKey || m.key || '').match(/genre=(\d+)/)?.[1] || m.key || m.id || ''),
   genres: () => Lazy('Genres', paged(`/library/sections/${sec()}/genre`, { type: 9 }),
@@ -2380,11 +2658,12 @@ async function loadIndex(i, autoplay) {
   if (tr.local) { if (!Local.loaded) await Local.load(); tr = Local.byId.get(tr.rk) || tr; }
   const seq = P.loadSeq = (P.loadSeq || 0) + 1;
   P.index = i; P.track = tr; P.time = 0; P.dur = (tr.dur || 0) / 1000; P.tx = false;
-  P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false; P.started = false; P.kicked = false; P.loadAt = performance.now();
+  P.endDone = false; P.lastCT = -1; P.lastMove = performance.now(); P.warmed = false; P.started = false; P.kicked = false; P.loadAt = performance.now(); P.fromTape = false;
+  const tcopy = !tr.local && !tr.demo && !tr.dav && !remoteActive() ? tapeCopy(tr) : null;
   if (tr.demo) { audio.pause(); P.demoMode = true; P.playing = autoplay; }
-  else if (tr.local) {   /* a song saved on this phone */
-    P.demoMode = false;
-    const url = await Local.url(tr);
+  else if (tr.local || tcopy) {   /* a song saved on this phone, or a Plex song that's on tape */
+    P.demoMode = false; P.fromTape = !!tcopy;
+    const url = await Local.url(tcopy || tr);
     if (seq !== P.loadSeq) return true;
     P.unlocking = false;
     if (!url) { flash("That song isn't on this device anymore."); return false; }
@@ -2396,7 +2675,9 @@ async function loadIndex(i, autoplay) {
     if (seq !== P.loadSeq) return true;
     P.unlocking = false; audio.src = url; if (autoplay) playRetry(url);
   }
-  else { P.demoMode = false; P.unlocking = false; audio.src = streamUrl(tr);
+  else { P.demoMode = false; P.unlocking = false;
+    if (!navigator.onLine) { flash("No signal, and that song isn't on tape."); }
+    audio.src = streamUrl(tr);
     if (autoplay) playRetry(audio.src); }
   setMediaSession(); updateBar(); if (cur().kind === 'np') renderNP(cur()); else render();
   return true;
@@ -2588,12 +2869,14 @@ function signInPrompt(title = 'Music') {
   return Message(title, 'Sign in to Plex to play your own music.', [
     { label: 'Sign In with Plex', act: startSignIn },
     { label: 'Paste a Token', act: () => showPanel('token') },
+    ...(tapeTracks().length ? [{ label: 'Tape', arrow: true, go: () => push(tapeMenu()) }] : []),
     { label: 'Music on This Phone', arrow: true, go: () => push(localMenu()) },
     ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Use Demo Library', act: () => { cfg.demo = true; save(); stack.length = 1; push(musicMenu()); } }
   ]);
 }
 function musicMenu() {
+  if (!isDemo() && !navigator.onLine && (tapeTracks().length || TAPE.vids.length)) { flash('No signal. Here’s your tape.'); return tapeMenu(); }
   if (!isDemo() && !ready()) return signInPrompt();
   return libMenu('Music', isDemo() ? Demo : Plex);
 }
@@ -2606,6 +2889,7 @@ function libMenu(title, lib) {
     { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
     { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
     { label: 'Songs', arrow: true, go: () => push(lib.songs()) },
+    { label: 'Tape', arrow: true, go: () => push(tapeMenu()) },
     { label: 'On This Phone', arrow: true, go: () => push(localMenu()) },
     ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Search', arrow: true, go: () => push(searchView()) }
@@ -2655,6 +2939,7 @@ function settingsView() {
     { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
     { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } },
     { label: 'Tone', value: tonePresetName(), arrow: true, go: () => push(toneView()) },
+    { label: 'Tape', value: tapeQName(tapeQ()), arrow: true, go: () => push(tapeSetup()) },
     { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } },
@@ -2839,6 +3124,8 @@ const HELP = `
 <h3>Videos</h3>
 <p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the display. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
 <p>On the display, <span class="k">▶❙❙</span> or the knob's center plays and pauses, the knob skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">BACK</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
+<h3>Tape (no signal)</h3>
+<p>Open an album or playlist and choose <b>Dub to Tape</b>. Keep myStereo open while it dubs. Find it all under <b>Music › Tape</b>. Songs on tape play with no signal, and a TAPE light shows in the corner.</p>
 <h3>Cover Flow</h3>
 <p>Turn your iPhone sideways, or choose <b>Music › Cover Flow</b>. Swipe through your albums. Tap the middle one to flip it over and see its songs, then tap a song to play it. Turn the phone upright or tap <b>Done</b> to go back.</p>
 <p>Turning sideways only works when Portrait Orientation Lock is off in Control Center.</p>
@@ -2878,6 +3165,7 @@ function updateBar() {
   barL.innerHTML = stack.length > 1 ? ICON.back : (s ? (s.playing ? ICON.play : ICON.pause) : '');
   const w95 = screenEl.classList.contains('w95');
   barR.innerHTML = (SLEEP.until || SLEEP.eos ? ICON.moon : '') + (s && cfg.shuffle ? ICON.shuf : '') + (s && cfg.repeat !== 'off' ? (cfg.repeat === 'one' ? ICON.rep1 : ICON.rep) : '') +
+    (tapeNow() || TAPE.busy ? `<span class="crn-tape${TAPE.busy ? ' rec' : ''}">${TAPE.busy ? '● REC' : 'TAPE'}</span>` : '') +
     (w95 ? (busy > 0 ? ICON_HG : '<i class="wb">_</i><i class="wb">□</i><i class="wb">×</i>') : (busy > 0 ? ICON.spin : cornerHTML(s)));
   $('#pod').classList.toggle('jlplay', !!(s && s.playing));
 }
@@ -3042,10 +3330,12 @@ const CASES = [
   { id: 'red', name: 'Red', base: '#8f0e12', v: { case: 'linear-gradient(165deg,#e8504a 0%,#c4161c 50%,#8f0e12 100%)', 'case-edge': '#7a0b0f', wheel: 'radial-gradient(circle at 50% 40%,#f6f6f7,#e5e6e8)', 'wheel-edge': '#c9cbcf', 'wheel-ink': '#a9acb1', 'wheel-press': '#5c1013', center: 'linear-gradient(#ffffff,#e9eaec)', 'center-edge': '#c9cbcf', bezel: '#1d0a0b' } },
   { id: 'u2', name: 'Black & Red', base: '#060607', v: { case: 'linear-gradient(165deg,#34363a 0%,#141517 45%,#050506 100%)', 'case-edge': '#000', wheel: 'radial-gradient(circle at 50% 40%,#d8232f,#a90f1b)', 'wheel-edge': '#6e0911', 'wheel-ink': '#2a0507', 'wheel-press': '#000000', center: 'linear-gradient(#2b2d30,#17181a)', 'center-edge': '#0a0a0b', bezel: '#000' } },
   { id: 'zune', name: 'Zune Brown', base: '#3b281d', v: { case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(170deg,#7a5843 0%,#5a3f2e 42%,#3f2a1e 100%)', 'case-edge': '#2b1c13', wheel: 'radial-gradient(circle at 50% 38%,#6a4b38,#4a3324)', 'wheel-edge': '#2a1b12', 'wheel-ink': '#d8c3a8', 'wheel-press': '#fff3e2', center: 'linear-gradient(#7e5c46,#5b3f2d)', 'center-edge': '#2f1f15', bezel: '#0d0a08' } },
-  { id: 'bc', name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
-  { id: 'jl', name: 'JL Edition', base: '#cbbd94', v: { 'rx-key': 'linear-gradient(#e2ddcc,#cbc4ad)', 'rx-ink': '#111111', 'rx-glow': '#2fbf3a', case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
-  { id: 'lg', name: 'LG Edition', eliteOnly: true, base: '#2a2c30', v: { 'rx-key': 'linear-gradient(#2a2c30,#0b0c0e)', 'rx-ink': '#d9e8f0', 'rx-glow': '#7fdcff', case: 'repeating-linear-gradient(180deg,#3b3d42 0 calc(var(--w)*.012),#0d0e10 calc(var(--w)*.012) calc(var(--w)*.04)) 0 86%/100% 40% no-repeat,linear-gradient(90deg,#7d838a 0%,#e6e9ec 16%,#aeb3b9 30%,#fafbfc 48%,#a7acb2 64%,#dde0e3 80%,#7a8087 100%)', 'case-edge': '#4d5258', wheel: 'radial-gradient(circle at 50% 38%,#26282c,#0b0c0e)', 'wheel-edge': '#c9ced3', 'wheel-ink': '#d9e8f0', 'wheel-press': '#7fdcff', center: 'radial-gradient(circle at 50% 30%,#ffffff,#d5d9dd 55%,#9aa0a6)', 'center-edge': '#7a8087', bezel: '#030405' } },
-  { id: 'trek', name: 'Away Mission', base: '#1e2126', v: { 'rx-key': '#ffcc99', 'rx-ink': '#000000', 'rx-glow': '#ff9966', case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
+  { id: 'bc', sp: true, name: 'BC Edition', base: '#d8161b', v: { case: "var(--bc-noise),radial-gradient(ellipse 55% 30% at 88% 52%,rgba(244,176,44,.95),rgba(244,176,44,0) 70%),radial-gradient(ellipse 70% 22% at 30% 3%,rgba(250,196,70,.9),rgba(250,196,70,0) 75%),linear-gradient(180deg,#f2ad2e 0%,#ee8a22 22%,#ea5a1e 40%,#e4261c 56%,#dc171c 78%,#d3121a 100%)", 'case-edge': '#b10f14', wheel: 'radial-gradient(circle at 50% 40%,#2b2a2e,#1a191c)', 'wheel-edge': '#0e0d10', 'wheel-ink': '#e8ecef', 'wheel-press': '#ffffff', center: 'linear-gradient(#ee3038,#d01920)', 'center-edge': '#8f0d12', bezel: '#0b0b0c' } },
+  { id: 'jl', sp: true, name: 'JL Edition', base: '#cbbd94', v: { 'rx-key': 'linear-gradient(#e2ddcc,#cbc4ad)', 'rx-ink': '#111111', 'rx-glow': '#2fbf3a', case: 'radial-gradient(ellipse 80% 40% at 30% 10%,rgba(255,252,235,.45),rgba(255,252,235,0) 70%),linear-gradient(170deg,#e6dcbe 0%,#d8cba5 45%,#c7b88e 100%)', 'case-edge': '#a3967a', wheel: 'linear-gradient(#cacaca,#bcbcbc)', 'wheel-edge': '#808080', 'wheel-ink': '#1f1f1f', 'wheel-press': '#000080', center: '#c0c0c0', 'center-edge': '#808080', bezel: '#2b2b2b' } },
+  { id: 'lg', sp: true, name: 'LG Edition', eliteOnly: true, base: '#2a2c30', v: { 'rx-key': 'linear-gradient(#2a2c30,#0b0c0e)', 'rx-ink': '#d9e8f0', 'rx-glow': '#7fdcff', case: 'repeating-linear-gradient(180deg,#3b3d42 0 calc(var(--w)*.012),#0d0e10 calc(var(--w)*.012) calc(var(--w)*.04)) 0 86%/100% 40% no-repeat,linear-gradient(90deg,#7d838a 0%,#e6e9ec 16%,#aeb3b9 30%,#fafbfc 48%,#a7acb2 64%,#dde0e3 80%,#7a8087 100%)', 'case-edge': '#4d5258', wheel: 'radial-gradient(circle at 50% 38%,#26282c,#0b0c0e)', 'wheel-edge': '#c9ced3', 'wheel-ink': '#d9e8f0', 'wheel-press': '#7fdcff', center: 'radial-gradient(circle at 50% 30%,#ffffff,#d5d9dd 55%,#9aa0a6)', 'center-edge': '#7a8087', bezel: '#030405' } },
+  { id: 'trek', sp: true, name: 'Away Mission', base: '#1e2126', v: { 'rx-key': '#ffcc99', 'rx-ink': '#000000', 'rx-glow': '#ff9966', case: 'repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,rgba(0,0,0,.04) 1px 3px),linear-gradient(170deg,#41464f 0%,#2a2e35 42%,#16181c 100%)', 'case-edge': '#0b0c0e', wheel: 'radial-gradient(circle at 50% 38%,#30353c,#1a1d21)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#e7b24a', 'wheel-press': '#ffd98a', center: 'radial-gradient(circle at 50% 32%,#3a3f47,#1f2227)', 'center-edge': '#e7b24a', bezel: '#050506' } },
+  { id: 'scan', sp: true, name: 'Field Scanner', base: '#454a50', v: { 'rx-key': 'linear-gradient(#f08a52,#d9652d)', 'rx-ink': '#141414', 'rx-glow': '#5FE3C6', case: 'repeating-linear-gradient(45deg,#3b3f44 0 2px,#1d2023 2px 5px) 0 0/100% calc(var(--w)*.045) no-repeat,repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 1px,rgba(0,0,0,.05) 1px 3px),linear-gradient(175deg,#4f545a 0%,#2d3034 58%,#18191c 100%)', 'case-edge': '#0b0c0e', wheel: 'repeating-conic-gradient(#a3a9af 0 2deg,#6c7278 2deg 4deg)', 'wheel-edge': '#0b0c0e', 'wheel-ink': '#141414', 'wheel-press': '#E8743B', center: 'radial-gradient(circle at 40% 30%,#3b3e43,#141518)', 'center-edge': '#0b0c0e', bezel: '#050607' } },
+  { id: 'ra', sp: true, name: 'Runaway Anchor', base: '#1e3f5c', v: { 'rx-key': 'linear-gradient(#f6e0ab,#e6c47c)', 'rx-ink': '#1e3f5c', 'rx-glow': '#aae491', case: 'radial-gradient(ellipse 80% 30% at 30% 4%,rgba(162,192,214,.22),rgba(162,192,214,0) 70%),repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 1px,rgba(0,0,0,.035) 1px 3px),linear-gradient(175deg,#27506f 0%,#1e3f5c 48%,#162f45 100%)', 'case-edge': '#12283b', wheel: 'radial-gradient(circle,#1e3f5c 0 66%,#f0d396 66.5% 68%,transparent 68.5%),repeating-conic-gradient(#f0d396 0 4.2deg,#1e3f5c 4.2deg 7.5deg)', 'wheel-edge': '#f0d396', 'wheel-ink': '#f0d396', 'wheel-press': '#ffffff', center: 'url(ra-anchor.png) center/100% 100% no-repeat,#1e3f5c', 'center-edge': '#f0d396', bezel: '#0f2233' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
 const caseOf = id => CASES.find(c => c.id === id) || CASES[0];
@@ -3097,7 +3387,7 @@ function applyCase(id = cfg.caseColor, over = {}) {
   pod.classList.toggle('squircle', c.id === 'zune');
   pod.classList.toggle('bced', c.id === 'bc');
   pod.classList.toggle('jled', c.id === 'jl'); $('#podback').classList.toggle('jlback', c.id === 'jl');
-  pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('saber', c.id === 'lg');
+  pod.classList.toggle('trek', c.id === 'trek'); pod.classList.toggle('scan', c.id === 'scan'); pod.classList.toggle('raed', c.id === 'ra'); $('#podback').classList.toggle('raback', c.id === 'ra'); document.documentElement.classList.toggle('raback', c.id === 'ra'); pod.classList.toggle('saber', c.id === 'lg');
   pod.classList.add('recv'); if (typeof rxSync === 'function') rxSync();
   { const lum = h => { const m = /#([0-9a-f]{6})/i.exec(h || ''); if (!m) return .5; const n = parseInt(m[1], 16); return ((n >> 16 & 255) * .299 + (n >> 8 & 255) * .587 + (n & 255) * .114) / 255; };
     if (!c.v['rx-key']) { const light = lum(c.base) > .55;
@@ -3105,9 +3395,9 @@ function applyCase(id = cfg.caseColor, over = {}) {
       pod.style.setProperty('--rx-ink', light ? '#1c1d1f' : '#f3f0ea'); pod.style.setProperty('--rx-glow', light ? '#E0602A' : '#F2B84B'); }
     const cw = wheelOf('center' in over ? over.center : cfg.center), cc = cw ? cw[2] : c.v.center;
     pod.style.setProperty('--rx-cink', lum(cc) > .6 ? '#1c1d1f' : '#f1f2f3'); }
-  const eliteBack = ELITE && c.id !== 'jl';   /* the Musaka Edition back belongs to myStereo Elite, whatever the case */
+  const eliteBack = ELITE && c.id !== 'jl' && c.id !== 'ra';   /* the Musaka Edition back belongs to myStereo Elite, whatever the case */
   $('#podback').classList.toggle('eliteback', eliteBack); document.documentElement.classList.toggle('eliteback', eliteBack);
-  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : eliteBack ? (c.id === 'lg' ? 'myStereo Elite\nLG Edition' : 'myStereo Elite\nMusaka Edition') : 'Built by BC';
+  $('#engrave').textContent = c.id === 'jl' ? 'JL Edition · 37 Years of Uptime' : c.id === 'ra' ? 'Runaway Anchor Edition\nCocktails & Mocktails' : eliteBack ? (c.id === 'lg' ? 'myStereo Elite\nLG Edition' : 'myStereo Elite\nMusaka Edition') : 'Built by BC';
   if (typeof screenStyle === 'function') try { screenStyle(); updateBar(); } catch {}
   const red = c.id === 'bc' && !eliteBack;
   $('#podback').classList.toggle('redback', red); document.documentElement.classList.toggle('redback', red);
@@ -3117,12 +3407,14 @@ function applyCase(id = cfg.caseColor, over = {}) {
 }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (cfg.caseColor === 'rx-auto') applyCase(); }); } catch {}
 const caseList = () => CASES.filter(c => ELITE || !c.eliteOnly);
-function caseView() {
-  const CASES = caseList();
-  const v = List('Case', CASES.map(c => ({ label: c.name, get check() { return cfg.caseColor === c.id; },
-    act: () => { cfg.caseColor = c.id; save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} case`); } })),
-    { onSel() { applyCase(CASES[this.sel].id); }, onLeave() { applyCase(); } });
-  v.sel = Math.max(0, CASES.findIndex(c => c.id === cfg.caseColor));
+function caseView(special) {
+  const CASES = caseList().filter(c => !!c.sp === !!special);
+  const items = CASES.map(c => ({ cid: c.id, label: c.name, get check() { return cfg.caseColor === c.id; },
+    act: () => { cfg.caseColor = c.id; save(); applyCase(); if (c.id === 'jl') w95boot(); else flash(`${c.name} faceplate`); } }));
+  if (!special) items.push({ label: 'Special Editions', get value() { return caseOf(cfg.caseColor).sp ? '✓' : ''; }, arrow: true, go: () => push(caseView(true)) });
+  const v = List(special ? 'Editions' : 'Faceplate', items,
+    { onSel() { applyCase(items[this.sel]?.cid); }, onLeave() { applyCase(); } });
+  v.sel = items.findIndex(x => x.cid === cfg.caseColor); if (v.sel < 0) v.sel = special ? 0 : items.length - 1;
   return v;
 }
 function layout() {
@@ -3515,7 +3807,7 @@ async function runSearch(v) {
 /* ---------- ratings (kept only on this myStereo) ---------- */
 const RATE = { all: LS.get('ratings', {}) };
 const rateScope = t => t && t.dav ? 'dav' : t && t.local ? 'local' : t && t.demo ? 'demo' : (cfg.server?.machineId || 'x');
-const rateKey = t => rateScope(t) + ':' + t.rk;
+const rateKey = t => t && t.tape ? t.server + ':' + t.plexRk : rateScope(t) + ':' + t.rk;
 const ratingOf = t => (t && RATE.all[rateKey(t)]?.r) || 0;
 function setRating(t, r) {
   if (!t) return; r = clamp(Math.round(r), 0, 5); const k = rateKey(t);
@@ -3523,6 +3815,8 @@ function setRating(t, r) {
   else RATE.all[k] = { r, at: Date.now(), t: { rk: t.rk, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part, demo: t.demo || undefined, local: t.local || undefined, dav: t.dav || undefined, url: t.url || undefined } };
   LS.set('ratings', RATE.all);
   if (plexRateOK(t)) plexRatePut(t.rk, r);
+  else if (t.tape && cfg.token && cfg.server?.owned && cfg.server.machineId === t.server) plexRatePut(t.plexRk, r);
+  if (r === 5 && cfg.tapeStars && plexRateOK(t) && !Local.byId.has(tapeId(t.rk))) dub({ key: 'star:' + t.rk, title: t.title, paths: [['/library/metadata/' + t.rk]], quiet: true });
 }
 /* ---------- star ratings saved in Plex (only on a server you own; shared servers keep ratings on this device) ---------- */
 const plexRateOK = t => !!(t && !t.local && !t.dav && !t.demo && cfg.token && cfg.server?.owned && !isDemo());
@@ -4131,7 +4425,7 @@ function quizEnd(v) {
 }
 
 /* ---------- screen style ---------- */
-const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['auto', 'Auto (Light or Dark)'], ['color', 'Light'], ['dark', 'Dark'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['oneline', 'One Line (light)'], ['dial', 'Tuning Dial (dark)'], ['classic', 'Classic LCD'], ['mini', 'Mini LCD'], ['console', 'Starship Console'], ['saber', 'Blade', true]];
+const SCREENS = [['rxauto', 'Auto (LCD or Amber)'], ['auto', 'Auto (Light or Dark)'], ['color', 'Light'], ['dark', 'Dark'], ['lcd', 'LCD'], ['amber', 'Amber'], ['teal', 'Teal'], ['oneline', 'One Line (light)'], ['dial', 'Tuning Dial (dark)'], ['classic', 'Classic LCD'], ['mini', 'Mini LCD'], ['console', 'Starship Console', false, true], ['scanner', 'Field Scanner', false, true], ['anchor', 'Runaway Anchor', false, true], ['saber', 'Blade', false, true]];
 const darkQ = matchMedia('(prefers-color-scheme: dark)');
 const screenList = () => SCREENS.filter(x => ELITE || !x[2]);
 const screenName = () => (SCREENS.find(s => s[0] === (cfg.screen || 'color')) || SCREENS[0])[1];
@@ -4141,7 +4435,7 @@ function screenStyle(id = cfg.screen) {
   screenEl.classList.toggle('w95', w95);
   screenEl.classList.toggle('classic', !w95 && id === 'classic');
   screenEl.classList.toggle('console', !w95 && id === 'console');
-  screenEl.classList.toggle('saber', !w95 && ELITE && id === 'saber');
+  screenEl.classList.toggle('saber', !w95 && id === 'saber');
   screenEl.classList.toggle('dark', false);
   screenEl.classList.toggle('rxd', !w95 && (id === 'dark' || (id === 'auto' && darkQ.matches)));
   screenEl.classList.toggle('rxl', !w95 && (id === 'color' || (id === 'auto' && !darkQ.matches)));
@@ -4150,18 +4444,22 @@ function screenStyle(id = cfg.screen) {
   const fxl = !w95 && id === 'oneline', fxd = !w95 && id === 'dial';
   screenEl.classList.toggle('fx', fxl || fxd); screenEl.classList.toggle('fx-line', fxl); screenEl.classList.toggle('fx-dial', fxd);
   const rxDark = id === 'rxauto' && darkQ.matches;
-  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || id === 'dial' || rxDark));
+  screenEl.classList.toggle('scanl', !w95 && id === 'scanner');
+  screenEl.classList.toggle('anchor', !w95 && id === 'anchor');
+  screenEl.classList.toggle('vfd', !w95 && (id === 'amber' || id === 'teal' || id === 'dial' || id === 'scanner' || rxDark));
   screenEl.classList.toggle('lcd', !w95 && (id === 'lcd' || id === 'oneline' || (id === 'rxauto' && !rxDark)));
-  screenEl.style.setProperty('--vfd', id === 'teal' ? '#5FE3C6' : '#F2B84B');
+  screenEl.style.setProperty('--vfd', id === 'teal' || id === 'scanner' ? '#5FE3C6' : '#F2B84B');
 }
 function applyScreen() { screenStyle(); render(); }
 try { darkQ.addEventListener('change', () => { if (cfg.screen === 'auto' || cfg.screen === 'rxauto') applyScreen(); }); } catch {}
-function screenView() {
-  const SCREENS = screenList();
-  const v = List('Screen', SCREENS.map(([id, name]) => ({ label: name, get check() { return (cfg.screen || 'color') === id; },
-    act: () => { cfg.screen = id; save(); applyScreen(); } })),
-    { onSel() { screenStyle(SCREENS[this.sel][0]); }, onLeave() { screenStyle(); } });
-  v.sel = Math.max(0, SCREENS.findIndex(s => s[0] === (cfg.screen || 'color')));
+function screenView(special) {
+  const all = screenList(), SCREENS = all.filter(x => !!x[3] === !!special);
+  const items = SCREENS.map(([id, name]) => ({ id, label: name, get check() { return (cfg.screen || 'color') === id; },
+    act: () => { cfg.screen = id; save(); applyScreen(); } }));
+  if (!special) items.push({ label: 'Special Editions', get value() { const x = all.find(s => s[0] === (cfg.screen || 'color')); return x && x[3] ? '✓' : ''; }, arrow: true, go: () => push(screenView(true)) });
+  const v = List(special ? 'Editions' : 'Screen', items,
+    { onSel() { screenStyle(items[this.sel]?.id); }, onLeave() { screenStyle(); } });
+  v.sel = items.findIndex(s => s.id === (cfg.screen || 'color')); if (v.sel < 0) v.sel = special ? 0 : items.length - 1;
   return v;
 }
 
@@ -4177,7 +4475,7 @@ function cfSource() {
   }
   if (ready()) {
     const v = Lazy('Albums', paged(`/library/sections/${sec()}/all`, { type: 9, sort: 'titleSort' }),
-      m => ({ title: m.title, artist: m.parentTitle || '', thumb: m.thumb || null, tracks: () => Plex.album(m) }));
+      m => ({ title: m.title, artist: m.parentTitle || '', thumb: m.thumb || null, tracks: () => Plex.album(m, true) }));
     v.key = cfg.server.machineId + ':' + sec(); return v;
   }
   return null;
@@ -4418,7 +4716,7 @@ async function videoSections() {
 }
 const vLabel = m => m.type === 'episode' ? (m.index != null ? `${m.index}. ${m.title}` : m.title) : m.title;
 const vItem = m => ({ label: m.type === 'episode' && m.grandparentTitle && m._deck ? `${m.grandparentTitle}: ${m.title}` : vLabel(m),
-  value: m.viewOffset ? 'Resume' : (!m.viewCount && m.type !== 'show' ? null : null), arrow: true, go: () => playVideo(m) });
+  value: m.viewOffset ? 'Resume' : (ELITE && tapeVid(m) ? 'Tape' : null), arrow: true, go: () => ELITE ? push(videoMenu(m)) : playVideo(m) });
 const movieList = s => Lazy(s.title, paged(`/library/sections/${s.key}/all`, { type: 1 }), vItem);
 const showList = s => Lazy(s.title, paged(`/library/sections/${s.key}/all`, { type: 2 }), m => ({ label: m.title, arrow: true, go: () => push(seasonList(m)) }));
 const seasonList = sh => Lazy(sh.title, paged(`/library/metadata/${sh.ratingKey}/children`),
@@ -4462,8 +4760,8 @@ function vStart(v) {
   V.resume = (m.viewOffset || 0) / 1000;
   const s = NPs(); if (s && s.playing) toggle();
   $('#vName').textContent = m.type === 'episode' ? `${m.grandparentTitle || ''} · ${m.title}` : m.title;
-  vEl.src = V.hls ? vHlsUrl(m) : vDirectUrl(m);
-  vEl.play().catch(() => {});
+  if (m._tape) { V.hls = false; tapeVidUrl(m._tape).then(u => { if (V.m !== m) return; if (!u) { flash("That video isn't on tape anymore."); return; } vEl.src = u; vEl.play().catch(() => {}); }); }
+  else { vEl.src = V.hls ? vHlsUrl(m) : vDirectUrl(m); vEl.play().catch(() => {}); }
   vPlace();
   if (V.resume > 30) flash(`Resuming at ${fmt(V.resume)}`);
 }
@@ -4531,7 +4829,7 @@ vEl.addEventListener('ended', () => {
 });
 vEl.addEventListener('error', () => {
   if (!V.active || !vEl.getAttribute('src')) return;
-  if (!V.hls) { V.hls = true; V.resume = vEl.currentTime || V.resume; vEl.src = vHlsUrl(V.m); vEl.play().catch(() => {}); }
+  if (!V.hls && !V.m._tape) { V.hls = true; V.resume = vEl.currentTime || V.resume; vEl.src = vHlsUrl(V.m); vEl.play().catch(() => {}); }
   else flash('This video won’t play here.');
 });
 vEl.addEventListener('click', () => { if (vlayer.classList.contains('show')) { vlayer.classList.remove('show'); clearTimeout(V.uiT); } else vShowUi(); });
@@ -5119,7 +5417,7 @@ function w95close() {
 }
 function w95boot() {
   w95ov.className = 'w95ov boot'; w95ov.hidden = false;
-  w95ov.innerHTML = '<b>myPod<i>95</i></b><span>Starting myPod 95…</span><div class="prog"><i></i></div>';
+  w95ov.innerHTML = '<b>myStereo<i>95</i></b><span>Starting myStereo 95…</span><div class="prog"><i></i></div>';
   setTimeout(() => { if (w95ov.classList.contains('boot')) w95close(); }, 2300);
 }
 function w95dialog(title, icon, text, buttons, next) {
@@ -5134,7 +5432,7 @@ function jlJoke() {   /* now and then, when a song starts */
 }
 function jlBsod() {
   w95ov.className = 'w95ov bsod'; w95ov.hidden = false; JL.dlgNext = null;
-  w95ov.innerHTML = `<h6>myPod 95</h6><p>A fatal exception 0E has occurred at 0028:C0FFEE01 in VXD RETIRE(01) + 00001989. The current career will be terminated.</p>
+  w95ov.innerHTML = `<h6>myStereo 95</h6><p>A fatal exception 0E has occurred at 0028:C0FFEE01 in VXD RETIRE(01) + 00001989. The current career will be terminated.</p>
     <p>*&nbsp; Press any key to retire.<br>*&nbsp; Press CTRL+ALT+DEL to work another 37 years. You will lose any unsaved vacation days.</p>
     <p style="align-self:center">Press any key to continue <span class="cur">_</span></p>`;
 }
