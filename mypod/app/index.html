@@ -118,7 +118,11 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .npj-list li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .npj-list li.past{opacity:.45;text-decoration:line-through;text-decoration-color:var(--lc)}
 .npj-list li.now{font-weight:700;color:#000;background:linear-gradient(transparent 55%,color-mix(in srgb,var(--lc) 35%,transparent) 55% 92%,transparent 92%)}
-.np .np-dest{color:inherit;opacity:.85}
+.np .np-dest{color:inherit;opacity:.85;display:flex;align-items:center;justify-content:center;gap:1.4cqw}
+.np .np-dest svg{height:4.6cqw;width:4.6cqw;flex:none;display:block}
+.np .np-dest:empty{display:none}
+.tp-dub.sv{align-items:stretch}.sv-ico{align-self:center;height:34%;aspect-ratio:1;display:grid;place-items:center}.sv-ico svg{height:100%;width:auto}
+.sv-t{font-size:5.6cqw;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .big .np-jc{width:50cqw}
 .np-tape{position:relative;flex:none;width:46cqw;aspect-ratio:1.55;box-sizing:border-box;border:.6cqw solid currentColor;border-radius:2.4cqw;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#222}
 .np-tape img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -2066,23 +2070,31 @@ async function importMusic(files) {
 
 function localMenu() {
   const v = List('On Phone', () => {
-    const mine = homeTracks(), has = mine.length > 0, lib = has ? Local.lib(mine) : null;
+    const all = Local.tracks, has = all.length > 0, lib = has ? Local.lib(all) : null, mine = homeTracks(), saved = tapeTracks();
+    const lists = Object.entries(TAPE.lists).map(([k, x]) => ({ k, ...x, ts: x.ids.map(id => Local.byId.get(id)).filter(Boolean) })).filter(x => x.ts.length);
+    const stars = saved.filter(t => RATE.all[t.server + ':' + t.plexRk]?.r === 5), mixes = mixOnTape();
     return [
-      { label: 'Add Music', act: () => pickMusic(false) },
-      ...(canPickFolder() ? [{ label: 'Add a Folder', act: () => pickMusic(true) }] : []),
+      ...(TAPE.busy ? [{ label: 'Saving Now', value: TAPE.job && !TAPE.job.video ? `${TAPE.job.done}/${TAPE.job.total || '…'}` : '', arrow: true, go: () => push(dubbingView()) }] : []),
       ...(has ? [
-        { label: 'Shuffle Songs', act: localShuffle },
+        { label: 'Shuffle', act: () => tapeShuffle(all) },
         { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
         { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
+        ...(mixes.length ? [{ label: 'Mixtapes', value: String(mixes.length), arrow: true, go: () => push(List('Mixtapes', mixes.map(m => ({ label: m.title, value: mixLen(m), arrow: true, go: () => push(mixView(m)) })))) }] : []),
+        ...(lists.length ? [{ label: 'Playlists', value: String(lists.length), arrow: true, go: () => push(List('Playlists', lists.map(x => ({ label: x.title, arrow: true, go: () => push(List(x.title, x.ts.map(t => ({ label: t.title, track: t })))) })))) }] : []),
+        ...(stars.length ? [{ label: '5-Star Mix', value: String(stars.length), arrow: true, go: () => push(List('5-Star Mix', stars.map(t => ({ label: t.title, track: t })))) }] : []),
         { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
-        { label: 'Songs', value: String(mine.length), arrow: true, go: () => push(lib.songs()) },
-        { label: 'Search', arrow: true, go: () => push(searchView(Local.lib(homeTracks()))) },
-        { label: 'Manage', arrow: true, go: () => push(localManage()) }
-      ] : [])
+        { label: 'Songs', value: String(all.length), arrow: true, go: () => push(lib.songs()) },
+        { label: 'Search', arrow: true, go: () => push(searchView(Local.lib(Local.tracks))) }
+      ] : []),
+      ...(ELITE && TAPE.vids.length ? [{ label: 'Videos', value: String(TAPE.vids.length), arrow: true, go: () => push(tapeVideos()) }] : []),
+      { label: 'Add Files', act: () => pickMusic(false) },
+      ...(canPickFolder() ? [{ label: 'Add a Folder', act: () => pickMusic(true) }] : []),
+      ...(mine.length ? [{ label: 'Manage Added Files', arrow: true, go: () => push(localManage()) }] : []),
+      { label: 'Settings', arrow: true, go: () => push(tapeSetup()) }
     ];
-  });
-  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : homeTracks().length ? null
-    : 'Add songs saved on this device, like ripped CDs or downloads. myStereo keeps its own copy, no Plex needed.' });
+  }, { tapeLive: true });
+  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : Local.tracks.length || TAPE.vids.length ? null
+    : 'Music here plays with no signal and uses no data. Open any album or playlist and choose Save to Phone, or add files like ripped CDs.' });
   v.noteRows = 4;
   if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
   return v;
@@ -2141,7 +2153,7 @@ function tapeDraw() { const v = cur(); if (v && v.tapeLive) render(); }
 
 /* queue a dub: an album, a playlist, or a handful of songs. Songs already on tape are skipped, so dubbing again fills in what's missing */
 function dub(job) {
-  if (isDemo() || !ready()) { flash('Sign in to Plex to dub music to tape.'); return; }
+  if (isDemo() || !ready()) { flash('Sign in to Plex to save music to your phone.'); return; }
   if (TAPE.q.some(x => x.key === job.key)) { push(dubbingView()); return; }
   Object.assign(job, { done: 0, total: 0, now: '', failed: 0, skipped: 0, added: 0, mid: cfg.server.machineId, q: tapeQ() });
   TAPE.q.push(job); if (!job.quiet) push(dubbingView());
@@ -2185,7 +2197,7 @@ async function tapeRun() {
               Local.tracks.push(o); Local.byId.set(id, o);
               job.added++; break;
             } catch (e) {
-              if (/quota|full/i.test(String(e && (e.name + e.message)))) { flash('This phone is out of room for more tape.'); job.stop = true; job.failed++; break; }
+              if (/quota|full/i.test(String(e && (e.name + e.message)))) { flash('This phone is out of room.'); job.stop = true; job.failed++; break; }
               if (document.hidden) { await whenVisible(); continue; }   /* the phone slept or switched apps: pick up the same song */
               if (tries === 2) job.failed++;
             }
@@ -2197,7 +2209,7 @@ async function tapeRun() {
       }
     } catch (e) { job.err = errText(e); }
     TAPE.q.shift(); TAPE.last = job; TAPE.job = null;
-    if (!job.quiet || job.failed) flash(job.err ? `Couldn't dub ${job.title}` : job.stop ? `Stopped dubbing ${job.title}` : `${job.title} is on tape` + (job.failed ? ` · ${job.failed} skipped` : ''));
+    if (!job.quiet || job.failed) flash(job.err ? `Couldn't save ${job.title}` : job.stop ? `Stopped saving ${job.title}` : `${job.title} is on your phone` + (job.failed ? ` · ${job.failed} skipped` : ''));
     tapeDraw();
   }
   TAPE.busy = false; try { TAPE.wake?.release(); } catch {} TAPE.wake = null;
@@ -2205,16 +2217,19 @@ async function tapeRun() {
 }
 const HUB = '<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="20" cy="20" r="5" fill="currentColor"/><path d="M20 4v8M6.1 28l6.9-4M33.9 28l-6.9-4" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>';
 const tpReel = t => `<i class="tp-reel" style="--t:${clamp(t, 0, 1).toFixed(2)}">${HUB}</i>`;
+const OFF_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95 6 6 0 0 0-11.3-1.6A4.6 4.6 0 0 0 7 18.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3.5 3.5l17 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+const SAVE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 6.5v8M8.8 11.5l3.2 3.2 3.2-3.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 19h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const CASS_SVG = '<svg viewBox="0 0 34 22" aria-hidden="true"><rect x="1" y="1" width="32" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="11" cy="10" r="3.4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="23" cy="10" r="3.4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9 21l2-4h12l2 4" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>';
 function dubbingView() {
-  const v = List('Dubbing', () => TAPE.busy ? [
-      { label: 'Stop Dubbing', act: () => { if (TAPE.job) TAPE.job.stop = true; TAPE.q.splice(1); flash('Stopping after this song'); } },
+  const v = List('Saving', () => TAPE.busy ? [
+      { label: 'Stop Saving', act: () => { if (TAPE.job) TAPE.job.stop = true; TAPE.q.splice(1); flash('Stopping after this song'); } },
       ...TAPE.q.slice(1).map(j => ({ label: j.title, value: 'Next', dim: true })),
-      { label: 'Go to Tape', arrow: true, go: () => push(tapeMenu()) }
-    ] : [{ label: 'Go to Tape', arrow: true, go: () => push(tapeMenu()) }], { tapeLive: true });
+      { label: 'Go to On Phone', arrow: true, go: () => push(localMenu()) }
+    ] : [{ label: 'Go to On Phone', arrow: true, go: () => push(localMenu()) }], { tapeLive: true });
+  Object.defineProperty(v, 'title', { get: () => TAPE.job && TAPE.job.key.startsWith('mix:') ? 'Dubbing' : 'Saving' });
   Object.defineProperty(v, 'note', { get() {
     const j = TAPE.job;
-    if (!j) { const l = TAPE.last; return l ? (l.err ? `Couldn't dub ${l.title}. ${l.err}` : l.video ? (l.stop ? `Stopped. ${l.title} wasn't saved.` : `${l.title} is on tape. Find it under Tape › Videos.`) : `${l.title} is on tape. ${l.added} new song${l.added === 1 ? '' : 's'}` + (l.skipped ? `, ${l.skipped} already there` : '') + (l.failed ? `, ${l.failed} didn't come through` : '') + '.') : 'Nothing dubbing right now.'; }
+    if (!j) { const l = TAPE.last; return l ? (l.err ? `Couldn't save ${l.title}. ${l.err}` : l.video ? (l.stop ? `Stopped. ${l.title} wasn't saved.` : `${l.title} is on your phone. Find it under On Phone › Videos.`) : `${l.title} is on your phone. ${l.added} new song${l.added === 1 ? '' : 's'}` + (l.skipped ? `, ${l.skipped} already there` : '') + (l.failed ? `, ${l.failed} didn't come through` : '') + '.') : 'Nothing saving right now.'; }
     if (j.video) return `● REC  ${j.title}\n${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}\nKeep myStereo open while it dubs.`;
     return `● REC  COUNTER ${String(TAPE.count).padStart(3, '0')}\n${j.title}: song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}${j.now ? ' · ' + j.now : ''}\nKeep myStereo open. If you leave, it picks up where it left off.`;
   } });
@@ -2222,6 +2237,8 @@ function dubbingView() {
     const j = TAPE.job; if (!j) return null;
     const p = j.video ? (j.pct || 0) / 100 : j.total ? j.done / j.total : 0;
     const line = j.video ? `${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}` : `Song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}`;
+    if (!j.key.startsWith('mix:')) return `<div class="tp-dub sv"><div class="sv-ico">${SAVE_SVG}</div><div class="sv-t">${esc(j.title)}</div>
+      <div class="tp-line"><b>${line}</b><span>${Math.round(p * 100)}%</span></div>${j.video ? '' : `<div class="tp-now">${esc(j.now || '')}</div>`}<div class="tp-prog"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div>`;
     return `<div class="tp-dub"><div class="tp-cas tp-go"><div class="tp-lab">SIDE A · ${esc(j.title)}</div><div class="tp-win">${tpReel(1 - p * .7)}${tpReel(.3 + p * .7)}</div><i class="tp-notch"></i></div>
       <div class="tp-line"><b>${line}</b><span class="tp-ctr">${String(TAPE.count).padStart(3, '0')}</span></div>
       ${j.video ? '' : `<div class="tp-now">${esc(j.now || '')}</div>`}<div class="tp-prog"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div>`;
@@ -2229,45 +2246,19 @@ function dubbingView() {
   Object.defineProperty(v, 'noteRows', { get: () => TAPE.job ? Math.max(3, ROWS - 1) : 4 });
   return v;
 }
-/* the Dub to Tape row at the top of an album or playlist */
+/* the Save to Phone row at the end of an album or playlist */
 function dubRow(title, key, paths, opts = {}) {
-  return { get label() { const j = TAPE.q.find(x => x.key === key); return j ? (j === TAPE.job ? `Dubbing ${j.done}/${j.total || '…'}` : 'Waiting to Dub') : TAPE.sets[key] ? 'On Tape' : 'Dub to Tape'; },
+  return { get label() { const j = TAPE.q.find(x => x.key === key); return j ? (j === TAPE.job ? `Saving ${j.done}/${j.total || '…'}` : 'Waiting to Save') : TAPE.sets[key] ? 'Saved to Phone' : 'Save to Phone'; },
     get value() { return TAPE.q.some(x => x.key === key) ? '' : TAPE.sets[key] ? '✓' : tapeQName(tapeQ()); },
-    arrow: true, go: () => { if (TAPE.sets[key] && !TAPE.q.some(x => x.key === key)) { push(tapeMenu()); return; } dub({ key, title, paths, set: true, ...opts }); } };
+    arrow: true, go: () => { if (TAPE.sets[key] && !TAPE.q.some(x => x.key === key)) { push(localMenu()); return; } dub({ key, title, paths, set: true, ...opts }); } };
 }
 function tapeLib() { return Local.lib(tapeTracks()); }
 const mixOnTape = () => (typeof MIX === 'undefined' ? [] : MIX.all.filter(m => { const rs = [...m.a, ...m.b]; return rs.length && rs.every(r => r.demo ? false : r.local ? Local.byId.has(r.rk) : Local.byId.has(tapeId(r.rk, r.mid))); }));
-function tapeMenu() {
-  const v = List('Tape', () => {
-    const ts = tapeTracks(), has = ts.length > 0, lib = has ? tapeLib() : null;
-    const lists = Object.entries(TAPE.lists).map(([k, x]) => ({ k, ...x, ts: x.ids.map(id => Local.byId.get(id)).filter(Boolean) })).filter(x => x.ts.length);
-    const stars = ts.filter(t => RATE.all[t.server + ':' + t.plexRk]?.r === 5);
-    return [
-      ...(TAPE.busy ? [{ label: 'Dubbing Now', value: TAPE.job && !TAPE.job.video ? `${TAPE.job.done}/${TAPE.job.total || '…'}` : '', arrow: true, go: () => push(dubbingView()) }] : []),
-      ...(has ? [
-        { label: 'Shuffle Tape', act: () => tapeShuffle(ts) },
-        { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
-        { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
-        ...(mixOnTape().length ? [{ label: 'Mixtapes', value: String(mixOnTape().length), arrow: true, go: () => push(List('Mixtapes', mixOnTape().map(m => ({ label: m.title, value: mixLen(m), arrow: true, go: () => push(mixView(m)) })))) }] : []),
-        ...(lists.length ? [{ label: 'Playlists', value: String(lists.length), arrow: true, go: () => push(List('Playlists', lists.map(x => ({ label: x.title, arrow: true, go: () => push(List(x.title, x.ts.map(t => ({ label: t.title, track: t })))) })))) }] : []),
-        ...(stars.length ? [{ label: '5-Star Mix', value: String(stars.length), arrow: true, go: () => push(List('5-Star Mix', stars.map(t => ({ label: t.title, track: t })))) }] : []),
-        { label: 'Songs', value: String(ts.length), arrow: true, go: () => push(lib.songs()) },
-        { label: 'Search', arrow: true, go: () => push(searchView(tapeLib())) }
-      ] : []),
-      ...(ELITE && TAPE.vids.length ? [{ label: 'Videos', value: String(TAPE.vids.length), arrow: true, go: () => push(tapeVideos()) }] : []),
-      { label: 'Tape Settings', arrow: true, go: () => push(tapeSetup()) }
-    ];
-  }, { tapeLive: true });
-  Object.defineProperty(v, 'note', { get: () => !Local.loaded ? 'Loading…' : tapeTracks().length || TAPE.vids.length ? null
-    : 'Nothing on tape yet. Open any album or mixtape and choose Dub to Tape. Music on tape plays with no signal and saves your data plan.' });
-  v.noteRows = 4;
-  if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
-  return v;
-}
+function tapeMenu() { return localMenu(); }
 async function tapeShuffle(ts) {
   if (!ts.length) return;
   unlockLocalAudio();
-  P.view = List('Shuffle Tape', [...ts].sort(() => Math.random() - .5).map(t => ({ label: t.title, track: t })));
+  P.view = List('Shuffle', [...ts].sort(() => Math.random() - .5).map(t => ({ label: t.title, track: t })));
   if (await loadIndex(0, true)) { buildOrder(); openNowPlaying(); }
 }
 function tapeStars() {   /* keep 5-star songs on tape: dub any that aren't there yet */
@@ -2283,16 +2274,16 @@ function tapeSetup() {
   const twice = (key, label, run) => ({ get label() { return arm.k === key ? 'Press again to erase' : label; }, act: async () => {
     if (arm.k !== key) { arm.k = key; render(); setTimeout(() => { if (arm.k === key) { arm.k = null; render(); } }, 4000); return; }
     arm.k = null; await run(); } });
-  const v = List('Tape Settings', () => [
+  const v = List('On Phone Settings', () => [
     { label: 'Quality', value: tapeQName(tapeQ()), act: () => { const i = TQ.findIndex(x => x[0] === tapeQ()); cfg.tapeQ = TQ[(i + 1) % TQ.length][0]; save(); flash(TQ[(i + 1) % TQ.length][2]); } },
-    { label: 'Play Tape First', value: cfg.tapeFirst === false ? 'Off' : 'On', act: () => { cfg.tapeFirst = cfg.tapeFirst === false; save(); flash(cfg.tapeFirst ? 'Songs on tape play from this phone' : 'Songs stream from Plex when there is a signal'); } },
+    { label: 'Play Saved Copies First', value: cfg.tapeFirst === false ? 'Off' : 'On', act: () => { cfg.tapeFirst = cfg.tapeFirst === false; save(); flash(cfg.tapeFirst ? 'Saved songs play from this phone, with no data' : 'Songs stream from Plex when there is a signal'); } },
     { label: 'Keep 5-Star Songs', value: cfg.tapeStars ? 'On' : 'Off', act: () => { cfg.tapeStars = !cfg.tapeStars; save(); if (cfg.tapeStars) tapeStars(); } },
     { label: 'Erase an Album', arrow: true, go: () => push(List('Erase an Album', () => Local.groups(tapeTracks()).albums.map(al =>
         twice('al:' + al.artist + al.title, al.title, () => tapeErase(al.tracks))))) },
     ...(ELITE && TAPE.vids.length ? [{ label: 'Erase a Video', arrow: true, go: () => push(List('Erase a Video', () => TAPE.vids.map(x => twice('v:' + x.rk, x.title, () => tapeEraseVideo(x))))) }] : []),
-    ...(tapeTracks().length || TAPE.vids.length ? [twice('all', 'Erase All Tape', async () => { await tapeErase(tapeTracks()); for (const x of [...TAPE.vids]) await tapeEraseVideo(x); })] : [])
+    ...(tapeTracks().length || TAPE.vids.length ? [twice('all', 'Erase Everything Saved', async () => { await tapeErase(tapeTracks()); for (const x of [...TAPE.vids]) await tapeEraseVideo(x); })] : [])
   ], { tapeLive: true });
-  Object.defineProperty(v, 'note', { get: () => `On tape: ${mb(tapeBytes())}` + (TAPE.est != null ? ` · Room left: ${mb(TAPE.est)}` : '') + '. Tape lives on this phone only.' });
+  Object.defineProperty(v, 'note', { get: () => `Saved from Plex: ${mb(tapeBytes())}` + (TAPE.est != null ? ` · Room left: ${mb(TAPE.est)}` : '') + '. Files you added are under On Phone.' });
   v.noteRows = 2; tapeEstimate().then(() => { if (cur() === v) render(); });
   if (!Local.loaded) Local.load().then(() => { if (cur() === v) render(); });
   return v;
@@ -2307,7 +2298,7 @@ async function tapeErase(ts) {
   LS.set('tapeSets', TAPE.sets);
   for (const [k, x] of Object.entries(TAPE.lists)) { x.ids = x.ids.filter(id => !gone.has(id)); if (!x.ids.length) delete TAPE.lists[k]; }
   LS.set('tapeLists', TAPE.lists);
-  await Local.load(); tapeEstimate(); flash(`Erased ${ts.length} song${ts.length === 1 ? '' : 's'} from tape`); render();
+  await Local.load(); tapeEstimate(); flash(`Erased ${ts.length} song${ts.length === 1 ? '' : 's'} from this phone`); render();
 }
 
 /* myStereo Elite: videos on tape. Only MP4 and MOV files can be saved; they go into the browser's file cache */
@@ -2320,10 +2311,10 @@ function videoMenu(m) {
     const on = tapeVid(m), j = TAPE.q.find(x => x.key === 'v:' + m.ratingKey);
     return [
       { label: m.viewOffset ? 'Resume' : 'Play', act: () => playVideo(m) },
-      on ? { label: 'Play from Tape', value: mb(on.size), act: () => playVideo({ ...m, _tape: on }) }
-        : j ? { label: j === TAPE.job ? `Dubbing ${j.pct || 0}%` : 'Waiting to Dub', arrow: true, go: () => push(dubbingView()) }
-        : { label: 'Dub to Tape', value: vDirect(m) ? (size ? mb(size) : '') : 'Not this one', act: () => {
-            if (!vDirect(m)) { flash("This video's format can't go on tape. MP4 and MOV videos can."); return; }
+      on ? { label: 'Play Saved Copy', value: mb(on.size), act: () => playVideo({ ...m, _tape: on }) }
+        : j ? { label: j === TAPE.job ? `Saving ${j.pct || 0}%` : 'Waiting to Save', arrow: true, go: () => push(dubbingView()) }
+        : { label: 'Save to Phone', value: vDirect(m) ? (size ? mb(size) : '') : 'Not this one', act: () => {
+            if (!vDirect(m)) { flash("This video's format can't be saved. MP4 and MOV videos can."); return; }
             if (TAPE.est != null && size && size > TAPE.est) { flash(`Not enough room. This needs ${mb(size)}.`); return; }
             dub({ key: 'v:' + m.ratingKey, title: vLabel(m), video: m, size }); } }
     ];
@@ -2361,7 +2352,7 @@ function tapeVideos() {
 }
 /* ---------- Mixtapes: made on this phone. A C60 or C90, Side A and Side B against the clock ---------- */
 const MIX = { all: LS.get('mixtapes', []), rec: LS.get('mixRec', null), lastSave: 0 };
-const mixSave = () => LS.set('mixtapes', MIX.all);
+const mixSave = () => { LS.set('mixtapes', MIX.all); if (typeof mixSyncSoon === 'function' && MIX.all.some(m => m.sig !== mixSig(m) && mixSyncable(m))) mixSyncSoon(); };
 const mixOf = id => MIX.all.find(m => m.id === id);
 const MIX_COLORS = [['#e0602a', 'Orange'], ['#2549c7', 'Blue'], ['#0f8400', 'Green'], ['#c9a45c', 'Gold'], ['#d04a7a', 'Pink'], ['#1e3f5c', 'Navy']];
 const sideMs = m => m.len ? m.len * 30000 : Infinity;
@@ -2409,7 +2400,8 @@ function mixtapesMenu(lib) {
   const v = List('Mixtapes', () => [
     { label: 'Make a Mixtape', act: mixNew },
     ...MIX.all.map(m => ({ label: m.title, value: mixLen(m), arrow: true, mid: m.id, go: () => push(mixView(m)) }))
-  ]);
+  ], { mixLive: true });
+  mixPull();
   Object.defineProperty(v, 'note', { get: () => MIX.all.length ? ' ' : 'Make one here: pick a C60 or C90 and fill Side A and Side B, or pick No Limit for a mixtape of any length.' });
   Object.defineProperty(v, 'noteHTML', { get() { if (!MIX.all.length) return null; const it = v.get(v.sel); return jcardHTML(mixOf(it?.mid) || MIX.all[0]); } });
   Object.defineProperty(v, 'noteRows', { get: () => MIX.all.length ? 2 : 3 });
@@ -2428,11 +2420,12 @@ function mixView(m) {
       rec ? { label: 'Stop Recording', act: mixStop } : { label: A || B ? 'Record More' : 'Start Recording', act: () => mixRecord(m) },
       { label: m.len ? 'Side A' : 'Songs', value: `${A} · ${mmss(sideUsed(m, 'a'))}`, arrow: true, go: () => push(mixSide(m, 'a')) },
       ...(m.len ? [{ label: 'Side B', value: `${B} · ${mmss(sideUsed(m, 'b'))}`, arrow: true, go: () => push(mixSide(m, 'b')) }] : []),
-      ...(rks.length && ready() ? [{ label: onTape ? 'On Tape' : 'Dub to Tape', value: onTape ? '✓' : tapeQName(tapeQ()), act: () => {
-          if (onTape) { flash('Every song is already on tape.'); return; }
+      ...(rks.length && ready() ? [{ label: onTape ? 'Saved to Phone' : 'Dub to Phone', value: onTape ? '✓' : tapeQName(tapeQ()), act: () => {
+          if (onTape) { flash('Every song is already on your phone.'); return; }
           const paths = []; for (let i = 0; i < rks.length; i += 100) paths.push(['/library/metadata/' + rks.slice(i, i + 100).join(',')]);
           dub({ key: 'mix:' + m.id, title: m.title, paths }); } }] : []),
       { label: 'Print the J-Card', act: () => mixPrint(m) },
+      { label: 'Sync', value: mixStatus(m), act: () => { if (!mixSyncable(m)) { flash(isDemo() || !cfg.token ? 'Sign in to Plex to keep mixtapes on all your devices.' : 'This mixtape was made on another Plex server.'); return; } m.syncErr = false; mixPush().then(() => mixPull(true)); } },
       { label: 'Label', value: m.title, act: () => { const t = (prompt('Write the label', m.title) || '').trim(); if (t) { m.title = t; v.title = t; mixSave(); render(); } } },
       { label: 'For', value: m.for || 'Anyone', act: () => { const t = prompt('Who is it for?', m.for || ''); if (t != null) { m.for = t.trim(); mixSave(); render(); } } },
       { label: 'Label Color', value: (MIX_COLORS.find(c => c[0] === m.color) || MIX_COLORS[0])[1], act: () => {
@@ -2445,9 +2438,9 @@ function mixView(m) {
               if (!ok) { m.a = all; m.b = []; flash(`Too much music for a C${len}. Take a few songs off first.`); return; } }
             else if (sideUsed(m, 'a') > cap || sideUsed(m, 'b') > cap) { flash(`Too much music for a C${len}. Take a few songs off first.`); return; } }
           m.len = len; m.pos = null; mixSave(); render(); } },
-      twice('erase', 'Erase Mixtape', () => { if (MIX.rec === m.id) mixStop(); MIX.all = MIX.all.filter(x => x !== m); mixSave(); pop(); flash(`Erased ${m.title}`); })
+      twice('erase', 'Erase Mixtape', () => { if (MIX.rec === m.id) mixStop(); mixForget(m); MIX.all = MIX.all.filter(x => x !== m); mixSave(); pop(); flash(`Erased ${m.title}`); })
     ];
-  });
+  }, { mixLive: true });
   Object.defineProperty(v, 'note', { get: () => ' ' });
   Object.defineProperty(v, 'noteHTML', { get: () => jcardHTML(m, true) });
   Object.defineProperty(v, 'noteRows', { get: () => Math.min(3, Math.max(2, ROWS - 3)) });
@@ -2518,6 +2511,88 @@ ol{margin:0 0 8px;padding-left:16px;font-size:10.5px;line-height:1.35}li span{di
     else { const u = URL.createObjectURL(new Blob([html], { type: 'text/html' })); const l = document.createElement('a'); l.href = u; l.download = `${m.title.replace(/[^\w -]+/g, '')} J-Card.html`; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000); }
   });
 }
+/* ---------- Mixtapes follow you: each one is saved to Plex as a playlist, so it shows up on every device signed in to the same server.
+   The label, "for", color, tape length and where Side A ends ride along in the playlist's description. Your place in the tape stays on each device. ---------- */
+const MSYNC = { t: null, busy: false, lastPull: 0, gone: LS.get('mixGone', []) };
+const MIX_TAG = /\[mystereo:(\{.*?\})\]/s;
+const mixSig = m => JSON.stringify([m.title, m.for, m.color, m.len, m.a.map(r => r.rk), m.b.map(r => r.rk)]);
+const mixSyncable = m => ready() && !isDemo() && cfg.server?.machineId && (!m.mid || m.mid === cfg.server.machineId);
+const mixRemoteRks = (m, s) => m[s].filter(r => !r.demo && !r.local && (!r.mid || r.mid === cfg.server?.machineId)).map(r => r.rk);
+const mixStatus = m => !mixSyncable(m) ? (isDemo() || !cfg.token ? 'This device only' : 'On another server') : m.syncErr ? 'Not saved yet' : m.sig === mixSig(m) && m.plexId ? 'Saved to Plex' : 'Saving…';
+const mixSummary = m => {
+  const meta = { v: 1, id: m.id, len: m.len, color: m.color, for: m.for || '', made: m.made, a: mixRemoteRks(m, 'a').length };
+  return `Mixtape · ${m.len ? 'C' + m.len : 'No Limit'}${m.for ? ' · for ' + m.for : ''}. Made with myStereo.\n[mystereo:${JSON.stringify(meta)}]`;
+};
+function mixSyncSoon() { clearTimeout(MSYNC.t); MSYNC.t = setTimeout(mixPush, 1500); }
+async function mixPush() {
+  if (MSYNC.busy) { mixSyncSoon(); return; }
+  if (!ready() || isDemo()) return;
+  MSYNC.busy = true;
+  try {
+    for (const pid of [...MSYNC.gone]) {   /* mixtapes erased here: erase their playlists too */
+      try { await pms(`/playlists/${pid}`, {}, { method: 'DELETE', quiet: true }); } catch (e) { if (e.status !== 404) continue; }
+      MSYNC.gone = MSYNC.gone.filter(x => x !== pid); LS.set('mixGone', MSYNC.gone);
+    }
+    for (const m of MIX.all) {
+      if (!mixSyncable(m) || (m.plexId && m.sig === mixSig(m))) continue;
+      const sig = mixSig(m), rks = [...mixRemoteRks(m, 'a'), ...mixRemoteRks(m, 'b')];
+      const uri = `server://${cfg.server.machineId}/com.plexapp.plugins.library/library/metadata/${rks.join(',')}`;
+      try {
+        if (!m.plexId) {
+          const d = await pms('/playlists', { type: 'audio', title: m.title, smart: 0, ...(rks.length ? { uri } : {}) }, { method: 'POST', quiet: true });
+          const pid = d.MediaContainer?.Metadata?.[0]?.ratingKey; if (!pid) throw new Error('no playlist');
+          m.plexId = String(pid); m.mid = cfg.server.machineId;
+        } else {
+          await pms(`/playlists/${m.plexId}/items`, {}, { method: 'DELETE', quiet: true });
+          if (rks.length) await pms(`/playlists/${m.plexId}/items`, { uri }, { method: 'PUT', quiet: true });
+        }
+        try { await pms(`/playlists/${m.plexId}`, { title: m.title, summary: mixSummary(m) }, { method: 'PUT', quiet: true }); }
+        catch { await pms(`/library/metadata/${m.plexId}`, { 'title.value': m.title, 'summary.value': mixSummary(m), 'title.locked': 1, 'summary.locked': 1 }, { method: 'PUT', quiet: true }); }
+        m.sig = sig; m.syncedAt = Date.now(); m.syncErr = false;
+      } catch (e) {
+        if (e.status === 404 && m.plexId) { m.plexId = null; mixSyncSoon(); }   /* the playlist was deleted in Plex: make it again */
+        else m.syncErr = true;
+      }
+      LS.set('mixtapes', MIX.all);
+    }
+  } finally { MSYNC.busy = false; const v = cur(); if (v && (v.mixLive)) render(); }
+}
+/* bring in mixtapes made or changed on other devices */
+async function mixPull(force) {
+  if (!ready() || isDemo() || MSYNC.busy || (!force && Date.now() - MSYNC.lastPull < 20000)) return;
+  MSYNC.lastPull = Date.now();
+  let lists;
+  try { const d = await pms('/playlists', { playlistType: 'audio', 'X-Plex-Container-Start': 0, 'X-Plex-Container-Size': 500 }, { quiet: true }); lists = d.MediaContainer?.Metadata || []; }
+  catch { return; }
+  const mid = cfg.server.machineId, seen = new Set(); let changed = false;
+  for (const pl of lists) {
+    const tag = MIX_TAG.exec(pl.summary || ''); if (!tag) continue;
+    let meta; try { meta = JSON.parse(tag[1]); } catch { continue; }
+    const pid = String(pl.ratingKey); seen.add(pid);
+    if (MSYNC.gone.includes(pid)) continue;
+    let m = MIX.all.find(x => x.plexId === pid && x.mid === mid) || MIX.all.find(x => x.id === meta.id);
+    const stamp = (pl.updatedAt || 0) * 1000;
+    if (m && (m.sig !== mixSig(m) || (m.syncedAt && stamp <= m.syncedAt + 2000))) continue;   /* local changes win until they're pushed; skip if nothing new */
+    let items;
+    try { const d = await pms(`/playlists/${pid}/items`, { 'X-Plex-Container-Start': 0, 'X-Plex-Container-Size': 1000 }, { quiet: true }); items = (d.MediaContainer?.Metadata || []).filter(x => x.type === 'track'); }
+    catch { continue; }
+    const refs = items.map(x => { const t = trackFrom(x); return { rk: t.rk, mid, title: t.title, artist: t.artist, album: t.album, dur: t.dur, thumb: t.thumb, part: t.part }; });
+    const nA = meta.len ? Math.min(refs.length, meta.a ?? refs.length) : refs.length;
+    const keepLocal = m ? [...m.a, ...m.b].filter(r => r.local || r.demo) : [];
+    if (!m) { m = { id: meta.id || 'm' + pid, made: meta.made || Date.now(), pos: null }; MIX.all.push(m); }
+    Object.assign(m, { title: pl.title, for: meta.for || '', color: meta.color || MIX_COLORS[0][0], len: meta.len ?? 90, plexId: pid, mid,
+      a: [...refs.slice(0, nA), ...keepLocal], b: refs.slice(nA) });
+    m.sig = mixSig(m); m.syncedAt = Math.max(Date.now(), stamp); m.syncErr = false; changed = true;
+  }
+  /* erased on another device: erase here too (only ones that were saved to this server) */
+  for (const m of [...MIX.all]) if (m.plexId && m.mid === mid && m.syncedAt && !seen.has(m.plexId) && m.sig === mixSig(m)) {
+    if (MIX.rec === m.id) { MIX.rec = null; LS.set('mixRec', null); }
+    MIX.all = MIX.all.filter(x => x !== m); changed = true;
+  }
+  if (changed) { LS.set('mixtapes', MIX.all); const v = cur(); if (v && v.mixLive) render(); }
+  mixPush();
+}
+function mixForget(m) { if (m.plexId && m.mid === cfg.server?.machineId) { MSYNC.gone.push(m.plexId); LS.set('mixGone', MSYNC.gone); mixSyncSoon(); } }
 /* tap the art on Now Playing: the album, mixtape side or list that's playing, with the current song marked */
 function queueView() {
   const src = P.view, h = src.headLen || 0;
@@ -2690,7 +2765,8 @@ function davSetupView() {
 const sec = () => cfg.sectionId;
 const Plex = {
   playlists: () => Lazy('Playlists', paged('/playlists', { playlistType: 'audio', sectionID: sec() }),
-    m => ({ label: m.title, arrow: true, go: () => push(Plex.playlist(m)) })),
+    m => MIX_TAG.test(m.summary || '') ? { label: m.title, value: 'Mixtape', arrow: true, go: async () => { await mixPull(true); const x = MIX.all.find(y => y.plexId === String(m.ratingKey)); push(x ? mixView(x) : Plex.playlist(m)); } }
+      : { label: m.title, arrow: true, go: () => push(Plex.playlist(m)) }),
   artists: () => Lazy('Artists', paged(`/library/sections/${sec()}/all`, { type: 8, sort: 'titleSort' }),
     m => ({ label: m.title, arrow: true, go: () => push(Plex.artist(m)) })),
   albums: () => Lazy('Albums', paged(`/library/sections/${sec()}/all`, { type: 9, sort: 'titleSort' }), Plex.albumItem),
@@ -2913,7 +2989,7 @@ async function loadIndex(i, autoplay) {
     P.unlocking = false; audio.src = url; if (autoplay) playRetry(url);
   }
   else { P.demoMode = false; P.unlocking = false;
-    if (!navigator.onLine) { flash("No signal, and that song isn't on tape."); }
+    if (!navigator.onLine) { flash("No signal, and that song isn't saved on this phone."); }
     audio.src = streamUrl(tr);
     if (autoplay) playRetry(audio.src); }
   setMediaSession(); updateBar(); if (cur().kind === 'np') renderNP(cur()); else render();
@@ -3084,7 +3160,6 @@ function mainMenu() {
       ...(MIX.rec && mixOf(MIX.rec) ? [{ label: 'Recording', value: '●', arrow: true, go: () => push(mixView(mixOf(MIX.rec))) }] : []),
       { label: 'Music', arrow: true, go: () => push(musicMenu()) },
       { label: 'Mixtapes', arrow: true, go: () => push(mixtapesMenu()) },
-      { label: 'Tape', arrow: true, go: () => push(tapeMenu()) },
       { label: 'On Phone', arrow: true, go: () => push(localMenu()) },
       { label: 'Videos', arrow: true, go: () => push(videosView()) },
       { label: 'Shuffle', act: shuffleSongs },
@@ -3117,14 +3192,13 @@ function signInPrompt(title = 'Music') {
   return Message(title, 'Sign in to Plex to play your own music.', [
     { label: 'Sign In with Plex', act: startSignIn },
     { label: 'Paste a Token', act: () => showPanel('token') },
-    ...(tapeTracks().length ? [{ label: 'Tape', arrow: true, go: () => push(tapeMenu()) }] : []),
-    { label: 'Music on This Phone', arrow: true, go: () => push(localMenu()) },
+        { label: 'On Phone', arrow: true, go: () => push(localMenu()) },
     ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Use Demo Library', act: () => { cfg.demo = true; save(); stack.length = 1; push(musicMenu()); } }
   ]);
 }
 function musicMenu() {
-  if (!isDemo() && !navigator.onLine && (tapeTracks().length || TAPE.vids.length)) { flash('No signal. Here’s your tape.'); return tapeMenu(); }
+  if (!isDemo() && !navigator.onLine && (tapeTracks().length || TAPE.vids.length)) { flash('No signal. Here’s the music on your phone.'); return localMenu(); }
   if (!isDemo() && !ready()) return signInPrompt();
   return libMenu('Music', isDemo() ? Demo : Plex);
 }
@@ -3176,7 +3250,7 @@ function settingsView() {
     { label: 'Look', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(lookView()) },
     { label: 'Sound', value: tonePresetName(), arrow: true, go: () => push(soundView()) },
     { label: 'Music Sources', value: isDemo() ? 'Demo' : cfg.token ? (cfg.server?.name || 'Plex') : 'Signed out', arrow: true, go: () => push(sourcesView()) },
-    { label: 'Tape', value: tapeQName(tapeQ()), arrow: true, go: () => push(tapeSetup()) },
+    { label: 'On Phone', value: tapeQName(tapeQ()), arrow: true, go: () => push(tapeSetup()) },
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Help', arrow: true, go: () => push(helpView()) },
@@ -3206,7 +3280,6 @@ function sourcesView() {
     { label: 'Plex', value: cfg.token ? (cfg.server?.name || 'No server') : 'Signed out', arrow: true, go: () => push(plexView()) },
     ...(cfg.token ? [{ label: 'Server', value: cfg.server?.name || 'Choose', arrow: true, go: () => push(serversView()) }] : []),
     ...(ELITE ? [{ label: 'Network Share', value: DAV.on ? DAV.host() : 'Off', arrow: true, go: () => push(davSetupView()) }] : []),
-    { label: 'On Phone', value: String(homeTracks().length), arrow: true, go: () => push(localMenu()) },
     { label: 'Demo Library', value: isDemo() ? 'On' : 'Off', act: () => {
         if (isDemo() && !cfg.token) { cfg.demo = false; save(); flash('Sign in under Plex to use your own music.'); return; }
         cfg.demo = !isDemo(); save(); } }
@@ -3395,8 +3468,8 @@ const HELP = `
 <p>On the display, <span class="k">▶❙❙</span> or the knob's center plays and pauses, the knob skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">BACK</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
 <h3>Mixtapes</h3>
 <p><b>Mixtapes › Make a Mixtape</b>. Pick a C60, C90 or No Limit, then choose songs anywhere to record them onto the tape. At the end of Side A, press the knob to flip the tape. Tap the art on Now Playing to see what's on the album or mixtape.</p>
-<h3>Tape (no signal)</h3>
-<p>Open an album or playlist and choose <b>Dub to Tape</b> at the bottom. Keep myStereo open while it dubs. Find it all under <b>Tape</b> on the main menu. Songs on tape play with no signal, and a TAPE light shows in the corner.</p>
+<h3>On Phone (no signal, no data)</h3>
+<p>Open an album or playlist and choose <b>Save to Phone</b> at the bottom. Keep myStereo open while it saves. Find it all under <b>On Phone</b> on the main menu, with any files you added. When a song plays from your phone, a cloud with a line through it shows in the corner: no data used.</p>
 <h3>Cover Flow</h3>
 <p>Turn your iPhone sideways, or choose <b>Music › Cover Flow</b>. Swipe through your albums. Tap the middle one to flip it over and see its songs, then tap a song to play it. Turn the phone upright or tap <b>Done</b> to go back.</p>
 <p>Turning sideways only works when Portrait Orientation Lock is off in Control Center.</p>
@@ -3436,7 +3509,7 @@ function updateBar() {
   barL.innerHTML = stack.length > 1 ? ICON.back : (s ? (s.playing ? ICON.play : ICON.pause) : '');
   const w95 = screenEl.classList.contains('w95');
   barR.innerHTML = (SLEEP.until || SLEEP.eos ? ICON.moon : '') + (s && cfg.shuffle ? ICON.shuf : '') + (s && cfg.repeat !== 'off' ? (cfg.repeat === 'one' ? ICON.rep1 : ICON.rep) : '') +
-    (TAPE.busy || MIX.rec ? '<span class="crn-tape rec">● REC</span>' : tapeNow() ? `<span class="crn-cass" aria-label="Playing from tape">${CASS_SVG}</span>` : '') +
+    (MIX.rec || (TAPE.busy && TAPE.job?.key.startsWith('mix:')) ? '<span class="crn-tape rec">● REC</span>' : TAPE.busy ? '<span class="crn-tape">SAVING</span>' : '') + (tapeNow() || P.track?.local ? `<span class="crn-cass" aria-label="Offline: playing from this phone, no data">${OFF_SVG}</span>` : '') +
     (w95 ? (busy > 0 ? ICON_HG : '<i class="wb">_</i><i class="wb">□</i><i class="wb">×</i>') : (busy > 0 ? ICON.spin : cornerHTML(s)));
   $('#pod').classList.toggle('jlplay', !!(s && s.playing));
 }
@@ -3555,7 +3628,7 @@ function renderNP(v, anim, force) {
     bodyEl.dataset.k = k; const t = s.track; const a = art(t.thumb);
     bodyEl.innerHTML = `<div class="np rows ${anim || ''}">
       <div class="np-pos" id="npPos"></div>
-      <div class="np-main">${mixm ? npJcard(mixm, mixv.side) : onTape ? `<div class="np-tape${s.playing ? ' tp-go' : ''}" id="npTape" aria-label="Playing from tape">${a ? `<img alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : ''}<div class="tp-win">${tpReel(.6)}${tpReel(.45)}</div><i class="tp-notch"></i></div>`
+      <div class="np-main">${mixm ? npJcard(mixm, mixv.side) : false ? `<div class="np-tape${s.playing ? ' tp-go' : ''}" id="npTape" aria-label="Playing from tape">${a ? `<img alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : ''}<div class="tp-win">${tpReel(.6)}${tpReel(.45)}</div><i class="tp-notch"></i></div>`
         : a ? `<img class="np-art" alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : '<div class="np-art"></div>'}
         <div class="np-meta"><div class="np-title">${esc(t.title)}</div><div class="np-artist">${esc(t.artist)}</div><div class="np-album">${esc(t.album)}</div><div class="np-stars" id="npStars"></div></div></div>
       <div class="np-bar" id="npBar"></div><div class="np-dest" id="npDest"></div></div>`;
@@ -3579,7 +3652,7 @@ function updateNP() {
   const s = NPs(); const bar = $('#npBar'); if (!s || !bar) return;
   $('#npPos').textContent = (s.pos && s.total ? `${s.pos} of ${s.total}` : '') + (s.remote ? `${s.pos && s.total ? ' · ' : ''}on ${cfg.target.name}` : '');
   if (P.flip && !s.remote) $('#npPos').textContent = 'End of Side A · press the knob to flip';
-  $('#npDest').textContent = s.remote ? '' : tapeNow() ? (navigator.onLine ? 'Playing from Tape' : 'No signal · playing from Tape') : P.track?.local ? 'Playing from this phone' : ''; { const tp = $('#npTape'); if (tp) tp.classList.toggle('tp-go', !!s.playing); }
+  $('#npDest').innerHTML = s.remote || !(tapeNow() || P.track?.local) ? '' : `${OFF_SVG}<span>${navigator.onLine ? 'Offline · no data used' : 'No signal · from your phone'}</span>`; { const tp = $('#npTape'); if (tp) tp.classList.toggle('tp-go', !!s.playing); }
   const npEl = bar.parentElement; if (npEl) npEl.classList.toggle('opts', v.mode !== 'play');
   const rs = $('#npStars'); if (rs) { const r = ratingOf(s.track); rs.textContent = r && v.mode !== 'rating' ? starsTxt(r) : ''; }
   if (v.mode === 'rating') {
@@ -5009,7 +5082,7 @@ async function videoSections() {
 }
 const vLabel = m => m.type === 'episode' ? (m.index != null ? `${m.index}. ${m.title}` : m.title) : m.title;
 const vItem = m => ({ label: m.type === 'episode' && m.grandparentTitle && m._deck ? `${m.grandparentTitle}: ${m.title}` : vLabel(m),
-  value: m.viewOffset ? 'Resume' : (ELITE && tapeVid(m) ? 'Tape' : null), arrow: true, go: () => ELITE ? push(videoMenu(m)) : playVideo(m) });
+  value: m.viewOffset ? 'Resume' : (ELITE && tapeVid(m) ? 'Saved' : null), arrow: true, go: () => ELITE ? push(videoMenu(m)) : playVideo(m) });
 const movieList = s => Lazy(s.title, paged(`/library/sections/${s.key}/all`, { type: 1 }), vItem);
 const showList = s => Lazy(s.title, paged(`/library/sections/${s.key}/all`, { type: 2 }), m => ({ label: m.title, arrow: true, go: () => push(seasonList(m)) }));
 const seasonList = sh => Lazy(sh.title, paged(`/library/metadata/${sh.ratingKey}/children`),
@@ -5053,7 +5126,7 @@ function vStart(v) {
   V.resume = (m.viewOffset || 0) / 1000;
   const s = NPs(); if (s && s.playing) toggle();
   $('#vName').textContent = m.type === 'episode' ? `${m.grandparentTitle || ''} · ${m.title}` : m.title;
-  if (m._tape) { V.hls = false; tapeVidUrl(m._tape).then(u => { if (V.m !== m) return; if (!u) { flash("That video isn't on tape anymore."); return; } vEl.src = u; vEl.play().catch(() => {}); }); }
+  if (m._tape) { V.hls = false; tapeVidUrl(m._tape).then(u => { if (V.m !== m) return; if (!u) { flash("That video isn't on this phone anymore."); return; } vEl.src = u; vEl.play().catch(() => {}); }); }
   else { vEl.src = V.hls ? vHlsUrl(m) : vDirectUrl(m); vEl.play().catch(() => {}); }
   vPlace();
   if (V.resume > 30) flash(`Resuming at ${fmt(V.resume)}`);
@@ -5905,6 +5978,8 @@ else if (cfg.token && cfg.server) {
 }
 if (remoteActive()) startPoll();
 setTimeout(cfOrient, 0);
+setTimeout(() => mixPull(true), 3000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) mixPull(); });
 })();
 </script>
 
