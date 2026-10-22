@@ -148,7 +148,7 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 
 .row{display:flex;align-items:center;gap:2cqw;height:var(--rh);padding:0 3cqw 0 3.4cqw;
   font-size:calc(var(--rh)*.54);font-weight:600;white-space:nowrap;line-height:1}
-.has-sb .row{padding-right:8cqw}
+.has-sb .row{padding-right:3cqw;margin-right:4.2cqw}
 .row .l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;padding-block:.15em}
 .row .r{display:flex;align-items:center;gap:1.6cqw;color:#4d535a;flex:none;max-width:48%}
 .row .v{overflow:hidden;text-overflow:ellipsis;font-weight:400}
@@ -957,7 +957,7 @@ html.desk .console .bar-t{margin:5px 16px 0 0;height:calc(100% - 10px);line-heig
 html.desk .console .body::before{width:72px;border-bottom-left-radius:34px}
 html.desk .console .rows{left:86px}
 html.desk .row{cursor:pointer;padding-left:22px;padding-right:22px}
-html.desk .sb{width:14px;right:8px}html.desk .has-sb .row{padding-right:38px}
+html.desk .sb{width:8px;right:8px}html.desk .has-sb .row{padding-right:14px;margin-right:24px}
 html.desk .row:hover:not(.sel){background:rgba(61,115,201,.10)}
 html.desk .console .row:hover:not(.sel){background:rgba(255,153,102,.18)}
 html.desk .dk-foot{display:block;grid-column:1/3;padding:8px 16px 10px;text-align:center;font:600 14px var(--f-ui);color:#4b525a;text-shadow:0 1px 0 rgba(255,255,255,.6)}
@@ -1130,7 +1130,10 @@ html:not(.desk) .pod.recv .center{z-index:1;display:grid;place-items:center;colo
 html:not(.desk) .pod.recv .center::after{content:'SELECT'}html:not(.desk) .pod.recv.rx-np .center::after{content:'MODE'}html:not(.desk) .pod.recv.rx-vid .center::after{content:'PLAY'}
 html:not(.desk) .pod.recv .rx-keys{order:2;display:block;width:calc(var(--w)*.91);margin-top:calc(var(--w)*.035)}
 .rx-src,.rx-modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--w)*.016)}
-.rx-modes{display:none}html:not(.desk) .pod.recv.rx-np .rx-modes{display:grid}html:not(.desk) .pod.recv.rx-np .rx-src{display:none}
+.rx-modes{display:none}html:not(.desk) .pod.recv.rx-np .rx-modes{display:grid}
+.rx-mx{display:none!important}html:not(.desk) .pod.recv.rx-mix .rx-mx{display:flex!important}html:not(.desk) .pod.recv.rx-mix :is([data-rxm=shuffle],[data-rxm=repeat],#rxTx [data-rx=prev],#rxTx [data-rx=next]){display:none!important}
+#rxTx .rx-mx{gap:calc(var(--w)*.012);flex-direction:row;align-items:center;justify-content:center}#rxTx .rx-mx span{font-size:calc(var(--w)*.03);font-weight:700;letter-spacing:.08em}
+.rx-mx.dim{opacity:.4}html:not(.desk) .pod.recv.rx-np .rx-src{display:none}
 .rx-keys i{width:calc(var(--w)*.022);height:calc(var(--w)*.022);border-radius:50%;background:rgba(0,0,0,.35)}
 .rx-keys button.lit i{background:var(--rx-glow);box-shadow:0 0 calc(var(--w)*.02) var(--rx-glow)}
 /* Back sits dead center so it is the same reach for a left or right thumb, and it is lit so it reads as the way out */
@@ -1394,6 +1397,12 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
 .vfd .stars button{color:color-mix(in srgb,var(--vfd) 30%,#000)}.vfd .stars button.on,.vfd .np-stars{color:var(--vfd)}
 .vfd .sbox{background:#0b0a07;border-bottom:0}.vfd .sbox input{background:#1d1709;color:var(--vfd);border:0}
 .vfd .npstrip{background:#0b0a07;border-top:1px solid color-mix(in srgb,var(--vfd) 30%,transparent);color:var(--vfd);text-transform:uppercase}
+
+/* the scroll bar has its own lane on the right, thin and just for show, so it never sits on top of the highlighted row */
+.screen:not(.w95) .sb{width:1.5cqw;right:1.3cqw;border:0!important;border-radius:99cqw;box-shadow:none}
+.screen:not(.w95) .sb i{border-radius:99cqw;box-shadow:none}
+.w95 .sb{width:3cqw}
+html.desk .screen .sb{width:8px;right:8px}
 </style>
 
 </head>
@@ -1432,10 +1441,10 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
       <div class="rx-dial" aria-hidden="true"><i></i></div>
     </div>
     <div class="rx-keys" id="rxKeys">
-      <div class="rx-src"><button type="button" data-rx="music"><i></i>MUSIC</button><button type="button" data-rx="videos"><i></i>VIDEO</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rx="extras"><i></i>EXTRAS</button><button type="button" data-rx="settings"><i></i>SETUP</button></div>
-      <div class="rx-modes"><button type="button" data-rxm="scrub"><i></i>SCRUB</button><button type="button" data-rxm="rating"><i></i>RATE</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rxm="shuffle"><i></i>SHUFFLE</button><button type="button" data-rxm="repeat"><i></i>REPEAT</button></div>
+      <div class="rx-src"><button type="button" data-rx="home"><i></i>HOME</button><button type="button" data-rx="media"><i></i>MEDIA</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rx="extras"><i></i>EXTRAS</button><button type="button" data-rx="settings"><i></i>SETUP</button></div>
+      <div class="rx-modes"><button type="button" data-rxm="scrub"><i></i>SCRUB</button><button type="button" data-rxm="rating"><i></i>RATE</button><button type="button" class="rx-bk" data-rx="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>BACK</button><button type="button" data-rxm="shuffle"><i></i>SHUFFLE</button><button type="button" class="rx-mx" data-rxa="flip"><i></i>FLIP</button><button type="button" data-rxm="repeat"><i></i>REPEAT</button><button type="button" class="rx-mx" data-rxa="rewind"><i></i>REWIND</button></div>
     </div>
-    <div class="rx-tx" id="rxTx"><button type="button" data-rx="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button type="button" data-rx="play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M3 5v14l9-7zM14 5h3v14h-3zM19 5h3v14h-3z"/></svg></button><button type="button" data-rx="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button></div>
+    <div class="rx-tx" id="rxTx"><button type="button" data-rx="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M5 5h2.4v14H5zM19 5v14l-10-7z"/></svg></button><button type="button" class="rx-mx" data-rxw="-1" aria-label="Rewind"><svg viewBox="0 0 24 24"><path d="M12 5v14L2 12zM22 5v14l-10-7z"/></svg><span>REW</span></button><button type="button" data-rx="play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M3 5v14l9-7zM14 5h3v14h-3zM19 5h3v14h-3z"/></svg></button><button type="button" data-rx="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16.6 5H19v14h-2.4zM5 5v14l10-7z"/></svg></button><button type="button" class="rx-mx" data-rxw="1" aria-label="Fast forward"><span>FF</span><svg viewBox="0 0 24 24"><path d="M12 5v14l10-7zM2 5v14l10-7z"/></svg></button></div>
     <div class="dk-foot" id="dkFoot">Own your media.</div>
   </div>
   <div class="podback" id="podback" aria-label="The back of your myStereo">
@@ -1591,6 +1600,9 @@ const LS = {
   set(k, v) { try { localStorage.setItem(LSP + k, JSON.stringify(v)); } catch {} }
 };
 const PRODUCT = 'myStereo';
+/* version: the third number goes up with every update; 1.5 starts beta */
+const APP_VERSION = '1.4.2';
+const WHATS_NEW = `<h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2482,6 +2494,34 @@ function mixSideEnd() {
   else { P.flip = null; if (m) { m.pos = null; mixSave(); } flash(m && !m.len ? `That’s the end of ${m.title}.` : 'End of the tape. It’s rewound to Side A.'); }
   if (cur().kind === 'np') updateNP();
 }
+/* mixtape keys: rewind and fast forward wind through the tape (a tap jumps 15 seconds, holding keeps winding, right across songs),
+   Flip turns the tape over, Rewind goes back to the start of the side */
+const MXW = { t: null, held: false };
+async function mixWind(sec) {
+  if (!P.view?.mix || !P.track) return;
+  const t = (P.demoMode ? P.time : audio.currentTime) + sec, d = P.dur || audio.duration || 0;
+  if (t < 0) {
+    if (P.index > 0 && P.time < 2) { if (await loadIndex(P.index - 1, P.playing)) { const dd = (P.track.dur || 0) / 1000; const go = () => seekTo(Math.max(0, (audio.duration || dd) - 2)); if (audio.readyState >= 1 || P.demoMode) go(); else audio.addEventListener('loadedmetadata', go, { once: true }); } }
+    else seekTo(0);
+  } else if (d && t >= d - .5) { if (P.index + 1 < P.view.count()) { await loadIndex(P.index + 1, P.playing); } else seekTo(Math.max(0, d - .5)); }
+  else seekTo(t);
+  mixPos(); updateBar();
+}
+document.addEventListener('pointerdown', e => {
+  const wb = e.target.closest && e.target.closest('#rxTx [data-rxw]'); if (!wb) return;
+  const dir = +wb.dataset.rxw; MXW.held = false; clearInterval(MXW.t);
+  MXW.t = setTimeout(() => { MXW.held = true; MXW.t = setInterval(() => mixWind(dir * 3), 120); }, 450);
+});
+['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => document.addEventListener(ev, () => { clearTimeout(MXW.t); clearInterval(MXW.t); }));
+function mixKey(a) {
+  const mv = P.view?.mix, m = mv && mixOf(mv.id); if (!m) return;
+  if (a === 'rewind') { if (P.index === 0) seekTo(0); else mixPlay(m, mv.side, false, 0); flash(`Rewound to the start of ${m.len ? 'Side ' + SIDE(mv.side) : m.title}`); return; }
+  if (a === 'flip') {
+    const other = mv.side === 'a' ? 'b' : 'a';
+    if (!m.len || !m[other].length) { flash(m.len ? `Side ${SIDE(other)} is blank.` : 'This mixtape has one side.'); return; }
+    P.flip = null; flash(`Flipping to Side ${SIDE(other)}…`); mixPlay(m, other, true);
+  }
+}
 function mixFlip() { const f = P.flip; P.flip = null; const m = f && mixOf(f.id); if (m) { flash('Flipping to Side B…'); mixPlay(m, 'b'); } }
 /* the J-card: a printable insert for a real cassette case */
 function mixPrint(m) {
@@ -3187,7 +3227,8 @@ function alphaView() {
     { label: 'Share an Idea', act: () => { document.querySelector('input[name="fbKind"][value="Idea"]').checked = true; showPanel('fb'); } },
     { label: 'What to Test', arrow: true, go: () => push(Page('What to Test', ALPHA_TEST)) },
     { label: 'Buy BC a Record', act: () => { window.open('https://ownyourmedia.club/club/#tip', '_blank', 'noopener'); } },
-    { label: 'Build', value: '1.4 Alpha' }
+    { label: 'What’s New', arrow: true, go: () => push(Page('What’s New', WHATS_NEW)) },
+    { label: 'Version', value: APP_VERSION + ' Alpha' }
   ], { note: 'Thanks for testing! Your notes go straight to BC.', noteRows: 2 });
 }
 function signInPrompt(title = 'Music') {
@@ -3256,7 +3297,7 @@ function settingsView() {
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Help', arrow: true, go: () => push(helpView()) },
-    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+    { label: 'About', value: APP_VERSION, arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' ' + APP_VERSION + '. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
   ]);
 }
 /* the look of the player: faceplate, display, knob and screen */
@@ -3367,7 +3408,7 @@ function fbDevice() {
   const ua = navigator.userAgent, s = NPs();
   const dev = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : 'Other';
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-  return [`Edition: ${ELITE ? 'myStereo Elite' : 'myStereo'} 1.4 Alpha`, `Device: ${dev}${standalone ? ' (Home Screen app)' : ' (browser)'}`,
+  return [`Edition: ${ELITE ? 'myStereo Elite' : 'myStereo'} ${APP_VERSION} Alpha`, `Device: ${dev}${standalone ? ' (Home Screen app)' : ' (browser)'}`,
     `Screen: ${screen.width}x${screen.height}, window ${innerWidth}x${innerHeight}`,
     `View: ${typeof isDesk === 'function' && isDesk() ? 'Desktop Mode' : 'iPod'} · Case: ${caseOf(cfg.caseColor).name} · Screen style: ${screenName()}`,
     `Music: ${isDemo() ? 'demo library' : cfg.token ? 'Plex (' + (cfg.server?.owned ? 'own server' : 'shared server') + ')' : 'not signed in'}${ELITE && DAV.on ? ' + network share' : ''}`,
@@ -3448,7 +3489,7 @@ const HELP = `
 <h3>Go back</h3>
 <p>Press <span class="k">BACK</span>, the lit button in the middle of the row under the screen. Or tap the title bar at the top of the screen.</p>
 <h3>Jump around</h3>
-<p>The buttons beside Back go straight to <b>Music</b>, <b>Video</b>, <b>Extras</b> and <b>Setup</b> from anywhere.</p>
+<p>The buttons beside Back: <b>Home</b> goes to the main menu, <b>Media</b> has Music, Mixtapes, On Phone and Videos, and <b>Extras</b> and <b>Setup</b> go straight there from anywhere.</p>
 <h3>Play and pause</h3>
 <p>Press <span class="k">▶❙❙</span> along the bottom. <span class="k">⏮</span> and <span class="k">⏭</span> change songs.</p>
 <h3>Get back to your song</h3>
@@ -3511,7 +3552,7 @@ function updateBar() {
   barL.innerHTML = stack.length > 1 ? ICON.back : (s ? (s.playing ? ICON.play : ICON.pause) : '');
   const w95 = screenEl.classList.contains('w95');
   barR.innerHTML = (SLEEP.until || SLEEP.eos ? ICON.moon : '') + (s && cfg.shuffle ? ICON.shuf : '') + (s && cfg.repeat !== 'off' ? (cfg.repeat === 'one' ? ICON.rep1 : ICON.rep) : '') +
-    (MIX.rec || (TAPE.busy && TAPE.job?.key.startsWith('mix:')) ? '<span class="crn-tape rec">● REC</span>' : TAPE.busy ? '<span class="crn-tape">SAVING</span>' : '') + (tapeNow() || P.track?.local ? `<span class="crn-cass" aria-label="Offline: playing from this phone, no data">${OFF_SVG}</span>` : '') +
+    (MIX.rec || (TAPE.busy && TAPE.job?.key.startsWith('mix:')) ? '<span class="crn-tape rec">● REC</span>' : TAPE.busy ? '<span class="crn-tape">SAVING</span>' : '') + (P.view?.mix && P.track && !remoteActive() ? `<span class="crn-cass" aria-label="Playing a mixtape">${CASS_SVG}</span>` : '') + (tapeNow() || P.track?.local ? `<span class="crn-cass" aria-label="Offline: playing from this phone, no data">${OFF_SVG}</span>` : '') +
     (w95 ? (busy > 0 ? ICON_HG : '<i class="wb">_</i><i class="wb">□</i><i class="wb">×</i>') : (busy > 0 ? ICON.spin : cornerHTML(s)));
   $('#pod').classList.toggle('jlplay', !!(s && s.playing));
 }
@@ -3830,7 +3871,7 @@ async function select() {
   if (codeStep('center')) return;
   const v = cur();
   if (v.kind === 'np' && P.flip && !remoteActive()) { mixFlip(); return; }
-  if (v.kind === 'np') { if (!NPs()) return; v.mode = NP_MODES[(NP_MODES.indexOf(v.mode) + 1) % NP_MODES.length]; npIdle(v); updateNP(); npPop(v); return; }
+  if (v.kind === 'np') { if (!NPs()) return; { const ms = P.view?.mix ? NP_MODES.filter(x => x !== 'shuffle' && x !== 'repeat') : NP_MODES; v.mode = ms[(ms.indexOf(v.mode) + 1) % ms.length]; } npIdle(v); updateNP(); npPop(v); return; }
   if (v.kind === 'page') return;
   if (v.kind === 'game') { if (v.g) v.G.action(v); return; }
   if (v.kind === 'video') { vToggle(); return; }
@@ -4020,7 +4061,9 @@ function rxSync() {
   const pod = $('#pod'); if (!pod || !pod.classList.contains('recv')) return;
   const v = typeof cur === 'function' ? cur() : null; if (!v) return;
   pod.classList.toggle('rx-np', v.kind === 'np'); pod.classList.toggle('rx-vid', v.kind === 'video');
-  const root = stack[1], sec = !root ? '' : root.title === 'Music' ? 'music' : root.title === 'Videos' ? 'videos' : root.title === 'Extras' ? 'extras' : root.title === 'Settings' ? 'settings' : '';
+  const mx = !!(P.view?.mix && P.track && !remoteActive()); pod.classList.toggle('rx-mix', mx);
+  const fl = document.querySelector('#rxKeys [data-rxa=flip]'); if (fl) { const m = mx && mixOf(P.view.mix.id); fl.classList.toggle('dim', !(m && m.len && (P.view.mix.side === 'a' ? m.b.length : m.a.length))); }
+  const root = stack[1], sec = !root ? 'home' : ['Media', 'Music', 'Videos', 'Mixtapes', 'On Phone'].includes(root.title) ? 'media' : root.title === 'Extras' ? 'extras' : root.title === 'Settings' ? 'settings' : '';
   document.querySelectorAll('#rxKeys .rx-src [data-rx]').forEach(b => b.classList.toggle('lit', b.dataset.rx === sec));
   document.querySelectorAll('#rxKeys [data-rxm]').forEach(b => b.classList.toggle('lit', v.kind === 'np' && v.mode === b.dataset.rxm));
 }
@@ -4032,15 +4075,27 @@ document.addEventListener('pointerdown', e => {
     if (navigator.vibrate) try { navigator.vibrate(40); } catch {} setTimeout(() => el.classList.remove('on'), 4000); }, 5000);
 });
 ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => document.addEventListener(t, () => clearTimeout(RX.holdT), true));
-const RX_GO = { music: () => musicMenu(), videos: () => videosView(), extras: () => extrasView(), settings: () => settingsView() };
+const RX_GO = { home: null, media: () => mediaMenu(), extras: () => extrasView(), settings: () => settingsView() };
+function mediaMenu() {
+  return List('Media', [
+    { label: 'Music', arrow: true, go: () => push(musicMenu()) },
+    { label: 'Mixtapes', arrow: true, go: () => push(mixtapesMenu()) },
+    { label: 'On Phone', arrow: true, go: () => push(localMenu()) },
+    { label: 'Videos', arrow: true, go: () => push(videosView()) }
+  ]);
+}
 document.addEventListener('click', e => {
+  const mxb = e.target.closest && e.target.closest('#rxKeys [data-rxa]');
+  if (mxb) { click(); mixKey(mxb.dataset.rxa); return; }
+  const wb = e.target.closest && e.target.closest('#rxTx [data-rxw]');
+  if (wb) { if (MXW.held) { MXW.held = false; return; } click(); mixWind(+wb.dataset.rxw * 15); return; }
   const b = e.target.closest && e.target.closest('#rxKeys [data-rx],#rxTx [data-rx],#rxKeys [data-rxm]'); if (!b) return;
   const k = b.dataset.rx, m = b.dataset.rxm;
   if (k === 'back' && RX.held) { RX.held = false; return; }
   if (m) { const v = cur(); if (v.kind === 'np' && NPs()) { click(); v.mode = v.mode === m ? 'play' : m; npIdle(v); updateNP(); rxSync(); } return; }
   if (k === 'back') return press('menu');
   if (k === 'prev' || k === 'play' || k === 'next') return press(k);
-  if (RX_GO[k]) { click(); while (stack.length > 1) { const v = stack.pop(); if (v.onLeave) try { v.onLeave(); } catch {} } push(RX_GO[k]()); rxSync(); }
+  if (k in RX_GO) { click(); while (stack.length > 1) { const v = stack.pop(); if (v.onLeave) try { v.onLeave(); } catch {} } if (RX_GO[k]) push(RX_GO[k]()); else render('out'); rxSync(); }
 });
 let drag = null;
 wheel.addEventListener('pointerdown', e => {
