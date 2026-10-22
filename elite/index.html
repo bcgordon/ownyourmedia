@@ -892,6 +892,7 @@ html:not(.vfull) .vctl,html:not(.vfull) .vtop{display:none}
 
 /* no double-tap zoom anywhere on myStereo (quick Menu, Menu presses were zooming in) */
 html,body,.stage,.podwrap,.pod,.screen,.bar{touch-action:manipulation}
+.rd{font-variant-numeric:tabular-nums;margin-left:8px}.rd.nofit{opacity:.45;text-decoration:line-through}
 @media (prefers-reduced-motion: reduce){.rows.in,.rows.out{animation:none}.spin{animation-duration:3s}.toast{transition:none}}
 
 /* ---------- Desktop Mode: a 2004-style jukebox window instead of a giant iPod (mouse first, no click wheel) ---------- */
@@ -1601,9 +1602,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.5';
+const APP_VERSION = '1.4.6';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -3580,10 +3581,18 @@ function cornerView() {
   return v;
 }
 setInterval(() => { if (!document.hidden && (cfg.corner || 'clockeq').startsWith('clock')) updateBar(); }, 15000);
+/* while recording a mixtape, songs show their run time; ones too long for the room left are dimmed */
+function recDur(it) {
+  const t = it && it.track; if (!MIX.rec || !t || !t.dur) return null;
+  const m = mixOf(MIX.rec); if (!m) return null;
+  const cap = sideMs(m), fit = !m.len || sideUsed(m, 'a') + t.dur <= cap || sideUsed(m, 'b') + t.dur <= cap;
+  return { txt: mmss(t.dur), fit };
+}
 function rowHTML(it, sel, i) {
   let r = '';
+  const rd = recDur(it);
   if (it.check) r = ICON.check;
-  else { if (it.value != null) r += `<span class="v">${esc(it.value)}</span>`; if (it.arrow) r += ICON.chev; }
+  else { if (it.value != null && it.value !== '') r += `<span class="v">${esc(it.value)}</span>`; if (rd) r += `<span class="v rd${rd.fit ? '' : ' nofit'}"${rd.fit ? '' : ' title="Too long for the room left"'}>${rd.txt}</span>`; if (it.arrow) r += ICON.chev; }
   return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${brandHTML(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
 }
 /* focus layouts: draw the current list as one big item with its neighbors, over the normal rows */
@@ -3602,7 +3611,7 @@ function fxRender() {
   ov.innerHTML = (dial ? `<div class="fx-scale"><span>A</span><span>D</span><span>G</span><span>J</span><span>M</span><span>P</span><span>S</span><span>V</span><span>Z</span><i style="left:${(pos * 100).toFixed(1)}%"></i></div>` : '')
     + `<div class="fx-count">${String(i + 1).padStart(3, '0')} / ${String(n).padStart(3, '0')}</div>`
     + `<button type="button" class="fx-nb" data-fx="-1">${lab(pv)}</button>`
-    + `<button type="button" class="fx-cur" data-fx="0"><b>${lab(it)}</b><span>${[it.value != null && it.value !== '' ? esc(it.value) : '', it.check ? '✓ Selected' : '', it.arrow ? 'Open ›' : ''].filter(Boolean).join(' · ') || '&nbsp;'}</span></button>`
+    + `<button type="button" class="fx-cur" data-fx="0"><b>${lab(it)}</b><span>${[it.value != null && it.value !== '' ? esc(it.value) : '', recDur(it) ? recDur(it).txt + (recDur(it).fit ? '' : ' · too long') : '', it.check ? '✓ Selected' : '', it.arrow ? 'Open ›' : ''].filter(Boolean).join(' · ') || '&nbsp;'}</span></button>`
     + `<button type="button" class="fx-nb" data-fx="1">${lab(nx)}</button>`;
 }
 bodyEl.addEventListener('click', e => {
