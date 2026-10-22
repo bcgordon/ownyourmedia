@@ -1601,8 +1601,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.2';
-const WHATS_NEW = `<h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const APP_VERSION = '1.4.3';
+const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
+const WHATS_NEW = `<h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -3297,7 +3298,7 @@ function settingsView() {
     ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
     { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
     { label: 'Help', arrow: true, go: () => push(helpView()) },
-    { label: 'About', value: APP_VERSION, arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' ' + APP_VERSION + '. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+    { label: 'About', value: APP_VERSION, arrow: true, go: () => push(Page('About', aboutHTML())) }
   ]);
 }
 /* the look of the player: faceplate, display, knob and screen */
@@ -3634,7 +3635,7 @@ function renderList(v, anim) {
   const s = split || v.nostrip ? null : NPs();
   const rows = Math.max(1, ROWS - noteRows - (s ? 1 : 0)); v._rows = rows;
   const nh = note && !v.err ? v.noteHTML : null;
-  let html = note ? `<div class="note${nh ? ' gfx' : ''}" style="height:calc(var(--rh) * ${noteRows})">${nh || brandHTML(note)}</div>` : '';
+  let html = note ? `<div class="note${nh ? ' gfx' : ''}" style="height:calc(var(--rh) * ${noteRows})">${nh || `<span>${brandHTML(note)}</span>`}</div>` : '';
   let sb = '';
   if (v.err) { v.sel = 0; html += rowHTML({ label: 'Try Again' }, true, 0); }
   else {
