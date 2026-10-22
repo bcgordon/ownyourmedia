@@ -111,7 +111,7 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .jc-ovbar button{flex:1;min-height:48px;border:0;border-radius:10px;background:#F2B84B;color:#141414;font:700 18px var(--f-ui)}
 .jc-ovbar button[data-a="close"]{background:#e8e8ea}
 .jc-ov iframe{flex:1;border:0;background:#fff}
-.np-jc{position:relative;flex:none;width:52cqw;aspect-ratio:1.3;cursor:pointer;display:flex;border-radius:1.6cqw;overflow:hidden;background:#f6f1e4;color:#1c1b19;box-shadow:0 1px 3px rgba(0,0,0,.4),inset 0 0 0 .4cqw rgba(0,0,0,.15);text-align:left}
+.np-jc{position:relative;flex:none;height:100%;max-height:40cqw;width:auto;aspect-ratio:1.3;cursor:pointer;display:flex;border-radius:1.6cqw;overflow:hidden;background:#f6f1e4;color:#1c1b19;box-shadow:0 1px 3px rgba(0,0,0,.4),inset 0 0 0 .4cqw rgba(0,0,0,.15);text-align:left}
 .npj-body{flex:1;min-width:0;display:flex;flex-direction:column;padding:1.6cqw 2.4cqw;background:repeating-linear-gradient(180deg,transparent 0 calc(5.6cqw - 1px),rgba(37,73,199,.16) calc(5.6cqw - 1px) 5.6cqw)}
 .npj-top{border-bottom:.4cqw solid var(--lc);padding-bottom:.4cqw;margin-bottom:.4cqw}
 .npj-t{font:700 6.4cqw/1.05 Caveat,"Marker Felt","Bradley Hand",cursive;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:none}
@@ -125,7 +125,7 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .np .np-dest:empty{display:none}
 .tp-dub.sv{align-items:stretch}.sv-ico{align-self:center;height:34%;aspect-ratio:1;display:grid;place-items:center}.sv-ico svg{height:100%;width:auto}
 .sv-t{font-size:5.6cqw;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.big .np-jc{width:50cqw}
+.big .np-jc{max-height:38cqw}
 .np-tape{position:relative;flex:none;width:46cqw;aspect-ratio:1.55;box-sizing:border-box;border:.6cqw solid currentColor;border-radius:2.4cqw;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#222}
 .np-tape img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .np-tape .tp-win{position:relative;flex:none;width:76%;height:40%;background:rgba(10,10,10,.82);color:#f3efe6;border-color:#f3efe6}
@@ -1325,24 +1325,24 @@ html:not(.desk) .pod.recv.raed .rx-dial i{background:#f0d396;box-shadow:0 0 calc
 .podback.raback .engrave{top:80%;white-space:pre-line;line-height:1.4;color:#f0d396;text-shadow:0 1px 0 rgba(0,0,0,.4);font-family:"Diplomata SC",Georgia,serif;font-size:calc(var(--w)*.042);letter-spacing:.02em}
 html.raback.showback,html.raback.showback body{background:#162f45}
 /* Runaway Anchor display */
-.screen.anchor{background:#1e3f5c;color:#f0d396;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
-.anchor .bar{background:#162f45;border-bottom:.5cqw solid #f0d396;color:#f0d396}
+.screen.anchor{background:linear-gradient(#f4dca5,#f0d396);color:#1e3f5c;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.anchor .bar{background:#e6c47c;border-bottom:.5cqw solid #1e3f5c;color:#1e3f5c}
 .anchor .bar-t{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.01em}
-.anchor .bar svg path{stroke:#f0d396!important}.anchor .bar-r,.anchor .crn-clock{color:#f0d396}.anchor .crn-eq i{background:#aae491}
-.anchor .row{color:#fff;font-weight:700}
-.anchor .row.sel{background:#f0d396;color:#1e3f5c;box-shadow:inset 0 0 0 .5cqw #e2bd6c}
-.anchor .row .r,.anchor .row .v{color:#a2c0d6}.anchor .row.sel .r,.anchor .row.sel .v{color:#1e3f5c}
-.anchor .row.dim{color:#7e9bb3}
-.anchor .sb{background:#162f45;border:0}.anchor .sb i{background:#f0d396}
-.anchor .note,.anchor .page{color:#fff}.anchor .page h3{color:#f0d396}
-.anchor .npstrip{background:#162f45;border-top:.5cqw solid #f0d396;color:#fff}.anchor .npstrip .go{color:#f0d396}
-.anchor .np-pos{color:#a2c0d6}.anchor .np-title{color:#f0d396}.anchor .np-artist,.anchor .np-album{color:#fff}
-.anchor .np-art{box-shadow:0 0 0 .6cqw #f0d396}
-.anchor .trk{background:#162f45;border:0}.anchor .fill{background:#f0d396}.anchor .knob{background:#fff;border:0}
-.anchor .seg{background:#162f45;border:0}.anchor .seg button{color:#fff}.anchor .seg button.on{background:#f0d396;color:#1e3f5c}
-.anchor .stars button{color:#3d6385}.anchor .stars button.on,.anchor .np-stars{color:#f0d396}
-.anchor .sbox{background:#162f45}.anchor .sbox input{background:#24496a;color:#fff;border:1px solid #f0d396}
-html.desk .anchor .row:hover:not(.sel){background:rgba(240,211,150,.14)}
+.anchor .bar svg path{stroke:#1e3f5c!important;fill:#1e3f5c}.anchor .bar-r,.anchor .crn-clock{color:#1e3f5c}.anchor .crn-eq i{background:#1e3f5c}
+.anchor .row{color:#1e3f5c;font-weight:700}
+.anchor .row.sel{background:#1e3f5c;color:#f0d396;box-shadow:none}
+.anchor .row .r,.anchor .row .v{color:#3d6385}.anchor .row.sel .r,.anchor .row.sel .v{color:#f0d396}
+.anchor .row.dim{color:#8a7a52}
+.anchor .sb{background:rgba(30,63,92,.15);border:0}.anchor .sb i{background:#1e3f5c}
+.anchor .note,.anchor .page{color:#1e3f5c}.anchor .page h3{color:#1e3f5c}
+.anchor .npstrip{background:#e6c47c;border-top:.5cqw solid #1e3f5c;color:#1e3f5c}.anchor .npstrip .go{color:#1e3f5c}
+.anchor .np-pos{color:#3d6385}.anchor .np-title{color:#1e3f5c}.anchor .np-artist,.anchor .np-album{color:#2f5576}
+.anchor .np-art{box-shadow:0 0 0 .6cqw #1e3f5c}
+.anchor .trk{background:rgba(30,63,92,.18);border:0}.anchor .fill{background:#1e3f5c}.anchor .knob{background:#1e3f5c;border:0}
+.anchor .seg{background:rgba(30,63,92,.15);border:0}.anchor .seg button{color:#1e3f5c}.anchor .seg button.on{background:#1e3f5c;color:#f0d396}
+.anchor .stars button{color:#c9a85e}.anchor .stars button.on,.anchor .np-stars{color:#1e3f5c}
+.anchor .sbox{background:#e6c47c}.anchor .sbox input{background:#fbf1d8;color:#1e3f5c;border:1px solid #1e3f5c}
+html.desk .anchor .row:hover:not(.sel){background:rgba(30,63,92,.12)}
 html:not(.desk) .pod.recv.saber .center{box-shadow:0 0 calc(var(--w)*.03) rgba(95,208,255,.6)}
 html:not(.desk) .pod.recv .console .bar-t,html:not(.desk) .pod.recv .saber .bar-t{letter-spacing:0;font-size:.86em}html:not(.desk) .pod.recv .console .bar-t{font-size:.8em}
 
@@ -1601,9 +1601,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.3';
+const APP_VERSION = '1.4.4';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
