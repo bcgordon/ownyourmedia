@@ -74,7 +74,30 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .crn-dest{display:flex;align-items:center;gap:1cqw;max-width:21cqw;font-size:3.8cqw;font-weight:600;color:#2a5fb8}
 .crn-dest span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .crn-tape{flex:none;font-size:2.9cqw;font-weight:800;letter-spacing:.1em;line-height:1.25;padding:0 .9cqw;margin-right:1.2cqw;border:.35cqw solid currentColor;border-radius:.8cqw}
-.crn-tape.rec{color:#e0412f;border-color:#e0412f}
+.crn-tape.rec{color:#e0412f;border-color:#e0412f;animation:tpBlink 1.2s steps(2) infinite}
+.crn-cass{display:flex;align-items:center;margin-right:1.4cqw}.crn-cass svg{height:4.6cqw;width:auto}
+@keyframes tpBlink{50%{opacity:.35}}
+@keyframes tpSpin{to{transform:rotate(360deg)}}
+.note.gfx{display:block;padding:1.4cqw 4cqw 0;text-align:left}
+.tp-dub{display:flex;flex-direction:column;gap:1.6cqw;height:100%}
+.tp-cas{position:relative;align-self:center;width:72cqw;flex:none;aspect-ratio:1.9;box-sizing:border-box;border:.6cqw solid currentColor;border-radius:2.6cqw;padding:2cqw 2.4cqw;display:flex;flex-direction:column;align-items:center;gap:2cqw;max-height:52%}
+.tp-lab{align-self:stretch;padding:0 2cqw;border-radius:1cqw;background:color-mix(in srgb,currentColor 14%,transparent);font-size:4.2cqw;font-weight:700;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.6}
+.tp-win{flex:1;min-height:0;width:66%;border:.5cqw solid currentColor;border-radius:99cqw;display:flex;align-items:center;justify-content:space-between;padding:0 1.6cqw;box-sizing:border-box;background:rgba(0,0,0,.35)}
+.tp-reel{position:relative;height:80%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle,transparent 0 calc(30% - 1px),rgba(122,86,34,.85) 30% calc(30% + var(--t) * 20%),transparent calc(30% + var(--t) * 20% + 1px))}
+.tp-reel svg{width:58%;height:58%}
+.tp-go .tp-reel svg{animation:tpSpin 2.4s linear infinite}
+.tp-notch{position:absolute;bottom:-.6cqw;left:24%;right:24%;height:12%;border:.6cqw solid currentColor;border-bottom:0;border-radius:1.4cqw 1.4cqw 0 0}
+.tp-line{display:flex;justify-content:space-between;align-items:center;font-size:5.4cqw}
+.tp-ctr{font-size:4.2cqw;letter-spacing:.14em;padding:0 1.4cqw;border:.3cqw solid currentColor;border-radius:.8cqw;opacity:.85;font-variant-numeric:tabular-nums}
+.tp-now{font-size:4.6cqw;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:-1cqw}
+.tp-prog{height:2.4cqw;border-radius:99cqw;background:color-mix(in srgb,currentColor 18%,transparent);overflow:hidden}.tp-prog i{display:block;height:100%;background:currentColor}
+.np-tape{position:relative;flex:none;width:46cqw;aspect-ratio:1.55;box-sizing:border-box;border:.6cqw solid currentColor;border-radius:2.4cqw;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#222}
+.np-tape img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.np-tape .tp-win{position:relative;flex:none;width:76%;height:40%;background:rgba(10,10,10,.82);color:#f3efe6;border-color:#f3efe6}
+.np-tape .tp-notch{border-color:currentColor;background:inherit}
+.big .np-tape{width:42cqw}
+@media (prefers-reduced-motion:reduce){.tp-go .tp-reel svg,.crn-tape.rec{animation:none}}
 .crn-dest svg{height:4.4cqw;flex:none}
 .dark .crn-eq i{background:#6aa8f5}.dark .crn-dest{color:#7fb4f6}
 .classic .crn-eq i{background:var(--ink);border-radius:0}.classic .crn-dest{color:var(--ink)}
@@ -309,9 +332,11 @@ html.showback body{background-color:#b8bdc3}
   font-size:calc(var(--rh)*.44);font-weight:600;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .npstrip:active{background:linear-gradient(#73adf0,#2a68cc);color:#fff}
 .npstrip svg{height:calc(var(--rh)*.4);width:auto;flex:none}
+.npstrip svg path{fill:currentColor;stroke:currentColor}
 .npstrip .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{text-transform:none!important;font-variant:normal!important;font-variant-caps:normal!important}
 .npstrip .t b{font-weight:700}
-.npstrip .go{flex:none;font-weight:700;color:#2a5fb8}
+.npstrip .go{flex:none;font-weight:700;color:inherit;opacity:.85;display:flex;align-items:center}
 .npstrip:active .go{color:#fff}
 .npstrip .go svg{height:calc(var(--rh)*.34);vertical-align:-.05em;margin-left:.3em}
 .npstrip:focus-visible{outline:3px solid #2a68cc;outline-offset:-3px}
@@ -363,7 +388,7 @@ html.showback body{background-color:#b8bdc3}
 .dark .stars button.on,.dark .np-stars{color:#6aa8f5}
 .dark .dots i{background:#16181b;border-color:#7d848c}
 .dark .npstrip{background:linear-gradient(#33373c,#212428);border-top-color:#0b0c0e;color:#f2f3f5}
-.dark .npstrip .go{color:#7fb4f6}
+.dark .npstrip .go{color:inherit}
 .dark .sbox{background:linear-gradient(#2a2d32,#202327);border-bottom-color:#0b0c0e}
 .dark .sbox input{background:#0f1113;color:#f2f3f5;border-color:#555b62}
 .dark .nppop{background:rgba(58,62,68,.95)}
@@ -1265,7 +1290,7 @@ html.raback.showback,html.raback.showback body{background:#162f45}
 /* Runaway Anchor display */
 .screen.anchor{background:#1e3f5c;color:#f0d396;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
 .anchor .bar{background:#162f45;border-bottom:.5cqw solid #f0d396;color:#f0d396}
-.anchor .bar-t{font-family:"Diplomata SC",Georgia,serif;font-weight:400;letter-spacing:.02em;font-size:.86em}
+.anchor .bar-t{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.01em}
 .anchor .bar svg path{stroke:#f0d396!important}.anchor .bar-r,.anchor .crn-clock{color:#f0d396}.anchor .crn-eq i{background:#aae491}
 .anchor .row{color:#fff;font-weight:700}
 .anchor .row.sel{background:#f0d396;color:#1e3f5c;box-shadow:inset 0 0 0 .5cqw #e2bd6c}
@@ -2149,7 +2174,9 @@ async function tapeRun() {
   TAPE.busy = false; try { TAPE.wake?.release(); } catch {} TAPE.wake = null;
   await Local.load(); tapeEstimate(); tapeDraw(); updateBar();
 }
-const reels = () => `<span class="tp-reel"></span>`;
+const HUB = '<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="20" cy="20" r="5" fill="currentColor"/><path d="M20 4v8M6.1 28l6.9-4M33.9 28l-6.9-4" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>';
+const tpReel = t => `<i class="tp-reel" style="--t:${clamp(t, 0, 1).toFixed(2)}">${HUB}</i>`;
+const CASS_SVG = '<svg viewBox="0 0 34 22" aria-hidden="true"><rect x="1" y="1" width="32" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="11" cy="10" r="3.4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="23" cy="10" r="3.4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9 21l2-4h12l2 4" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>';
 function dubbingView() {
   const v = List('Dubbing', () => TAPE.busy ? [
       { label: 'Stop Dubbing', act: () => { if (TAPE.job) TAPE.job.stop = true; TAPE.q.splice(1); flash('Stopping after this song'); } },
@@ -2162,7 +2189,15 @@ function dubbingView() {
     if (j.video) return `● REC  ${j.title}\n${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}\nKeep myStereo open while it dubs.`;
     return `● REC  COUNTER ${String(TAPE.count).padStart(3, '0')}\n${j.title}: song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}${j.now ? ' · ' + j.now : ''}\nKeep myStereo open. If you leave, it picks up where it left off.`;
   } });
-  v.noteRows = 4;
+  Object.defineProperty(v, 'noteHTML', { get() {
+    const j = TAPE.job; if (!j) return null;
+    const p = j.video ? (j.pct || 0) / 100 : j.total ? j.done / j.total : 0;
+    const line = j.video ? `${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}` : `Song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}`;
+    return `<div class="tp-dub"><div class="tp-cas tp-go"><div class="tp-lab">SIDE A · ${esc(j.title)}</div><div class="tp-win">${tpReel(1 - p * .7)}${tpReel(.3 + p * .7)}</div><i class="tp-notch"></i></div>
+      <div class="tp-line"><b>${line}</b><span class="tp-ctr">${String(TAPE.count).padStart(3, '0')}</span></div>
+      ${j.video ? '' : `<div class="tp-now">${esc(j.now || '')}</div>`}<div class="tp-prog"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div>`;
+  } });
+  Object.defineProperty(v, 'noteRows', { get: () => TAPE.job ? Math.max(3, ROWS - 1) : 4 });
   return v;
 }
 /* the Dub to Tape row at the top of an album or playlist */
@@ -3093,6 +3128,7 @@ async function onSignedIn() {
 }
 
 /* ---------- how to use ---------- */
+const brandHTML = t => esc(t == null ? '' : String(t)).replace(/myStereo/g, '<span class="brand">myStereo</span>');
 const Page = (title, html) => ({ kind: 'page', title, html, scroll: 0 });
 const HELP = `
 <h3>Choose something</h3>
@@ -3163,7 +3199,7 @@ function updateBar() {
   barL.innerHTML = stack.length > 1 ? ICON.back : (s ? (s.playing ? ICON.play : ICON.pause) : '');
   const w95 = screenEl.classList.contains('w95');
   barR.innerHTML = (SLEEP.until || SLEEP.eos ? ICON.moon : '') + (s && cfg.shuffle ? ICON.shuf : '') + (s && cfg.repeat !== 'off' ? (cfg.repeat === 'one' ? ICON.rep1 : ICON.rep) : '') +
-    (tapeNow() || TAPE.busy ? `<span class="crn-tape${TAPE.busy ? ' rec' : ''}">${TAPE.busy ? '● REC' : 'TAPE'}</span>` : '') +
+    (TAPE.busy ? '<span class="crn-tape rec">● REC</span>' : tapeNow() ? `<span class="crn-cass" aria-label="Playing from tape">${CASS_SVG}</span>` : '') +
     (w95 ? (busy > 0 ? ICON_HG : '<i class="wb">_</i><i class="wb">□</i><i class="wb">×</i>') : (busy > 0 ? ICON.spin : cornerHTML(s)));
   $('#pod').classList.toggle('jlplay', !!(s && s.playing));
 }
@@ -3194,7 +3230,7 @@ function rowHTML(it, sel, i) {
   let r = '';
   if (it.check) r = ICON.check;
   else { if (it.value != null) r += `<span class="v">${esc(it.value)}</span>`; if (it.arrow) r += ICON.chev; }
-  return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${esc(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
+  return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${brandHTML(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
 }
 /* focus layouts: draw the current list as one big item with its neighbors, over the normal rows */
 function fxRender() {
@@ -3206,7 +3242,7 @@ function fxRender() {
   if (!ov) { ov = document.createElement('div'); ov.className = 'fx-ov'; bodyEl.appendChild(ov); }
   const st = bodyEl.querySelector('.npstrip'); ov.style.bottom = st ? st.offsetHeight + 'px' : '0';
   const n = v.count(), i = Math.min(v.sel, n - 1), it = v.get(i) || {}, pv = i > 0 ? v.get(i - 1) : null, nx = i < n - 1 ? v.get(i + 1) : null;
-  const lab = x => x ? esc(x.label || '') : '&nbsp;';
+  const lab = x => x ? brandHTML(x.label || '') : '&nbsp;';
   const L = (it.label || '').replace(/^the\s+/i, '').charAt(0).toUpperCase(), pos = /[A-Z]/.test(L) ? (L.charCodeAt(0) - 65) / 25 : 0;
   const dial = screenEl.classList.contains('fx-dial');
   ov.innerHTML = (dial ? `<div class="fx-scale"><span>A</span><span>D</span><span>G</span><span>J</span><span>M</span><span>P</span><span>S</span><span>V</span><span>Z</span><i style="left:${(pos * 100).toFixed(1)}%"></i></div>` : '')
@@ -3223,7 +3259,7 @@ function render(anim) {
   setTimeout(() => { try { rxSync(); } catch {} });
   const v = cur(); if (!v) return;
   const jlc = v === stack[0] && isJL();
-  barT.textContent = jlc ? jlTitle() : v.title; barT.classList.toggle('jlcount', jlc); updateBar();
+  if (jlc) barT.textContent = jlTitle(); else barT.innerHTML = brandHTML(v.title); barT.classList.toggle('jlcount', jlc); updateBar();
   if (v.kind !== 'search') bodyEl.dataset.view = '';
   screenEl.classList.toggle('vidmode', v.kind === 'video'); if (v.kind !== 'video') screenEl.classList.remove('vidui');
   if (v.kind !== 'game') stopGame();
@@ -3244,7 +3280,8 @@ function renderList(v, anim) {
   const split = !!v.split && !note && cfg.splitArt !== false;
   const s = split || v.nostrip ? null : NPs();
   const rows = Math.max(1, ROWS - noteRows - (s ? 1 : 0)); v._rows = rows;
-  let html = note ? `<div class="note" style="height:calc(var(--rh) * ${noteRows})">${esc(note)}</div>` : '';
+  const nh = note && !v.err ? v.noteHTML : null;
+  let html = note ? `<div class="note${nh ? ' gfx' : ''}" style="height:calc(var(--rh) * ${noteRows})">${nh || brandHTML(note)}</div>` : '';
   let sb = '';
   if (v.err) { v.sel = 0; html += rowHTML({ label: 'Try Again' }, true, 0); }
   else {
@@ -3256,12 +3293,12 @@ function renderList(v, anim) {
     const end = Math.min(n, v.top + rows);
     for (let i = v.top; i < end; i++) html += rowHTML(v.get(i) || { label: '…', dim: true }, i === v.sel, i);
     if (v.loading && v.loading() && end - v.top < rows) html += rowHTML({ label: 'Loading…', dim: true }, false);
-    if (n > rows) {
+    if (n > rows && rows >= 3) {
       const h = Math.max(8, rows / n * 100), t = (v.top / Math.max(1, n - rows)) * (100 - h);
       sb = `<div class="sb" style="top:calc(1.6cqw + ${noteRows} * var(--rh))"><i style="top:${t}%;height:${h}%"></i></div>`;
     }
   }
-  const strip = s ? `<button class="npstrip" id="npStrip" type="button" aria-label="Now Playing: ${esc(s.track.title)}">${s.playing ? ICON.play : ICON.pause}<span class="t"><b>${esc(s.track.title)}</b>${s.track.artist ? ' · ' + esc(s.track.artist) : ''}</span><span class="go">Now Playing${ICON.chev}</span></button>` : '';
+  const strip = s ? `<button class="npstrip" id="npStrip" type="button" aria-label="Now Playing: ${esc(s.track.title)}">${s.playing ? ICON.play : ICON.pause}<span class="t"><b>${esc(s.track.title)}</b>${s.track.artist ? ' · ' + esc(s.track.artist) : ''}</span><span class="go">${ICON.chev}</span></button>` : '';
   if (split) {
     if (anim || !$('#splitArt')) bodyEl.innerHTML = `<div class="rows split-l" id="splitL"></div><div class="split-r" id="splitArt"><img alt=""><img alt=""></div>`;
     const L = $('#splitL'); L.className = `rows split-l ${anim || ''}${sb ? ' has-sb' : ''}`; L.innerHTML = html + sb;
@@ -3275,12 +3312,14 @@ function renderList(v, anim) {
 function renderNP(v, anim, force) {
   const s = NPs();
   if (!s) { bodyEl.dataset.k = ''; bodyEl.innerHTML = `<div class="rows ${anim || ''}"><div class="note" style="height:calc(var(--rh) * 3)">Nothing is playing.</div></div>`; return; }
-  const k = s.track.rk + '|' + (s.remote ? 1 : 0);
+  const onTape = !s.remote && tapeNow();
+  const k = s.track.rk + '|' + (s.remote ? 1 : 0) + (onTape ? 't' : '');
   if (bodyEl.dataset.k !== k || anim || force) {
     bodyEl.dataset.k = k; const t = s.track; const a = art(t.thumb);
     bodyEl.innerHTML = `<div class="np rows ${anim || ''}">
       <div class="np-pos" id="npPos"></div>
-      <div class="np-main">${a ? `<img class="np-art" alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : '<div class="np-art"></div>'}
+      <div class="np-main">${onTape ? `<div class="np-tape${s.playing ? ' tp-go' : ''}" id="npTape" aria-label="Playing from tape">${a ? `<img alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : ''}<div class="tp-win">${tpReel(.6)}${tpReel(.45)}</div><i class="tp-notch"></i></div>`
+        : a ? `<img class="np-art" alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : '<div class="np-art"></div>'}
         <div class="np-meta"><div class="np-title">${esc(t.title)}</div><div class="np-artist">${esc(t.artist)}</div><div class="np-album">${esc(t.album)}</div><div class="np-stars" id="npStars"></div></div></div>
       <div class="np-bar" id="npBar"></div><div class="np-dest" id="npDest"></div></div>`;
   }
@@ -3295,7 +3334,7 @@ function updateNP() {
   const v = cur(); if (!v || v.kind !== 'np') return;
   const s = NPs(); const bar = $('#npBar'); if (!s || !bar) return;
   $('#npPos').textContent = (s.pos && s.total ? `${s.pos} of ${s.total}` : '') + (s.remote ? `${s.pos && s.total ? ' · ' : ''}on ${cfg.target.name}` : '');
-  $('#npDest').textContent = '';
+  $('#npDest').textContent = ''; { const tp = $('#npTape'); if (tp) tp.classList.toggle('tp-go', !!s.playing); }
   const npEl = bar.parentElement; if (npEl) npEl.classList.toggle('opts', v.mode !== 'play');
   const rs = $('#npStars'); if (rs) { const r = ratingOf(s.track); rs.textContent = r && v.mode !== 'rating' ? starsTxt(r) : ''; }
   if (v.mode === 'rating') {
@@ -5499,7 +5538,7 @@ function deskTick() {
   const s = NPs(), lcd = DKE.dkLcd;
   DKE.dkPP.innerHTML = s && s.playing ? DK_PAUSE : DK_PLAY;
   lcd.classList.toggle('idle', !s);
-  if (!s) { DKE.dkL1.textContent = ELITE ? 'myStereo Elite' : 'myStereo'; DKE.dkL2.textContent = 'Pick something to play'; }
+  if (!s) { DKE.dkL1.innerHTML = brandHTML(ELITE ? 'myStereo Elite' : 'myStereo'); DKE.dkL2.textContent = 'Pick something to play'; }
   else {
     const t = s.track; DKE.dkL1.textContent = t.title || '';
     const alt = [t.artist, t.album].filter(Boolean); DKE.dkL2.textContent = (alt.length ? alt[DK.line % alt.length] : '') + (s.remote ? `  ·  on ${cfg.target.name}` : '');
@@ -5524,7 +5563,7 @@ function applyDesk() {
   if (on && CF.open) cfClose();
   if (!on && DK.mini) { DK.mini = false; root.classList.remove('dk-mini'); miniIcon(); }
   root.classList.toggle('desk', on);
-  DKE.dkName.textContent = ELITE ? 'myStereo Elite · Musaka Edition' : 'myStereo';
+  DKE.dkName.innerHTML = brandHTML(ELITE ? 'myStereo Elite · Musaka Edition' : 'myStereo');
   DKE.dkFoot.textContent = ELITE ? 'Own your media. Make it so.' : 'Own your media.';
   DKE.dkItems.dataset.k = '';
   layout(); vPlace(); deskTick();
