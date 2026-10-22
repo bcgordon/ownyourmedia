@@ -61,6 +61,33 @@ footer.wrap{padding-block:40px 56px;display:flex;flex-wrap:wrap;justify-content:
 footer span{display:block}
 footer .muted{color:var(--muted);font-size:18px}
 @media (max-width:600px){nav a{margin-left:12px}}
+.jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.jump a{font:600 16px var(--mono);text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;background:var(--card)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;align-items:start}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:26px;min-width:0}
+.card h3{margin:0 0 10px;font-size:28px;line-height:1.1;letter-spacing:-.02em}
+.card p{margin:0 0 12px}
+.card ol,.card ul{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:8px}
+.fmt{list-style:none;padding:0!important;gap:12px!important}
+.fmt li{border-left:6px solid var(--tan);padding-left:14px}
+.fmt li.best{border-color:var(--blue)}
+.fmt b{display:block;font-size:22px}
+.fmt small{display:block;font:500 15px var(--mono);color:var(--muted);margin-top:2px}
+.tools{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.tools li{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:20px;min-width:0}
+.tools .os{font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--rust)}
+.tools b{display:block;font-size:22px;margin:4px 0 6px}
+.tools span{color:#3d3a35}
+.tools a{font:600 16px var(--mono)}
+.tip{background:#E8EEFB;border:2px solid var(--blue);border-radius:14px;padding:16px 20px;margin-top:22px}
+.fix{display:flex;flex-direction:column;gap:10px}
+.fix details{border:2px solid var(--ink);border-radius:12px;background:#fff;overflow:hidden}
+.fix summary{cursor:pointer;list-style:none;padding:14px 46px 14px 16px;font-weight:700;font-size:19px;position:relative;min-height:48px}
+.fix summary::-webkit-details-marker{display:none}
+.fix summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font:600 26px var(--mono);color:var(--blue)}
+.fix details[open] summary::after{content:"–"}
+.fix details p{margin:0;padding:0 16px 16px;font-size:18px}
+.card .tag{font:600 14px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -68,7 +95,7 @@ footer .muted{color:var(--muted);font-size:18px}
 
 <header class="wrap">
   <a class="brand" href="/"><img src="/assets/club-logo-96.png" alt="">Own Your Media Club</a>
-  <nav><a href="/mypod/">myStereo</a><a href="/club/">Join</a></nav>
+  <nav><a href="#rip">Rip CDs</a><a href="#help">Help</a><a href="/mypod/">myStereo</a></nav>
 </header>
 
 <main>
@@ -77,6 +104,7 @@ footer .muted{color:var(--muted);font-size:18px}
     <h1>Keep what you love.</h1>
     <p class="lead">Owning your music isn’t about being against technology. It’s easier than you think, and you don’t have to give anything up to start.</p>
     <p class="lead"><span class="todo">[BC: one or two lines in your own voice. Who this is for, and why it matters to you.]</span></p>
+    <div class="jump"><a href="#levels">Pick a starting point</a><a href="#rip">How to rip CDs</a><a href="#help">Troubleshooting</a></div>
   </div>
 
   <section class="wrap">
@@ -97,7 +125,7 @@ footer .muted{color:var(--muted);font-size:18px}
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap" id="levels">
     <div class="rule"><h2>Pick your starting point</h2><p>Start small. Go further only if you want to.</p></div>
     <div class="levels">
       <div class="level one">
@@ -108,7 +136,7 @@ footer .muted{color:var(--muted);font-size:18px}
           <li>Pick the ten albums you’d be saddest to lose.</li>
           <li>Buy them as downloads, or rip CDs you already have.</li>
           <li>Save them to your phone’s Files.</li>
-          <li>Open myStereo: <b>Music › On This Phone › Add Music</b>.</li>
+          <li>Open myStereo: <b>On Phone › Add Music</b>.</li>
         </ol>
       </div>
       <div class="level">
@@ -142,6 +170,94 @@ footer .muted{color:var(--muted);font-size:18px}
       <li><b>Downloads</b><span>Many artists sell albums as downloads directly, and many records come with a download code.</span></li>
       <li><b>Local shops</b><span>Ask the staff. They love helping people start. <span class="todo">[List partner shops when they’re confirmed.]</span></span></li>
     </ul>
+  </section>
+
+
+  <section class="wrap" id="rip">
+    <div class="rule"><h2>How to rip CDs</h2><p>One evening, then it’s yours for good</p></div>
+    <div class="cols">
+      <div class="card">
+        <span class="tag">What you need</span>
+        <h3>A computer and a CD drive</h3>
+        <p>Most new laptops don’t have a CD drive. A USB one costs about $25 and works on any Mac or PC. Rip the CDs you own, for your own listening.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Best format</span>
+        <h3>Rip once, in full quality</h3>
+        <ul class="fmt">
+          <li class="best"><b>FLAC</b>The best choice. Exactly as good as the CD, about half the size, and Plex and myStereo play it. <small>About 300 MB per album</small></li>
+          <li><b>Apple Lossless (ALAC)</b>Same quality as FLAC. Pick it if you mostly use Apple’s Music app. <small>About 300 MB per album</small></li>
+          <li><b>MP3 320 or AAC 256</b>Only if you’re short on space. You can’t get the lost quality back later. <small>About 100 MB per album</small></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size:30px;margin:40px 0 16px;letter-spacing:-.02em">Free tools that do it well</h3>
+    <ul class="tools">
+      <li><span class="os">Windows</span><b>Exact Audio Copy</b><span>The most careful ripper. It rereads scratched spots and checks your copy against other people’s rips (AccurateRip). A little old-fashioned to set up.</span></li>
+      <li><span class="os">Mac</span><b>XLD (X Lossless Decoder)</b><span>The Mac favorite. Careful like EAC, and simple once it’s set to FLAC.</span></li>
+      <li><span class="os">Windows · Mac · Linux</span><b>fre:ac</b><span>The easiest to start with. Pick FLAC, insert a CD, press rip.</span></li>
+      <li><span class="os">Already on your computer</span><b>Media Player or Apple Music</b><span>Windows Media Player can rip to FLAC, and Apple Music can rip to Apple Lossless. Change the format in settings first; both start with small, lower-quality files.</span></li>
+      <li><span class="os">Fix names and covers</span><b>MusicBrainz Picard</b><span>Free on every computer. It looks up each album online and fills in song names, years and cover art.</span></li>
+      <li><span class="os">Online, free</span><b>MusicBrainz and AccurateRip</b><span>The free databases behind the tools above. They supply album info and confirm your rip is perfect. No sign-up needed.</span></li>
+    </ul>
+
+    <div class="cols" style="margin-top:32px">
+      <div class="card">
+        <span class="tag">Step by step</span>
+        <h3>Your first CD</h3>
+        <ol>
+          <li>Install one of the free tools above.</li>
+          <li>In its settings, choose <b>FLAC</b>, and turn on <b>AccurateRip</b> if it offers it.</li>
+          <li>Choose one music folder on your computer for everything.</li>
+          <li>Put in a CD. Check that the album and song names came up right.</li>
+          <li>Press rip. A careful rip takes about 5 to 15 minutes.</li>
+          <li>Make sure the album has a cover. If not, MusicBrainz Picard can add one.</li>
+          <li>Back up the music folder to an external drive now and then.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <span class="tag">Keep it tidy</span>
+        <h3>A folder Plex will love</h3>
+        <p>Name folders like this and Plex and myStereo sort everything on their own:</p>
+        <p style="font:500 17px var(--mono);background:var(--paper);border-radius:10px;padding:14px">Music /<br>&nbsp;&nbsp;Night Ferry /<br>&nbsp;&nbsp;&nbsp;&nbsp;Harbor Lights (2024) /<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;01 Undertow.flac<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cover.jpg</p>
+        <p>Most rippers can name files this way for you. Look for “file naming” in their settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="help">
+    <div class="rule"><h2>Troubleshooting</h2><p>Tap a question</p></div>
+    <div class="cols">
+      <div class="card fix">
+        <span class="tag">Ripping</span>
+        <details><summary>Album and song names came up blank</summary><p>The tool couldn’t find the CD online. Rip it anyway, then open the folder in MusicBrainz Picard to fill in the names. Or type them in before you rip.</p></details>
+        <details><summary>It’s very slow, or stops on one song</summary><p>That’s usually a scratch. Careful rippers reread the bad spot many times. Wipe the CD from the center out with a soft cloth and try again. If one song still won’t finish, let it go and move on. You’ll rarely hear the difference.</p></details>
+        <details><summary>AccurateRip says it doesn’t match</summary><p>Your copy differs from other people’s. Clean the disc and rip again, or try another CD drive. If the CD isn’t in AccurateRip at all, that’s fine. It just hasn’t been checked by anyone yet.</p></details>
+        <details><summary>There’s no cover art</summary><p>Save a picture of the cover as <b>cover.jpg</b> in the album’s folder, or let MusicBrainz Picard add it.</p></details>
+        <details><summary>My Mac won’t open XLD</summary><p>Mac blocks apps that don’t come from the App Store the first time. Right-click XLD, choose Open, then Open again.</p></details>
+        <details><summary>One album shows up as several in Plex</summary><p>The songs have different “album artist” names, often on albums with guest singers. Use MusicBrainz Picard to give every song on the album the same album artist, then refresh the library in Plex.</p></details>
+      </div>
+      <div class="card fix">
+        <span class="tag">Downloading</span>
+        <details><summary>My download is a .zip file on my iPhone</summary><p>Open the Files app, find it in Downloads, and tap it once. It unzips into a folder. Then add the songs in myStereo under <b>On Phone › Add Music</b>.</p></details>
+        <details><summary>I can’t find what I downloaded</summary><p>On iPhone, look in Files › Downloads. On a computer, look in the Downloads folder.</p></details>
+        <details><summary>Which format should I pick when I buy?</summary><p>FLAC or ALAC if they offer it. MP3 320 is fine if they don’t.</p></details>
+        <details><summary>Dub to Tape stopped partway</summary><p>Dubbing only works while myStereo is open on screen. Open it again and it picks up where it left off. If a song was skipped, choose Dub to Tape again and it fills in the gaps.</p></details>
+        <details><summary>It says my phone is out of room</summary><p>Go to <b>Settings › Tape</b>. Switch Quality to Space Saver, or erase an album you’re done with.</p></details>
+        <details><summary>A video won’t dub to tape (Elite)</summary><p>Only MP4 and MOV videos can go on tape. Other videos still stream from Plex when you have a signal.</p></details>
+      </div>
+      <div class="card fix">
+        <span class="tag" style="text-transform:none;letter-spacing:.04em">myStereo</span>
+        <details><summary>The song is playing, but I hear nothing</summary><p>This happens when Tone is set to anything but Flat and another app, a call or Siri took over the sound. Press play again. If it’s still quiet, set <b>Settings › Sound › Tone</b> to Flat, then close myStereo fully and reopen it.</p></details>
+        <details><summary>The first song won’t start</summary><p>Press play once more. iPhones sometimes ignore the first play while a speaker or AirPods connect.</p></details>
+        <details><summary>It won’t connect to Plex</summary><p>Make sure your Plex server is on and Remote Access is turned on in Plex. Then go to <b>Settings › Music Sources › Plex › Reconnect</b>.</p></details>
+        <details><summary>I don’t see the latest changes</summary><p>Close myStereo fully (swipe it away) and open it again. Sometimes it takes two tries.</p></details>
+        <details><summary>The music stops when my screen locks</summary><p>Set <b>Settings › Sound › Tone</b> to Flat and reopen the app. Tone presets can stop music when the screen locks.</p></details>
+        <details><summary>My mixtape won’t play a song I tap</summary><p>If you see a red ● REC, the mixtape is still recording, so songs you tap are added to it. Choose <b>Recording</b> on the main menu, then <b>Stop Recording</b>.</p></details>
+        <details><summary>Still stuck?</summary><p>In myStereo, go to <b>Alpha › Send Feedback</b>. It goes straight to BC.</p></details>
+      </div>
+    </div>
   </section>
 
   <section class="wrap">
