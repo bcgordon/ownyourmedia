@@ -893,6 +893,10 @@ html:not(.vfull) .vctl,html:not(.vfull) .vtop{display:none}
 /* no double-tap zoom anywhere on myStereo (quick Menu, Menu presses were zooming in) */
 html,body,.stage,.podwrap,.pod,.screen,.bar{touch-action:manipulation}
 .rd{font-variant-numeric:tabular-nums;margin-left:8px}.rd.nofit{opacity:.45;text-decoration:line-through}
+.row.tabbed{gap:2.2cqw}.rtab{flex:none;width:2.2cqw;height:calc(var(--rh)*.52);border-radius:.5cqw;box-shadow:0 0 0 .3cqw rgba(255,255,255,.25)}
+.classic .rtab{box-shadow:none;outline:1px solid var(--ink)}
+.vstat{cursor:default;justify-content:space-between;font-variant-numeric:tabular-nums}.vstat:active{background:inherit;color:inherit}
+.vstat .t{flex:none}.vstat .vs-r{flex:0 1 auto;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:1.2cqw;opacity:.9;white-space:nowrap;overflow:hidden}.vstat .vs-r svg{height:calc(var(--rh)*.36)}.vstat .vs-r svg path{fill:none!important;stroke:currentColor}
 @media (prefers-reduced-motion: reduce){.rows.in,.rows.out{animation:none}.spin{animation-duration:3s}.toast{transition:none}}
 
 /* ---------- Desktop Mode: a 2004-style jukebox window instead of a giant iPod (mouse first, no click wheel) ---------- */
@@ -1602,9 +1606,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.8';
+const APP_VERSION = '1.4.9';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2412,16 +2416,28 @@ function jcardHTML(m, big) {
     <div class="jc-sides">${m.len ? `<span>A <u><i style="width:${Math.min(100, a / cap * 100)}%"></i></u> ${mmss(a)}</span><span>B <u><i style="width:${Math.min(100, b / cap * 100)}%"></i></u> ${mmss(b)}</span>` : `<span>${m.a.length} song${m.a.length === 1 ? '' : 's'} · ${mmss(a)}</span>`}</div>
   </div></div>`;
 }
+const CLOUD_SVG = '<svg viewBox="0 0 20 14" aria-hidden="true"><path d="M5 13a4 4 0 0 1-.6-8 5 5 0 0 1 9.6 1.2A3.4 3.4 0 0 1 15 13z" stroke-width="1.6"/><path d="M7.4 8.6l1.8 1.8 3.6-3.8" stroke-width="1.6"/></svg>';
 function mixtapesMenu(lib) {
   const v = List('Mixtapes', () => [
-    { label: 'Make a Mixtape', act: mixNew },
-    ...MIX.all.map(m => ({ label: m.title, value: mixLen(m), arrow: true, mid: m.id, go: () => push(mixView(m)) })),
-    ...(!isDemo() && cfg.token ? [{ label: 'Sync with Plex', act: mixSyncNow }] : [])
+    ...MIX.all.map(m => ({ label: m.title, value: mixLen(m), tab: m.color, arrow: true, mid: m.id, go: () => push(mixView(m)) })),
+    { label: '+ New Mixtape', act: mixNew, isNew: true },
+    ...(!isDemo() && cfg.token ? [{ label: 'Sync with Plex', act: mixSyncNow, isSync: true }] : [])
   ], { mixLive: true });
   mixPull();
-  Object.defineProperty(v, 'note', { get: () => MIX.all.length ? ' ' : 'Make one here: pick a C60 or C90 and fill Side A and Side B, or pick No Limit for a mixtape of any length.' });
-  Object.defineProperty(v, 'noteHTML', { get() { if (!MIX.all.length) return null; const it = v.get(v.sel); return jcardHTML(mixOf(it?.mid) || MIX.all[0]); } });
-  Object.defineProperty(v, 'noteRows', { get: () => MIX.all.length ? 2 : 3 });
+  Object.defineProperty(v, 'note', { get: () => MIX.all.length ? null : 'Make one here: pick a C60 or C90 and fill Side A and Side B, or pick No Limit for a mixtape of any length.' });
+  Object.defineProperty(v, 'noteRows', { get: () => 3 });
+  /* one line at the bottom for the highlighted tape: how full each side is, and whether it's saved to Plex */
+  Object.defineProperty(v, 'status', { get() {
+    if (!MIX.all.length) return null;
+    const it = v.get(v.sel) || {}, m = mixOf(it.mid);
+    if (it.isNew) return '<span class="t">C60 · C90 · No Limit</span>';
+    if (it.isSync) return `<span class="t">${MSYNC.found ? `${MSYNC.found} on ${esc(cfg.server?.name || 'Plex')}` : 'Save and bring in mixtapes'}</span>`;
+    if (!m) return null;
+    const left = m.len ? `A ${mmss(sideUsed(m, 'a'))} · B ${mmss(sideUsed(m, 'b'))}` : `${m.a.length} song${m.a.length === 1 ? '' : 's'} · ${mmss(sideUsed(m, 'a'))}`;
+    const st = mixStatus(m), ok = st === 'Saved to Plex';
+    const short = { 'Saved to Plex': 'Saved', 'This device only': 'This phone', 'On another server': 'Other server', 'Not connected': 'Not synced', 'After 1st song': 'Not yet' }[st] || st;
+    return `<span class="t">${MIX.rec === m.id ? '● REC · ' : ''}${left}</span><span class="vs-r">${ok ? CLOUD_SVG : ''}${esc(short)}</span>`;
+  } });
   return v;
 }
 function mixView(m) {
@@ -3549,7 +3565,7 @@ const HELP = `
 <p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the display. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
 <p>On the display, <span class="k">▶❙❙</span> or the knob's center plays and pauses, the knob skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">BACK</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
 <h3>Mixtapes</h3>
-<p><b>Mixtapes › Make a Mixtape</b>. Pick a C60, C90 or No Limit, then choose songs anywhere to record them onto the tape. At the end of Side A, press the knob to flip the tape. Tap the art on Now Playing to see what's on the album or mixtape.</p>
+<p><b>Mixtapes › + New Mixtape</b>. Pick a C60, C90 or No Limit, then choose songs anywhere to record them onto the tape. At the end of Side A, press the knob to flip the tape. Tap the art on Now Playing to see what's on the album or mixtape.</p>
 <h3>On Phone (no signal, no data)</h3>
 <p>Open an album or playlist and choose <b>Save to Phone</b> at the bottom. Keep myStereo open while it saves. Find it all under <b>On Phone</b> on the main menu, with any files you added. When a song plays from your phone, a cloud with a line through it shows in the corner: no data used.</p>
 <h3>Cover Flow</h3>
@@ -3630,7 +3646,7 @@ function rowHTML(it, sel, i) {
   const rd = recDur(it);
   if (it.check) r = ICON.check;
   else { if (it.value != null && it.value !== '') r += `<span class="v">${esc(it.value)}</span>`; if (rd) r += `<span class="v rd${rd.fit ? '' : ' nofit'}"${rd.fit ? '' : ' title="Too long for the room left"'}>${rd.txt}</span>`; if (it.arrow) r += ICON.chev; }
-  return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}"${i != null ? ` data-i="${i}"` : ''}><span class="l">${brandHTML(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
+  return `<div class="row${sel ? ' sel' : ''}${it.dim ? ' dim' : ''}${it.tab ? ' tabbed' : ''}"${i != null ? ` data-i="${i}"` : ''}>${it.tab ? `<i class="rtab" style="background:${it.tab}"></i>` : ''}<span class="l">${brandHTML(it.label)}</span>${r ? `<span class="r">${r}</span>` : ''}</div>`;
 }
 /* focus layouts: draw the current list as one big item with its neighbors, over the normal rows */
 function fxRender() {
@@ -3678,8 +3694,9 @@ function renderList(v, anim) {
   else if (n === 0 && !(v.loading && v.loading())) note = note || 'Nothing here yet.';
   const noteRows = note ? (v.noteRows || 3) : 0;
   const split = !!v.split && !note && cfg.splitArt === true;
-  const s = split || v.nostrip ? null : NPs();
-  const rows = Math.max(1, ROWS - noteRows - (s ? 1 : 0)); v._rows = rows;
+  const stat = !split && !v.err && v.status ? v.status : null;   /* a status line in place of the Now Playing strip */
+  const s = split || v.nostrip || stat ? null : NPs();
+  const rows = Math.max(1, ROWS - noteRows - (s || stat ? 1 : 0)); v._rows = rows;
   const nh = note && !v.err ? v.noteHTML : null;
   let html = note ? `<div class="note${nh ? ' gfx' : ''}" style="height:calc(var(--rh) * ${noteRows})">${nh || `<span>${brandHTML(note)}</span>`}</div>` : '';
   let sb = '';
@@ -3705,8 +3722,8 @@ function renderList(v, anim) {
     if (anim) { $('#splitArt').classList.remove('in'); void $('#splitArt').offsetWidth; $('#splitArt').classList.add('in'); }
     artTick(); return;
   }
-  bodyEl.innerHTML = `<div class="rows ${anim || ''}${sb ? ' has-sb' : ''}">${html}${sb}</div>${strip}`;
-  if (sb && s) bodyEl.querySelector('.sb').style.bottom = `calc(1.6cqw + var(--rh))`;
+  bodyEl.innerHTML = `<div class="rows ${anim || ''}${sb ? ' has-sb' : ''}">${html}${sb}</div>${stat ? `<div class="npstrip vstat" role="status">${stat}</div>` : strip}`;
+  if (sb && (s || stat)) bodyEl.querySelector('.sb').style.bottom = `calc(1.6cqw + var(--rh))`;
   const st = $('#npStrip'); if (st) st.addEventListener('click', () => { click(); openNowPlaying(); });
 }
 function renderNP(v, anim, force) {
