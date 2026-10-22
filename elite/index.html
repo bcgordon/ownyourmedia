@@ -1606,9 +1606,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.9';
+const APP_VERSION = '1.4.10';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2526,12 +2526,53 @@ async function mixWind(sec) {
   else seekTo(t);
   mixPos(); updateBar();
 }
+/* the sound of the tape winding. Made with Web Audio rather than by playing bits of the song while it seeks:
+   a phone has to stop and reload the stream on every jump, so the song itself stays silent there. */
+const WIND = { g: null, srcs: [] };
+function windCtx() {
+  try {
+    /* on iPhone, let these sounds play with the ring switch on silent, like the music does */
+    if (navigator.audioSession && navigator.audioSession.type !== 'playback') { try { navigator.audioSession.type = 'playback'; } catch {} }
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') { const pr = actx.resume(); if (pr && pr.catch) pr.catch(() => {}); }
+    return actx;
+  } catch { return null; }
+}
+function windStart(dir, len) {
+  const c = windCtx(); if (!c) return; windStop(true);
+  const t0 = c.currentTime, out = c.createGain(); out.gain.setValueAtTime(0, t0); out.gain.linearRampToValueAtTime(.22, t0 + .12); out.connect(c.destination);
+  /* hiss of tape rushing past the heads, rising as the reels speed up */
+  const n = c.sampleRate, b = c.createBuffer(1, n, n), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+  const hiss = c.createBufferSource(); hiss.buffer = b; hiss.loop = true;
+  const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.4;
+  const hi = dir > 0 ? 3200 : 2600; bp.frequency.setValueAtTime(700, t0); bp.frequency.exponentialRampToValueAtTime(hi, t0 + .5);
+  const hg = c.createGain(); hg.gain.value = .55; hiss.connect(bp); bp.connect(hg); hg.connect(out);
+  /* the high warble of music going by fast */
+  const sq = c.createOscillator(); sq.type = 'triangle'; sq.frequency.setValueAtTime(500, t0); sq.frequency.exponentialRampToValueAtTime(dir > 0 ? 2400 : 1900, t0 + .5);
+  const lfo = c.createOscillator(); lfo.frequency.value = 11; const lg = c.createGain(); lg.gain.value = 260; lfo.connect(lg); lg.connect(sq.frequency);
+  const sg = c.createGain(); sg.gain.value = .07; sq.connect(sg); sg.connect(out);
+  /* the motor */
+  const mo = c.createOscillator(); mo.type = 'sawtooth'; mo.frequency.setValueAtTime(70, t0); mo.frequency.linearRampToValueAtTime(130, t0 + .5);
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 400; const mg = c.createGain(); mg.gain.value = .25; mo.connect(lp); lp.connect(mg); mg.connect(out);
+  WIND.srcs = [hiss, sq, lfo, mo]; WIND.srcs.forEach(x => x.start(t0)); WIND.g = out;
+  if (len) windStop(false, len);
+}
+function windStop(now, after = 0) {
+  const c = actx, g = WIND.g, srcs = WIND.srcs; if (!c || !g) return;
+  WIND.g = null; WIND.srcs = [];
+  const t = c.currentTime + after, fade = now ? .02 : .14;
+  try { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value || .22, t); g.gain.linearRampToValueAtTime(0, t + fade); } catch {}
+  srcs.forEach(x => { try { x.stop(t + fade + .02); } catch {} });
+}
 document.addEventListener('pointerdown', e => {
   const wb = e.target.closest && e.target.closest('#rxTx [data-rxw]'); if (!wb) return;
-  const dir = +wb.dataset.rxw; MXW.held = false; clearInterval(MXW.t);
-  MXW.t = setTimeout(() => { MXW.held = true; MXW.t = setInterval(() => mixWind(dir * 3), 120); }, 450);
+  const dir = +wb.dataset.rxw; MXW.held = false; clearInterval(MXW.t); windCtx();
+  MXW.t = setTimeout(() => { MXW.held = true; windStart(dir); MXW.muted = !audio.muted; audio.muted = true; MXW.t = setInterval(() => mixWind(dir * 3), 120); }, 450);
 });
-['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => document.addEventListener(ev, () => { clearTimeout(MXW.t); clearInterval(MXW.t); }));
+['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => document.addEventListener(ev, () => {
+  clearTimeout(MXW.t); clearInterval(MXW.t);
+  if (MXW.held) { windStop(); if (MXW.muted) { audio.muted = false; MXW.muted = false; } }
+}));
 function mixKey(a) {
   const mv = P.view?.mix, m = mv && mixOf(mv.id); if (!m) return;
   if (a === 'rewind') { if (P.index === 0) seekTo(0); else mixPlay(m, mv.side, false, 0); flash(`Rewound to the start of ${m.len ? 'Side ' + SIDE(mv.side) : m.title}`); return; }
@@ -4152,7 +4193,7 @@ document.addEventListener('click', e => {
   const mxb = e.target.closest && e.target.closest('#rxKeys [data-rxa]');
   if (mxb) { click(); mixKey(mxb.dataset.rxa); return; }
   const wb = e.target.closest && e.target.closest('#rxTx [data-rxw]');
-  if (wb) { if (MXW.held) { MXW.held = false; return; } click(); mixWind(+wb.dataset.rxw * 15); return; }
+  if (wb) { if (MXW.held) { MXW.held = false; return; } click(); windStart(+wb.dataset.rxw, .32); mixWind(+wb.dataset.rxw * 15); return; }
   const b = e.target.closest && e.target.closest('#rxKeys [data-rx],#rxTx [data-rx],#rxKeys [data-rxm]'); if (!b) return;
   const k = b.dataset.rx, m = b.dataset.rxm;
   if (k === 'back' && RX.held) { RX.held = false; return; }
