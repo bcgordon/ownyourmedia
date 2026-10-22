@@ -111,6 +111,17 @@ body{background-color:var(--bg);background-image:radial-gradient(ellipse 70% 55%
 .jc-ovbar button{flex:1;min-height:48px;border:0;border-radius:10px;background:#F2B84B;color:#141414;font:700 18px var(--f-ui)}
 .jc-ovbar button[data-a="close"]{background:#e8e8ea}
 .jc-ov iframe{flex:1;border:0;background:#fff}
+.np-jc{position:relative;flex:none;width:52cqw;aspect-ratio:1.3;cursor:pointer;display:flex;border-radius:1.6cqw;overflow:hidden;background:#f6f1e4;color:#1c1b19;box-shadow:0 1px 3px rgba(0,0,0,.4),inset 0 0 0 .4cqw rgba(0,0,0,.15);text-align:left}
+.npj-body{flex:1;min-width:0;display:flex;flex-direction:column;padding:1.6cqw 2.4cqw;background:repeating-linear-gradient(180deg,transparent 0 calc(5.6cqw - 1px),rgba(37,73,199,.16) calc(5.6cqw - 1px) 5.6cqw)}
+.npj-top{border-bottom:.4cqw solid var(--lc);padding-bottom:.4cqw;margin-bottom:.4cqw}
+.npj-t{font:700 6.4cqw/1.05 Caveat,"Marker Felt","Bradley Hand",cursive;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:none}
+.npj-side{display:block;margin-bottom:.6cqw;font:700 2.6cqw "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;color:var(--lc)}
+.npj-list{margin:0;padding-left:5cqw;font:600 5cqw/5.6cqw Caveat,"Marker Felt","Bradley Hand",cursive;text-transform:none;color:#2b2a27}
+.npj-list li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.npj-list li.past{opacity:.45;text-decoration:line-through;text-decoration-color:var(--lc)}
+.npj-list li.now{font-weight:700;color:#000;background:linear-gradient(transparent 55%,color-mix(in srgb,var(--lc) 35%,transparent) 55% 92%,transparent 92%)}
+.np .np-dest{color:inherit;opacity:.85}
+.big .np-jc{width:50cqw}
 .np-tape{position:relative;flex:none;width:46cqw;aspect-ratio:1.55;box-sizing:border-box;border:.6cqw solid currentColor;border-radius:2.4cqw;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#222}
 .np-tape img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .np-tape .tp-win{position:relative;flex:none;width:76%;height:40%;background:rgba(10,10,10,.82);color:#f3efe6;border-color:#f3efe6}
@@ -1480,7 +1491,7 @@ html.rx-boot .pod.recv .rx-dial{animation:rxSpin 1.3s cubic-bezier(.2,.7,.2,1) .
   </section>
 
   <p class="hint">Turn the knob to scroll. Press its center to select, Back to go back.
-    Settings › How to Use has the rest. On a keyboard: <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Enter</kbd>, <kbd>Esc</kbd>, and <kbd>Space</kbd> to play or pause.</p>
+    Settings › Help › How to Use has the rest. On a keyboard: <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Enter</kbd>, <kbd>Esc</kbd>, and <kbd>Space</kbd> to play or pause.</p>
   <button class="dk-on" id="dkOn" type="button" hidden>Switch to Desktop Mode</button>
   <div class="cf" id="cf" hidden aria-label="Cover Flow">
     <div class="cf-stage" id="cfStage"></div>
@@ -1627,7 +1638,7 @@ const art = (thumb, size = 320) => !thumb ? null : (thumb.startsWith('data:') ||
   cfg.server ? `${cfg.server.uri}/photo/:/transcode?${qs({ width: size, height: size, minSize: 1, upscale: 1, url: thumb, 'X-Plex-Token': cfg.server.token })}` : null;
 
 function errText(e) {
-  if (e && e.status === 401) return 'Plex says your sign-in has expired. Sign in again under Settings › Plex.';
+  if (e && e.status === 401) return 'Plex says your sign-in has expired. Sign in again under Settings › Music Sources › Plex.';
   if (e && (e.name === 'TypeError' || e.name === 'AbortError'))
     return "Can't reach Plex from here. Check that your server is on. If you're viewing this inside Claude, open your own hosted copy instead.";
   return (e && e.message) || 'Something went wrong.';
@@ -2052,11 +2063,11 @@ async function importMusic(files) {
     st.done++;
   }
   await Local.load();
-  st.finished = true; if (cur() === v) render(); else flash(`Added ${st.added} song${st.added === 1 ? '' : 's'} to On This Phone`);
+  st.finished = true; if (cur() === v) render(); else flash(`Added ${st.added} song${st.added === 1 ? '' : 's'} to On Phone`);
 }
 
 function localMenu() {
-  const v = List('On This Phone', () => {
+  const v = List('On Phone', () => {
     const mine = homeTracks(), has = mine.length > 0, lib = has ? Local.lib(mine) : null;
     return [
       { label: 'Add Music', act: () => pickMusic(false) },
@@ -2205,7 +2216,7 @@ function dubbingView() {
     ] : [{ label: 'Go to Tape', arrow: true, go: () => push(tapeMenu()) }], { tapeLive: true });
   Object.defineProperty(v, 'note', { get() {
     const j = TAPE.job;
-    if (!j) { const l = TAPE.last; return l ? (l.err ? `Couldn't dub ${l.title}. ${l.err}` : l.video ? (l.stop ? `Stopped. ${l.title} wasn't saved.` : `${l.title} is on tape. Find it under Music › Tape › Videos.`) : `${l.title} is on tape. ${l.added} new song${l.added === 1 ? '' : 's'}` + (l.skipped ? `, ${l.skipped} already there` : '') + (l.failed ? `, ${l.failed} didn't come through` : '') + '.') : 'Nothing dubbing right now.'; }
+    if (!j) { const l = TAPE.last; return l ? (l.err ? `Couldn't dub ${l.title}. ${l.err}` : l.video ? (l.stop ? `Stopped. ${l.title} wasn't saved.` : `${l.title} is on tape. Find it under Tape › Videos.`) : `${l.title} is on tape. ${l.added} new song${l.added === 1 ? '' : 's'}` + (l.skipped ? `, ${l.skipped} already there` : '') + (l.failed ? `, ${l.failed} didn't come through` : '') + '.') : 'Nothing dubbing right now.'; }
     if (j.video) return `● REC  ${j.title}\n${j.pct || 0}% · ${mb(j.got || 0)} of ${mb(j.size || 0)}\nKeep myStereo open while it dubs.`;
     return `● REC  COUNTER ${String(TAPE.count).padStart(3, '0')}\n${j.title}: song ${Math.min(j.done + 1, j.total || 1)} of ${j.total || '…'}${j.now ? ' · ' + j.now : ''}\nKeep myStereo open. If you leave, it picks up where it left off.`;
   } });
@@ -2861,7 +2872,7 @@ async function poll() {
 const audio = new Audio(); audio.preload = 'auto'; audio.setAttribute('x-webkit-airplay', 'allow');
 /* remember whether music is meant to be playing, so a speaker that drops the end-of-song signal can't stall the queue */
 { const _play = audio.play.bind(audio), _pause = audio.pause.bind(audio);
-  audio.play = () => { P.want = true; return _play(); };
+  audio.play = () => { P.want = true; if (typeof toneWake === 'function') toneWake(); return _play(); };
   audio.pause = () => { P.want = false; return _pause(); }; }
 /* AirPlay and Bluetooth: Safari's own speaker picker (it lists AirPlay speakers, Apple TVs and Bluetooth headphones) */
 const AIR = { wireless: false };
@@ -3074,12 +3085,15 @@ function mainMenu() {
     const a = [
       ...(MIX.rec && mixOf(MIX.rec) ? [{ label: 'Recording', value: '●', arrow: true, go: () => push(mixView(mixOf(MIX.rec))) }] : []),
       { label: 'Music', arrow: true, go: () => push(musicMenu()) },
+      { label: 'Mixtapes', arrow: true, go: () => push(mixtapesMenu()) },
+      { label: 'Tape', arrow: true, go: () => push(tapeMenu()) },
+      { label: 'On Phone', arrow: true, go: () => push(localMenu()) },
       { label: 'Videos', arrow: true, go: () => push(videosView()) },
+      { label: 'Shuffle', act: shuffleSongs },
       { label: 'Play On', arrow: true, go: () => push(playOnView()) },
       { label: 'Extras', arrow: true, go: () => push(extrasView()) },
       { label: 'Settings', arrow: true, go: () => push(settingsView()) },
-      { label: 'Alpha', arrow: true, go: () => push(alphaView()) },
-      { label: 'Shuffle Songs', act: shuffleSongs }
+      { label: 'Alpha', arrow: true, go: () => push(alphaView()) }
     ];
     if (NPs()) a.push({ label: 'Now Playing', arrow: true, go: openNowPlaying });
     return a;
@@ -3088,7 +3102,7 @@ function mainMenu() {
 const ALPHA_TEST = `<p>You're one of the first people using myStereo. Thank you. Here's what BC most wants to hear about:</p>
 <h3>Playing music</h3><p>Does the first song start when you press play? Do songs move on by themselves, especially on a HomePod or Bluetooth speaker?</p>
 <h3>Ratings</h3><p>Rate a song here, then look for the same stars in Plexamp. Do they match?</p>
-<h3>Music on your phone</h3><p>Try Music › On This Phone › Add Music. Did your songs, names and album covers come through?</p>
+<h3>Music on your phone</h3><p>Try On Phone › Add Music on the main menu. Did your songs, names and album covers come through?</p>
 <h3>On a computer</h3><p>Try Desktop Mode, the Mini Player and the star ratings.</p>
 <h3>Anything else</h3><p>Confusing words, buttons that are hard to hit, text that's too small, things you wish it did. All of it helps.</p>
 <p>When you're ready, go back and choose <b>Send Feedback</b>.</p>`;
@@ -3120,14 +3134,11 @@ function libMenu(title, lib) {
   return List(title, [
     { label: 'Cover Flow', arrow: true, go: () => cfOpen(false) },
     { label: 'Playlists', arrow: true, go: () => push(lib.playlists()) },
-    { label: 'Mixtapes', arrow: true, go: () => push(mixtapesMenu()) },
     { label: 'Ratings', arrow: true, go: () => push(ratingsView()) },
     { label: 'Artists', arrow: true, go: () => push(lib.artists()) },
     { label: 'Albums', arrow: true, go: () => push(lib.albums()) },
     { label: 'Genres', arrow: true, go: () => push(lib.genres()) },
     { label: 'Songs', arrow: true, go: () => push(lib.songs()) },
-    { label: 'Tape', arrow: true, go: () => push(tapeMenu()) },
-    { label: 'On This Phone', arrow: true, go: () => push(localMenu()) },
     ...(ELITE ? [{ label: 'Network Share', arrow: true, go: () => push(DAV.on ? davFolder(DAV.base(), cfg.dav.name || 'Network Share') : davSetupView()) }] : []),
     { label: 'Search', arrow: true, go: () => push(searchView()) }
   ], { split: true });
@@ -3164,27 +3175,49 @@ function plexPlayOnView(title) {
 }
 function settingsView() {
   return List('Settings', () => [
-    { label: 'How to Use', arrow: true, go: () => push(Page('How to Use', HELP)) },
-    { label: 'User’s Guide', arrow: true, go: openGuide },
+    { label: 'Look', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(lookView()) },
+    { label: 'Sound', value: tonePresetName(), arrow: true, go: () => push(soundView()) },
+    { label: 'Music Sources', value: isDemo() ? 'Demo' : cfg.token ? (cfg.server?.name || 'Plex') : 'Signed out', arrow: true, go: () => push(sourcesView()) },
+    { label: 'Tape', value: tapeQName(tapeQ()), arrow: true, go: () => push(tapeSetup()) },
+    ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
+    { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
+    { label: 'Help', arrow: true, go: () => push(helpView()) },
+    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+  ]);
+}
+/* the look of the player: faceplate, display, knob and screen */
+function lookView() {
+  return List('Look', () => [
+    { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
+    { label: 'Display', value: screenName(), arrow: true, go: () => push(screenView()) },
+    { label: 'Knob Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
+    { label: 'Knob Center', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
+    { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
+    { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
+    { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } }
+  ]);
+}
+function soundView() {
+  return List('Sound', () => [
+    { label: 'Tone', value: tonePresetName(), arrow: true, go: () => push(toneView()) },
+    { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } }
+  ]);
+}
+function sourcesView() {
+  return List('Music Sources', () => [
     { label: 'Plex', value: cfg.token ? (cfg.server?.name || 'No server') : 'Signed out', arrow: true, go: () => push(plexView()) },
     ...(cfg.token ? [{ label: 'Server', value: cfg.server?.name || 'Choose', arrow: true, go: () => push(serversView()) }] : []),
     ...(ELITE ? [{ label: 'Network Share', value: DAV.on ? DAV.host() : 'Off', arrow: true, go: () => push(davSetupView()) }] : []),
+    { label: 'On Phone', value: String(homeTracks().length), arrow: true, go: () => push(localMenu()) },
     { label: 'Demo Library', value: isDemo() ? 'On' : 'Off', act: () => {
         if (isDemo() && !cfg.token) { cfg.demo = false; save(); flash('Sign in under Plex to use your own music.'); return; }
-        cfg.demo = !isDemo(); save(); } },
-    ...(deskOK() ? [{ label: 'Desktop Mode', value: isDesk() ? 'On' : 'Off', act: () => setDesk(!isDesk()) }] : []),
-    { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
-    { label: 'Clicker', value: cfg.clicker ? 'On' : 'Off', act: () => { cfg.clicker = !cfg.clicker; save(); } },
-    { label: 'Tone', value: tonePresetName(), arrow: true, go: () => push(toneView()) },
-    { label: 'Tape', value: tapeQName(tapeQ()), arrow: true, go: () => push(tapeSetup()) },
-    { label: 'Faceplate', value: caseOf(cfg.caseColor).name, arrow: true, go: () => push(caseView()) },
-    { label: 'Ratings Backup', arrow: true, go: () => push(backupView()) },
-    { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } },
-    { label: 'Display', value: screenName(), arrow: true, go: () => push(screenView()) },
-    { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
-    { label: 'Knob Color', value: wheelName(cfg.wheel), arrow: true, go: () => push(wheelView('wheel')) },
-    { label: 'Knob Center', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
-    { label: 'About', arrow: true, go: () => push(Message('About', (ELITE ? 'myStereo Elite' : 'myStereo') + ' 1.4. Own your media. Plays your Plex music and videos here, or sends it to Plexamp on another device. Settings stay on this device.')) }
+        cfg.demo = !isDemo(); save(); } }
+  ]);
+}
+function helpView() {
+  return List('Help', [
+    { label: 'How to Use', arrow: true, go: () => push(Page('How to Use', HELP)) },
+    { label: 'User’s Guide', arrow: true, go: openGuide }
   ]);
 }
 function plexView() {
@@ -3314,7 +3347,7 @@ async function startSignIn() {
     pStatus.textContent = 'Tap the button, sign in on the Plex page, then come back here. This page finishes on its own.';
     const started = Date.now();
     const check = async () => {
-      if (Date.now() - started > 10 * 60 * 1000) { clearInterval(pinTimer); pStatus.textContent = 'The sign-in code expired. Start again from Settings › Plex.'; pLink.hidden = true; return; }
+      if (Date.now() - started > 10 * 60 * 1000) { clearInterval(pinTimer); pStatus.textContent = 'The sign-in code expired. Start again from Settings › Music Sources › Plex.'; pLink.hidden = true; return; }
       try { const p = await req(`https://plex.tv/api/v2/pins/${pin.id}?${qs(baseP())}`, { quiet: true });
         if (p.authToken) { clearInterval(pinTimer); cfg.token = p.authToken; save(); onSignedIn(); } } catch {}
     };
@@ -3352,7 +3385,7 @@ const HELP = `
 <ol><li><b>Scrub</b>: move through the song</li><li><b>Rating</b>: give the song 1 to 5 stars</li><li><b>Shuffle</b>: Off or Songs</li><li><b>Repeat</b>: Off, Track, or Album</li><li>Back to normal</li></ol>
 <p>A light shows which one the knob is set to. After a few seconds it goes back to normal by itself.</p>
 <h3>Volume</h3>
-<p>Use your iPhone's volume buttons. For more bass or clearer voices, try <b>Settings › Tone</b>.</p>
+<p>Use your iPhone's volume buttons. For more bass or clearer voices, try <b>Settings › Sound › Tone</b>.</p>
 <h3>AirPlay and Bluetooth</h3>
 <p><b>Play On › AirPlay &amp; Bluetooth</b> opens your iPhone's speaker list. Pick a HomePod, Apple TV, AirPlay speaker, or Bluetooth headphones.</p>
 <h3>Ratings</h3>
@@ -3363,9 +3396,9 @@ const HELP = `
 <p>Choose <b>Videos</b> on the main menu for your Plex movies and TV shows. A video starts on the display. Tap the picture to see the title and time. Turn your iPhone sideways to watch full screen, and tap the video to show the controls.</p>
 <p>On the display, <span class="k">▶❙❙</span> or the knob's center plays and pauses, the knob skips 10 seconds, and <span class="k">⏮</span> <span class="k">⏭</span> jump 30 seconds. <span class="k">BACK</span> stops. myStereo remembers where you stopped, and so does Plex.</p>
 <h3>Mixtapes</h3>
-<p><b>Music › Mixtapes › Make a Mixtape</b>. Pick a C60, C90 or No Limit, then choose songs anywhere to record them onto the tape. At the end of Side A, press the knob to flip the tape. Tap the art on Now Playing to see what's on the album or mixtape.</p>
+<p><b>Mixtapes › Make a Mixtape</b>. Pick a C60, C90 or No Limit, then choose songs anywhere to record them onto the tape. At the end of Side A, press the knob to flip the tape. Tap the art on Now Playing to see what's on the album or mixtape.</p>
 <h3>Tape (no signal)</h3>
-<p>Open an album or playlist and choose <b>Dub to Tape</b> at the bottom. Keep myStereo open while it dubs. Find it all under <b>Music › Tape</b>. Songs on tape play with no signal, and a TAPE light shows in the corner.</p>
+<p>Open an album or playlist and choose <b>Dub to Tape</b> at the bottom. Keep myStereo open while it dubs. Find it all under <b>Tape</b> on the main menu. Songs on tape play with no signal, and a TAPE light shows in the corner.</p>
 <h3>Cover Flow</h3>
 <p>Turn your iPhone sideways, or choose <b>Music › Cover Flow</b>. Swipe through your albums. Tap the middle one to flip it over and see its songs, then tap a song to play it. Turn the phone upright or tap <b>Done</b> to go back.</p>
 <p>Turning sideways only works when Portrait Orientation Lock is off in Control Center.</p>
@@ -3384,7 +3417,7 @@ const HELP = `
 <h3>Flip it over</h3>
 <p>Swipe sideways on the empty part of the faceplate, like the space around the knob, to turn myStereo over and see the back. Swipe again to flip it back. The music keeps playing.</p>
 <h3>More than one Plex server</h3>
-<p>Go to <b>Settings › Server</b> and pick one. Each server remembers which music library you chose.</p>
+<p>Go to <b>Settings › Music Sources › Server</b> and pick one. Each server remembers which music library you chose.</p>
 <h3>Make it yours</h3>
 <p>In Settings you can turn <b>Menu Art</b> on or off (album art beside the main and Music menus), pick a <b>Faceplate</b>, a <b>Knob Color</b> and <b>Knob Center</b> of your own, set the <b>Display</b> (Light, Dark, LCD, Amber, Teal and more), adjust the <b>Tone</b>, choose what shows in the top-right <b>Corner</b> (a clock, a little equalizer, or where the music is playing), turn Large Text on or off, and turn the click sound on or off.</p>
 <h3>The full guide</h3>
@@ -3518,13 +3551,13 @@ function renderList(v, anim) {
 function renderNP(v, anim, force) {
   const s = NPs();
   if (!s) { bodyEl.dataset.k = ''; bodyEl.innerHTML = `<div class="rows ${anim || ''}"><div class="note" style="height:calc(var(--rh) * 3)">Nothing is playing.</div></div>`; return; }
-  const onTape = !s.remote && tapeNow();
-  const k = s.track.rk + '|' + (s.remote ? 1 : 0) + (onTape ? 't' : '');
+  const onTape = !s.remote && tapeNow(), mixv = !s.remote && P.view?.mix, mixm = mixv && mixOf(mixv.id);
+  const k = s.track.rk + '|' + (s.remote ? 1 : 0) + (onTape ? 't' : '') + (mixm ? 'm' + P.index : '');
   if (bodyEl.dataset.k !== k || anim || force) {
     bodyEl.dataset.k = k; const t = s.track; const a = art(t.thumb);
     bodyEl.innerHTML = `<div class="np rows ${anim || ''}">
       <div class="np-pos" id="npPos"></div>
-      <div class="np-main">${onTape ? `<div class="np-tape${s.playing ? ' tp-go' : ''}" id="npTape" aria-label="Playing from tape">${a ? `<img alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : ''}<div class="tp-win">${tpReel(.6)}${tpReel(.45)}</div><i class="tp-notch"></i></div>`
+      <div class="np-main">${mixm ? npJcard(mixm, mixv.side) : onTape ? `<div class="np-tape${s.playing ? ' tp-go' : ''}" id="npTape" aria-label="Playing from tape">${a ? `<img alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : ''}<div class="tp-win">${tpReel(.6)}${tpReel(.45)}</div><i class="tp-notch"></i></div>`
         : a ? `<img class="np-art" alt="" src="${esc(a)}" onerror="this.style.visibility='hidden'">` : '<div class="np-art"></div>'}
         <div class="np-meta"><div class="np-title">${esc(t.title)}</div><div class="np-artist">${esc(t.artist)}</div><div class="np-album">${esc(t.album)}</div><div class="np-stars" id="npStars"></div></div></div>
       <div class="np-bar" id="npBar"></div><div class="np-dest" id="npDest"></div></div>`;
@@ -3534,6 +3567,13 @@ function renderNP(v, anim, force) {
 const SHUF = [[false, 'Off'], [true, 'Songs']];
 const REP = [['off', 'Off'], ['one', 'Track'], ['all', 'Album']];
 const segs = (opts, curv, kind) => opts.map(([val, lab]) => `<button type="button" class="${val === curv ? 'on' : ''}" data-opt="${kind}" data-val="${val}">${lab}</button>`).join('');
+/* a mixtape on Now Playing: its handwritten J-card, with the song before, this song and the next one on the ruled lines */
+function npJcard(m, side) {
+  const v = P.view, n = v.count(), i = P.index, row = k => { const it = k >= 0 && k < n ? v.get(k) : null; return it ? esc(it.label) : ''; };
+  return `<div class="np-jc" style="--lc:${m.color}" aria-label="${esc(m.title)}"><div class="jc-band"></div><div class="npj-body">
+    <div class="npj-top"><b class="npj-t">${esc(m.title)}</b></div><span class="npj-side">${m.len ? 'SIDE ' + SIDE(side) + ' · ' : ''}SONG ${i + 1} OF ${n}</span>
+    <ol class="npj-list" start="${Math.max(1, i)}">${i > 0 ? `<li class="past">${row(i - 1)}</li>` : ''}<li class="now">${row(i)}</li>${i + 1 < n ? `<li>${row(i + 1)}</li>` : ''}</ol></div></div>`;
+}
 function updateNP() {
   try { rxSync(); } catch {}
   setTimeout(npFit);
@@ -3541,7 +3581,7 @@ function updateNP() {
   const s = NPs(); const bar = $('#npBar'); if (!s || !bar) return;
   $('#npPos').textContent = (s.pos && s.total ? `${s.pos} of ${s.total}` : '') + (s.remote ? `${s.pos && s.total ? ' · ' : ''}on ${cfg.target.name}` : '');
   if (P.flip && !s.remote) $('#npPos').textContent = 'End of Side A · press the knob to flip';
-  $('#npDest').textContent = ''; { const tp = $('#npTape'); if (tp) tp.classList.toggle('tp-go', !!s.playing); }
+  $('#npDest').textContent = s.remote ? '' : tapeNow() ? (navigator.onLine ? 'Playing from Tape' : 'No signal · playing from Tape') : P.track?.local ? 'Playing from this phone' : ''; { const tp = $('#npTape'); if (tp) tp.classList.toggle('tp-go', !!s.playing); }
   const npEl = bar.parentElement; if (npEl) npEl.classList.toggle('opts', v.mode !== 'play');
   const rs = $('#npStars'); if (rs) { const r = ratingOf(s.track); rs.textContent = r && v.mode !== 'rating' ? starsTxt(r) : ''; }
   if (v.mode === 'rating') {
@@ -3742,7 +3782,7 @@ function press(b) {
 }
 
 bodyEl.addEventListener('click', e => {
-  if (e.target.closest('.np-art,.np-tape') && cur().kind === 'np' && P.view && NPs() && !NPs().remote) { click(); push(queueView()); return; }
+  if (e.target.closest('.np-art,.np-tape,.np-jc') && cur().kind === 'np' && P.view && NPs() && !NPs().remote) { click(); push(queueView()); return; }
   const m = e.target.closest('[data-mode]');
   if (m) { const v = cur(); if (v.kind === 'np') { click(); v.mode = m.dataset.mode; npIdle(v); updateNP(); } return; }
   const st = e.target.closest('[data-star]');
@@ -3838,10 +3878,19 @@ function toneGraph() {
     TONE.bass = c.createBiquadFilter(); TONE.bass.type = 'lowshelf'; TONE.bass.frequency.value = 110;
     TONE.treb = c.createBiquadFilter(); TONE.treb.type = 'highshelf'; TONE.treb.frequency.value = 7000;
     TONE.src.connect(TONE.bass); TONE.bass.connect(TONE.treb); TONE.treb.connect(c.destination);
-    audio.addEventListener('play', () => { try { TONE.ctx.resume(); } catch {} });
+    audio.addEventListener('play', toneWake);
+    c.onstatechange = () => { if (c.state !== 'running' && P.want) toneWake(); };
     return true;
   } catch { return false; }
 }
+/* iPhone pauses the Web Audio engine when another app (Apple Music, a call, Siri) takes the sound, and keeps it paused.
+   The song then "plays" in silence. Wake it on play and on every tap. */
+function toneWake() {
+  const c = TONE.ctx; if (!c || c.state === 'running' || c.state === 'closed') return;
+  try { const pr = c.resume(); if (pr && pr.catch) pr.catch(() => {}); } catch {}
+}
+['pointerdown', 'touchend', 'keydown'].forEach(ev => addEventListener(ev, toneWake, { capture: true, passive: true }));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) toneWake(); });
 function toneApply(b = cfg.bass || 0, t = cfg.treble || 0, loud = !!cfg.loud) {
   if (!TONE.src && b === 0 && t === 0 && !loud) return;
   if (!toneGraph()) { flash("Tone controls aren't available here."); return; }
@@ -3996,7 +4045,7 @@ function letterPing(v) {
 
 /* ---------- search ---------- */
 function searchView(lib) {
-  if (!lib && !isDemo() && !ready()) return Message('Search', 'Search works with your Plex library. Sign in under Settings › Plex.');
+  if (!lib && !isDemo() && !ready()) return Message('Search', 'Search works with your Plex library. Sign in under Settings › Music Sources › Plex.');
   return { kind: 'search', title: 'Search', q: '', sel: 0, top: 0, items: [], state: 'idle', seq: 0, lib,
     count() { return this.items.length; }, get(i) { return this.items[i]; } };
 }
@@ -4589,7 +4638,7 @@ const gameBtn = (v, b) => !!(v.G.btn && v.g && v.G.btn(v, b));
 const QUIZ_ROUNDS = 10, QUIZ_SECS = 12;
 const qaudio = new Audio(); qaudio.preload = 'auto';
 function quizView() {
-  if (isDemo()) return Message('Music Quiz', 'Music Quiz plays clips from your own Plex music. Sign in under Settings › Plex and turn off the demo.');
+  if (isDemo()) return Message('Music Quiz', 'Music Quiz plays clips from your own Plex music. Sign in under Settings › Music Sources › Plex and turn off the demo.');
   if (!ready()) return signInPrompt('Music Quiz');
   const q = { round: 0, score: 0, state: 'loading', pool: [], choices: [], answer: null, t0: 0, picked: -1, gained: 0, best: LS.get('quizBest', 0), wasPlaying: false, err: null };
   const items = () => {
@@ -4729,7 +4778,7 @@ function cfSource() {
 function cfOpen(auto) {
   if (CF.open) return;
   const src = cfSource();
-  if (!src) { if (!auto) push(Message('Cover Flow', 'Cover Flow works with your Plex library or the demo. Sign in under Settings › Plex.')); return; }
+  if (!src) { if (!auto) push(Message('Cover Flow', 'Cover Flow works with your Plex library or the demo. Sign in under Settings › Music Sources › Plex.')); return; }
   CF.src = src; CF.srcKey = src.key; src.onLoad = () => { if (CF.open && CF.src === src) cfDraw(); };
   CF.open = true; CF.auto = auto; CF.flipped = false;
   CF.pos = CF.target = CF.last[src.key] || 0;
@@ -4969,7 +5018,7 @@ const seasonList = sh => Lazy(sh.title, paged(`/library/metadata/${sh.ratingKey}
   m => ({ label: m.title, arrow: true, go: () => push(Lazy(`${sh.title}: ${m.title}`, paged(`/library/metadata/${m.ratingKey}/children`), vItem)) }));
 const pickLib = (title, libs, make) => libs.length > 1 ? List(title, libs.map(x => ({ label: x.title, arrow: true, go: () => push(make(x)) }))) : make(libs[0]);
 function videosView() {
-  if (isDemo() || !ready()) return Message('Videos', 'Videos play from your Plex server. Sign in under Settings › Plex.');
+  if (isDemo() || !ready()) return Message('Videos', 'Videos play from your Plex server. Sign in under Settings › Music Sources › Plex.');
   const v = List('Videos', () => v._items || [{ label: 'Loading…', dim: true }]);
   videoSections().then(s => {
     const mv = s.filter(x => x.type === 'movie'), sh = s.filter(x => x.type === 'show'), it = [];
