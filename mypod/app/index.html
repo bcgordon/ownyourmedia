@@ -1600,9 +1600,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.6';
+const APP_VERSION = '1.4.8';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2413,7 +2413,8 @@ function jcardHTML(m, big) {
 function mixtapesMenu(lib) {
   const v = List('Mixtapes', () => [
     { label: 'Make a Mixtape', act: mixNew },
-    ...MIX.all.map(m => ({ label: m.title, value: mixLen(m), arrow: true, mid: m.id, go: () => push(mixView(m)) }))
+    ...MIX.all.map(m => ({ label: m.title, value: mixLen(m), arrow: true, mid: m.id, go: () => push(mixView(m)) })),
+    ...(!isDemo() && cfg.token ? [{ label: 'Sync with Plex', act: mixSyncNow }] : [])
   ], { mixLive: true });
   mixPull();
   Object.defineProperty(v, 'note', { get: () => MIX.all.length ? ' ' : 'Make one here: pick a C60 or C90 and fill Side A and Side B, or pick No Limit for a mixtape of any length.' });
@@ -2439,7 +2440,7 @@ function mixView(m) {
           const paths = []; for (let i = 0; i < rks.length; i += 100) paths.push(['/library/metadata/' + rks.slice(i, i + 100).join(',')]);
           dub({ key: 'mix:' + m.id, title: m.title, paths }); } }] : []),
       { label: 'Print the J-Card', act: () => mixPrint(m) },
-      { label: 'Sync', value: mixStatus(m), act: () => { if (!mixSyncable(m)) { flash(isDemo() || !cfg.token ? 'Sign in to Plex to keep mixtapes on all your devices.' : 'This mixtape was made on another Plex server.'); return; } m.syncErr = false; mixPush().then(() => mixPull(true)); } },
+      { label: 'Sync', value: mixStatus(m), act: () => { if (!mixSyncable(m) && cfg.server?.machineId && !isDemo() && cfg.token) { flash('This mixtape was made on another Plex server.'); return; } mixSyncNow(); } },
       { label: 'Label', value: m.title, act: () => { const t = (prompt('Write the label', m.title) || '').trim(); if (t) { m.title = t; v.title = t; mixSave(); render(); } } },
       { label: 'For', value: m.for || 'Anyone', act: () => { const t = prompt('Who is it for?', m.for || ''); if (t != null) { m.for = t.trim(); mixSave(); render(); } } },
       { label: 'Label Color', value: (MIX_COLORS.find(c => c[0] === m.color) || MIX_COLORS[0])[1], act: () => {
@@ -2555,12 +2556,12 @@ ol{margin:0 0 8px;padding-left:16px;font-size:10.5px;line-height:1.35}li span{di
 }
 /* ---------- Mixtapes follow you: each one is saved to Plex as a playlist, so it shows up on every device signed in to the same server.
    The label, "for", color, tape length and where Side A ends ride along in the playlist's description. Your place in the tape stays on each device. ---------- */
-const MSYNC = { t: null, busy: false, lastPull: 0, gone: LS.get('mixGone', []) };
+const MSYNC = { t: null, busy: false, lastPull: 0, gone: LS.get('mixGone', []), plain: new Set(), found: 0 };
 const MIX_TAG = /\[mystereo:(\{.*?\})\]/s;
 const mixSig = m => JSON.stringify([m.title, m.for, m.color, m.len, m.a.map(r => r.rk), m.b.map(r => r.rk)]);
 const mixSyncable = m => ready() && !isDemo() && cfg.server?.machineId && (!m.mid || m.mid === cfg.server.machineId);
 const mixRemoteRks = (m, s) => m[s].filter(r => !r.demo && !r.local && (!r.mid || r.mid === cfg.server?.machineId)).map(r => r.rk);
-const mixStatus = m => !mixSyncable(m) ? (isDemo() || !cfg.token ? 'This device only' : 'On another server') : m.syncErr ? 'Not saved yet' : m.sig === mixSig(m) && m.plexId ? 'Saved to Plex' : 'Saving…';
+const mixStatus = m => isDemo() || !cfg.token ? 'This device only' : !cfg.server?.machineId ? 'Not connected' : !mixSyncable(m) ? 'On another server' : m.syncErr ? 'Not saved' : m.sig === mixSig(m) && m.plexId ? 'Saved to Plex' : !m.plexId && !mixRemoteRks(m, 'a').length && !mixRemoteRks(m, 'b').length ? 'After 1st song' : 'Saving…';
 const mixSummary = m => {
   const meta = { v: 1, id: m.id, len: m.len, color: m.color, for: m.for || '', made: m.made, a: mixRemoteRks(m, 'a').length };
   return `Mixtape · ${m.len ? 'C' + m.len : 'No Limit'}${m.for ? ' · for ' + m.for : ''}. Made with myStereo.\n[mystereo:${JSON.stringify(meta)}]`;
@@ -2578,6 +2579,7 @@ async function mixPush() {
     for (const m of MIX.all) {
       if (!mixSyncable(m) || (m.plexId && m.sig === mixSig(m))) continue;
       const sig = mixSig(m), rks = [...mixRemoteRks(m, 'a'), ...mixRemoteRks(m, 'b')];
+      if (!m.plexId && !rks.length) continue;   /* Plex won't make an empty playlist: wait for the first song */
       const uri = `server://${cfg.server.machineId}/com.plexapp.plugins.library/library/metadata/${rks.join(',')}`;
       try {
         if (!m.plexId) {
@@ -2588,12 +2590,17 @@ async function mixPush() {
           await pms(`/playlists/${m.plexId}/items`, {}, { method: 'DELETE', quiet: true });
           if (rks.length) await pms(`/playlists/${m.plexId}/items`, { uri }, { method: 'PUT', quiet: true });
         }
-        try { await pms(`/playlists/${m.plexId}`, { title: m.title, summary: mixSummary(m) }, { method: 'PUT', quiet: true }); }
-        catch { await pms(`/library/metadata/${m.plexId}`, { 'title.value': m.title, 'summary.value': mixSummary(m), 'title.locked': 1, 'summary.locked': 1 }, { method: 'PUT', quiet: true }); }
+        /* the label rides in the description; check Plex kept it, since that's how other devices know it's a mixtape */
+        const kept = async () => { try { const d = await pms(`/playlists/${m.plexId}`, {}, { quiet: true }); return MIX_TAG.test(d.MediaContainer?.Metadata?.[0]?.summary || ''); } catch { return false; } };
+        try { await pms(`/playlists/${m.plexId}`, { title: m.title, summary: mixSummary(m) }, { method: 'PUT', quiet: true }); } catch {}
+        if (!(await kept())) {
+          try { await pms(`/library/metadata/${m.plexId}`, { type: 15, 'title.value': m.title, 'summary.value': mixSummary(m), 'title.locked': 1, 'summary.locked': 1 }, { method: 'PUT', quiet: true }); } catch {}
+          if (!(await kept())) throw Object.assign(new Error('label'), { why: 'Plex saved the songs but not the label' });
+        }
         m.sig = sig; m.syncedAt = Date.now(); m.syncErr = false;
       } catch (e) {
         if (e.status === 404 && m.plexId) { m.plexId = null; mixSyncSoon(); }   /* the playlist was deleted in Plex: make it again */
-        else m.syncErr = true;
+        else m.syncErr = e.why || (e.status ? `Plex said ${e.status}` : 'Can’t reach Plex');
       }
       LS.set('mixtapes', MIX.all);
     }
@@ -2602,15 +2609,21 @@ async function mixPush() {
 /* bring in mixtapes made or changed on other devices */
 async function mixPull(force) {
   if (!ready() || isDemo() || MSYNC.busy || (!force && Date.now() - MSYNC.lastPull < 20000)) return;
+  if (!cfg.server.machineId) { await mixFixServer(); if (!cfg.server.machineId) return; }
   MSYNC.lastPull = Date.now();
   let lists;
   try { const d = await pms('/playlists', { playlistType: 'audio', 'X-Plex-Container-Start': 0, 'X-Plex-Container-Size': 500 }, { quiet: true }); lists = d.MediaContainer?.Metadata || []; }
-  catch { return; }
-  const mid = cfg.server.machineId, seen = new Set(); let changed = false;
+  catch { return false; }
+  const mid = cfg.server.machineId, seen = new Set(); let changed = false; MSYNC.found = 0;
   for (const pl of lists) {
+    if (pl.smart || pl.smart === '1') continue;
+    if (pl.summary == null) {   /* some servers leave the description out of the list: look once per change */
+      const ck = pl.ratingKey + ':' + (pl.updatedAt || 0);
+      if (!MSYNC.plain.has(ck)) { try { const d = await pms(`/playlists/${pl.ratingKey}`, {}, { quiet: true }); pl.summary = d.MediaContainer?.Metadata?.[0]?.summary || ''; } catch {} if (!MIX_TAG.test(pl.summary || '')) MSYNC.plain.add(ck); }
+    }
     const tag = MIX_TAG.exec(pl.summary || ''); if (!tag) continue;
     let meta; try { meta = JSON.parse(tag[1]); } catch { continue; }
-    const pid = String(pl.ratingKey); seen.add(pid);
+    const pid = String(pl.ratingKey); seen.add(pid); MSYNC.found = seen.size;
     if (MSYNC.gone.includes(pid)) continue;
     let m = MIX.all.find(x => x.plexId === pid && x.mid === mid) || MIX.all.find(x => x.id === meta.id);
     const stamp = (pl.updatedAt || 0) * 1000;
@@ -2633,6 +2646,30 @@ async function mixPull(force) {
   }
   if (changed) { LS.set('mixtapes', MIX.all); const v = cur(); if (v && v.mixLive) render(); }
   mixPush();
+  return true;
+}
+/* Sync Now: save everything, bring in everything, and say what happened */
+async function mixSyncNow() {
+  if (isDemo() || !cfg.token) { flash('Sign in to Plex to keep mixtapes on all your devices.'); return; }
+  await mixFixServer();
+  if (!cfg.server?.machineId) { flash('Can’t reach your Plex server right now.'); return; }
+  flash('Syncing with Plex…');
+  for (const m of MIX.all) if (m.syncErr) m.syncErr = false;
+  while (MSYNC.busy) await new Promise(r => setTimeout(r, 300));
+  clearTimeout(MSYNC.t); await mixPush();
+  while (MSYNC.busy) await new Promise(r => setTimeout(r, 300));
+  const ok = await mixPull(true);
+  while (MSYNC.busy) await new Promise(r => setTimeout(r, 300));
+  const bad = MIX.all.find(m => mixSyncable(m) && m.syncErr), empty = MIX.all.filter(m => mixSyncable(m) && !m.plexId && !mixRemoteRks(m, 'a').length && !mixRemoteRks(m, 'b').length).length;
+  if (bad) flash(`${bad.title} didn’t save: ${bad.syncErr}.`);
+  else if (!ok) flash('Can’t reach your Plex server right now.');
+  else flash(`In sync. ${MSYNC.found} mixtape${MSYNC.found === 1 ? '' : 's'} on ${cfg.server.name || 'your server'}${empty ? `; ${empty} empty one${empty === 1 ? '' : 's'} save${empty === 1 ? 's' : ''} after the first song` : ''}.`);
+  render();
+}
+/* servers picked before mixtapes could sync may not know their own ID: ask the server */
+async function mixFixServer() {
+  if (!cfg.server || cfg.server.machineId || isDemo()) return;
+  try { const d = await pms('/identity', {}, { quiet: true }); const id = d.MediaContainer?.machineIdentifier; if (id) { cfg.server.machineId = id; save(); } } catch {}
 }
 function mixForget(m) { if (m.plexId && m.mid === cfg.server?.machineId) { MSYNC.gone.push(m.plexId); LS.set('mixGone', MSYNC.gone); mixSyncSoon(); } }
 /* tap the art on Now Playing: the album, mixtape side or list that's playing, with the current song marked */
@@ -3309,7 +3346,7 @@ function lookView() {
     { label: 'Knob Center', value: wheelName(cfg.center), arrow: true, go: () => push(wheelView('center')) },
     { label: 'Corner', value: cornerName(), arrow: true, go: () => push(cornerView()) },
     { label: 'Large Text', value: cfg.bigText ? 'On' : 'Off', act: () => { cfg.bigText = !cfg.bigText; save(); layout(); } },
-    { label: 'Menu Art', value: cfg.splitArt === false ? 'Off' : 'On', act: () => { cfg.splitArt = cfg.splitArt === false; save(); } }
+    { label: 'Menu Art', value: cfg.splitArt === true ? 'On' : 'Off', act: () => { cfg.splitArt = cfg.splitArt !== true; save(); } }
   ]);
 }
 function soundView() {
@@ -3526,7 +3563,7 @@ const HELP = `
 <p><b>Extras › Games</b> has four games. Each one remembers your best score.</p>
 <p><b>Brick.</b> Turn the knob or drag to move the paddle. Press the center to launch the ball.</p>
 <p><b>Music Quiz.</b> Hear a few seconds of a song from your library and pick its name. Faster answers score more.</p>
-<p><b>Stack.</b> Turn the knob or drag sideways to move the falling block. Press the center or tap the screen to turn it. Press ⏭ or swipe down to drop it. Press ⏯ to pause.</p>
+<p><b>Snake.</b> Eat the dots to grow, and don’t hit the walls or your own tail. Turn the knob clockwise to turn right and back to turn left, or press ⏭ and ⏮. On the screen, swipe the way you want to go. Press the center or tap to pause.</p>
 <p><b>Minesweeper.</b> Tap a square to open it. Press and hold to place a flag. With the knob: turn to move the box, ⏮ and ⏭ move up and down a row, the center opens a square, and ⏯ places a flag.</p>
 <h3>Flip it over</h3>
 <p>Swipe sideways on the empty part of the faceplate, like the space around the knob, to turn myStereo over and see the back. Swipe again to flip it back. The music keeps playing.</p>
@@ -3638,7 +3675,7 @@ function renderList(v, anim) {
   if (v.err) note = errText(v.err);
   else if (n === 0 && !(v.loading && v.loading())) note = note || 'Nothing here yet.';
   const noteRows = note ? (v.noteRows || 3) : 0;
-  const split = !!v.split && !note && cfg.splitArt !== false;
+  const split = !!v.split && !note && cfg.splitArt === true;
   const s = split || v.nostrip ? null : NPs();
   const rows = Math.max(1, ROWS - noteRows - (s ? 1 : 0)); v._rows = rows;
   const nh = note && !v.err ? v.noteHTML : null;
@@ -4374,7 +4411,7 @@ function gamesView() {
   return List('Games', [
     { label: 'Brick', arrow: true, go: () => push(gameView(Brick)) },
     { label: 'Music Quiz', arrow: true, go: () => push(quizView()) },
-    { label: 'Stack', arrow: true, go: () => push(gameView(Stack)) },
+    { label: 'Snake', arrow: true, go: () => push(gameView(Snake)) },
     { label: 'Minesweeper', arrow: true, go: () => push(gameView(Mines)) }
   ]);
 }
@@ -4536,125 +4573,81 @@ function gameBanner(g, ctx, L, title, sub) {
   ctx.font = `500 ${fs * .85}px ${L.font}`; ctx.fillText(sub, g.w / 2, g.h * .36 + fs * 2.4);
 }
 
-/* ---------- stack (falling blocks) ---------- */
-const ST_W = 10, ST_H = 16;
-const ST_P = {
-  I: { c: '#38b6d8', m: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]] },
-  O: { c: '#efc12e', m: [[1,1],[1,1]] },
-  T: { c: '#9a5bd0', m: [[0,1,0],[1,1,1],[0,0,0]] },
-  S: { c: '#4aa947', m: [[0,1,1],[1,1,0],[0,0,0]] },
-  Z: { c: '#e0463d', m: [[1,1,0],[0,1,1],[0,0,0]] },
-  J: { c: '#3a7bd8', m: [[1,0,0],[1,1,1],[0,0,0]] },
-  L: { c: '#ef8a2c', m: [[0,0,1],[1,1,1],[0,0,0]] }
-};
-const stRot = (m, dir) => { const n = m.length, o = m.map(r => r.slice());
-  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) o[y][x] = dir > 0 ? m[n - 1 - x][y] : m[x][n - 1 - y]; return o; };
-function stBag(g) { if (!g.bag.length) { g.bag = Object.keys(ST_P); for (let i = g.bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [g.bag[i], g.bag[j]] = [g.bag[j], g.bag[i]]; } } return g.bag.pop(); }
-function stFits(g, m, px, py) {
-  for (let y = 0; y < m.length; y++) for (let x = 0; x < m.length; x++) {
-    if (!m[y][x]) continue; const bx = px + x, by = py + y;
-    if (bx < 0 || bx >= ST_W || by >= ST_H) return false;
-    if (by >= 0 && g.grid[by][bx]) return false;
-  }
-  return true;
+/* ---------- snake ---------- */
+const SN_DIRS = [[1, 0], [0, 1], [-1, 0], [0, -1]]; /* right, down, left, up: clockwise */
+function snFood(g) {
+  const used = new Set(g.body.map(([x, y]) => x + ',' + y)), free = [];
+  for (let y = 0; y < g.rows; y++) for (let x = 0; x < g.cols; x++) if (!used.has(x + ',' + y)) free.push([x, y]);
+  g.food = free.length ? free[Math.floor(Math.random() * free.length)] : null;
 }
-function stSpawn(g) {
-  const k = g.next || stBag(g); g.next = stBag(g);
-  g.p = { k, m: ST_P[k].m.map(r => r.slice()), x: Math.floor((ST_W - ST_P[k].m.length) / 2), y: k === 'I' ? -1 : 0 };
-  g.fall = 0;
-  if (!stFits(g, g.p.m, g.p.x, g.p.y)) { g.state = 'over'; click(); }
+const snSpeed = g => Math.max(.065, .17 - (g.body.length - 3) * .004);
+function snTurn(g, d) { /* d: absolute direction 0-3; queued so two quick turns both count */
+  const last = g.q.length ? g.q[g.q.length - 1] : g.dir;
+  if (d === last || (d + 2) % 4 === last || g.q.length >= 2) return;
+  g.q.push(d); click();
 }
-const stSpeed = g => Math.max(.07, .8 - (g.level - 1) * .07);
-function stLock(g) {
-  const { m, x: px, y: py, k } = g.p;
-  for (let y = 0; y < m.length; y++) for (let x = 0; x < m.length; x++) if (m[y][x] && py + y >= 0) g.grid[py + y][px + x] = k;
-  let n = 0;
-  for (let y = ST_H - 1; y >= 0; y--) if (g.grid[y].every(Boolean)) { g.grid.splice(y, 1); g.grid.unshift(Array(ST_W).fill(null)); n++; y++; }
-  if (n) { g.lines += n; g.score += [0, 100, 300, 500, 800][n] * g.level; g.level = 1 + Math.floor(g.lines / 10); g.flashT = .18; }
-  if (g.score > g.best) { g.best = g.score; LS.set('stackBest', g.best); }
-  click(); stSpawn(g);
-}
-const Stack = {
-  title: 'Stack',
+const Snake = {
+  title: 'Snake',
   new(w, h, old) {
-    const g = old ? Object.assign(old, { w, h }) : { w, h, grid: Array.from({ length: ST_H }, () => Array(ST_W).fill(null)), bag: [], next: null, p: null,
-      score: 0, lines: 0, level: 1, best: LS.get('stackBest', 0), state: 'ready', fall: 0, flashT: 0 };
-    g.cs = Math.floor(Math.min(h * .96 / ST_H, w * .56 / ST_W)); g.bw = g.cs * ST_W; g.bh = g.cs * ST_H;
-    g.ox = Math.round(w * .06); g.oy = Math.round((h - g.bh) / 2);
-    if (!g.p) stSpawn(g);
+    const top = Math.round(h * .12), cs = Math.max(8, Math.floor(Math.min((w - 8) / 16, (h - top - 6) / 12)));
+    const cols = Math.floor((w - 8) / cs), rows = Math.floor((h - top - 6) / cs);
+    if (old && old.cols === cols && old.rows === rows) return Object.assign(old, { w, h, cs, top, ox: Math.round((w - cols * cs) / 2) });
+    const g = { w, h, cs, cols, rows, top, ox: Math.round((w - cols * cs) / 2), oy: top,
+      body: [], dir: 0, q: [], food: null, score: 0, best: LS.get('snakeBest', 0), state: 'ready', t: 0, flashT: 0 };
+    const y = Math.floor(rows / 2), x = Math.floor(cols / 3);
+    g.body = [[x, y], [x - 1, y], [x - 2, y]]; snFood(g);
     return g;
   },
   step(g, dt) {
     if (g.flashT > 0) g.flashT -= dt;
     if (g.state !== 'play') return;
-    g.fall += dt;
-    if (g.fall >= stSpeed(g)) { g.fall = 0; if (stFits(g, g.p.m, g.p.x, g.p.y + 1)) g.p.y++; else stLock(g); }
+    g.t += dt; if (g.t < snSpeed(g)) return; g.t = 0;
+    if (g.q.length) g.dir = g.q.shift();
+    const [dx, dy] = SN_DIRS[g.dir], [hx, hy] = g.body[0], nx = hx + dx, ny = hy + dy;
+    const eat = g.food && nx === g.food[0] && ny === g.food[1];
+    const hit = nx < 0 || ny < 0 || nx >= g.cols || ny >= g.rows || g.body.some(([x, y], i) => x === nx && y === ny && (eat || i < g.body.length - 1));
+    if (hit) { g.state = 'over'; g.flashT = .25; click(); return; }
+    g.body.unshift([nx, ny]);
+    if (eat) { g.score += 10; if (g.score > g.best) { g.best = g.score; LS.set('snakeBest', g.best); } click(); snFood(g); if (!g.food) g.state = 'over'; }
+    else g.body.pop();
   },
-  move(g, dx) { if (g.state === 'play' && stFits(g, g.p.m, g.p.x + dx, g.p.y)) { g.p.x += dx; click(); return true; } return false; },
-  rotate(g, dir = 1) {
-    if (g.state !== 'play') return;
-    const m = stRot(g.p.m, dir);
-    for (const k of [0, -1, 1, -2, 2]) if (stFits(g, m, g.p.x + k, g.p.y)) { g.p.m = m; g.p.x += k; click(); return; }
-  },
-  drop(g) {
-    if (g.state !== 'play') return;
-    let d = 0; while (stFits(g, g.p.m, g.p.x, g.p.y + 1)) { g.p.y++; d++; }
-    g.score += d * 2; stLock(g);
-  },
-  restart(v) { const { w, h } = v.g; v.g = Stack.new(w, h, null); v.g.state = 'play'; },
-  tick(v, d) { Stack.move(v.g, d > 0 ? 1 : -1); },
-  action(v) { const g = v.g; if (g.state === 'ready' || g.state === 'paused') { g.state = 'play'; click(); } else if (g.state === 'over') Stack.restart(v); else Stack.rotate(g, 1); },
+  restart(v) { const { w, h } = v.g; v.g = Snake.new(w, h, null); v.g.state = 'play'; },
+  action(v) { const g = v.g; if (g.state === 'ready' || g.state === 'paused') { g.state = 'play'; click(); } else if (g.state === 'over') Snake.restart(v); else { g.state = 'paused'; } },
+  /* knob: clockwise turns right, counter-clockwise turns left */
+  tick(v, d) { const g = v.g; if (g.state !== 'play') return; const last = g.q.length ? g.q[g.q.length - 1] : g.dir; snTurn(g, (last + (d > 0 ? 1 : 3)) % 4); },
   btn(v, b) {
     const g = v.g; if (!g) return false;
-    if (b === 'play') { if (g.state === 'play') g.state = 'paused'; else Stack.action(v); return true; }
-    if (b === 'next') { if (g.state === 'play') Stack.drop(g); else Stack.action(v); return true; }
-    if (b === 'prev') { if (g.state === 'play') Stack.rotate(g, -1); else Stack.action(v); return true; }
+    if (b === 'play') { Snake.action(v); return true; }
+    if (b === 'next' || b === 'prev') { if (g.state === 'play') Snake.tick(v, b === 'next' ? 1 : -1); else Snake.action(v); return true; }
     return false;
   },
-  down(v, p) { p.col = 0; },
+  down(v, p) { p.turned = false; },
+  /* swipe in the direction you want to go */
   drag(v, p) {
-    const g = v.g; if (g.state !== 'play') return;
-    const want = Math.round(p.dx / g.cs);
-    while (p.col < want && Stack.move(g, 1)) p.col++;
-    while (p.col > want && Stack.move(g, -1)) p.col--;
-    if (want !== p.col) p.col = want;
-    if (!p.dropped && p.dy > g.cs * 3 && Math.abs(p.dy) > Math.abs(p.dx) * 1.5) { p.dropped = true; Stack.drop(g); }
+    const g = v.g; if (g.state !== 'play' || p.turned) return;
+    const ax = Math.abs(p.dx), ay = Math.abs(p.dy); if (Math.max(ax, ay) < g.cs * 1.2) return;
+    p.turned = true; snTurn(g, ax > ay ? (p.dx > 0 ? 0 : 2) : (p.dy > 0 ? 1 : 3));
   },
-  up(v, p) { if (!p.moved) Stack.action(v); },
+  up(v, p) { if (!p.moved) Snake.action(v); },
   draw(g, ctx) {
-    const L = gameLook();
+    const L = gameLook(), { cs, ox, oy, cols, rows } = g, bw = cols * cs, bh = rows * cs;
+    const snakeC = L.classic ? L.ink : '#4aa947', headC = L.classic ? L.ink : '#2f8a3a', foodC = L.classic ? L.ink : '#e0463d';
     ctx.fillStyle = L.bg; ctx.fillRect(0, 0, g.w, g.h);
-    const { cs, ox, oy, bw, bh } = g;
     ctx.fillStyle = L.panel; ctx.fillRect(ox, oy, bw, bh);
     ctx.strokeStyle = L.ink; ctx.lineWidth = 1.5; ctx.strokeRect(ox - .75, oy - .75, bw + 1.5, bh + 1.5);
-    const cell = (x, y, k, ghost) => {
-      if (y < 0) return;
-      const X = ox + x * cs, Y = oy + y * cs;
-      if (ghost) { ctx.strokeStyle = L.classic ? L.ink : ST_P[k].c; ctx.globalAlpha = .45; ctx.lineWidth = 1.2; ctx.strokeRect(X + 1.5, Y + 1.5, cs - 3, cs - 3); ctx.globalAlpha = 1; return; }
-      ctx.fillStyle = L.classic ? L.ink : ST_P[k].c; ctx.fillRect(X + .5, Y + .5, cs - 1, cs - 1);
-      if (!L.classic) { ctx.fillStyle = 'rgba(255,255,255,.28)'; ctx.fillRect(X + .5, Y + .5, cs - 1, cs * .28); }
-    };
-    for (let y = 0; y < ST_H; y++) for (let x = 0; x < ST_W; x++) if (g.grid[y][x]) cell(x, y, g.grid[y][x]);
-    if (g.p && g.state !== 'over') {
-      let gy = g.p.y; while (stFits(g, g.p.m, g.p.x, gy + 1)) gy++;
-      const m = g.p.m;
-      if (g.state === 'play') for (let y = 0; y < m.length; y++) for (let x = 0; x < m.length; x++) if (m[y][x]) cell(g.p.x + x, gy + y, g.p.k, true);
-      for (let y = 0; y < m.length; y++) for (let x = 0; x < m.length; x++) if (m[y][x]) cell(g.p.x + x, g.p.y + y, g.p.k);
-    }
+    const fs = Math.max(12, g.h * .065);
+    ctx.fillStyle = L.ink; ctx.font = `700 ${fs}px ${L.font}`; ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left'; ctx.fillText(`Score ${g.score}`, ox, g.top / 2);
+    ctx.textAlign = 'right'; ctx.fillText(`Best ${g.best}`, ox + bw, g.top / 2);
+    if (g.food) { const [fx, fy] = g.food; ctx.fillStyle = foodC; ctx.beginPath(); ctx.arc(ox + fx * cs + cs / 2, oy + fy * cs + cs / 2, cs * .38, 0, Math.PI * 2); ctx.fill(); }
+    g.body.forEach(([x, y], i) => { ctx.fillStyle = i ? snakeC : headC; ctx.fillRect(ox + x * cs + 1, oy + y * cs + 1, cs - 2, cs - 2); });
+    /* eyes, so you can tell which way it's heading */
+    if (!L.classic && g.body.length) { const [hx, hy] = g.body[0], [dx, dy] = SN_DIRS[g.q[0] ?? g.dir], cx = ox + hx * cs + cs / 2, cy = oy + hy * cs + cs / 2;
+      ctx.fillStyle = '#fff'; for (const s of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + dx * cs * .18 - dy * s * cs * .2, cy + dy * cs * .18 + dx * s * cs * .2, cs * .11, 0, Math.PI * 2); ctx.fill(); } }
     if (g.flashT > 0) { ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(ox, oy, bw, bh); }
-    const sx = ox + bw + g.w * .05;
-    const ny = gameSide(g, ctx, L, sx, [['Score', g.score], ['Lines', g.lines], ['Level', g.level], ['Best', g.best]], 2) - g.h * .02;
-    /* next piece */
-    const nm = ST_P[g.next]?.m; if (nm) {
-      const ns = Math.max(6, cs * .8), fs = Math.max(12, g.h * .08);
-      ctx.fillStyle = L.label; ctx.font = `600 ${fs * .78}px ${L.font}`; ctx.textAlign = 'left'; ctx.fillText('Next', sx, ny);
-      for (let y = 0; y < nm.length; y++) for (let x = 0; x < nm.length; x++) if (nm[y][x]) {
-        ctx.fillStyle = L.classic ? L.ink : ST_P[g.next].c; ctx.fillRect(sx + x * ns, ny + fs * .7 + y * ns, ns - 1, ns - 1);
-      }
-    }
-    if (g.state === 'ready') gameBanner(g, ctx, L, 'Stack', 'Press the center to start');
+    if (g.state === 'ready') gameBanner(g, ctx, L, 'Snake', 'Press the center to start');
     else if (g.state === 'paused') gameBanner(g, ctx, L, 'Paused', 'Press the center to keep going');
-    else if (g.state === 'over') gameBanner(g, ctx, L, 'Game Over', 'Press the center to play again');
+    else if (g.state === 'over') gameBanner(g, ctx, L, g.food ? 'Game Over' : 'You Win', 'Press the center to play again');
   }
 };
 
