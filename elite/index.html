@@ -951,11 +951,22 @@ html:not(.desk) .pod.recv.deck .cx-trim.t{top:calc(var(--w)*.022)}html:not(.desk
 .cxs-sp{cursor:pointer}
 .cx-pill.off{opacity:.45}
 
+.cx-pill.cx-wide{width:calc(var(--w)*.3);font-size:calc(var(--w)*.034);letter-spacing:.08em}
+.cx-pill.cx-enter.cx-wide{font-size:calc(var(--w)*.05)}
+.cx-panel .cx-r{justify-items:end}
+.cx-pill[data-cx=make]{color:#d8261b}
+/* the flip button sits in the corner of the tape window, like opening the door to turn the tape over */
+.cxs-flip{position:absolute;right:2.5cqw;bottom:2.5cqw;z-index:2;display:flex;align-items:center;gap:1.5cqw;padding:1.6cqw 3cqw;border:0;border-radius:99px;background:rgba(240,240,232,.14);color:#e6eedc;font:400 6.5cqw/1 VT323,ui-monospace,monospace;letter-spacing:.06em;box-shadow:inset 0 0 0 .4cqw rgba(255,255,255,.22);cursor:pointer}
+.cxs-flip:active{background:rgba(240,240,232,.3)}.cxs-flip.off{opacity:.35}
+.cxs-win{position:relative;padding-bottom:9cqw;box-sizing:border-box}
+.cxs-tape.turn{animation:cxturn .7s cubic-bezier(.45,.05,.3,1)}
+@keyframes cxturn{0%{transform:none}35%{transform:translateY(-14%) scale(.92)}60%{transform:translateY(-14%) scale(.92) rotateY(90deg)}100%{transform:none}}
+
 /* the tape window: covers the whole screen and ignores taps, so the buttons do the work */
 .pod.deck .toast{z-index:40}
 .cxs{position:absolute;inset:0;z-index:30;flex-direction:column;background:radial-gradient(ellipse at 50% 0%,#2b2d30,#0e0f11 75%);color:#d9e4cf;font-family:VT323,ui-monospace,monospace;padding:4cqw;gap:3cqw;box-sizing:border-box;user-select:none;-webkit-user-select:none}
 .cxs-win{flex:1;min-height:0;display:grid;place-items:center;border-radius:3cqw;background:linear-gradient(160deg,rgba(255,255,255,.07),transparent 40%),rgba(0,0,0,.35);box-shadow:inset 0 0 0 .5cqw rgba(255,255,255,.08)}
-.cxs-tape{width:94%;aspect-ratio:1.6;max-height:100%;border-radius:2.4cqw;background:linear-gradient(#3a3b3f,#26272a);box-shadow:0 1.5cqw 3cqw rgba(0,0,0,.6),inset 0 0 0 .4cqw rgba(255,255,255,.06);position:relative;display:flex;flex-direction:column;padding:3.5cqw 4cqw;box-sizing:border-box;container-type:inline-size}
+.cxs-tape{width:90%;aspect-ratio:1.6;max-height:100%;border-radius:2.4cqw;background:linear-gradient(#3a3b3f,#26272a);box-shadow:0 1.5cqw 3cqw rgba(0,0,0,.6),inset 0 0 0 .4cqw rgba(255,255,255,.06);position:relative;display:flex;flex-direction:column;padding:3.5cqw 4cqw;box-sizing:border-box;container-type:inline-size}
 .cxs-lab{flex:1;border-radius:1.4cqw;background:repeating-linear-gradient(#f6efdf 0 8cqw,#dcd2bd 8cqw calc(8cqw + 1px));color:#1c1b19;display:flex;flex-direction:column;padding:2cqw 12cqw 0 6cqw;position:relative;overflow:hidden;box-sizing:border-box}
 .cxs-lab::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3cqw;background:var(--lc)}
 .cxs-t{font:700 10cqw/1 Caveat,cursive;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
@@ -1541,9 +1552,8 @@ html.desk .screen .sb{width:8px;right:8px}
     <div class="cx-top" id="cxTop" aria-label="Tape keys"><button type="button" class="cx-pk" data-rxw="-1" aria-label="Rewind">◀◀ REW</button><button type="button" class="cx-pk" data-cx="stop" aria-label="Stop, or eject when stopped">■ STOP/EJECT</button><button type="button" class="cx-pk cx-pl" data-cx="play" aria-label="Play or pause">▶ PLAY ❚❚</button><button type="button" class="cx-pk" data-rxw="1" aria-label="Fast forward">FF ▶▶</button></div>
     <div class="cx-brand" id="cxBrand"><span class="cx-name">myStereo</span><span class="cx-led" id="cxLed"><i></i>TAPE</span><div class="cx-ob"><span>MENU</span><button type="button" class="cx-pill cx-sm" data-cx="menu" aria-label="Leave the cassette deck"></button></div></div>
     <div class="cx-panel" id="cxPanel">
-      <div class="cx-ob cx-l"><span>TAPE SELECT</span><div class="cx-pair"><button type="button" class="cx-pill" data-cxs="-1" aria-label="Previous tape">−</button><button type="button" class="cx-pill" data-cxs="1" aria-label="Next tape">+</button></div><em>OR TAP A LABEL</em></div>
-      <div class="cx-ob"><span>DIR</span><button type="button" class="cx-pill" data-cx="flip" aria-label="Flip the tape">⇄</button><em>FLIP</em></div>
-      <div class="cx-ob"><span>LOAD</span><button type="button" class="cx-pill cx-enter" data-cx="load" aria-label="Load the tape"></button><em>CLOSE DOOR</em></div>
+      <div class="cx-ob cx-l"><span>MAKE MIXTAPE</span><button type="button" class="cx-pill cx-wide" data-cx="make" aria-label="Make a mixtape">REC ●</button><em>NEW BLANK TAPE</em></div>
+      <div class="cx-ob cx-r"><span>SEND MIXTAPE</span><button type="button" class="cx-pill cx-enter cx-wide" data-cx="send" aria-label="Send this mixtape by email">✉</button><em>BY EMAIL</em></div>
     </div>
     <div class="cx-foot" id="cxFoot"><div class="cx-tag"><span>BELT CLIP ON BACK</span><i></i><b>PERSONAL STEREO</b></div><div class="cx-low"><div class="cx-grip"></div><div class="cx-jack"><span>PHONES</span><i></i><span>VOL ▲▼</span></div></div></div>
     <div class="dk-foot" id="dkFoot">Own your media.</div>
@@ -1702,9 +1712,9 @@ const LS = {
 };
 const PRODUCT = 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const APP_VERSION = '1.4.14';
+const APP_VERSION = '1.4.15';
 const aboutHTML = () => `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.15</h3><p>Cassette Deck: Make Mixtape starts a new tape, Send Mixtape writes an email with both sides listed, and Flip sits in the corner of the tape window. Pick a tape by tapping its label with the door open.</p><h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2683,6 +2693,16 @@ function mixKey(a) {
 }
 function mixFlip() { const f = P.flip; P.flip = null; const m = f && mixOf(f.id); if (m) { flash('Flipping to Side B…'); mixPlay(m, 'b'); } }
 /* the J-card: a printable insert for a real cassette case */
+/* Send Mixtape: an email with the label, who it's for and both sides written out, ready to send from Mail */
+function mixSend(m) {
+  const side = (s, list) => list.length ? `${m.len ? `SIDE ${s}` : 'THE SONGS'}\n` + list.map((r, i) => `${String(i + 1).padStart(2, ' ')}. ${r.title}${r.artist ? ' — ' + r.artist : ''}`).join('\n') : '';
+  const body = [`${m.title}${m.for ? ` (for ${m.for})` : ''}`, `${m.len ? 'A C' + m.len + ' mixtape' : 'A mixtape'}, made ${mixDate(m)}.`, '',
+    side('A', m.a), m.len && m.b.length ? '\n' + side('B', m.b) : '', '', 'Made on myStereo. Own your media: ownyourmedia.club'].filter((x, i) => x !== '' || i === 2 || i === 5).join('\n');
+  const mk = t => `mailto:?subject=${encodeURIComponent(`A mixtape for you: ${m.title}`)}&body=${encodeURIComponent(t)}`;
+  let t = body, url = mk(t);
+  while (url.length > 7000 && t.length > 200) { t = t.slice(0, t.lastIndexOf('\n', t.length - 2)); url = mk(t + '\n…'); }
+  click(); location.href = url;
+}
 function mixPrint(m) {
   const li = s => m[s].map((r, i) => `<li><span>${esc(r.title)}<em>${esc(r.artist || '')}</em></span><b>${mmss(r.dur)}</b></li>`).join('') || '<li class="blank">(blank)</li>';
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J-Card · ${esc(m.title)}</title>
@@ -4313,21 +4333,21 @@ function cxDraw() {
   const key = state + '|' + (state === 'door' ? CXD.sel + ':' + list.map(x => x.id).join(',') : m ? m.id + m.title + m.for + m.color : '');
   if (key !== CXD.key) {
     CXD.key = key;
-    if (state === 'none') el.innerHTML = '<div class="cxs-msg">No mixtapes yet<small>Press MENU, then make one in Mixtapes</small></div>';
+    if (state === 'none') el.innerHTML = '<div class="cxs-msg">No mixtapes yet<small>Press Make Mixtape to start one</small></div>';
     else if (state === 'empty') el.innerHTML = '<div class="cxs-win"><div class="cxs-msg">No tape<small>Press STOP/EJECT to open the door</small></div></div><div class="cxs-lcd"><span>--- </span><span>DOOR CLOSED</span></div>';
     else if (state === 'door') {
       const n = 6, top = clamp(CXD.sel - 2, 0, Math.max(0, list.length - n));
-      el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>Door open</span><span>${CXD.sel + 1} of ${list.length}</span></div>${list.slice(top, top + n).map((x, j) => `<div class="cxs-sp${top + j === CXD.sel ? ' sel' : ''}" data-i="${top + j}" style="--lc:${x.color}"><i></i><b>${esc(x.title)}</b><span>${mixLen(x)}</span></div>`).join('')}</div><div class="cxs-lcd"><span>TAP OR − +</span><span>LOAD ▸</span></div>`;
+      el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>Door open</span><span>${CXD.sel + 1} of ${list.length}</span></div>${list.slice(top, top + n).map((x, j) => `<div class="cxs-sp${top + j === CXD.sel ? ' sel' : ''}" data-i="${top + j}" style="--lc:${x.color}"><i></i><b>${esc(x.title)}</b><span>${mixLen(x)}</span></div>`).join('')}</div><div class="cxs-lcd"><span>TAP A TAPE TO LOAD IT</span></div>`;
     } else {
       el.innerHTML = `<div class="cxs-win"><div class="cxs-tape" style="--lc:${m.color}"><div class="cxs-screws"><i style="left:0;top:0"></i><i style="right:0;top:0"></i><i style="left:0;bottom:0"></i><i style="right:0;bottom:0"></i></div>
         <div class="cxs-lab"><span class="cxs-side" id="cxsSide">A</span><span class="cxs-t">${esc(m.title)}</span><span class="cxs-for">${m.for ? 'for ' + esc(m.for) : mixDate(m)}</span>
-        <div class="cxs-wins"><div class="cxs-reel"><i class="cxs-pack" id="cxsL"></i><i class="cxs-hub"></i></div><div class="cxs-reel"><i class="cxs-pack" id="cxsR"></i><i class="cxs-hub"></i></div></div></div></div></div>
+        <div class="cxs-wins"><div class="cxs-reel"><i class="cxs-pack" id="cxsL"></i><i class="cxs-hub"></i></div><div class="cxs-reel"><i class="cxs-pack" id="cxsR"></i><i class="cxs-hub"></i></div></div></div></div>${m.len ? '<button type="button" class="cxs-flip" data-cx="flip" aria-label="Open the door and flip the tape">⏏ FLIP ⇄</button>' : ''}</div>
         <div class="cxs-lcd"><span class="cxs-ctr" id="cxsCtr"></span><span id="cxsDir"></span><span id="cxsLen">${mixLen(m)}</span></div>`;
     }
   }
   const pod = $('#pod'), run = cxPlaying();
   pod.classList.toggle('cx-run', run);
-  { const fl = document.querySelector('#cxPanel [data-cx=flip]'); if (fl) fl.classList.toggle('off', !m || CXD.door || !m.len); }
+  { const sd = document.querySelector('#cxPanel [data-cx=send]'); if (sd) sd.classList.toggle('off', !(CXD.door ? MIX.all[CXD.sel] : m)); }
   document.querySelector('#cxTop [data-cx=play]')?.classList.toggle('down', run);
   if (state !== 'tape') { el.classList.remove('run', 'wind', 'rev'); return; }
   const side = cxSide(m), cap = m.len ? sideMs(m) / 1000 : Math.max(60, sideUsed(m, side) / 1000), f = clamp(cxElapsed(m, side) / cap, 0, 1);
@@ -4349,7 +4369,7 @@ function cxLoad(m) {
 function cxPlay() {
   if (CXD.door) { const m = MIX.all[CXD.sel]; if (m) { cxLoad(m); } else return; }
   const m = cxTape();
-  if (!m) { if (MIX.all.length) { CXD.door = true; CXD.key = ''; CXD.sel = 0; flash('Pick a tape with − and +, then LOAD.'); cxDraw(); } else flash('No mixtapes yet. Press MENU to make one.'); return; }
+  if (!m) { if (MIX.all.length) { CXD.door = true; CXD.key = ''; CXD.sel = 0; flash('Tap a tape to load it.'); cxDraw(); } else flash('No mixtapes yet. Press MENU to make one.'); return; }
   if (cxIsCur()) { if (P.flip) { mixFlip(); return; } toggle(); setTimeout(cxDraw, 60); return; }
   const side = m.pos?.side || (m.a.length ? 'a' : 'b');
   mixPlay(m, side, true).then(() => cxDraw());
@@ -4358,7 +4378,7 @@ function cxStop() {
   if (cxPlaying()) { toggle(); flash('Stopped'); setTimeout(cxDraw, 60); return; }
   CXD.door = !CXD.door; CXD.key = '';
   if (CXD.door) CXD.sel = Math.max(0, MIX.all.findIndex(x => x.id === CXD.tape));
-  flash(CXD.door ? 'Door open. Pick a tape with − and +.' : 'Door closed'); cxDraw();
+  flash(CXD.door ? 'Door open. Tap a tape to load it.' : 'Door closed'); cxDraw();
 }
 function cxPick(d) {
   if (!CXD.door) { flash('Press STOP/EJECT to open the door first.'); return; }
@@ -4367,10 +4387,12 @@ function cxPick(d) {
 function cxFlip() {
   const m = cxTape(); if (!m || CXD.door) { flash(CXD.door ? 'Close the door first.' : 'No tape in. Press STOP/EJECT to load one.'); return; }
   if (!m.len) { flash('This mixtape has one side.'); return; }
-  if (cxIsCur()) { mixKey('flip'); return; }
+  const tp = document.querySelector('#cxScreen .cxs-tape'); if (tp) { tp.classList.remove('turn'); void tp.offsetWidth; tp.classList.add('turn'); }
+  tapeThunk();
+  if (cxIsCur()) { setTimeout(() => mixKey('flip'), 380); return; }
   const other = (m.pos?.side || 'a') === 'a' ? 'b' : 'a';
   if (!m[other].length) { flash(`Side ${SIDE(other)} is blank.`); return; }
-  m.pos = { side: other, i: 0, t: 0 }; mixSave(); flash(`Flipped to Side ${SIDE(other)}`); cxDraw();
+  m.pos = { side: other, i: 0, t: 0 }; mixSave(); setTimeout(() => { flash(`Flipped to Side ${SIDE(other)}`); cxDraw(); }, 380);
 }
 /* The deck is how mixtapes play: pressing Play on one turns myStereo over to reveal the Cassette Deck,
    dressed in your faceplate's colors (or a deck color you pick). MENU turns it back; the tape keeps playing. */
@@ -4438,15 +4460,16 @@ document.addEventListener('pointerdown', e => {
 ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => document.addEventListener(t, () => clearTimeout(CX.t), true));
 document.addEventListener('click', e => {
   const sp = e.target.closest && e.target.closest('#cxScreen .cxs-sp[data-i]');
-  if (sp) { click(); const i = +sp.dataset.i; if (i === CXD.sel) { const m = MIX.all[i]; if (m) cxLoad(m); } else { CXD.sel = i; cxDraw(); } return; }
+  if (sp) { click(); const i = +sp.dataset.i, m = MIX.all[i]; CXD.sel = i; if (m) cxLoad(m); return; }
   const s = e.target.closest && e.target.closest('#cxPanel [data-cxs]');
   if (s) { if (e.detail === 0) cxPick(+s.dataset.cxs); return; }   /* keyboard; taps already moved on pointerdown */
   const b = e.target.closest && e.target.closest('#pod [data-cx]'); if (!b) return;
   const k = b.dataset.cx; click();
   if (k === 'play') cxPlay();
   else if (k === 'stop') cxStop();
-  else if (k === 'load') { if (CXD.door) { const m = MIX.all[CXD.sel]; if (m) cxLoad(m); } else cxStop(); }
   else if (k === 'flip') cxFlip();
+  else if (k === 'make') deckFlip(false).then(() => mixNew());
+  else if (k === 'send') { const m = CXD.door ? MIX.all[CXD.sel] : cxTape(); if (m) mixSend(m); else flash('Load a tape first.'); }
   else if (k === 'menu') deckExit();
 });
 const RX_GO = { home: null, media: () => mediaMenu(), extras: () => extrasView(), settings: () => settingsView() };
