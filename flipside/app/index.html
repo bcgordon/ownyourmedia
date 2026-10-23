@@ -1001,6 +1001,20 @@ html:not(.desk) .pod.recv.deck .cx-trim.t{top:calc(var(--w)*.022)}html:not(.desk
 .screen.cxl .row.sel{background:#1d201a;color:#b0b4a2}.screen.cxl .row .r,.screen.cxl .row .v{color:#4b5143}.screen.cxl .row.sel .r,.screen.cxl .row.sel .v{color:#b0b4a2}
 .screen.cxl .np-art{filter:grayscale(1) contrast(1.15) sepia(.25);mix-blend-mode:multiply}
 
+/* Sport Yellow: a splash-proof yellow body with charcoal rubber caps, a cobalt panel and an FM dial over the tape window */
+.cx-tune,.cx-n2{display:none}
+.pod.cx-sport .cx-tt,.pod.cx-sport .cx-n1,.pod.cx-sport .cx-ar{display:none}
+.pod.cx-sport .cx-n2{display:inline}
+.pod.cx-sport .cx-tune{flex:1;display:flex;align-items:center;justify-content:space-between;gap:calc(var(--w)*.016);font:700 calc(var(--w)*.024)/1 "IBM Plex Mono",var(--cxf);color:#ffffff;padding-bottom:calc(var(--w)*.006);border-bottom:2px solid rgba(255,255,255,.55);background:linear-gradient(90deg,transparent 0 38%,#ff7a1a 38% calc(38% + 3px),transparent calc(38% + 3px)) 0 100%/100% 100% no-repeat}
+.pod.cx-sport .cx-tune b{color:#ffb15c;font-weight:800}
+.pod.cx-sport .cx-ar b{border-color:#ffb15c}
+html:not(.desk) .pod.recv.deck.cx-sport .bezel{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 0 0 2.5px #2e3033}
+.pod.cx-sport .cx-panel{box-shadow:inset 0 2.5px 0 #2e3033,inset 2.5px 0 0 #2e3033,inset -2.5px 0 0 #2e3033,inset 0 4px 0 rgba(255,255,255,.18)}
+.pod.cx-sport .cx-pk,.pod.cx-sport .cx-pill,.pod.cx-sport .cx-home{box-shadow:inset 0 -4px 0 #17181a,inset 0 2px 0 rgba(255,255,255,.12),0 3px 0 #b88600}
+.pod.cx-sport .cx-pill[data-cx=make]{color:#ff5a3c}
+.pod.cx-sport .cx-name{font-style:italic;letter-spacing:-.02em}
+.pod.cx-sport .cx-stripe i:nth-child(1){background:#ffffff}.pod.cx-sport .cx-stripe i:nth-child(2){background:#ff7a1a}.pod.cx-sport .cx-stripe i:nth-child(3){background:#2e3033}
+.pod.cx-sport .cx-tag em,.pod.cx-sport .cx-tag b{color:#e0601a}
 /* the deck inside Desktop Mode: the tape window fills the main panel, with a row of tape keys under it */
 .cxs-in{display:contents}
 html.desk .pod.deck .cxs{display:flex;padding:24px;align-items:center;justify-content:center}
@@ -1564,8 +1578,8 @@ html.desk .screen .sb{width:8px;right:8px}
     <div class="dk-pipnote" id="dkPipNote">Playing in the Mini Player<button type="button" data-dk="unpip">Bring it back</button></div>
     <nav class="dk-side" id="dkSide" aria-label="Library"><div class="dk-h"><span>LIBRARY</span><button class="dk-col" type="button" data-dk="side" id="dkCol" title="Hide the Library list" aria-label="Hide the Library list"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button></div><div id="dkItems"></div><div class="dk-sp"></div><div class="dk-art" id="dkArt" title="Now Playing">No song playing</div></nav>
     <div class="bezel">
-      <div class="cx-trim t" aria-hidden="true"><span class="cx-ar"><s>⊲</s><b>AUTO REVERSE</b><s>⊳</s></span><span class="cx-tt"><span class="on">NORMAL</span><span>CrO₂</span><span>METAL</span></span></div>
-      <div class="cx-trim b" aria-hidden="true"><div class="cx-stripe"><i></i><i></i><i></i><i></i></div><div class="cx-bl"><em>STEREO CASSETTE PLAYER</em></div></div>
+      <div class="cx-trim t" aria-hidden="true"><span class="cx-ar"><s>⊲</s><b>AUTO REVERSE</b><s>⊳</s></span><span class="cx-tt"><span class="on">NORMAL</span><span>CrO₂</span><span>METAL</span></span><span class="cx-tune"><b>FM</b><span>88</span><span>92</span><span>96</span><span>100</span><span>104</span><span>108</span><b>MHz</b></span></div>
+      <div class="cx-trim b" aria-hidden="true"><div class="cx-stripe"><i></i><i></i><i></i><i></i></div><div class="cx-bl"><em class="cx-n1">STEREO CASSETTE PLAYER</em><em class="cx-n2">SPORT · SPLASH PROOF</em></div></div>
       <div class="screen big" id="screen" role="application" aria-label="Player screen">
         <div class="bar"><span class="bar-l" id="barL"></span><span class="bar-t" id="barT">myStereo</span><span class="bar-r" id="barR"></span></div>
         <div class="body" id="body"></div>
@@ -1758,12 +1772,12 @@ const LS = {
 };
 const PRODUCT = FLIP ? 'Flipside' : 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const MS_VERSION = '1.4.26';
-const FLIP_VERSION = '1.0.1';
+const MS_VERSION = '1.4.28';
+const FLIP_VERSION = '1.0.3';
 const APP_VERSION = FLIP ? FLIP_VERSION : MS_VERSION;
-const FLIP_NEW = `<h3>1.0.1</h3><p>A tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.0.0</h3><p>Flipside is here: make someone a mixtape. C60 or C90, Side A and Side B, a handwritten label, songs you don’t own yet saved for later, and Send Mixtape to share it. Your tapes sync through Plex, so they show up in myStereo too.</p>`;
+const FLIP_NEW = `<h3>1.0.3</h3><p>Better on Android: the phone’s back button now steps back through the library and the deck instead of closing Flipside, and Chrome offers to install it as an app.</p><h3>1.0.2</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Deck Color.</p><h3>1.0.1</h3><p>A tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.0.0</h3><p>Flipside is here: make someone a mixtape. C60 or C90, Side A and Side B, a handwritten label, songs you don’t own yet saved for later, and Send Mixtape to share it. Your tapes sync through Plex, so they show up in myStereo too.</p>`;
 const aboutHTML = () => FLIP ? `<h3><span class="brand">Flipside</span> ${APP_VERSION}</h3><p>Make someone a mixtape. Pick a C60 or a C90, fill Side A and Side B with songs you love, label it by hand, and send it to a friend.</p><p>Powered by <b>myStereo</b>. Your music stays yours: it plays from your own Plex server.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + FLIP_NEW : `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.26</h3><p>On the Cassette Deck, a tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.4.25</h3><p>Meet Flipside, a mixtape-only app powered by myStereo, at ownyourmedia.club/flipside. Tapes made in either app show up in both, and tape links open in either.</p><h3>1.4.24</h3><p>Put songs you don’t own yet on a mixtape. Choose + A Song You Don’t Own on a tape, search for it, and it holds its place and its time on the side, marked ♡. Its menu has links to buy it on Bandcamp, Qobuz, the iTunes Store or 7digital. Once the file is in your Plex library, myStereo finds it and the slot fills in by itself. Tapes you send carry these songs too.</p><h3>1.4.23</h3><p>Desktop Mode, made for mixtapes. The Cassette Deck fills the main panel with its tape keys underneath. While you record, a panel on the right shows each side filling up, the time left and every song, with × to take one off. A cassette and the side show in the player’s display and the Mini Player, and the skip buttons wind the tape.</p><h3>1.4.22</h3><p>Cassette Deck: the whole deck sits lower, clear of the blur at the top of the iPhone screen.</p><h3>1.4.21</h3><p>Cassette Deck: the tape keys are a little smaller.</p><h3>1.4.20</h3><p>Cassette Deck: the headphone jack and grip are gone so the tape keys have more room, and a pressed key now looks pressed: it sinks in, darkens, and Play lights up while it’s latched down.</p><h3>1.4.19</h3><p>Cassette Deck: a clear ‹ myStereo button takes you back, and swiping to turn the deck over now returns to myStereo instead of showing the back. The reels turn more visibly while the tape plays.</p><h3>1.4.18</h3><p>Opening a mixtape someone sent you now checks which Plex server it plays from. If it’s one they share with you, myStereo offers to switch you to it. If it isn’t shared with you yet, or you’re not signed in, it tells you what to do, and keeps the tape waiting until you sign in.</p><h3>1.4.17</h3><p>Send a mixtape to the people you share your Plex server with. On the Cassette Deck, press Send Mixtape and tap a name (or use Send Mixtape on a tape’s menu). They get a link that opens the tape in their own myStereo, playing from your server, with its label, sides and who it’s from. Anyone else gets the closest matches from their own library.</p><h3>1.4.16</h3><p>Cassette Deck: myStereo now turns over to the deck even with Reduce Motion on, the tape sits centered in its window on every phone, and the tape keys are bigger with clearer symbols.</p><h3>1.4.15</h3><p>Cassette Deck: Make Mixtape starts a new tape, Send Mixtape writes an email with both sides listed, and Flip sits in the corner of the tape window. Pick a tape by tapping its label with the door open.</p><h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.28</h3><p>Better on Android: the phone’s back button now steps back through menus, the deck and panels instead of closing myStereo, and Chrome offers to install it as an app.</p><h3>1.4.27</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Look › Deck Color.</p><h3>1.4.26</h3><p>On the Cassette Deck, a tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.4.25</h3><p>Meet Flipside, a mixtape-only app powered by myStereo, at ownyourmedia.club/flipside. Tapes made in either app show up in both, and tape links open in either.</p><h3>1.4.24</h3><p>Put songs you don’t own yet on a mixtape. Choose + A Song You Don’t Own on a tape, search for it, and it holds its place and its time on the side, marked ♡. Its menu has links to buy it on Bandcamp, Qobuz, the iTunes Store or 7digital. Once the file is in your Plex library, myStereo finds it and the slot fills in by itself. Tapes you send carry these songs too.</p><h3>1.4.23</h3><p>Desktop Mode, made for mixtapes. The Cassette Deck fills the main panel with its tape keys underneath. While you record, a panel on the right shows each side filling up, the time left and every song, with × to take one off. A cassette and the side show in the player’s display and the Mini Player, and the skip buttons wind the tape.</p><h3>1.4.22</h3><p>Cassette Deck: the whole deck sits lower, clear of the blur at the top of the iPhone screen.</p><h3>1.4.21</h3><p>Cassette Deck: the tape keys are a little smaller.</p><h3>1.4.20</h3><p>Cassette Deck: the headphone jack and grip are gone so the tape keys have more room, and a pressed key now looks pressed: it sinks in, darkens, and Play lights up while it’s latched down.</p><h3>1.4.19</h3><p>Cassette Deck: a clear ‹ myStereo button takes you back, and swiping to turn the deck over now returns to myStereo instead of showing the back. The reels turn more visibly while the tape plays.</p><h3>1.4.18</h3><p>Opening a mixtape someone sent you now checks which Plex server it plays from. If it’s one they share with you, myStereo offers to switch you to it. If it isn’t shared with you yet, or you’re not signed in, it tells you what to do, and keeps the tape waiting until you sign in.</p><h3>1.4.17</h3><p>Send a mixtape to the people you share your Plex server with. On the Cassette Deck, press Send Mixtape and tap a name (or use Send Mixtape on a tape’s menu). They get a link that opens the tape in their own myStereo, playing from your server, with its label, sides and who it’s from. Anyone else gets the closest matches from their own library.</p><h3>1.4.16</h3><p>Cassette Deck: myStereo now turns over to the deck even with Reduce Motion on, the tape sits centered in its window on every phone, and the tape keys are bigger with clearer symbols.</p><h3>1.4.15</h3><p>Cassette Deck: Make Mixtape starts a new tape, Send Mixtape writes an email with both sides listed, and Flip sits in the corner of the tape window. Pick a tape by tapping its label with the door open.</p><h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -2832,6 +2846,8 @@ async function wishFill(force) {
   return n;
 }
 setTimeout(() => wishFill(), 6000);
+/* a small service worker, so Android (Chrome) offers to install the app; it doesn't cache anything */
+if ('serviceWorker' in navigator && location.protocol === 'https:') { try { navigator.serviceWorker.register(ELITE ? '/elite/sw.js' : 'sw.js').catch(() => {}); } catch {} }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) wishFill(); });
 /* ---------- Send a mixtape to people on your Plex servers ----------
    The tape travels as a link: its label and both sides, with each song's place on your server. Anyone you share that
@@ -3674,8 +3690,8 @@ function NPs() {
 /* ---------- menus ---------- */
 const stack = [];
 const cur = () => stack[stack.length - 1];
-function push(v) { stack.push(v); render('in'); }
-function pop() { if (stack.length > 1) { const v = stack.pop(); if (v.onLeave) v.onLeave(); render('out'); } }
+function push(v) { stack.push(v); render('in'); if (typeof backArm === 'function') backArm(); }
+function pop() { if (stack.length > 1) { const v = stack.pop(); if (v.onLeave) v.onLeave(); render('out'); if (typeof backTrim === 'function') setTimeout(backTrim, 0); } }
 function openNowPlaying() { if (P.view?.mix && P.track && !remoteActive() && deckDefault()) { if (!DECK.on) deckEnter(); else cxDraw(); return; } if (cur()?.kind === 'np') { renderNP(cur(), null, true); return; } push({ kind: 'np', title: 'Now Playing', mode: 'play' }); }
 
 function mainMenu() {
@@ -3896,6 +3912,7 @@ function signOut() {
 const panel = $('#panel'), pStatus = $('#pStatus'), pLink = $('#pLink'), pForm = $('#pForm');
 let pinTimer = null;
 function showPanel(mode) {
+  if (typeof backArm === 'function') backArm();
   panel.hidden = false; clearInterval(pinTimer);
   $('#pTitle').textContent = mode === 'token' ? 'Paste a Plex token' : mode === 'dav' ? 'Connect a network share' : mode === 'fb' ? 'Alpha Feedback' : 'Sign in to Plex';
   pForm.hidden = mode !== 'token'; pLink.hidden = true; $('#dForm').hidden = mode !== 'dav'; $('#fbForm').hidden = mode !== 'fb';
@@ -4257,6 +4274,7 @@ const CASES = [
   { id: 'ra', sp: true, name: 'Runaway Anchor', base: '#1e3f5c', v: { 'rx-key': 'linear-gradient(#f6e0ab,#e6c47c)', 'rx-ink': '#1e3f5c', 'rx-glow': '#aae491', case: 'radial-gradient(ellipse 80% 30% at 30% 4%,rgba(162,192,214,.22),rgba(162,192,214,0) 70%),repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 1px,rgba(0,0,0,.035) 1px 3px),linear-gradient(175deg,#27506f 0%,#1e3f5c 48%,#162f45 100%)', 'case-edge': '#12283b', wheel: 'radial-gradient(circle,#1e3f5c 0 66%,#f0d396 66.5% 68%,transparent 68.5%),repeating-conic-gradient(#f0d396 0 4.2deg,#1e3f5c 4.2deg 7.5deg)', 'wheel-edge': '#f0d396', 'wheel-ink': '#f0d396', 'wheel-press': '#ffffff', center: 'url(ra-anchor.png) center/100% 100% no-repeat,#1e3f5c', 'center-edge': '#f0d396', bezel: '#0f2233' } },
   { id: 'cx-black', deck: true, name: 'Night Black', base: '#1b1c1f', v: { case: 'linear-gradient(170deg,#2e3034,#1b1c1f)', 'cx-edge': '#45474d', 'cx-key': 'linear-gradient(#3a3c41,#232427)', 'cx-klab': '#e4e5e8', 'cx-panel': 'linear-gradient(#77797e,#5c5e63)', 'cx-btn': 'linear-gradient(#55575c,#3a3c40)', 'cx-enter': 'linear-gradient(#55575c,#3a3c40)', 'cx-btxt': '#e4e5e8', 'cx-label': '#e4e5e8', 'cx-sub': '#a9c3ff', 'cx-blab': '#e4e5e8', 'cx-bsub': '#7fa7ff', 'cx-brand': '#e9eaec', 'cx-brand2': '#cfd1d6', 'cx-led': '#4d8cff', 'cx-grip': '#232427' } },
   { id: 'cx-blue', deck: true, name: 'Metallic Blue', base: '#2a4673', v: { case: 'linear-gradient(170deg,#3d5f93,#20375e)', 'cx-edge': '#6d8cbc', 'cx-key': 'linear-gradient(#e2e5e9,#9da2a9)', 'cx-klab': '#16233b', 'cx-panel': 'linear-gradient(#c9ccd1,#9ea3aa)', 'cx-btn': 'linear-gradient(#f1f2f4,#b3b8bf)', 'cx-enter': 'linear-gradient(#ff8a3d,#d65f12)', 'cx-btxt': '#16233b', 'cx-label': '#16233b', 'cx-sub': '#b02a1c', 'cx-blab': '#e9eef6', 'cx-bsub': '#ffb07a', 'cx-brand': '#f2f4f7', 'cx-brand2': '#e3e9f3', 'cx-led': '#2ecc71', 'cx-grip': '#1a2c4c' } },
+  { id: 'cx-sport', deck: true, name: 'Sport Yellow', base: '#f5c400', v: { case: 'linear-gradient(180deg,#3a3c40 0,#2e3033 3.2%,#ffd21f 3.2%,#f5c400 50%,#e3ad00 96%,#2e3033 96%)', 'cx-edge': '#2e3033', 'cx-key': 'linear-gradient(#3e4044,#2a2c2f)', 'cx-klab': '#ffd21f', 'cx-panel': 'linear-gradient(#2c6fd6,#1b4fa6)', 'cx-btn': 'linear-gradient(#3e4044,#2a2c2f)', 'cx-enter': 'linear-gradient(#ff8a2a,#e0601a)', 'cx-btxt': '#ffd21f', 'cx-label': '#ffffff', 'cx-sub': '#ffb15c', 'cx-blab': '#2a2c2f', 'cx-bsub': '#d4500f', 'cx-brand': '#2a2c2f', 'cx-brand2': '#e0601a', 'cx-led': '#ff7a1a', 'cx-grip': '#2e3033' } },
   { id: 'cx-pearl', deck: true, name: 'Pearl & Teal', base: '#e8e4dc', v: { case: 'linear-gradient(170deg,#f4f1ea,#dcd7cc)', 'cx-edge': '#ffffff', 'cx-key': 'linear-gradient(#2fb3a3,#1d8478)', 'cx-klab': '#ffffff', 'cx-panel': 'linear-gradient(#2fb3a3,#1f8c80)', 'cx-btn': 'linear-gradient(#ffffff,#d6d1c6)', 'cx-enter': 'linear-gradient(#ffd23a,#e0a800)', 'cx-btxt': '#0f3d38', 'cx-label': '#0b2f2b', 'cx-sub': '#ffffff', 'cx-blab': '#0f3d38', 'cx-bsub': '#7a1fa2', 'cx-brand': '#1d8478', 'cx-brand2': '#1d8478', 'cx-led': '#ff4d6d', 'cx-grip': '#cfc9bc' } },
   { id: 'purple', name: 'Purple', base: '#6c4aa0', v: { case: 'linear-gradient(165deg,#c9b4ec 0%,#9a7acf 50%,#6c4aa0 100%)', 'case-edge': '#5d3f8c', wheel: 'radial-gradient(circle at 50% 40%,#f4f0fa,#e6def2)', 'wheel-edge': '#cbbfe0', 'wheel-ink': '#8e78b5', 'wheel-press': '#3d2766', center: 'linear-gradient(#b49ae0,#8566bd)', 'center-edge': '#5d3f8c', bezel: '#26282b' } }
 ];
@@ -4708,11 +4726,12 @@ function cxFlip() {
    dressed in your faceplate's colors (or a deck color you pick). MENU turns it back; the tape keeps playing. */
 const DECK = { on: false, busy: false };
 const deckDefault = () => cfg.mixPlayer !== 'np';
-const DECK_COLORS = [['match', 'Match Faceplate'], ['cx-black', 'Night Black'], ['cx-blue', 'Metallic Blue'], ['cx-pearl', 'Pearl & Teal']];
+const DECK_COLORS = [['match', 'Match Faceplate'], ['cx-black', 'Night Black'], ['cx-blue', 'Metallic Blue'], ['cx-sport', 'Sport Yellow'], ['cx-pearl', 'Pearl & Teal']];
 const deckColorName = () => (DECK_COLORS.find(x => x[0] === (cfg.deckColor || 'match')) || DECK_COLORS[0])[1];
 function deckVars(id = cfg.deckColor || 'match') {
   const pod = $('#pod'); if (!pod) return;
   const preset = CASES.find(c => c.deck && c.id === id);
+  pod.classList.toggle('cx-sport', id === 'cx-sport');
   if (preset) { for (const [k, val] of Object.entries(preset.v)) pod.style.setProperty('--' + k, val); return; }
   /* match the faceplate: its body and keys, with a gray tape-window panel */
   let cid = cfg.caseColor; if (cid === 'rx-auto') cid = matchMedia('(prefers-color-scheme: dark)').matches ? 'rx-black' : 'rx-white';
@@ -4745,7 +4764,7 @@ function tapeThunk() {
 }
 async function deckFlip(on) {
   if (DECK.busy || DECK.on === on) return;
-  if (document.documentElement.classList.contains('desk')) { DECK.on = on; deckClass(on); if (on) tapeThunk(); else render(); deskTick(); return; }   /* desktop: no turning over, the deck just takes the main panel */
+  if (document.documentElement.classList.contains('desk')) { DECK.on = on; deckClass(on); if (on) tapeThunk(); else render(); deskTick(); setTimeout(backTrim, 0); return; }   /* desktop: no turning over, the deck just takes the main panel */
   DECK.busy = true;
   const root = document.documentElement, k = matchMedia('(prefers-reduced-motion: reduce)').matches ? .6 : 1;
   root.classList.add('flipping'); await nesAnim(podflip, `rotateY(${flipAngle}deg) scale(1)`, `rotateY(${flipAngle + 90}deg) scale(.74)`, 380 * k);
@@ -4754,14 +4773,40 @@ async function deckFlip(on) {
   await nesAnim(podflip, `rotateY(${flipAngle - 90}deg) scale(.74)`, `rotateY(${flipAngle}deg) scale(1)`, 440 * k); root.classList.remove('flipping');
   DECK.busy = false;
   if (!on) render();
+  setTimeout(backTrim, 0);
 }
 function deckEnter() {
+  if (!FLIP) backArm();
   if (FLIP && document.getElementById('cxScreen') && !DECK.on) { while (stack.length > 1) { const v = stack.pop(); if (v.onLeave) try { v.onLeave(); } catch {} } }
   if (P.view?.mix && !remoteActive()) { CXD.tape = P.view.mix.id; LS.set('cxTape', CXD.tape); }
   CXD.key = ''; CXD.door = !cxTape() && MIX.all.length > 0;
   deckFlip(true);
 }
-function deckExit() { deckFlip(false); }
+function deckExit() { if (FLIP) backArm(); deckFlip(false); }
+/* Android's back button (and a browser's back): step back through the app instead of leaving it.
+   One history entry acts as a guard; it is put back after each step until there is nothing left to go back from. */
+const BACKG = { armed: false, skip: false };
+/* back at the top by other means: drop the guard so the next back press leaves, as expected */
+function backTrim() { if (BACKG.armed && !backDepth()) { BACKG.armed = false; BACKG.skip = true; try { history.back(); } catch { BACKG.skip = false; } } }
+function backArm() { if (BACKG.armed) return; try { history.pushState({ myst: 1 }, ''); BACKG.armed = true; } catch {} }
+function backDepth() {
+  return !panel.hidden || CF.open || (typeof NESM !== 'undefined' && NESM.open) || stack.length > 1 || (DECK.on && !FLIP) || (FLIP && !DECK.on) || (DECK.on && !!(CXD.wish || CXD.send));
+}
+addEventListener('popstate', () => {
+  if (BACKG.skip) { BACKG.skip = false; return; }
+  if (!BACKG.armed) return;
+  BACKG.armed = false;
+  let did = true;
+  if (!panel.hidden) hidePanel();
+  else if (typeof NESM !== 'undefined' && NESM.open) nesClose();
+  else if (CF.open) cfClose();
+  else if (DECK.on && (CXD.wish || CXD.send)) { CXD.wish = null; CXD.send = null; CXD.key = ''; cxDraw(); }
+  else if (DECK.on && !FLIP) deckFlip(false);
+  else if (FLIP && !DECK.on && stack.length <= 1) deckFlip(true);
+  else if (stack.length > 1) press('menu');
+  else did = false;
+  if (did && backDepth()) backArm();
+});
 const CX = { t: null, n: 0 };
 document.addEventListener('pointerdown', e => {
   const b = e.target.closest && e.target.closest('#cxPanel [data-cxs]'); if (!b) return;
@@ -5589,6 +5634,7 @@ function cfSource() {
   return null;
 }
 function cfOpen(auto) {
+  if (typeof backArm === 'function') backArm();
   if (CF.open) return;
   const src = cfSource();
   if (!src) { if (!auto) push(Message('Cover Flow', 'Cover Flow works with your Plex library or the demo. Sign in under Settings › Music Sources › Plex.')); return; }
@@ -6776,7 +6822,7 @@ else if (cfg.token && cfg.server) {
 if (remoteActive()) startPoll();
 setTimeout(cfOrient, 0);
 setTimeout(() => mixPull(true), 3000);
-if (location.pathname.startsWith('/mypod/') && !LS.get('movedNote', false)) setTimeout(() => { LS.set('movedNote', true); push(Message('New Address', 'myStereo now lives at ownyourmedia.club/mystereo. This old address keeps working, and your music, mixtapes and settings come along. To update your home screen icon, open the new address in Safari and add it again.', [{ label: 'Got It', act: () => pop() }])); }, 1500);
+if (location.pathname.startsWith('/mypod/') && !LS.get('movedNote', false)) setTimeout(() => { LS.set('movedNote', true); push(Message('New Address', 'myStereo now lives at ownyourmedia.club/mystereo. This old address keeps working, and your music, mixtapes and settings come along. To update your home screen icon, open the new address in Safari (iPhone) or Chrome (Android) and add it again.', [{ label: 'Got It', act: () => pop() }])); }, 1500);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) mixPull(); });
 })();
 </script>
