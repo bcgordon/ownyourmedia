@@ -1751,6 +1751,10 @@ html.land .stage>:is(.hint,.dk-on){display:none!important}
 html.land .panel{position:fixed;z-index:240;left:50%;top:50%;transform:translate(-50%,-50%);max-height:calc(100% - 24px);overflow-y:auto;box-sizing:border-box;box-shadow:0 24px 70px rgba(0,0,0,.55)}
 html.land .podwrap{--w:min(100vh,52vw);position:fixed;inset:0;width:auto;height:100%;perspective:1800px}
 html.land .podback{display:none}
+/* sideways there's no back to show, so the player can lay flat and its lists scroll like any other */
+html.land .podflip{-webkit-transform-style:flat;transform-style:flat}
+html.land:not(.desk) .pod.recv.deck .cxs-door{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding-bottom:2cqw}
+html.land:not(.desk) .pod.recv.deck .cxs-door .cxs-dh{flex:none}
 html.land .pod{border-radius:0;box-shadow:none}
 html.land:not(.desk) .pod.recv.deck{--pw:min(250px,30vw);display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:10px 16px;align-items:stretch;justify-items:stretch;overflow:hidden;border-radius:0;box-shadow:none;
   padding:max(10px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
@@ -1896,6 +1900,33 @@ html.wbdrag .wb-col.wb-lib.drop-col .wb-drop{border-color:#e0602a;color:#f2b84b}
 .wb-opt:active{background:#efe6d2}
 .wb-toast{position:absolute;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:270;max-width:80%;padding:10px 18px;border-radius:99px;background:#1b1c1f;color:#fff;font:600 16px/1.3 "Source Sans 3",sans-serif;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.12);opacity:0;transform:translate(-50%,16px);transition:opacity .25s,transform .25s;pointer-events:none}
 .wb-toast.on{opacity:1;transform:translate(-50%,0)}
+.wb-tabs{display:flex;gap:6px;flex:1 1 100%;min-width:0}
+.wb-col>header.wb-tabs{padding:8px}
+.wb-tab{flex:1;min-width:0;display:grid;gap:2px;justify-items:start;padding:7px 12px;border:0;border-radius:10px;background:rgba(255,255,255,.06);color:inherit;text-align:left;cursor:pointer}
+.wb-tab{overflow:hidden}.wb-tab-w{flex:1.6}.wb-tab b{font:800 13px/1 Archivo,sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+@media (max-width:760px){.wb-tab{padding:7px 9px}.wb-tab b{font-size:12px;letter-spacing:.03em}}
+.wb-tab small{font:600 13px/1.1 "Source Sans 3",sans-serif;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.wb-tab.on{background:#ecebe6;color:#1b1c1f;box-shadow:inset 0 -3px 0 #2fb89b}
+.wb-side .wb-tab{background:rgba(0,0,0,.06)}.wb-side .wb-tab.on{background:#1b1c1f;color:#f6efdf}
+.wb-tab.drop-on{box-shadow:0 0 0 3px #e0602a!important}
+.wb-left{flex:1 1 100%;font:600 14px/1 "Source Sans 3",sans-serif;opacity:.75}
+.wb-mid .wb-row.wish{opacity:1}
+.wb-findq{display:flex;gap:6px;padding:4px 8px 8px}
+.wb-findq input{flex:1;min-width:0;height:38px;border:0;border-radius:99px;padding:0 14px;background:#17181b;color:#ecebe6;font:400 16px "Source Sans 3",sans-serif;-webkit-user-select:text;user-select:text}
+.wb-findq .wb-b{height:38px;background:#ecebe6;color:#1b1c1f}
+.wb-row[data-wa=shopw]{padding-left:14px}
+.wb-labprev{position:sticky;top:0;z-index:2;display:grid;place-items:center;padding:4px 10px 10px;background:#24262a;box-shadow:0 6px 10px -6px rgba(0,0,0,.6)}
+.wb-tapebox{width:min(100%,200px);container-type:inline-size}
+.wb-tapebox .cxs-tape{width:100%}
+.wb-labtop{display:flex;flex-wrap:wrap;gap:6px;padding:0 10px 6px}
+.wb-labtop .wb-b{height:36px;padding:0 12px;font-size:14px}
+.wb-lg{padding:6px 10px 4px}
+.wb-lg>b{display:block;margin:0 0 6px 2px;font:800 12px/1 Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.wb-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wb-chip{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-radius:99px;background:#2c2e33;color:#ecebe6;font:600 15px/1 "Source Sans 3",sans-serif;cursor:pointer}
+.wb-chip i{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.5)}
+.wb-chip.on{background:#5fe3c6;color:#0d2722}
+.wb-chip:active{filter:brightness(1.2)}
 </style>
 
 </head>
@@ -2108,12 +2139,12 @@ const LS = {
 };
 const PRODUCT = FLIP ? 'Flipside' : 'myStereo';
 /* version: the third number goes up with every update; 1.5 starts beta */
-const MS_VERSION = '1.4.49';
-const FLIP_VERSION = '1.0.29';
+const MS_VERSION = '1.4.50';
+const FLIP_VERSION = '1.0.30';
 const APP_VERSION = FLIP ? FLIP_VERSION : MS_VERSION;
-const FLIP_NEW = `<h3>1.0.29</h3><p>Sideways on the deck, the headphone jack sits in its own spot between Menu and REC.</p><h3>1.0.28</h3><p>Turn your phone sideways. The Workbench lays out your library, crate and running order side by side; press and hold a song to drag it. On the deck, the door opens to your tapes face-on.</p><p>Sideways on the deck you get Tape Flow: a wide tape window and four big keys. Open the door and your tapes stand in a row, labels out. Swipe through them and tap the middle one to load it. Press Menu and you’re at the Workbench: pick a sketch or a tape, browse or search your library on the left, and drag songs into the crate, the running order or Side A and Side B. Drag a song back to the library to take it off. Tap any song for quick buttons. The story arc, held spots, the Coach and Make It a Tape are along the top. Turn the phone upright and you’re right where you left off.</p><h3>1.0.27</h3><p>A little something on the top edge of the deck for headphones and speakers. Look for it on your Home Screen app.</p><h3>1.0.26</h3><p>AirPlay &amp; Bluetooth on the menu side: send your tape to a speaker or headphones. On Android, pair them in your phone’s Settings and Flipside plays through them.</p><h3>1.0.25</h3><p>Update notes now show on the deck the first time you open a new version of Flipside, like this one.</p><h3>1.0.24</h3><p>A welcome screen the first time you open Flipside (Alpha › Welcome Screen shows it again), larger titles on the tape you lift out of the case, and an updated What to Test list for alpha testers.</p><h3>1.0.23</h3><p>The song that’s playing is written on the tape. Tapes sent to you are a surprise: only the current song shows until you’ve heard the whole tape, then the song list is yours. Sending a tape now includes a picture of the tape case and J-card for Messages and Mail; the sender chooses whether it shows the songs or keeps them a surprise. And Analog Mode (Settings): tapes live on your phone and play anywhere, with no signal. Recording copies each song to the phone, and tapes sent to you dub when you add them.</p><h3>1.0.22</h3><p>A SONGS button on the tape window opens the track list, handwritten on the J-card. The song playing is marked, and tapping a song plays from there.</p><h3>1.0.21</h3><p>Tape spines in the case are bigger and easier to read on phones.</p><h3>1.0.20</h3><p>The Sketch Pad grows into a planning tool for the art of the mixtape. Fill a Crate with maybe-songs, pick a Story Arc (the Classic Arc, Road Trip, For a Crush, Party, Heartbreak, or Bright Side, Late Side) or build your own beats, and put the keepers in the Running Order. Hold a Spot for a song you haven’t found yet, and note why each song is there. The Mixtape Coach points out the rules of thumb (an artist twice in a row, a long opener, the song before the flip), and you can dismiss any note or turn the coach off in Settings. Read The Art of the Mixtape in the Sketch Pad.</p><h3>1.0.19</h3><p>Sketch Pad: plan a tape before you make it. Grab songs in any order with no time limit, write down the story, and see whether it fits a C60 or a C90. Then Make It a Tape. And Arrange Songs, on any tape or sketch: pick a song up, turn the knob or tap where it goes, and put it down. On a computer, drag songs in the recording panel.</p><h3>1.0.18</h3><p>A bigger Label Maker. Sixteen Music Themes (Rock, Punk, Jazz, Blues, Soul & R&B, Hip-Hop, Disco & Funk, Electronic, Ska, Country, Folk, Classical, Indie, Pop, Chiptune and Metal) dress a tape in one press. New papers (Photocopy Zine, Checkerboard, Chrome, Sunset), new pens (Poster, Digital, Pixel), more stripe and ink colors, and Shells: Classic Black, Clear, Smoke, White, Neon and Gold, on the deck and on the spine in the case. Every choice opens its own list, and the label changes as you scroll it.</p><h3>1.0.17</h3><p>The tape case on phones too: open the door and your tapes stand in the case in their own labels. Swipe to scroll, or use REW and FF. Tap a tape to lift it out, tap it again to load it.</p><h3>1.0.16</h3><p>On a computer, opening the deck door shows your tapes in a carrying case: two rows of cassette spines in their own labels, a scroll bar you can drag, and the trackpad or mouse wheel to scroll. The chosen tape lifts out so it’s easy to read. The arrow keys pick a tape and Enter loads it.</p><h3>1.0.15</h3><p>The Sport line: Deck Color › Sport has the rugged, splash-proof deck in red, blue, green, yellow, orange, purple and white. Both sides of the player match.</p><h3>1.0.14</h3><p>Turning the player over is quiet now: no more thump when the deck comes around.</p><h3>1.0.13</h3><p>Long titles fit the label: the letters get smaller as the title gets longer and wrap to a second line. Titles hold up to 40 letters and “for” up to 24.</p><h3>1.0.12</h3><p>Edition Labels in the Label Maker: BC Edition, JL Edition, Away Mission, Field Scanner and Runaway Anchor, each with its own paper, pen and ink. Ink now always reads on its paper: dark papers get light inks, light papers get dark ones, and Surprise Me follows the same rule.</p><h3>1.0.11</h3><p>The knob keeps its size when you turn the player over or change colors. The tick marks around it stand out from the faceplate, dark on light colors like Sport Yellow and light on dark ones.</p><h3>1.0.10</h3><p>On Android, the Cassette Deck no longer leaves an empty gap at the top. That space is only needed under the iPhone’s status bar.</p><h3>1.0.9</h3><p>Label Maker: dress up a tape with six papers, five pens, ink colors and the stripe, or press Surprise Me. Find it on the menu side or under a tape’s Design the Label. The label travels with the tape when you sync or send it. PLAY is PLAY/PAUSE again, the reels turn only while the tape is really playing, and the deck fits short browser windows without overlapping its keys.</p><h3>1.0.8</h3><p>The button that turns the player over is now called <b>Menu</b>. It’s where your music, mixtapes, settings and the Alpha menu live.</p><h3>1.0.7</h3><p>The Alpha Quick Start Guide is in the Alpha menu, ready to read or share.</p><h3>1.0.6</h3><p>An Alpha menu on the main menu: send BC feedback and see what to test. Feedback notes now say Flipside and include your deck color.</p><h3>1.0.5</h3><p>A new Screen setting, starting on Match Player: the library screen goes light or dark with your phone and picks up the deck’s colors. Or choose LCD, Amber and the rest. Desktop Mode wears your deck color too. “Powered by myStereo” now sits on both sides of the player. On iPhones that keep a strip at the bottom of the screen, Sport Yellow’s buttons stay on the yellow.</p><h3>1.0.4</h3><p>Both sides match: the library side now wears the same colors as the deck color you pick, Sport Yellow included. The deck sits lower, clear of the iPhone’s status bar. And there’s a Flipside User’s Guide in Settings.</p><h3>1.0.3</h3><p>Better on Android: the phone’s back button now steps back through the library and the deck instead of closing Flipside, and Chrome offers to install it as an app.</p><h3>1.0.2</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Deck Color.</p><h3>1.0.1</h3><p>A tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.0.0</h3><p>Flipside is here: make someone a mixtape. C60 or C90, Side A and Side B, a handwritten label, songs you don’t own yet saved for later, and Send Mixtape to share it. Your tapes sync through Plex, so they show up in myStereo too.</p>`;
+const FLIP_NEW = `<h3>1.0.30</h3><p>Sideways, the tape builder has a new middle: search for songs you don’t own yet and drag them on, or dress up the label and watch the tape change. Side A and Side B now share one column with a tab for each.</p><p>Drag a song onto the other side’s tab to put it there, or hold it over the tab to flip to that side. In a sketch, search your library and choose Search beyond my library for songs you don’t own. On the deck, the Send list scrolls, so everyone you share with is there.</p><h3>1.0.29</h3><p>Sideways on the deck, the headphone jack sits in its own spot between Menu and REC.</p><h3>1.0.28</h3><p>Turn your phone sideways. The Workbench lays out your library, crate and running order side by side; press and hold a song to drag it. On the deck, the door opens to your tapes face-on.</p><p>Sideways on the deck you get Tape Flow: a wide tape window and four big keys. Open the door and your tapes stand in a row, labels out. Swipe through them and tap the middle one to load it. Press Menu and you’re at the Workbench: pick a sketch or a tape, browse or search your library on the left, and drag songs into the crate, the running order or Side A and Side B. Drag a song back to the library to take it off. Tap any song for quick buttons. The story arc, held spots, the Coach and Make It a Tape are along the top. Turn the phone upright and you’re right where you left off.</p><h3>1.0.27</h3><p>A little something on the top edge of the deck for headphones and speakers. Look for it on your Home Screen app.</p><h3>1.0.26</h3><p>AirPlay &amp; Bluetooth on the menu side: send your tape to a speaker or headphones. On Android, pair them in your phone’s Settings and Flipside plays through them.</p><h3>1.0.25</h3><p>Update notes now show on the deck the first time you open a new version of Flipside, like this one.</p><h3>1.0.24</h3><p>A welcome screen the first time you open Flipside (Alpha › Welcome Screen shows it again), larger titles on the tape you lift out of the case, and an updated What to Test list for alpha testers.</p><h3>1.0.23</h3><p>The song that’s playing is written on the tape. Tapes sent to you are a surprise: only the current song shows until you’ve heard the whole tape, then the song list is yours. Sending a tape now includes a picture of the tape case and J-card for Messages and Mail; the sender chooses whether it shows the songs or keeps them a surprise. And Analog Mode (Settings): tapes live on your phone and play anywhere, with no signal. Recording copies each song to the phone, and tapes sent to you dub when you add them.</p><h3>1.0.22</h3><p>A SONGS button on the tape window opens the track list, handwritten on the J-card. The song playing is marked, and tapping a song plays from there.</p><h3>1.0.21</h3><p>Tape spines in the case are bigger and easier to read on phones.</p><h3>1.0.20</h3><p>The Sketch Pad grows into a planning tool for the art of the mixtape. Fill a Crate with maybe-songs, pick a Story Arc (the Classic Arc, Road Trip, For a Crush, Party, Heartbreak, or Bright Side, Late Side) or build your own beats, and put the keepers in the Running Order. Hold a Spot for a song you haven’t found yet, and note why each song is there. The Mixtape Coach points out the rules of thumb (an artist twice in a row, a long opener, the song before the flip), and you can dismiss any note or turn the coach off in Settings. Read The Art of the Mixtape in the Sketch Pad.</p><h3>1.0.19</h3><p>Sketch Pad: plan a tape before you make it. Grab songs in any order with no time limit, write down the story, and see whether it fits a C60 or a C90. Then Make It a Tape. And Arrange Songs, on any tape or sketch: pick a song up, turn the knob or tap where it goes, and put it down. On a computer, drag songs in the recording panel.</p><h3>1.0.18</h3><p>A bigger Label Maker. Sixteen Music Themes (Rock, Punk, Jazz, Blues, Soul & R&B, Hip-Hop, Disco & Funk, Electronic, Ska, Country, Folk, Classical, Indie, Pop, Chiptune and Metal) dress a tape in one press. New papers (Photocopy Zine, Checkerboard, Chrome, Sunset), new pens (Poster, Digital, Pixel), more stripe and ink colors, and Shells: Classic Black, Clear, Smoke, White, Neon and Gold, on the deck and on the spine in the case. Every choice opens its own list, and the label changes as you scroll it.</p><h3>1.0.17</h3><p>The tape case on phones too: open the door and your tapes stand in the case in their own labels. Swipe to scroll, or use REW and FF. Tap a tape to lift it out, tap it again to load it.</p><h3>1.0.16</h3><p>On a computer, opening the deck door shows your tapes in a carrying case: two rows of cassette spines in their own labels, a scroll bar you can drag, and the trackpad or mouse wheel to scroll. The chosen tape lifts out so it’s easy to read. The arrow keys pick a tape and Enter loads it.</p><h3>1.0.15</h3><p>The Sport line: Deck Color › Sport has the rugged, splash-proof deck in red, blue, green, yellow, orange, purple and white. Both sides of the player match.</p><h3>1.0.14</h3><p>Turning the player over is quiet now: no more thump when the deck comes around.</p><h3>1.0.13</h3><p>Long titles fit the label: the letters get smaller as the title gets longer and wrap to a second line. Titles hold up to 40 letters and “for” up to 24.</p><h3>1.0.12</h3><p>Edition Labels in the Label Maker: BC Edition, JL Edition, Away Mission, Field Scanner and Runaway Anchor, each with its own paper, pen and ink. Ink now always reads on its paper: dark papers get light inks, light papers get dark ones, and Surprise Me follows the same rule.</p><h3>1.0.11</h3><p>The knob keeps its size when you turn the player over or change colors. The tick marks around it stand out from the faceplate, dark on light colors like Sport Yellow and light on dark ones.</p><h3>1.0.10</h3><p>On Android, the Cassette Deck no longer leaves an empty gap at the top. That space is only needed under the iPhone’s status bar.</p><h3>1.0.9</h3><p>Label Maker: dress up a tape with six papers, five pens, ink colors and the stripe, or press Surprise Me. Find it on the menu side or under a tape’s Design the Label. The label travels with the tape when you sync or send it. PLAY is PLAY/PAUSE again, the reels turn only while the tape is really playing, and the deck fits short browser windows without overlapping its keys.</p><h3>1.0.8</h3><p>The button that turns the player over is now called <b>Menu</b>. It’s where your music, mixtapes, settings and the Alpha menu live.</p><h3>1.0.7</h3><p>The Alpha Quick Start Guide is in the Alpha menu, ready to read or share.</p><h3>1.0.6</h3><p>An Alpha menu on the main menu: send BC feedback and see what to test. Feedback notes now say Flipside and include your deck color.</p><h3>1.0.5</h3><p>A new Screen setting, starting on Match Player: the library screen goes light or dark with your phone and picks up the deck’s colors. Or choose LCD, Amber and the rest. Desktop Mode wears your deck color too. “Powered by myStereo” now sits on both sides of the player. On iPhones that keep a strip at the bottom of the screen, Sport Yellow’s buttons stay on the yellow.</p><h3>1.0.4</h3><p>Both sides match: the library side now wears the same colors as the deck color you pick, Sport Yellow included. The deck sits lower, clear of the iPhone’s status bar. And there’s a Flipside User’s Guide in Settings.</p><h3>1.0.3</h3><p>Better on Android: the phone’s back button now steps back through the library and the deck instead of closing Flipside, and Chrome offers to install it as an app.</p><h3>1.0.2</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Deck Color.</p><h3>1.0.1</h3><p>A tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.0.0</h3><p>Flipside is here: make someone a mixtape. C60 or C90, Side A and Side B, a handwritten label, songs you don’t own yet saved for later, and Send Mixtape to share it. Your tapes sync through Plex, so they show up in myStereo too.</p>`;
 const aboutHTML = () => FLIP ? `<h3><span class="brand">Flipside</span> ${APP_VERSION}</h3><p>Make someone a mixtape. Pick a C60 or a C90, fill Side A and Side B with songs you love, label it by hand, and send it to a friend.</p><p>Powered by <b>myStereo</b>. Your music stays yours: it plays from your own Plex server.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + FLIP_NEW : `<h3><span class="brand">${ELITE ? 'myStereo Elite' : 'myStereo'}</span> ${APP_VERSION}</h3><p>Own your media. Plays your Plex music and videos here, or sends them to Plexamp on another device. Your settings stay on this device; your mixtapes and ratings follow you through Plex.</p><p>Built by BC Gordon in the Twin Cities. <b>ownyourmedia.club</b></p><h3>What’s New</h3>` + WHATS_NEW;
-const WHATS_NEW = `<h3>1.4.49</h3><p>Under the hood: a layout fix shared with Flipside. Nothing changes in myStereo.</p><h3>1.4.48</h3><p>Under the hood: groundwork shared with Flipside’s new sideways layouts. Nothing changes in myStereo.</p><h3>1.4.47</h3><p>On phones, the tape you lift out of the Cassette Deck’s case shows its whole title, larger.</p><h3>1.4.46</h3><p>Tapes sent to you keep their songs a surprise until you’ve heard them all, the playing song is written on the tape, and sent tapes come with a picture of the tape case and J-card.</p><h3>1.4.45</h3><p>On the Cassette Deck, SONGS opens the tape’s track list; tap a song to play from it.</p><h3>1.4.44</h3><p>Tape spines in the Cassette Deck’s case are easier to read on phones.</p><h3>1.4.43</h3><p>Sketch Pad: a crate for maybe-songs, story arcs and beats, held spots, notes on songs, and the Mixtape Coach. Plus The Art of the Mixtape.</p><h3>1.4.42</h3><p>Mixtapes › Sketch Pad to plan a tape with no time limit, and Arrange Songs on any tape to put the songs in order. On a computer, drag them in the recording panel.</p><h3>1.4.41</h3><p>Design the Label grows: Music Themes, new papers, pens and colors, and cassette Shells, with a live preview as you scroll each list.</p><h3>1.4.40</h3><p>The Cassette Deck’s open door shows your tapes in a carrying case on phones too: swipe or use REW and FF, tap to pick, tap again to load.</p><h3>1.4.39</h3><p>Desktop Mode: the open deck door shows your tapes in a scrolling carrying case, and the arrow keys and Enter pick and load a tape.</p><h3>1.4.38</h3><p>Deck Color › Sport: the Cassette Deck’s rugged Sport body in red, blue, green, yellow, orange, purple and white.</p><h3>1.4.37</h3><p>No more thump when you turn over to the Cassette Deck.</p><h3>1.4.36</h3><p>Mixtape titles fit their labels: up to 40 letters, shrinking and wrapping to two lines as needed.</p><h3>1.4.35</h3><p>Design the Label adds Edition Labels to match the special edition faceplates, and ink always reads on its paper.</p><h3>1.4.34</h3><p>The knob keeps its size after a trip to the Cassette Deck or a faceplate change, and its tick marks stand out from the faceplate.</p><h3>1.4.33</h3><p>On Android, the Cassette Deck no longer leaves an empty gap at the top.</p><h3>1.4.32</h3><p>Design the Label on any mixtape: six papers, five pens and ink colors. PLAY/PAUSE on the Cassette Deck, reels that turn only while it plays, and a deck that fits short browser windows.</p><h3>1.4.31</h3><p>Small behind-the-scenes fixes.</p><h3>1.4.30</h3><p>In a browser window, the Cassette Deck fits its frame again.</p><h3>1.4.29</h3><p>The Cassette Deck sits lower on the screen, clear of the iPhone’s status bar.</p><h3>1.4.28</h3><p>Better on Android: the phone’s back button now steps back through menus, the deck and panels instead of closing myStereo, and Chrome offers to install it as an app.</p><h3>1.4.27</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Look › Deck Color.</p><h3>1.4.26</h3><p>On the Cassette Deck, a tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.4.25</h3><p>Meet Flipside, a mixtape-only app powered by myStereo, at ownyourmedia.club/flipside. Tapes made in either app show up in both, and tape links open in either.</p><h3>1.4.24</h3><p>Put songs you don’t own yet on a mixtape. Choose + A Song You Don’t Own on a tape, search for it, and it holds its place and its time on the side, marked ♡. Its menu has links to buy it on Bandcamp, Qobuz, the iTunes Store or 7digital. Once the file is in your Plex library, myStereo finds it and the slot fills in by itself. Tapes you send carry these songs too.</p><h3>1.4.23</h3><p>Desktop Mode, made for mixtapes. The Cassette Deck fills the main panel with its tape keys underneath. While you record, a panel on the right shows each side filling up, the time left and every song, with × to take one off. A cassette and the side show in the player’s display and the Mini Player, and the skip buttons wind the tape.</p><h3>1.4.22</h3><p>Cassette Deck: the whole deck sits lower, clear of the blur at the top of the iPhone screen.</p><h3>1.4.21</h3><p>Cassette Deck: the tape keys are a little smaller.</p><h3>1.4.20</h3><p>Cassette Deck: the headphone jack and grip are gone so the tape keys have more room, and a pressed key now looks pressed: it sinks in, darkens, and Play lights up while it’s latched down.</p><h3>1.4.19</h3><p>Cassette Deck: a clear ‹ myStereo button takes you back, and swiping to turn the deck over now returns to myStereo instead of showing the back. The reels turn more visibly while the tape plays.</p><h3>1.4.18</h3><p>Opening a mixtape someone sent you now checks which Plex server it plays from. If it’s one they share with you, myStereo offers to switch you to it. If it isn’t shared with you yet, or you’re not signed in, it tells you what to do, and keeps the tape waiting until you sign in.</p><h3>1.4.17</h3><p>Send a mixtape to the people you share your Plex server with. On the Cassette Deck, press Send Mixtape and tap a name (or use Send Mixtape on a tape’s menu). They get a link that opens the tape in their own myStereo, playing from your server, with its label, sides and who it’s from. Anyone else gets the closest matches from their own library.</p><h3>1.4.16</h3><p>Cassette Deck: myStereo now turns over to the deck even with Reduce Motion on, the tape sits centered in its window on every phone, and the tape keys are bigger with clearer symbols.</p><h3>1.4.15</h3><p>Cassette Deck: Make Mixtape starts a new tape, Send Mixtape writes an email with both sides listed, and Flip sits in the corner of the tape window. Pick a tape by tapping its label with the door open.</p><h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
+const WHATS_NEW = `<h3>1.4.50</h3><p>Under the hood: more work shared with Flipside. Nothing changes in myStereo.</p><h3>1.4.49</h3><p>Under the hood: a layout fix shared with Flipside. Nothing changes in myStereo.</p><h3>1.4.48</h3><p>Under the hood: groundwork shared with Flipside’s new sideways layouts. Nothing changes in myStereo.</p><h3>1.4.47</h3><p>On phones, the tape you lift out of the Cassette Deck’s case shows its whole title, larger.</p><h3>1.4.46</h3><p>Tapes sent to you keep their songs a surprise until you’ve heard them all, the playing song is written on the tape, and sent tapes come with a picture of the tape case and J-card.</p><h3>1.4.45</h3><p>On the Cassette Deck, SONGS opens the tape’s track list; tap a song to play from it.</p><h3>1.4.44</h3><p>Tape spines in the Cassette Deck’s case are easier to read on phones.</p><h3>1.4.43</h3><p>Sketch Pad: a crate for maybe-songs, story arcs and beats, held spots, notes on songs, and the Mixtape Coach. Plus The Art of the Mixtape.</p><h3>1.4.42</h3><p>Mixtapes › Sketch Pad to plan a tape with no time limit, and Arrange Songs on any tape to put the songs in order. On a computer, drag them in the recording panel.</p><h3>1.4.41</h3><p>Design the Label grows: Music Themes, new papers, pens and colors, and cassette Shells, with a live preview as you scroll each list.</p><h3>1.4.40</h3><p>The Cassette Deck’s open door shows your tapes in a carrying case on phones too: swipe or use REW and FF, tap to pick, tap again to load.</p><h3>1.4.39</h3><p>Desktop Mode: the open deck door shows your tapes in a scrolling carrying case, and the arrow keys and Enter pick and load a tape.</p><h3>1.4.38</h3><p>Deck Color › Sport: the Cassette Deck’s rugged Sport body in red, blue, green, yellow, orange, purple and white.</p><h3>1.4.37</h3><p>No more thump when you turn over to the Cassette Deck.</p><h3>1.4.36</h3><p>Mixtape titles fit their labels: up to 40 letters, shrinking and wrapping to two lines as needed.</p><h3>1.4.35</h3><p>Design the Label adds Edition Labels to match the special edition faceplates, and ink always reads on its paper.</p><h3>1.4.34</h3><p>The knob keeps its size after a trip to the Cassette Deck or a faceplate change, and its tick marks stand out from the faceplate.</p><h3>1.4.33</h3><p>On Android, the Cassette Deck no longer leaves an empty gap at the top.</p><h3>1.4.32</h3><p>Design the Label on any mixtape: six papers, five pens and ink colors. PLAY/PAUSE on the Cassette Deck, reels that turn only while it plays, and a deck that fits short browser windows.</p><h3>1.4.31</h3><p>Small behind-the-scenes fixes.</p><h3>1.4.30</h3><p>In a browser window, the Cassette Deck fits its frame again.</p><h3>1.4.29</h3><p>The Cassette Deck sits lower on the screen, clear of the iPhone’s status bar.</p><h3>1.4.28</h3><p>Better on Android: the phone’s back button now steps back through menus, the deck and panels instead of closing myStereo, and Chrome offers to install it as an app.</p><h3>1.4.27</h3><p>New deck color: Sport Yellow, a splash-proof yellow deck with charcoal rubber trim, a cobalt panel and an FM dial over the tape window. Pick it in Settings › Look › Deck Color.</p><h3>1.4.26</h3><p>On the Cassette Deck, a tape with songs you don’t own yet shows a ♡ tag on its label. Tap it to see them, buy one, or check your library, right in the tape window.</p><h3>1.4.25</h3><p>Meet Flipside, a mixtape-only app powered by myStereo, at ownyourmedia.club/flipside. Tapes made in either app show up in both, and tape links open in either.</p><h3>1.4.24</h3><p>Put songs you don’t own yet on a mixtape. Choose + A Song You Don’t Own on a tape, search for it, and it holds its place and its time on the side, marked ♡. Its menu has links to buy it on Bandcamp, Qobuz, the iTunes Store or 7digital. Once the file is in your Plex library, myStereo finds it and the slot fills in by itself. Tapes you send carry these songs too.</p><h3>1.4.23</h3><p>Desktop Mode, made for mixtapes. The Cassette Deck fills the main panel with its tape keys underneath. While you record, a panel on the right shows each side filling up, the time left and every song, with × to take one off. A cassette and the side show in the player’s display and the Mini Player, and the skip buttons wind the tape.</p><h3>1.4.22</h3><p>Cassette Deck: the whole deck sits lower, clear of the blur at the top of the iPhone screen.</p><h3>1.4.21</h3><p>Cassette Deck: the tape keys are a little smaller.</p><h3>1.4.20</h3><p>Cassette Deck: the headphone jack and grip are gone so the tape keys have more room, and a pressed key now looks pressed: it sinks in, darkens, and Play lights up while it’s latched down.</p><h3>1.4.19</h3><p>Cassette Deck: a clear ‹ myStereo button takes you back, and swiping to turn the deck over now returns to myStereo instead of showing the back. The reels turn more visibly while the tape plays.</p><h3>1.4.18</h3><p>Opening a mixtape someone sent you now checks which Plex server it plays from. If it’s one they share with you, myStereo offers to switch you to it. If it isn’t shared with you yet, or you’re not signed in, it tells you what to do, and keeps the tape waiting until you sign in.</p><h3>1.4.17</h3><p>Send a mixtape to the people you share your Plex server with. On the Cassette Deck, press Send Mixtape and tap a name (or use Send Mixtape on a tape’s menu). They get a link that opens the tape in their own myStereo, playing from your server, with its label, sides and who it’s from. Anyone else gets the closest matches from their own library.</p><h3>1.4.16</h3><p>Cassette Deck: myStereo now turns over to the deck even with Reduce Motion on, the tape sits centered in its window on every phone, and the tape keys are bigger with clearer symbols.</p><h3>1.4.15</h3><p>Cassette Deck: Make Mixtape starts a new tape, Send Mixtape writes an email with both sides listed, and Flip sits in the corner of the tape window. Pick a tape by tapping its label with the door open.</p><h3>1.4.14</h3><p>Mixtapes now play on the Cassette Deck. Press Play on a mixtape and myStereo turns over to reveal the deck, in your faceplate’s colors; press MENU to turn it back while the tape keeps playing. Pick a different Deck Color, or go back to the Now Playing screen for mixtapes, in Settings › Look. The deck is no longer a faceplate of its own.</p><h3>1.4.13</h3><p>Cassette Deck: tape select and Load moved above the window and the tape keys below it, with the window centered. Tap a label to pick a tape (tap it again to load). DIR only works with a tape in. New trim: the Auto Reverse banner, tape types and color stripes.</p><h3>1.4.12</h3><p>The Cassette Deck: a mixtape-only skin in Night Black, Metallic Blue or Pearl &amp; Teal, run by its buttons. STOP/EJECT opens the door, − and + pick a tape by its label, LOAD closes the door on it, then PLAY, STOP, REW and FF work like a real deck, and DIR flips the tape. Auto reverse turns it to Side B by itself. Find it at the bottom of Mixtapes, or in Settings › Look › Faceplate. MENU takes you back.</p><h3>1.4.11</h3><p>The Cassette LCD screen, gray-green with blocky digits, in Settings › Look › Display.</p><h3>1.4.10</h3><p>Rewind and Fast Forward on a mixtape now sound like a tape winding, on phones too: a quick whirr for a tap, and hiss, squeal and motor while you hold. The song goes quiet while it winds, like a real deck.</p><h3>1.4.9</h3><p>A cleaner Mixtapes screen: each tape gets a color tab from its label, New Mixtape moves to the end, and one line at the bottom shows how full the highlighted tape is and whether it’s saved to Plex.</p><h3>1.4.8</h3><p>Mixtapes sync to Plex more reliably, and Mixtapes › Sync with Plex tells you exactly what happened. myStereo now checks that Plex kept each mixtape’s label, and finds mixtapes on servers that hide playlist descriptions.</p><h3>1.4.7</h3><p>Snake is in Extras › Games, in place of Stack. Turn the knob to steer, or swipe on the screen. Menu Art now starts off, for a full-width menu; turn it on in Settings › Look.</p><h3>1.4.6</h3><p>While you’re recording a mixtape, every song shows how long it runs. Songs too long for the room left on the tape are crossed out.</p><h3>1.4.5</h3><p>myStereo has a new address: ownyourmedia.club/mystereo. The old myPod address still works.</p><h3>1.4.4</h3><p>The Runaway Anchor display is now tan with dark blue lettering, like the bar’s gold coasters. The mixtape label on Now Playing no longer gets cut off at the top.</p><h3>1.4.3</h3><p>About is now a page you can scroll, with these notes for every version. Fixed messages that split into two columns when they mentioned myStereo.</p><h3>1.4.2</h3><p>Mixtapes play like tapes: no shuffle, repeat or skip. The buttons become Rewind and Fast Forward (tap to jump, hold to wind), plus Flip and Rewind to the start of the side. A cassette shows in the corner while a mixtape plays.</p><h3>1.4.1</h3><p>Home and Media buttons under the screen. A slimmer scroll bar with its own lane. Tape is now On Phone, with Save to Phone and an offline sign when nothing uses data. Mixtapes save to Plex so they show up on all your devices. Settings grouped into Look, Sound and Music Sources.</p><h3>1.4</h3><p>myStereo: the receiver look, the knob, tone controls, special editions, Mixtapes with Side A and Side B.</p>`;
 let clientId = LS.get('clientId', null);
 if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : 'pod-' + Math.random().toString(36).slice(2) + Date.now()); LS.set('clientId', clientId); }
 const cfg = Object.assign({ token: null, server: null, sectionId: null, sectionTitle: null, target: null,
@@ -5618,20 +5649,18 @@ function cxDraw() {
     }
     else if (state === 'wish') {
       const wm = mixOf(CXD.wish.id), ws = wm ? mixWishes(wm) : [], r = CXD.wish.r != null ? ws[CXD.wish.r] : null;
-      if (!r) el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>♡ To find on “${esc(wm?.title || '')}”</span></div>${ws.slice(0, 7).map((x, j) => `<div class="cxs-sp cxs-wf" data-wf="${j}" style="--lc:${wm.color}"><i></i><b>${esc(x.title)}</b><span>${esc((x.artist || '').slice(0, 18).toUpperCase())}</span></div>`).join('')}<div class="cxs-sp cxs-wf" data-wc="1" style="--lc:#888"><i></i><b>Check my library</b><span>NOW</span></div></div><div class="cxs-lcd"><span>TAP A SONG</span></div>`;
+      if (!r) el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>♡ To find on “${esc(wm?.title || '')}”</span></div>${(landOn() ? ws : ws.slice(0, 7)).map((x, j) => `<div class="cxs-sp cxs-wf" data-wf="${j}" style="--lc:${wm.color}"><i></i><b>${esc(x.title)}</b><span>${esc((x.artist || '').slice(0, 18).toUpperCase())}</span></div>`).join('')}<div class="cxs-sp cxs-wf" data-wc="1" style="--lc:#888"><i></i><b>Check my library</b><span>NOW</span></div></div><div class="cxs-lcd"><span>TAP A SONG</span></div>`;
       else el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>♡ ${esc(r.title)}</span></div>${shopLinks(r).map(([name], k) => `<div class="cxs-sp cxs-wf" data-wl="${k}" style="--lc:${wm.color}"><i></i><b>${esc(name)}</b><span>OPEN ↗</span></div>`).join('')}<div class="cxs-sp cxs-wf" data-wb="1" style="--lc:#888"><i></i><b>Back to the list</b><span>‹</span></div></div><div class="cxs-lcd"><span>BUY · ADD TO PLEX</span></div>`;
     }
     else if (state === 'send') {
       const sm = mixOf(CXD.send.id), ps = CXD.send.people;
-      el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>Send “${esc(sm?.title || '')}” to</span></div>${ps ? ps.slice(0, 7).map((p, j) => `<div class="cxs-sp cxs-pp" data-p="${j}" style="--lc:${sm?.color || '#888'}"><i></i><b>${esc(p.name)}</b><span>${p.email ? 'EMAIL' : 'SHARE'}</span></div>`).join('') : '<div class="cxs-msg"><small>Finding the people you share with…</small></div>'}<div class="cxs-sp cxs-sl" data-sl="1" style="--lc:#888"><i></i><b>Song list</b><span>${sm?.shareList ? 'SHOWN' : 'SURPRISE'}</span></div><div class="cxs-sp cxs-pp" data-p="-1" style="--lc:#888"><i></i><b>Someone else</b><span>SHARE</span></div></div><div class="cxs-lcd"><span>TAP A NAME</span></div>`;
+      el.innerHTML = `<div class="cxs-door"><div class="cxs-dh"><span>Send “${esc(sm?.title || '')}” to</span></div>${ps ? (landOn() ? ps : ps.slice(0, 7)).map((p, j) => `<div class="cxs-sp cxs-pp" data-p="${j}" style="--lc:${sm?.color || '#888'}"><i></i><b>${esc(p.name)}</b><span>${p.email ? 'EMAIL' : 'SHARE'}</span></div>`).join('') : '<div class="cxs-msg"><small>Finding the people you share with…</small></div>'}<div class="cxs-sp cxs-sl" data-sl="1" style="--lc:#888"><i></i><b>Song list</b><span>${sm?.shareList ? 'SHOWN' : 'SURPRISE'}</span></div><div class="cxs-sp cxs-pp" data-p="-1" style="--lc:#888"><i></i><b>Someone else</b><span>SHARE</span></div></div><div class="cxs-lcd"><span>TAP A NAME</span></div>`;
     }
     else if (state === 'none') el.innerHTML = `<div class="cxs-msg">No mixtapes yet<small>Press REC to make one</small>${isDemo() ? '<small>Demo music for now. Sign in to Plex in Settings for yours.</small>' : ''}</div>`;
     else if (state === 'empty') el.innerHTML = '<div class="cxs-win"><div class="cxs-msg">No tape<small>Press STOP/EJECT to open the door</small></div></div><div class="cxs-lcd"><span>--- </span><span>DOOR CLOSED</span></div>';
     else if (state === 'door' && landOn()) {
       /* sideways: Tape Flow. Your tapes face-on in a row, the middle one big; swipe through them and tap it to load */
-      const face = x => `<div class="cxs-tape ${labCls(x)}" style="${labStyle(x)}"><div class="cxs-screws"><i style="left:0;top:0"></i><i style="right:0;top:0"></i><i style="left:0;bottom:0"></i><i style="right:0;bottom:0"></i></div>
-        <div class="cxs-lab"><span class="cxs-side">${x.len ? 'A' : ''}</span><span class="cxs-t"><span>${esc(x.title)}</span></span><span class="cxs-for">${esc([x.for && 'for ' + x.for, x.from && 'from ' + x.from].filter(Boolean).join(' · ') || mixDate(x))}</span>
-        <div class="cxs-wins"><div class="cxs-reel"><i class="cxs-pack" style="--r:15cqw"></i><i class="cxs-hub"></i></div><div class="cxs-reel"><i class="cxs-pack" style="--r:15cqw"></i><i class="cxs-hub"></i></div></div></div></div>`;
+      const face = cxFace;
       el.innerHTML = `<div class="cxs-cf" id="cxsCf">${list.map((x, i) => `<div class="cxs-cfi${analogOn() && !mixDubbed(x) ? ' undub' : ''}" data-i="${i}">${face(x)}<b class="cxs-cfl">${mixLen(x)}${analogOn() && !mixDubbed(x) ? ' · DUB' : ''}</b></div>`).join('')}</div>
         <div class="cxs-lcd"><span id="cxsDoorL">SWIPE · TAP THE MIDDLE TAPE</span><span id="cxsDoorN"></span></div>`;
     }
@@ -6875,7 +6904,12 @@ try { landQ.addEventListener('change', cfOrient); } catch { try { landQ.addListe
    Turn the phone on its side. On the deck you get Tape Flow: a wide deck with big keys, and with the door open,
    your tapes face-on in a row to swipe through. Off the deck you get the Workbench: the Sketch Pad and the tape
    builder with room to spread out. Library, crate and running order side by side, with drag and drop. Upright is unchanged. */
-var WB = { on: false, id: null, lib: [], open: null, sheet: null, drag: null, press: null, cap: null, shown: 150, seq: 0, mode: '', scroll: {} };
+var WB = { on: false, id: null, lib: [], open: null, sheet: null, drag: null, press: null, cap: null, shown: 150, seq: 0, mode: '', scroll: {}, side: 'a', mid: 'find', find: { q: '', items: [], state: 'idle' } };
+/* a cassette, label side up: the deck's Tape Flow and the Workbench's label editor */
+function cxFace(x) { return `<div class="cxs-tape ${labCls(x)}" style="${labStyle(x)}"><div class="cxs-screws"><i style="left:0;top:0"></i><i style="right:0;top:0"></i><i style="left:0;bottom:0"></i><i style="right:0;bottom:0"></i></div>
+        <div class="cxs-lab"><span class="cxs-side">${x.len ? 'A' : ''}</span><span class="cxs-t"><span>${esc(x.title)}</span></span><span class="cxs-for">${esc([x.for && 'for ' + x.for, x.from && 'from ' + x.from].filter(Boolean).join(' · ') || mixDate(x))}</span>
+        <div class="cxs-wins"><div class="cxs-reel"><i class="cxs-pack" style="--r:15cqw"></i><i class="cxs-hub"></i></div><div class="cxs-reel"><i class="cxs-pack" style="--r:15cqw"></i><i class="cxs-hub"></i></div></div></div></div>`; }
+
 let wbTimer = 0;
 const landOn = () => document.documentElement.classList.contains('land');
 function landSync() {
@@ -6985,8 +7019,25 @@ function wbRoot() {
 const wbLibTop = () => WB.lib[WB.lib.length - 1];
 /* a new library (signed in, switched servers, went offline): start the library column over */
 function wbLibFresh() { const k = (isDemo() ? 'demo' : (ready() ? cfg.server.machineId + ':' + sec() : 'none')) + (navigator.onLine ? '' : ':off'); if (WB.lib.length && WB.libFor === k) return false; WB.lib = [wbRoot()]; WB.libFor = k; WB.mode = ''; return true; }
+/* songs you don't own yet, found online: they go on as songs to find, and fill in once they're in your library */
+const wishRef = x => ({ wish: true, title: x.title, artist: x.artist || '', album: x.album || '', dur: x.dur || 0, ...(x.itunes ? { itunes: x.itunes } : {}) });
+async function wbBeyond(q) {
+  const v = List(`♡ “${q}”`, [], { note: 'Searching…' }); WB.lib.push(v); wbLibDraw(true);
+  try { const r = await songSearch(q); v.note = r.length ? '' : 'Nothing found. Try the title and the artist.'; const items = r.map(x => ({ label: x.title, wishItem: x })); v.count = () => items.length; v.get = i => items[i]; }
+  catch { v.note = 'Can’t search right now. Check your connection.'; }
+  if (WB.on && wbLibTop() === v) wbLibDraw();
+}
+async function wbFindRun(q) {
+  q = (q || '').trim(); if (!q) return;
+  const my = ++WB.seq; WB.find = { q, items: [], state: 'loading' }; WB.open = null; wbDraw();
+  try { const r = await songSearch(q); if (my !== WB.seq) return; WB.find = { q, items: r, state: r.length ? 'done' : 'none' }; }
+  catch { if (my !== WB.seq) return; WB.find = { q, items: [], state: 'error' }; }
+  if (WB.on) wbDraw();
+}
 function wbLibGo(it) {
-  if (!it || !it.go) return;
+  if (!it) return;
+  if (it.wbGo) { WB.cap = null; it.wbGo(); return; }
+  if (!it.go) return;
   WB.cap = nv => { if (!WB.on) return; if (nv.kind !== 'list') { flash('Turn your phone upright for that one.'); return; } WB.lib.push(nv); WB.shown = 150; wbLibDraw(true); };
   setTimeout(() => { WB.cap = null; }, 8000);
   try { it.go(); } catch (e) { WB.cap = null; flash(errText(e)); }
@@ -7002,6 +7053,7 @@ async function wbSearch(q) {
     } else err = 'Search needs a signal and your Plex library.';
   } catch (e) { err = errText(e); }
   if (my !== WB.seq || !WB.on) return;
+  if (!err && mixOf(WB.id)?.sketch) items.push({ label: '♡ Search beyond my library', value: 'Songs you don’t own yet', arrow: true, wbGo: () => wbBeyond(q) });
   const v = List(`“${q}”`, items, { wbq: true, note: err || (items.length ? '' : 'No matches.') });
   if (wbLibTop()?.wbq) WB.lib[WB.lib.length - 1] = v; else WB.lib.push(v);
   WB.shown = 150; wbLibDraw(true);
@@ -7011,7 +7063,7 @@ function wbLibRows(v) {
   const n = v.count(), lim = Math.min(n, WB.shown);
   if (v.ensure) { if (!v.onLoad) v.onLoad = () => { if (WB.on && wbLibTop() === v) wbLibDraw(); }; v.ensure(0, Math.max(0, lim - 1)); }
   const out = [];
-  for (let i = 0; i < lim; i++) { const it = v.get(i); if (!it) continue; if (it.track || it.go || it.hdr) { if (it.value === 'Mixtape') continue; out.push([i, it]); } }
+  for (let i = 0; i < lim; i++) { const it = v.get(i); if (!it) continue; if (it.track || it.wishItem || it.go || it.wbGo || it.hdr) { if (it.value === 'Mixtape') continue; out.push([i, it]); } }
   return { out, more: n > lim };
 }
 const wbLab = it => { try { return String(it.label ?? ''); } catch { return ''; } };
@@ -7025,16 +7077,17 @@ function wbLibDraw(top) {
   else if (!out.length) h = `<p class="wb-note">${esc(v.loading && v.loading() ? 'Loading…' : (typeof v.note === 'string' && v.note.trim()) || 'Nothing here.')}</p>`;
   for (const [i, it] of out) {
     if (it.hdr) { h += `<div class="wb-sub">${esc(wbLab(it))}</div>`; continue; }
-    if (it.track) {
-      const tr = it.track, key = 'lib:' + i, open = WB.open === key;
-      h += `<div class="wb-row wb-song${open ? ' open' : ''}" data-wz="lib" data-wi="${i}" data-wt="1"><span class="wb-grip" aria-hidden="true"></span><span class="wb-tx"><b>${esc(wbLab(it))}</b><small>${esc([tr.artist, mmss(tr.dur)].filter(Boolean).join(' · '))}</small></span></div>`;
-      if (open) h += wbQuick(m ? (m.sketch ? [['crate', '+ Crate'], ['order', '+ Order'], ['play', '▶ Play']] : m.len ? [['sa', '+ Side A'], ['sb', '+ Side B'], ['play', '▶ Play']] : [['sa', '+ Tape'], ['play', '▶ Play']]) : [['play', '▶ Play']], 'lib', i);
+    if (it.track || it.wishItem) {
+      const tr = it.track || it.wishItem, wish = !it.track, key = 'lib:' + i, open = WB.open === key;
+      h += `<div class="wb-row wb-song${wish ? ' wish' : ''}${open ? ' open' : ''}" data-wz="lib" data-wi="${i}" data-wt="1"><span class="wb-grip" aria-hidden="true"></span><span class="wb-tx"><b>${esc((wish ? '♡ ' : '') + wbLab(it))}</b><small>${esc([tr.artist, tr.dur ? mmss(tr.dur) : '', wish ? 'not in your library' : ''].filter(Boolean).join(' · '))}</small></span></div>`;
+      if (open) h += wbQuick(wbAddBtns(m, !wish), 'lib', i);
     } else h += `<div class="wb-row wb-dir" data-wl="${i}"><span class="wb-tx"><b>${esc(wbLab(it))}</b>${it.value ? `<small>${esc(String(it.value))}</small>` : ''}</span><i class="wb-arr">›</i></div>`;
   }
   if (more) h += `<button type="button" class="wb-more" data-wa="more">More…</button>`;
   box.innerHTML = h;
   if (top) box.scrollTop = 0;
 }
+const wbAddBtns = (m, play) => [...(m ? (m.sketch ? [['crate', '+ Crate'], ['order', '+ Order']] : m.len ? [['sa', '+ Side A'], ['sb', '+ Side B']] : [['sa', '+ Tape']]) : []), ...(play ? [['play', '▶ Play']] : [])];
 const wbQuick = (btns, zone, i) => `<div class="wb-q">${btns.map(([k, l]) => `<button type="button" data-wq="${k}" data-wz2="${zone}" data-wi2="${i}">${l}</button>`).join('')}</div>`;
 const wbTime = ms => mmss(ms);
 function wbFit(sk) {
@@ -7044,9 +7097,9 @@ function wbFit(sk) {
 }
 function wbRowHTML(zone, i, r, extra = '') {
   const key = zone + ':' + i, open = WB.open === key;
-  const btns = zone === 'crate' ? [['toorder', '→ Order'], ...(r.wish ? [] : [['play', '▶ Play']]), ['note', r.note ? '✎ Note' : '+ Note'], ['del', '✕ Out']]
-    : zone === 'order' ? (r.ph ? [['spren', 'Rename'], ['del', '✕ Off']] : [['tocrate', '← Crate'], ...(r.wish ? [] : [['play', '▶ Play']]), ['note', r.note ? '✎ Why' : '+ Why'], ['del', '✕ Off']])
-    : [['other', zone === 'a' ? '→ Side B' : '← Side A'], ...(r.wish ? [] : [['play', '▶ Play']]), ['del', '✕ Off']];
+  const btns = zone === 'crate' ? [['toorder', '→ Order'], ...(r.wish ? [['shop', '♡ Find It']] : [['play', '▶ Play']]), ['note', r.note ? '✎ Note' : '+ Note'], ['del', '✕ Out']]
+    : zone === 'order' ? (r.ph ? [['spren', 'Rename'], ['del', '✕ Off']] : [['tocrate', '← Crate'], ...(r.wish ? [['shop', '♡ Find It']] : [['play', '▶ Play']]), ['note', r.note ? '✎ Why' : '+ Why'], ['del', '✕ Off']])
+    : [['other', zone === 'a' ? '→ Side B' : '← Side A'], ...(r.wish ? [['shop', '♡ Find It']] : [['play', '▶ Play']]), ['del', '✕ Off']];
   const m = mixOf(WB.id);
   return `<div class="wb-row${r.ph ? ' ph' : ''}${r.wish ? ' wish' : ''}${open ? ' open' : ''}${extra}" data-wz="${zone}" data-wi="${i}"><span class="wb-grip" aria-hidden="true"></span><span class="wb-tx"><b>${esc((r.ph ? '◌ ' : r.wish ? '♡ ' : '') + r.title)}</b><small>${esc([r.artist, r.note && '“' + r.note + '”'].filter(Boolean).join(' · ') || (r.ph ? 'a held spot' : ''))}</small></span><i class="wb-d">${mmss(r.dur)}</i></div>`
     + (open ? wbQuick(m && !m.len && !m.sketch && zone === 'a' ? btns.filter(b => b[0] !== 'other') : btns, zone, i) : '');
@@ -7068,10 +7121,47 @@ function wbCols(m) {
     return `<section class="wb-col wb-crate" data-wcol="crate"><header><b>The Crate</b><span>${m.crate.length} · ${mmss(ct)}</span></header><div class="wb-rows" data-wsc="crate">${m.crate.map((r, i) => wbRowHTML('crate', i, r)).join('') || '<p class="wb-note">The maybe pile. Drag in anything that might fit, or tap a song and + Crate. Choose later.</p>'}</div></section>
       <section class="wb-col wb-order" data-wcol="order"><header><b>Running Order</b><span>${m.a.length} · ${mmss(sideUsed(m, 'a'))}</span></header><div class="wb-rows" data-wsc="order">${order}</div></section>`;
   }
-  const side = sd => { const used = sideUsed(m, sd), cap = sideMs(m), f = m.len ? Math.min(100, used / cap * 100) : 0;
-    return `<section class="wb-col wb-side${m.len ? '' : ' wide'}" data-wcol="${sd}"><header><b>${m.len ? 'Side ' + SIDE(sd) : 'The Tape'}</b><span>${m.len ? `${mmss(used)} of ${mmss(cap)}` : `${m.a.length} · ${mmss(used)}`}</span>${m.len ? `<div class="wb-fill${f > 97 ? ' full' : ''}"><i style="width:${f}%"></i></div>` : ''}</header>
-      <div class="wb-rows" data-wsc="${sd}">${m[sd].map((r, i) => wbRowHTML(sd, i, r)).join('') || `<p class="wb-note">${sd === 'a' ? 'Blank. Drag songs here from the library, or tap a song and + Side A.' : 'Blank. Side B starts fresh after the flip.'}</p>`}</div></section>`; };
-  return side('a') + (m.len ? side('b') : '');
+  const sd = m.len ? (WB.side === 'b' ? 'b' : 'a') : 'a', used = sideUsed(m, sd), cap = sideMs(m), fill = m.len ? Math.min(100, used / cap * 100) : 0;
+  const tab = s => { const u = sideUsed(m, s); return `<button type="button" class="wb-tab${s === sd ? ' on' : ''}" data-wa="side" data-k="${s}" data-wtab="${s}"><b>Side ${SIDE(s)}</b><small>${m[s].length} · ${mmss(u)}</small></button>`; };
+  const mid = `<section class="wb-col wb-mid" data-wcol="find"><header class="wb-tabs"><button type="button" class="wb-tab wb-tab-w${WB.mid === 'find' ? ' on' : ''}" data-wa="mid" data-k="find"><b>♡ Don’t Own</b><small>${mixWishes(m).length ? mixWishes(m).length + ' to find' : 'search anywhere'}</small></button><button type="button" class="wb-tab${WB.mid === 'label' ? ' on' : ''}" data-wa="mid" data-k="label"><b>Label</b><small>${esc(labPaper(m.paper || 'lined')[1])}</small></button></header>
+    <div class="wb-rows" data-wsc="mid-${WB.mid}">${WB.mid === 'label' ? wbLabelHTML(m) : wbFindHTML(m)}</div><div class="wb-drop">Drop here to take it off</div></section>`;
+  return mid + `<section class="wb-col wb-side" data-wcol="${sd}"><header>${m.len ? `<div class="wb-tabs wb-ab">${tab('a')}${tab('b')}</div><span class="wb-left">${mmss(Math.max(0, cap - used))} left on Side ${SIDE(sd)}</span><div class="wb-fill${fill > 97 ? ' full' : ''}"><i style="width:${fill}%"></i></div>` : `<b>The Tape</b><span>${m.a.length} · ${mmss(used)}</span>`}</header>
+    <div class="wb-rows" data-wsc="side-${sd}">${m[sd].map((r, i) => wbRowHTML(sd, i, r)).join('') || `<p class="wb-note">${sd === 'a' ? 'Blank. Drag songs here from the library, or tap a song and + Side A.' : 'Blank. Side B starts fresh after the flip. Drag songs here, or onto the Side B tab from anywhere.'}</p>`}</div></section>`;
+}
+/* the middle of the tape builder: songs you don't own yet */
+function wbFindHTML(m) {
+  const F = WB.find, ws = mixWishes(m);
+  let h = `<form class="wb-findq" data-wf="1"><input id="wbFQ" type="search" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Any song, title and artist" value="${esc(F.q)}"><button type="submit" class="wb-b">Search</button></form>`;
+  if (F.state === 'loading') h += '<p class="wb-note">Searching…</p>';
+  else if (F.state === 'none') h += '<p class="wb-note">Nothing found. Try the title and the artist.</p>';
+  else if (F.state === 'error') h += '<p class="wb-note">Can’t search right now. Check your connection.</p>';
+  else if (F.state === 'idle') h += '<p class="wb-note">A song you don’t own yet can still go on the tape. Search for it, then drag it onto a side. It keeps its spot and its time, and fills in by itself once it’s in your Plex library.</p>';
+  F.items.forEach((x, i) => { const key = 'find:' + i, open = WB.open === key;
+    h += `<div class="wb-row wish${open ? ' open' : ''}" data-wz="find" data-wi="${i}" data-wt="1"><span class="wb-grip" aria-hidden="true"></span><span class="wb-tx"><b>♡ ${esc(x.title)}</b><small>${esc([x.artist, x.album].filter(Boolean).join(' · '))}</small></span><i class="wb-d">${x.dur ? mmss(x.dur) : ''}</i></div>`;
+    if (open) h += wbQuick(wbAddBtns(m, false), 'find', i); });
+  if (ws.length) h += `<div class="wb-sub">On this tape, to find</div>` + ws.map(r => { const s = m.a.includes(r) ? 'a' : 'b';
+    return `<div class="wb-row wish" data-wa="shopw" data-s="${s}" data-k="${m[s].indexOf(r)}"><span class="wb-tx"><b>♡ ${esc(r.title)}</b><small>${esc([r.artist, 'Side ' + SIDE(s)].filter(Boolean).join(' · '))}</small></span><i class="wb-arr">›</i></div>`; }).join('');
+  return h;
+}
+/* the middle of the tape builder: the label maker, with the tape itself up top */
+function wbLabelHTML(m) {
+  const chips = (key, arr, cur, dot) => arr.map(([id, nm]) => `<button type="button" class="wb-chip${cur === id ? ' on' : ''}" data-wa="lset" data-key="${key}" data-k="${esc(id)}">${dot ? `<i style="background:${esc(id)}"></i>` : ''}${esc(nm)}</button>`).join('');
+  const ink = labInk(m).toLowerCase();
+  const grp = (t, h) => `<div class="wb-lg"><b>${t}</b><div class="wb-chips">${h}</div></div>`;
+  return `<div class="wb-labprev"><div class="wb-tapebox">${cxFace(m)}</div></div>
+    <div class="wb-labtop"><button type="button" class="wb-b" data-wa="rename">Title</button><button type="button" class="wb-b" data-wa="lfor">${m.for ? 'For ' + esc(m.for) : 'Who’s It For?'}</button><button type="button" class="wb-b" data-wa="lsur">Surprise Me</button><button type="button" class="wb-b" data-wa="lreset">Start Over</button></div>
+    ${grp('Music Themes', LABEL_THEMES.map(L => `<button type="button" class="wb-chip" data-wa="lthm" data-k="${L[0]}">${esc(L[1])}</button>`).join(''))}
+    ${grp('Edition Labels', LABEL_EDITIONS.map(e => `<button type="button" class="wb-chip${m.paper === e[0] ? ' on' : ''}" data-wa="ledn" data-k="${e[0]}">${esc(e[1])}</button>`).join(''))}
+    ${grp('Paper', chips('paper', LABEL_PAPERS, m.paper || 'lined'))}
+    ${grp('Stripe', chips('color', MIX_COLORS, m.color, true))}
+    ${grp('Pen', chips('pen', LABEL_PENS, m.pen || 'marker'))}
+    ${grp('Ink', chips('ink', LABEL_INKS.filter(x => inkFits(m, x[0])).map(x => [x[0].toLowerCase(), x[1]]), ink, true))}
+    ${grp('Shell', chips('shell', LABEL_SHELLS, m.shell || 'classic'))}`;
+}
+function wbShopSheet(m, r) {
+  wbSheet(r.title, [...shopLinks(r).map(([name, url]) => ({ label: `Find It on ${name}`, sub: 'Opens in your browser', act: () => window.open(url, '_blank', 'noopener') })),
+    { label: 'Check My Library Again', sub: 'If you’ve added it to Plex, it fills in on the tape.', act: async () => { WB.sheet = null; wbSheetDraw(); let n = 0; try { n = await wishFill(true); } catch {} if (!n) flash(`${r.title} isn’t in your library yet.`); wbDraw(); } }],
+    `${r.artist || ''}${r.dur ? ' · ' + mmss(r.dur) : ''}. Not in your library yet. Buy it where you like, add the file to your Plex music, and it fills in on the tape by itself.`);
 }
 function wbStripHTML(m) {
   const deck = `<button type="button" class="wb-b wb-deck" data-wa="deck">⏏ Deck</button>`;
@@ -7107,7 +7197,7 @@ function wbDraw() {
     if (m) wbLibDraw(true);
   } else if (m) wbLibDraw();
   el.querySelector('#wbStrip').innerHTML = wbStripHTML(m);
-  const work = el.querySelector('#wbWork'); work.className = 'wb-work' + (m ? (m.sketch || m.len ? '' : ' one') : ' pick');
+  const work = el.querySelector('#wbWork'); work.className = 'wb-work' + (m ? (m.sketch ? '' : ' tape') : ' pick');
   work.innerHTML = m ? wbCols(m) : wbPickerHTML();
   el.querySelectorAll('#wbWork [data-wsc]').forEach(x => { if (WB.scroll[x.dataset.wsc]) x.scrollTop = WB.scroll[x.dataset.wsc]; });
   wbSheetDraw(); wbNow(true);
@@ -7176,15 +7266,16 @@ function wbNewTape() {
 /* moving songs: from the library, between crate and order, between sides, or back off the tape */
 const wbArr = (m, z) => z === 'crate' ? (m.crate = m.crate || []) : z === 'order' ? m.a : m[z];
 function wbSrc(m, src) {
-  if (src.zone === 'lib') { const it = wbLibTop()?.get(src.i); return it?.track ? mixRef(it.track) : null; }
+  if (src.zone === 'lib') { const it = wbLibTop()?.get(src.i); return it?.track ? mixRef(it.track) : it?.wishItem ? wishRef(it.wishItem) : null; }
+  if (src.zone === 'find') { const x = WB.find.items[src.i]; return x ? wishRef(x) : null; }
   return wbArr(m, src.zone)?.[src.i] || null;
 }
 function wbMove(src, dst) {
   const m = mixOf(WB.id); if (!m) return false;
   const r = wbSrc(m, src); if (!r) return false;
-  const fromLib = src.zone === 'lib';
+  const fromLib = src.zone === 'lib' || src.zone === 'find';
   if (dst.ref && dst.ref === r) return false;
-  if (dst.zone === 'lib') {
+  if (dst.zone === 'lib' || dst.zone === 'find') {
     if (fromLib) return false;
     wbArr(m, src.zone).splice(src.i, 1);
     if (m.sketch && src.zone === 'order' && !r.ph) { delete r.beat; m.crate.unshift(r); flash(`${r.title} is back in the crate`); }
@@ -7205,7 +7296,10 @@ function wbMove(src, dst) {
   arr.splice(at, 0, r);
   if (m.sketch) skNorm(m); else if (m.pos) m.pos = null;
   if (fromLib && !m.sketch && analogOn() && !mixOnPhone(r) && r.rk && navigator.onLine && ready() && !isDemo()) dub({ key: 'rec:' + m.id + ':' + r.rk, title: r.title, paths: [['/library/metadata/' + r.rk]], quiet: true });
-  if (fromLib) flash(m.sketch ? (dst.zone === 'crate' ? `In the crate: ${r.title}` : `In the order: ${r.title}${dst.beat || r.beat ? ' · ' + (skBeatOf(m, r)?.name || '') : ''}`) : m.len ? `Side ${SIDE(dst.zone)}: ${r.title} · ${mmss(sideMs(m) - sideUsed(m, dst.zone))} left` : `Added ${r.title}`);
+  if (fromLib && r.wish) { try { wishFill(true); } catch {} }
+  if (!m.sketch && m.len && fromLib && WB.side !== dst.zone) WB.side = dst.zone;
+  if (fromLib && r.wish) flash(`♡ ${r.title} is ${m.sketch ? (dst.zone === 'crate' ? 'in the crate' : 'in the order') : m.len ? 'on Side ' + SIDE(dst.zone) : 'on the tape'} as a song to find.`);
+  else if (fromLib) flash(m.sketch ? (dst.zone === 'crate' ? `In the crate: ${r.title}` : `In the order: ${r.title}${dst.beat || r.beat ? ' · ' + (skBeatOf(m, r)?.name || '') : ''}`) : m.len ? `Side ${SIDE(dst.zone)}: ${r.title} · ${mmss(sideMs(m) - sideUsed(m, dst.zone))} left` : `Added ${r.title}`);
   else if (src.zone !== dst.zone) flash(dst.zone === 'crate' ? `${r.title} is back in the crate` : dst.zone === 'order' ? `${r.title} is in the order` : `Moved to Side ${SIDE(dst.zone)}`);
   return wbSaved(m);
 }
@@ -7218,8 +7312,10 @@ function wbPlay(r) {
 }
 function wbQuickAct(k, zone, i) {
   const m = mixOf(WB.id);
+  WB.cap = null;
+  if (zone === 'find') { if (!m) return; return wbMove({ zone: 'find', i: +i }, { zone: k === 'crate' ? 'crate' : k === 'order' ? 'order' : k === 'sb' ? 'b' : 'a' }); }
   if (zone === 'lib') {
-    const it = wbLibTop()?.get(+i), t = it?.track; if (!t) return;
+    const it = wbLibTop()?.get(+i), t = it?.track; if (!t && !it?.wishItem) return;
     if (k === 'play') { const rec = MIX.rec; MIX.rec = null; try { playFrom(wbLibTop(), +i); } finally { MIX.rec = rec; } setTimeout(() => wbNow(true), 600); WB.open = null; wbLibDraw(); return; }
     if (!m) return;
     const end = { zone: k === 'crate' ? 'crate' : k === 'order' ? 'order' : k === 'sb' ? 'b' : 'a' };
@@ -7236,6 +7332,7 @@ function wbQuickAct(k, zone, i) {
   }
   const r = wbArr(m, zone)?.[+i]; if (!r) return;
   if (k === 'play') { wbPlay(r); WB.open = null; wbDraw(); return; }
+  if (k === 'shop') { WB.open = null; wbShopSheet(m, r); return; }
   if (k === 'toorder') return wbMove({ zone, i: +i }, { zone: 'order' });
   if (k === 'tocrate') return wbMove({ zone, i: +i }, { zone: 'crate', ref: m.crate[0] });
   if (k === 'other') return wbMove({ zone, i: +i }, { zone: zone === 'a' ? 'b' : 'a', ref: zone === 'a' ? m.b[0] : undefined });
@@ -7245,8 +7342,9 @@ function wbQuickAct(k, zone, i) {
 }
 function wbBind(el) {
   el.addEventListener('contextmenu', e => e.preventDefault());
+  el.addEventListener('submit', e => { if (!e.target.closest('[data-wf]')) return; e.preventDefault(); const q = e.target.querySelector('input'); if (q) { q.blur(); wbFindRun(q.value); } });
   el.addEventListener('click', e => {
-    if (Date.now() - (WB.dragEnd || 0) < 350) return;
+    if (Date.now() - (WB.dragEnd || 0) < 200) return;
     const q = e.target.closest('[data-wq]');
     if (q) { click(); wbQuickAct(q.dataset.wq, q.dataset.wz2, q.dataset.wi2); return; }
     const a = e.target.closest('[data-wa]');
@@ -7255,7 +7353,7 @@ function wbBind(el) {
       if (k === 'back') { if (WB.lib.length > 1) { const v = WB.lib.pop(); if (v.wbq) { const q2 = $('#wbQ'); if (q2) q2.value = ''; } WB.shown = 150; WB.open = null; wbLibDraw(true); } }
       else if (k === 'more') { WB.shown += 150; wbLibDraw(); }
       else if (k === 'home') { WB.id = null; WB.open = null; WB.sheet = null; wbDraw(); }
-      else if (k === 'pick') { WB.id = a.dataset.id; WB.open = null; wbDraw(); }
+      else if (k === 'pick') { WB.id = a.dataset.id; WB.open = null; WB.side = 'a'; wbDraw(); }
       else if (k === 'newsk') wbNewSketch();
       else if (k === 'newtape') wbNewTape();
       else if (k === 'deck') { WB.sheet = null; wbClose(); deckEnter(); }
@@ -7267,6 +7365,18 @@ function wbBind(el) {
       else if (k === 'spot' && m) wbSpot(m);
       else if (k === 'make' && m) wbMakeSheet(m);
       else if (k === 'sx') { WB.sheet = null; wbSheetDraw(); }
+      else if (k === 'side') { WB.side = a.dataset.k; WB.open = null; wbDraw(); }
+      else if (k === 'mid') { WB.mid = a.dataset.k; WB.open = null; wbDraw(); }
+      else if (k === 'shopw' && m) { const r = m[a.dataset.s]?.[+a.dataset.k]; if (r) wbShopSheet(m, r); }
+      else if (k === 'lfor' && m) { const t = askFor(m.for); if (t != null) { m.for = t; mixSave(); wbDraw(); } }
+      else if (k === 'lset' && m) { m[a.dataset.key] = a.dataset.k; if (m.ink && !inkFits(m, m.ink)) m.ink = ''; mixSave(); wbDraw(); }
+      else if (k === 'lthm' && m) { const L = LABEL_THEMES.find(x => x[0] === a.dataset.k); if (L) { Object.assign(m, { paper: L[2], pen: L[3], ink: L[4], color: L[5], shell: L[6] || '' }); mixSave(); flash(`${L[1]} label`); wbDraw(); } }
+      else if (k === 'ledn' && m) { const e2 = LABEL_EDITIONS.find(x => x[0] === a.dataset.k); if (e2) { Object.assign(m, { paper: e2[0], pen: e2[3], ink: e2[4], color: e2[5], shell: 'classic' }); mixSave(); flash(`${e2[1]} label`); wbDraw(); } }
+      else if (k === 'lsur' && m) { const r = x => x[Math.floor(Math.random() * x.length)];
+        if (Math.random() < .35) { const L = r(LABEL_THEMES); Object.assign(m, { paper: L[2], pen: L[3], ink: L[4], color: L[5], shell: L[6] }); flash(`${L[1]} label`); }
+        else { m.paper = r([...LABEL_PAPERS, ...LABEL_PAPERS, ...LABEL_EDITIONS])[0]; m.pen = r(LABEL_PENS)[0]; m.color = r(MIX_COLORS)[0]; m.shell = r(LABEL_SHELLS)[0]; m.ink = r(LABEL_INKS.filter(x => inkFits(m, x[0])))[0]; }
+        mixSave(); wbDraw(); }
+      else if (k === 'lreset' && m) { m.paper = ''; m.pen = ''; m.ink = ''; m.shell = ''; mixSave(); wbDraw(); }
       else if (k === 'si') { const it = WB.sheet?.items[+a.dataset.k]; if (it && it.act) it.act(); }
       return;
     }
@@ -7298,9 +7408,12 @@ function wbBind(el) {
   });
   el.addEventListener('pointerup', e => { if (WB.drag && !WB.drag.touch) wbDragEnd(e.clientX, e.clientY); wbPressEnd(); });
   el.addEventListener('pointercancel', () => { if (WB.drag && !WB.drag.touch) wbDragKill(); wbPressEnd(); });
-  document.addEventListener('touchmove', e => { if (!WB.drag) return; e.preventDefault(); const t = e.touches[0]; WB.drag.touch = true; wbDragMove(t.clientX, t.clientY); }, { passive: false });
-  document.addEventListener('touchend', e => { if (!WB.drag) { wbPressEnd(); return; } const t = e.changedTouches[0]; wbDragEnd(t ? t.clientX : WB.drag.x, t ? t.clientY : WB.drag.y); });
-  document.addEventListener('touchcancel', () => { if (WB.drag) wbDragKill(); });
+  /* touch events keep going to the row the finger landed on, even after a redraw takes it off the page, so listen there */
+  el.addEventListener('touchstart', e => { const row = e.target.closest('[data-wz]'); if (!row || row.wbTouch) return; row.wbTouch = true;
+    row.addEventListener('touchmove', ev => { if (!WB.drag) return; ev.preventDefault(); ev.stopPropagation(); const t = ev.touches[0]; WB.drag.touch = true; wbDragMove(t.clientX, t.clientY); }, { passive: false });
+    row.addEventListener('touchend', ev => { if (!WB.drag) { wbPressEnd(); return; } ev.stopPropagation(); wbDragEnd(WB.drag.x, WB.drag.y); });
+    row.addEventListener('touchcancel', () => { if (WB.drag) wbDragKill(); }); }, { passive: true });
+  document.addEventListener('touchend', () => { if (!WB.drag) wbPressEnd(); });
 }
 function wbPressEnd() { const p = WB.press; if (!p) return; clearTimeout(p.t); p.row.classList.remove('press'); WB.press = null; }
 function wbDragStart(p) {
@@ -7317,8 +7430,9 @@ function wbDragStart(p) {
 function wbHit(x, y) {
   const el = document.elementFromPoint(x, y); if (!el) return null;
   const col = el.closest('#wb [data-wcol]'); if (!col) return null;
+  const tabEl = el.closest('#wb [data-wtab]'); if (tabEl) return { zone: tabEl.dataset.wtab, el: tabEl, mode: 'on', tab: true };
   const zone = col.dataset.wcol;
-  if (zone === 'lib') return WB.drag?.src.zone === 'lib' ? null : { zone: 'lib', el: col, mode: 'col' };
+  if (zone === 'lib' || zone === 'find') return ['lib', 'find'].includes(WB.drag?.src.zone) ? null : { zone, el: col, mode: 'col' };
   const m = mixOf(WB.id); if (!m) return null;
   const row = el.closest('[data-wz]');
   if (row && row.dataset.wz === zone) {
@@ -7337,7 +7451,10 @@ function wbMark(hit) {
 function wbDragMove(x, y) {
   const d = WB.drag; if (!d) return; d.x = x; d.y = y;
   d.g.style.transform = `translate(${x - d.ox - parseFloat(d.g.style.left)}px,${y - d.oy - parseFloat(d.g.style.top)}px) rotate(-1.5deg)`;
-  wbMark(wbHit(x, y));
+  const hit = wbHit(x, y); wbMark(hit);
+  /* hold over the other side's tab to flip to it */
+  if (hit && hit.tab && hit.zone !== WB.side) { if (!d.flipT) d.flipT = setTimeout(() => { d.flipT = 0; if (WB.drag === d && d.hit?.tab) { WB.side = d.hit.zone; wbDraw(); } }, 500); }
+  else if (d.flipT) { clearTimeout(d.flipT); d.flipT = 0; }
 }
 function wbAutoScroll() {
   const d = WB.drag; if (!d) return;
@@ -7348,7 +7465,7 @@ function wbAutoScroll() {
 }
 function wbDragKill() {
   const d = WB.drag; if (!d) return;
-  clearInterval(d.auto); if (d.hit && d.hit.el) d.hit.el.classList.remove('ins-before', 'ins-after', 'drop-on', 'drop-col');
+  clearInterval(d.auto); clearTimeout(d.flipT); if (d.hit && d.hit.el) d.hit.el.classList.remove('ins-before', 'ins-after', 'drop-on', 'drop-col');
   d.g.remove(); d.row.classList.remove('lift'); document.documentElement.classList.remove('wbdrag'); WB.drag = null; WB.dragEnd = Date.now();
 }
 function wbDragEnd(x, y) {
