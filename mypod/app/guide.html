@@ -141,6 +141,7 @@ figcaption{font-size:15px;color:var(--gray);margin-top:8px;text-align:center}
 [hidden]{display:none!important}
 footer{padding-block:40px 56px;text-align:center;color:var(--light);font-size:14px}
 footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01em}
+footer .club{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;font-weight:600;color:var(--gray)}footer .club img{border-radius:9px}
 @media (max-width:380px){.pair{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
 
@@ -460,15 +461,20 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Record More</dt><dd>Turns recording back on, so you can add songs to whatever room is left.</dd></div>
       <div><dt>Take a Song Off</dt><dd>Open <b>Side A</b> or <b>Side B</b> on the mixtape, then <b>Take a Song Off</b>. Press twice to take it off.</dd></div>
       <div><dt>Tape</dt><dd>Switch between C60, C90 and No Limit. Switching to No Limit puts both sides together; switching back splits them again, or tells you if there’s too much music to fit.</dd></div>
-      <div><dt>Label, For, Label Color</dt><dd>Rename it, change who it’s for, or pick another color for the label.</dd></div>
+      <div><dt>Arrange Songs</dt><dd>Put the songs in the order that tells the story. Pick a song to pick it up, turn the knob (or tap the spot where it goes) and press again to put it down. A song can cross from the end of Side A to the top of Side B if there’s room. On a computer, drag songs in the recording panel.</dd></div>
+      <div><dt>Coach’s Notes</dt><dd>Gentle mixtape rules of thumb about this tape: an artist twice in a row, a long opener, the song right before the flip. Press a note to dismiss it, or turn <span class="path">Settings › Mixtape Coach</span> off.</dd></div>
+      <div><dt>Label, For, Design the Label</dt><dd>Rename it, change who it’s for, or dress the label: music themes, edition labels, paper, shell, stripe, pen and ink.</dd></div>
       <div><dt>Erase Mixtape</dt><dd>Press twice. It’s erased everywhere it was saved.</dd></div>
     </dl>
+
+    <h3>Plan one first: the Sketch Pad</h3>
+    <p><span class="path">Mixtapes › Sketch Pad</span> is for planning a tape before you make it. Start a sketch and pick a <b>Story Arc</b> (the Classic Arc, Road Trip, For a Crush, Party, Heartbreak, or Bright Side, Late Side) or build your own beats. Then fill <b>The Crate</b> with every song that might fit, in any order. Move the keepers into the <b>Running Order</b>, under the beat where they belong, and arrange them. <b>Hold a Spot</b> saves room for a song you haven’t picked yet, and <b>Why It’s Here</b> keeps a note on any song. The sketch always shows whether the order fits a C60 or a C90. When it’s right, <b>Make It a Tape</b>. <b>The Art of the Mixtape</b>, also in the Sketch Pad, has ten rules of thumb for the craft.</p>
 
     <h3>Share, save and print</h3>
     <dl class="terms">
       <div><dt>On all your devices</dt><dd>When you’re signed in to Plex, each mixtape is saved to Plex as a playlist, so it shows up in myStereo on your phone, your computer and Elite, and as a playlist in Plexamp. The label, color and sides come along; where you stopped stays on each device. Songs added under On Phone stay on that phone. The line at the bottom of the Mixtapes list shows whether the highlighted tape is saved. If one doesn’t show up on another device, press <b>Mixtapes › Sync with Plex</b> on both; it tells you what it found. Both devices need to be signed in to the same Plex account.</dd></div>
       <div><dt>Dub to Phone</dt><dd>Saves every song on the mixtape to your phone, so it plays with no signal and no data. You’ll see the cassette recording while it works, and the offline sign while it plays.</dd></div>
-      <div><dt>Print the J-Card</dt><dd>Makes a printable insert for a real cassette case: the cover, the spine and the song list. Print it, or choose Save File and print it later from Files.</dd></div>
+      <div><dt>Print the J-Card</dt><dd>Makes a printable insert for a real cassette case: the cover, the spine and the song list, in your tape’s label design on light paper, with the Own Your Media Club stamp in the corner. Long tapes get a second inside panel for Side B that folds behind Side A. Print it, or choose Save File and print it later from Files.</dd></div>
     </dl>
     <h3>On Phone: music with no signal, no data</h3>
     <p>Save albums and playlists to your phone before a road trip, a flight or a weekend at the cabin. Music on your phone plays with no signal and uses none of your data plan.</p>
@@ -596,7 +602,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="settings">
     <p class="num">Chapter 9</p>
     <h2>Settings</h2>
-    <p class="lead">Settings is grouped so it’s quick to scan: <b>Look</b> (Faceplate, Display, Knob Color, Knob Center, Corner, Large Text, Menu Art), <b>Sound</b> (Tone, Clicker), <b>Music Sources</b> (Plex, Server, Demo Library<span class="el-only">, Network Share</span>), <b>On Phone</b>, <b>Ratings Backup</b>, <b>Help</b> and <b>About</b>.</p>
+    <p class="lead">Settings is grouped so it’s quick to scan: <b>Look</b> (Faceplate, Display, Knob Color, Knob Center, Corner, Large Text, Menu Art), <b>Sound</b> (Tone, Clicker), <b>Music Sources</b> (Plex, Server, Demo Library<span class="el-only">, Network Share</span>), <b>On Phone</b>, <b>Ratings Backup</b>, <b>Help</b>, <b>About Us</b> (Own Your Media Club: who makes myStereo, and why) and <b>About</b> (your version and what’s new).</p>
     <h3>Desktop Mode</h3>
     <p>On a computer, myStereo can become a jukebox window built for a mouse. See <a href="#desktop">Chapter 10</a>.</p>
     <h3>Tone</h3>
@@ -770,6 +776,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <div class="mark"><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></div>
     <p class="own-line">Own your media.</p>
     <p>Built by BC Gordon.</p>
+    <p class="club"><img src="/assets/club-logo-96.png" alt="" width="40" height="40">An Own Your Media Club project · ownyourmedia.club</p>
   </footer>
 </main>
 <a class="backbar" id="backbar" href="./" hidden>‹ Back to myStereo<span class="el-only"> Elite</span></a>
