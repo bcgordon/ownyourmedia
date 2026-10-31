@@ -9,17 +9,17 @@
 <meta property="og:title" content="Own Your Media Club">
 <meta property="og:description" content="Homemade tools for owning your music, movies and books, plus Twin Cities places to go offline.">
 <meta property="og:url" content="https://ownyourmedia.club/">
-<meta name="theme-color" content="#F1EDE4">
+<meta name="theme-color" content="#F4EDE0">
 <link rel="icon" type="image/png" href="/assets/club-favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/club-apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="OYM Club">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Special+Elite&amp;family=Alfa+Slab+One&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#F1EDE4}
-a{color:#191817}a:hover{color:#2549C7}
-a:focus-visible{outline:3px solid #2549C7;outline-offset:3px}
+body{margin:0;background:#F4EDE0}
+a{color:#1C1B19}a:hover{color:#1C1B19}
+a:focus-visible{outline:3px solid #1C1B19;outline-offset:3px}
 html{-webkit-text-size-adjust:100%}
 img{max-width:100%}
 
@@ -29,7 +29,7 @@ img{max-width:100%}
 .pass{position:absolute;top:58px;width:31.5%;aspect-ratio:.63;border-radius:14px;text-decoration:none;display:flex;flex-direction:column;align-items:center;padding:30px 10px 14px;box-sizing:border-box;
   box-shadow:0 18px 30px -12px rgba(0,0,0,.45),0 2px 0 rgba(0,0,0,.15);transform-origin:50% -58px;transition:transform .25s;font-family:'Bricolage Grotesque',Georgia,sans-serif}
 .pass .strap{position:absolute;left:50%;top:-58px;width:16px;margin-left:-8px;height:66px;border-radius:2px;background:var(--strap)}
-.pass .slot{position:absolute;top:12px;left:50%;width:46px;height:9px;margin-left:-23px;border-radius:6px;background:#F1EDE4;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.18)}
+.pass .slot{position:absolute;top:12px;left:50%;width:46px;height:9px;margin-left:-23px;border-radius:6px;background:#F4EDE0;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.18)}
 .pass .pi{margin-bottom:8px;display:flex;flex-direction:column;align-items:center;gap:6px;font:600 8.5px 'IBM Plex Mono',monospace;letter-spacing:.2em;color:var(--sub);text-align:center}
 .pass .pi img{width:34px;height:34px;border-radius:8px}
 .pass .tier{margin-top:auto;font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.3em;color:var(--acc)}
@@ -39,9 +39,9 @@ img{max-width:100%}
 .pass .foot{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;font:600 8px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:var(--sub)}
 .pass .foot b{font:700 18px 'Bricolage Grotesque',sans-serif;letter-spacing:.06em;color:var(--acc)}
 .pass .foot em{font-style:normal;color:var(--ink)}
-.p-card{--strap:#B23A12;--ink:#191817;--sub:#55524C;--acc:#B23A12;background:linear-gradient(180deg,#fffdf8,#efe8da);left:0;transform:rotate(-6deg);z-index:1;box-shadow:inset 0 0 0 1.5px #d6cdb9,0 18px 30px -12px rgba(0,0,0,.35)}
-.p-member{--strap:#2549C7;--ink:#ffffff;--sub:#c9d4f7;--acc:#F2B84B;background:linear-gradient(180deg,#2f56d8,#1d3aa6);left:34.25%;top:40px;transform:rotate(0deg);z-index:3}
-.p-back{--strap:#C9A45C;--ink:#EDE8DE;--sub:#a8a29a;--acc:#C9A45C;background:#121212;left:68.5%;transform:rotate(6deg);z-index:2;box-shadow:inset 0 0 0 1px rgba(201,164,92,.5),0 18px 30px -12px rgba(0,0,0,.55)}
+.p-card{--strap:#C93C25;--ink:#1C1B19;--sub:#55524C;--acc:#C93C25;background:linear-gradient(180deg,#fffdf8,#efe8da);left:0;transform:rotate(-6deg);z-index:1;box-shadow:inset 0 0 0 1.5px #d6cdb9,0 18px 30px -12px rgba(0,0,0,.35)}
+.p-member{--strap:#1C1B19;--ink:#ffffff;--sub:#E9DFCB;--acc:#F2B84B;background:linear-gradient(180deg,#2f56d8,#1d3aa6);left:34.25%;top:40px;transform:rotate(0deg);z-index:3}
+.p-back{--strap:#E2A33B;--ink:#EDE8DE;--sub:#a8a29a;--acc:#E2A33B;background:#121212;left:68.5%;transform:rotate(6deg);z-index:2;box-shadow:inset 0 0 0 1px rgba(201,164,92,.5),0 18px 30px -12px rgba(0,0,0,.55)}
 .pass:hover,.pass:focus-visible{z-index:4}
 .p-card:hover{transform:rotate(-3deg) translateY(-6px)}.p-member:hover{transform:translateY(-8px)}.p-back:hover{transform:rotate(3deg) translateY(-6px)}
 @keyframes passSway{0%,100%{rotate:0deg}50%{rotate:1.6deg}}
@@ -49,7 +49,7 @@ img{max-width:100%}
 @media (max-width:480px){.passes{height:300px}.pass{padding:24px 6px 10px}.pass .pi span{display:none}.pass .l1{font-size:7px;letter-spacing:.1em}.pass .foot{font-size:7px}.pass .foot b{font-size:15px}}
 [data-preview][hidden],[data-public][hidden]{display:none!important}
 /* join the club (from the membership page) */
-.oymj{--paper:#F1EDE4;--card:#FFFDF8;--ink:#191817;--muted:#55524C;--blue:#2549C7;--rust:#B23A12;--f:'Bricolage Grotesque',Georgia,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+.oymj{--paper:#F4EDE0;--card:#FFFDF8;--ink:#1C1B19;--muted:#55524C;--blue:#1C1B19;--rust:#C93C25;--f:'Bricolage Grotesque',Georgia,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
   max-width:1160px;margin:0 auto;padding:56px 24px;box-sizing:border-box}
 .oymj *{box-sizing:border-box}
 .oymj .rule{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:32px}
@@ -68,8 +68,8 @@ img{max-width:100%}
 .oymj .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px;align-items:stretch}
 .oymj .way{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .oymj .way.alt{box-shadow:8px 8px 0 var(--blue)}
-.oymj .way.top{background:#121212;color:#EDE8DE;border-color:#121212;box-shadow:8px 8px 0 #C9A45C}
-.oymj .way.top .eyebrow{color:#C9A45C}.oymj .way.top small,.oymj .way.top .price span,.oymj .way.top .alt-price{color:#b9b2a6}
+.oymj .way.top{background:#121212;color:#EDE8DE;border-color:#121212;box-shadow:8px 8px 0 #E2A33B}
+.oymj .way.top .eyebrow{color:#E2A33B}.oymj .way.top small,.oymj .way.top .price span,.oymj .way.top .alt-price{color:#b9b2a6}
 .oymj .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:0}
 .oymj .price b{font-size:64px;font-weight:800;letter-spacing:-.03em;line-height:1}
 .oymj .price span{font:600 16px var(--mono);color:var(--muted)}
@@ -79,17 +79,56 @@ img{max-width:100%}
 .oymj .btn{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 26px;border:2px solid var(--ink);border-radius:999px;font:600 19px var(--f);text-decoration:none;background:none;color:var(--ink);cursor:pointer}
 .oymj .btn.solid{background:var(--ink);color:var(--paper)}
 .oymj .btn.solid:hover{background:var(--blue);border-color:var(--blue);color:#fff}
-.oymj .way.top .btn.solid{background:#C9A45C;border-color:#C9A45C;color:#121212}
+.oymj .way.top .btn.solid{background:#E2A33B;border-color:#E2A33B;color:#121212}
 .oymj .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
 .oymj .fine{margin:20px 0 0;font:500 15px var(--mono);color:var(--muted)}
+
+/* sticker stripes */
+.oym-stripes{height:22px;background:linear-gradient(#D8452E 0 6px,transparent 6px 8px,#E2A33B 8px 14px,transparent 14px 16px,#1C1B19 16px 22px)}
+/* backstage passes */
+.bp-lede{margin:0 0 8px;max-width:62ch;color:var(--muted)}
+.bp-row{margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:44px 26px;align-items:start}
+.bp-tier{min-width:0;display:flex;flex-direction:column;align-items:center}
+.bp-clip{position:relative;width:62px;height:34px;margin-bottom:-14px;z-index:2;border-radius:8px 8px 4px 4px;background:linear-gradient(#cfd2d6,#8f949b)}
+.bp-clip::before{content:"";position:absolute;left:50%;bottom:100%;width:16px;height:42px;margin-left:-8px;background:var(--strap);border-radius:2px}
+.bp{position:relative;width:280px;max-width:100%;aspect-ratio:2.125/3.375;border-radius:16px;overflow:hidden;box-shadow:0 18px 30px rgba(0,0,0,.25);container-type:inline-size;font-family:Archivo,'Bricolage Grotesque',sans-serif}
+.bp::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.22) 0 18%,transparent 34% 70%,rgba(255,255,255,.1) 84%);pointer-events:none}
+.bp-slot{position:absolute;left:50%;top:4.5cqw;width:30cqw;height:6.5cqw;margin-left:-15cqw;border-radius:99px;background:var(--paper);box-shadow:inset 0 2px 4px rgba(0,0,0,.35)}
+.bp-hd{position:absolute;left:0;right:0;top:15cqw;padding:0 7cqw;display:flex;justify-content:space-between;font:800 3.6cqw/1 'Bricolage Grotesque',sans-serif;letter-spacing:.2em}
+.bp-seal{position:absolute;left:50%;top:22cqw;width:46cqw;margin-left:-23cqw;aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+.bp-lvl{position:absolute;left:0;right:0;top:72cqw;text-align:center;font:400 15cqw/.9 'Alfa Slab One',Georgia,serif}
+.bp-kind{position:absolute;left:0;right:0;top:91cqw;text-align:center;font:800 3.6cqw/1 'Bricolage Grotesque',sans-serif;letter-spacing:.24em}
+.bp-bars{position:absolute;left:0;right:0;top:102cqw;height:9cqw;background:linear-gradient(#D8452E 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#1C1B19 70%)}
+.bp2 .bp-bars{top:108cqw;background:linear-gradient(#F4EDE0 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#1C1B19 70%)}
+.bp3 .bp-bars{background:linear-gradient(#D8452E 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#F4EDE0 70%)}
+.bp-mot{position:absolute;left:0;right:0;top:120cqw;text-align:center;font:400 4.4cqw/1.4 'Special Elite','IBM Plex Mono',monospace;opacity:.85}
+.bp-ft{position:absolute;left:7cqw;right:7cqw;bottom:6cqw;display:flex;justify-content:space-between;font:400 4.2cqw/1.25 'Special Elite','IBM Plex Mono',monospace}
+.bp-ft b{display:block;font:800 2.8cqw/1 'Bricolage Grotesque',sans-serif;letter-spacing:.2em;margin-bottom:1.6cqw;opacity:.7}.bp-ft .r{text-align:right}
+.bp-stamp{position:absolute;right:5cqw;top:62cqw;transform:rotate(-14deg);padding:1.4cqw 2.6cqw;border:.8cqw solid currentColor;border-radius:1.4cqw;font:800 3.6cqw/1 'Bricolage Grotesque',sans-serif;letter-spacing:.14em}
+.bp1{background:radial-gradient(circle at 30% 20%,#FFFDF8,#F4EDE0 60%);color:#1C1B19}.bp1 .bp-hd{color:#C93C25}.bp1 .bp-kind{color:#6B655C}
+.bp2{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px),radial-gradient(circle at 30% 20%,#E5573F,#D8452E 60%,#B93722);color:#F4EDE0}.bp2 .bp-stamp{color:#E2A33B}
+.bp3{background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px),radial-gradient(circle at 30% 20%,#2D2B28,#1C1B19 60%);color:#F4EDE0}.bp3 .bp-lvl{color:#E2A33B;letter-spacing:.06em}.bp3 .bp-stamp{color:#D8452E}
+.bp-info{width:100%;max-width:320px;margin-top:22px}
+.bp-info h3{margin:0;font:400 26px/1.1 'Alfa Slab One',Georgia,serif}
+.bp-how{margin:4px 0 12px;font:600 14px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#C93C25}
+.bp-info ul{margin:0;padding-left:20px;font-size:17px}.bp-info li{margin:4px 0}.bp-info li.plus{list-style:none;margin-left:-20px;color:var(--muted);font-style:italic}
+
+/* hero: the three passes, fanned out on their lanyards */
+.hero-passes{display:flex;justify-content:center;align-items:flex-start;padding-top:40px;text-decoration:none;color:inherit}
+.hero-passes .hp-one{display:flex;flex-direction:column;align-items:center;flex:none}
+.hero-passes .bp{width:clamp(120px,13vw,160px)}
+.hero-passes .hp-one:nth-child(1){transform:rotate(-7deg) translateY(18px);margin-right:-26px}
+.hero-passes .hp-one:nth-child(2){position:relative;z-index:1}
+.hero-passes .hp-one:nth-child(3){transform:rotate(7deg) translateY(18px);margin-left:-26px}
+@media (max-width:420px){.hero-passes .bp{width:112px}.hero-passes .hp-one:nth-child(1){margin-right:-20px}.hero-passes .hp-one:nth-child(3){margin-left:-20px}}
 </style>
 </head>
 <body>
-<div style="background: #F1EDE4; color: #191817; font-family: 'Bricolage Grotesque', Georgia, sans-serif; font-size: 19px; line-height: 1.5; min-height: 100vh">
+<div style="background: #F4EDE0; color: #1C1B19; font-family: 'Bricolage Grotesque', Georgia, sans-serif; font-size: 19px; line-height: 1.5; min-height: 100vh">
 
   <header style="max-width: 1160px; margin: 0 auto; padding: 22px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
     <a href="#top" style="display: flex; align-items: center; gap: 12px; text-decoration: none">
-      <img src="/assets/club-logo-96.png" alt="" style="width: 44px; height: 44px; border-radius: 11px">
+      <img src="/assets/oym-seal.webp" alt="" style="width: 52px; height: 52px; border-radius: 50%">
       <span style="font-weight: 800; font-size: 22px; letter-spacing: -0.01em">Own Your Media Club</span>
     </a>
     <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 16px">
@@ -97,117 +136,69 @@ img{max-width:100%}
       <a href="#tools" style="padding: 10px 14px; text-decoration: none">Detox tools</a>
       <a href="#local" style="padding: 10px 14px; text-decoration: none">Go local</a>
       <a href="#gather" style="padding: 10px 14px; text-decoration: none">Gatherings</a>
-      <a href="#join" data-preview hidden style="padding: 10px 14px; text-decoration: none">Join</a>
+      <a href="#join" style="padding: 10px 14px; text-decoration: none">Passes</a>
       <a href="#about" style="padding: 10px 14px; text-decoration: none">About</a>
       <a href="#rules" style="padding: 10px 14px; text-decoration: none">Club rules</a>
     </nav>
   </header>
+  <div class="oym-stripes" aria-hidden="true"></div>
 
   <section id="top" style="max-width: 1160px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 48px">
     <div style="flex: 1 1 520px; min-width: 0">
-      <p style="margin: 0 0 18px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #2549C7">Offline projects · Twin Cities, MN</p>
+      <p style="margin: 0 0 18px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #1C1B19">Offline projects · Twin Cities, MN</p>
       <h1 style="margin: 0; font-weight: 800; font-size: clamp(52px, 8vw, 104px); line-height: 0.95; letter-spacing: -0.035em">Own your media.<br>Then go outside.</h1>
-      <p style="margin: 28px 0 0; max-width: 34em; font-size: 22px; line-height: 1.5; color: #46433E">Homemade tools that work on iPhone and Android, for people who would rather own their music, movies and books than rent them <b style="color: #191817; font-weight: 800">from tech companies</b>. Plus a short list of local places where the good stuff still happens in person.</p>
+      <p style="margin: 28px 0 0; max-width: 34em; font-size: 22px; line-height: 1.5; color: #46433E">Homemade tools that work on iPhone and Android, for people who would rather own their music, movies and books than rent them <b style="color: #1C1B19; font-weight: 800">from tech companies</b>. Plus a short list of local places where the good stuff still happens in person.</p>
       <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px">
-        <a href="#projects" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #191817; color: #F1EDE4; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See the projects</a>
-        <a href="#join" data-preview hidden style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #2549C7; color: #FFFFFF; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">Join the club</a>
-        <a href="#local" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #191817; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">Find a place nearby</a>
-        <a href="#tools" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #191817; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See what we're testing</a>
+        <a href="#projects" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #1C1B19; color: #F4EDE0; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See the projects</a>
+        <a href="#join" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; background: #1C1B19; color: #FFFFFF; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See the passes</a>
+        <a href="#local" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #1C1B19; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">Find a place nearby</a>
+        <a href="#tools" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; border: 2px solid #1C1B19; font-weight: 600; font-size: 19px; text-decoration: none; border-radius: 999px">See what we're testing</a>
       </div>
     </div>
     <div style="flex: 1 1 360px; min-width: 0; display: grid; place-items: center; padding: 24px 8px">
 
-      <div class="passes" data-preview hidden aria-label="Three membership passes: Card, Member and Backstage">
-          <a class="pass p-card" href="#join" aria-label="CARD pass">
-            <i class="strap"></i>
-            <span class="slot"></span>
-            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
-            <span class="tier">TIER 1</span>
-            <b class="big">CLUB<br>CARD</b>
-            <span class="rule"></span>
-            <span class="l1">ONE YEAR</span>
-            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$20 · ONE TIME</em></span>
-          </a>
-          <a class="pass p-member" href="#join" aria-label="MEMBER pass">
-            <i class="strap"></i>
-            <span class="slot"></span>
-            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
-            <span class="tier">TIER 2</span>
-            <b class="big">MEMBER</b>
-            <span class="rule"></span>
-            <span class="l1">LETTERS + DIGS</span>
-            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$50 A YEAR</em></span>
-          </a>
-          <a class="pass p-back" href="#join" aria-label="BACKSTAGE pass">
-            <i class="strap"></i>
-            <span class="slot"></span>
-            <span class="pi"><img src="/assets/club-logo-96.png" alt=""><span>OWN YOUR MEDIA CLUB</span></span>
-            <span class="tier">TIER 3</span>
-            <b class="big">ALL<br>ACCESS</b>
-            <span class="rule"></span>
-            <span class="l1">ALL GATHERINGS</span>
-            <span class="foot"><span>MEMBER SINCE</span><b>2026</b><em>$75 A YEAR</em></span>
-          </a>
-      </div>
-      <div data-public style="position: relative; width: min(480px, 100%); aspect-ratio: 1.586">
-        <div aria-hidden="true" style="position: absolute; inset: 0; background: #E4DDCF; border: 2px solid #191817; border-radius: 18px; transform: rotate(5deg) translate(10px, 6px)"></div>
-        <div role="img" aria-label="Own Your Media Club membership card. Member number blank, established 2026, stamped valid offline only." style="position: absolute; inset: 0; display: flex; flex-direction: column; background: #FFFDF8; border: 2px solid #191817; border-radius: 18px; box-shadow: 8px 8px 0 #191817; transform: rotate(-4deg); overflow: hidden; font-family: 'Special Elite', 'Courier New', monospace; color: #191817">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 18px 10px 18px; background: #2549C7; color: #FFFFFF; border-bottom: 2px solid #191817">
-            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(15px, 4.4vw, 21px); letter-spacing: -0.01em; line-height: 1.1">Own Your Media Club</span>
-            <span aria-hidden="true" style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #F1EDE4; border: 2px solid #191817; box-sizing: border-box"></span>
-          </div>
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(10px, 3vw, 16px) 18px clamp(12px, 3.4vw, 18px); position: relative">
-            <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: clamp(10px, 2.8vw, 13px); letter-spacing: 0.16em; text-transform: uppercase; color: #55524C">Membership card</span>
-            <div style="display: flex; flex-direction: column; gap: clamp(6px, 2vw, 10px); font-size: clamp(15px, 4.2vw, 20px)">
-              <div style="display: flex; align-items: baseline; gap: 8px"><span>Member</span><span style="flex: 1; border-bottom: 1.5px solid #191817; height: 1em"></span></div>
-              <div style="display: flex; align-items: baseline; gap: 18px"><span>No. ______</span><span>Est. 2026</span></div>
-            </div>
-            <span style="max-width: 52%; font-size: clamp(11px, 3vw, 14px); line-height: 1.3; color: #46433E">Not transferable to the cloud.</span>
-            <span style="position: absolute; right: 16px; bottom: clamp(10px, 3vw, 16px); padding: 4px 10px; border: 3px solid #B23A12; border-radius: 6px; color: #B23A12; font-size: clamp(13px, 3.8vw, 18px); line-height: 1.15; text-align: center; text-transform: uppercase; transform: rotate(-11deg); opacity: 0.88">Valid<br>offline only</span>
-          </div>
-        </div>
-      </div>
+      <a class="hero-passes" href="#join" aria-label="See the three backstage passes: Member, All Access and Crew"><div class="hp-one"><div class="bp-clip" style="--strap:#1C1B19"></div><div class="bp bp1"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="bp-seal" src="/assets/oym-seal.webp" alt=""><div class="bp-lvl">MEMBER</div><div class="bp-kind">ONE YEAR · NO RENEWAL</div><div class="bp-bars"></div><div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0001</div></div></div></div><div class="hp-one"><div class="bp-clip" style="--strap:#D8452E"></div><div class="bp bp2"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="bp-seal" src="/assets/oym-seal.webp" alt=""><div class="bp-stamp">RENEWS</div><div class="bp-lvl">ALL<br>ACCESS</div><div class="bp-bars"></div><div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0042</div></div></div></div><div class="hp-one"><div class="bp-clip" style="--strap:#E2A33B"></div><div class="bp bp3"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="bp-seal" src="/assets/oym-seal-crew.webp" alt=""><div class="bp-stamp">STAFF ONLY</div><div class="bp-lvl">CREW</div><div class="bp-kind">BEHIND THE SCENES</div><div class="bp-bars"></div><div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0007</div></div></div></div></a>
     </div>
   </section>
 
   <section id="projects" style="max-width: 1160px; margin: 0 auto; padding: 24px 24px 88px">
-    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 2px solid #191817; padding-top: 20px; margin-bottom: 32px">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 2px solid #1C1B19; padding-top: 20px; margin-bottom: 32px">
       <h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em">The projects</h2>
       <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #55524C">Free · No ads · iPhone &amp; Android</p>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px">
 
-      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px; box-shadow: 6px 6px 0 #191817">
+      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #1C1B19; border-radius: 22px; box-shadow: 6px 6px 0 #1C1B19">
         <img src="/assets/mypod-icon.png" alt="myStereo app icon" style="width: 84px; height: 84px; border-radius: 20px">
-        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #2549C7">Music · iPhone &amp; Android</p>
+        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #1C1B19">Music · iPhone &amp; Android</p>
         <h3 style="margin: 0; font-weight: 800; font-size: 34px; letter-spacing: -0.02em; line-height: 1.05">myStereo</h3>
         <p style="margin: 0; flex-grow: 1">Your own Plex music library on a stereo-style player with a real turn-and-press knob. No Plex? No problem. It also plays music stored right on your device. Cases, ratings, games and a few secrets.</p>
-        <p style="margin: 0; padding: 12px 14px; background: #1d2025; color: #F1EDE4; border-radius: 12px; font-size: 17px; line-height: 1.45">Like to tinker? <a href="/elite/" style="color: #E7B24A; font-weight: 700">myStereo Elite</a> adds extras like playing music from your own network share.</p>
-        <a href="/mystereo/" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #2549C7; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 14px">Meet myStereo</a>
+        <p style="margin: 0; padding: 12px 14px; background: #1d2025; color: #F4EDE0; border-radius: 12px; font-size: 17px; line-height: 1.45">Like to tinker? <a href="/elite/" style="color: #E7B24A; font-weight: 700">myStereo Elite</a> adds extras like playing music from your own network share.</p>
+        <a href="/mystereo/" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #1C1B19; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 14px">Meet myStereo</a>
       </article>
 
-      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px; box-shadow: 6px 6px 0 #191817">
-        <img src="/assets/flipside-icon.webp" alt="Flipside app icon" style="width: 84px; height: 84px; border-radius: 20px; border: 2px solid #191817">
+      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #1C1B19; border-radius: 22px; box-shadow: 6px 6px 0 #1C1B19">
+        <img src="/assets/flipside-icon.webp" alt="Flipside app icon" style="width: 84px; height: 84px; border-radius: 20px; border: 2px solid #1C1B19">
         <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #C9501E">Mixtapes · Powered by myStereo</p>
         <h3 style="margin: 0; font-weight: 800; font-size: 34px; letter-spacing: -0.02em; line-height: 1.05">Flipside</h3>
         <p style="margin: 0; flex-grow: 1">Make someone a mixtape. A C60 or a C90, Side A and Side B, a handwritten label, played on a cassette deck that’s all buttons, and sent to a friend.</p>
         <a href="/flipside/" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #E0602A; color: #FFF6EC; font-weight: 600; text-decoration: none; border-radius: 14px">Meet Flipside</a>
       </article>
 
-      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px; box-shadow: 6px 6px 0 #191817">
-        <img src="/assets/myshelf.webp" alt="myShelf app icon" style="width: 84px; height: 84px; border-radius: 20px; border: 2px solid #191817">
-        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #B23A12">Shelf tracker · Phone &amp; computer</p>
+      <article style="display: flex; flex-direction: column; gap: 16px; padding: 28px; background: #FFFDF8; border: 2px solid #1C1B19; border-radius: 22px; box-shadow: 6px 6px 0 #1C1B19">
+        <img src="/assets/myshelf.webp" alt="myShelf app icon" style="width: 84px; height: 84px; border-radius: 20px; border: 2px solid #1C1B19">
+        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #C93C25">Shelf tracker · Phone &amp; computer</p>
         <h3 style="margin: 0; font-weight: 800; font-size: 34px; letter-spacing: -0.02em; line-height: 1.05">myShelf</h3>
         <p style="margin: 0; flex-grow: 1">A catalog for the physical stuff: records, tapes, discs and books. Retro video-store looks, with a fast bulk-entry mode for big shelves.</p>
-        <p style="margin: 0; padding: 12px 14px; background: #F1EDE4; border-radius: 12px; font-size: 16px; line-height: 1.45; color: #46433E"><b style="color: #191817">Founder’s note:</b> BC’s own copy is still called the Book of Rao, the holiest text of the planet Krypton.</p>
-        <a href="/myshelf/" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; border: 2px solid #191817; font-weight: 600; text-decoration: none; border-radius: 14px">Open myShelf</a>
+        <p style="margin: 0; padding: 12px 14px; background: #F4EDE0; border-radius: 12px; font-size: 16px; line-height: 1.45; color: #46433E"><b style="color: #1C1B19">Founder’s note:</b> BC’s own copy is still called the Book of Rao, the holiest text of the planet Krypton.</p>
+        <a href="/myshelf/" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; border: 2px solid #1C1B19; font-weight: 600; text-decoration: none; border-radius: 14px">Open myShelf</a>
       </article>
 
     </div>
   </section>
 
   <section id="tools" style="max-width: 1160px; margin: 0 auto; padding: 0 24px 88px">
-    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 2px solid #191817; padding-top: 20px; margin-bottom: 14px">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 2px solid #1C1B19; padding-top: 20px; margin-bottom: 14px">
       <h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em; line-height: 1.02">Digital detox tools we're trying</h2>
       <p id="toolsUpdated" style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #55524C"></p>
     </div>
@@ -220,15 +211,15 @@ img{max-width:100%}
     var list = document.getElementById('toolsList');
     function el(tag, style, text) { var e = document.createElement(tag); if (style) e.setAttribute('style', style); if (text != null) e.textContent = text; return e; }
     function btn(label, href) {
-      var a = el('a', 'display: inline-flex; align-items: center; min-height: 48px; padding: 0 18px; border: 2px solid #191817; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none', label);
+      var a = el('a', 'display: inline-flex; align-items: center; min-height: 48px; padding: 0 18px; border: 2px solid #1C1B19; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none', label);
       a.href = href; a.rel = 'noopener'; return a;
     }
     fetch('detox-tools.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
       if (d.updated) document.getElementById('toolsUpdated').textContent = 'Updated ' + d.updated;
       (d.tools || []).slice(0, 3).forEach(function (app) {
-        var card = el('article', 'display: flex; flex-direction: column; gap: 14px; padding: 26px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px');
+        var card = el('article', 'display: flex; flex-direction: column; gap: 14px; padding: 26px; background: #FFFDF8; border: 2px solid #1C1B19; border-radius: 22px');
         var top = el('div', 'display: flex; align-items: center; gap: 14px');
-        function letterTile() { return el('span', 'flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; background: #191817; color: #F1EDE4; font-weight: 800; font-size: 28px', (app.name || '?').replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase() || '?'); }
+        function letterTile() { return el('span', 'flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; background: #1C1B19; color: #F4EDE0; font-weight: 800; font-size: 28px', (app.name || '?').replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase() || '?'); }
         var icon;
         if (app.icon) {
           /* app icons fill the tile; a wordmark logo ("iconFit": "logo") sits inside it with some room */
@@ -245,8 +236,8 @@ img{max-width:100%}
         top.appendChild(icon); top.appendChild(names); card.appendChild(top);
         if (app.what) card.appendChild(el('p', 'margin: 0; flex-grow: 1', app.what));
         if (app.take) {
-          var take = el('p', 'margin: 0; padding: 12px 14px; background: #F1EDE4; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E');
-          take.appendChild(el('b', 'color: #191817', "BC's take: ")); take.appendChild(document.createTextNode(app.take)); card.appendChild(take);
+          var take = el('p', 'margin: 0; padding: 12px 14px; background: #F4EDE0; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E');
+          take.appendChild(el('b', 'color: #1C1B19', "BC's take: ")); take.appendChild(document.createTextNode(app.take)); card.appendChild(take);
         }
         var row = el('div', 'display: flex; flex-wrap: wrap; gap: 10px');
         (app.links || []).forEach(function (l) { if (l && l.url) row.appendChild(btn(l.label || 'Learn more', l.url)); });
@@ -256,39 +247,39 @@ img{max-width:100%}
   })();
   </script>
 
-  <section id="local" style="background: #FFFDF8; border-top: 2px solid #191817; border-bottom: 2px solid #191817">
+  <section id="local" style="background: #FFFDF8; border-top: 2px solid #1C1B19; border-bottom: 2px solid #1C1B19">
     <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 88px">
-      <p style="margin: 0 0 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #B23A12">Go local</p>
+      <p style="margin: 0 0 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #C93C25">Go local</p>
       <h2 style="margin: 0; max-width: 16em; font-weight: 800; font-size: clamp(36px, 5vw, 56px); line-height: 1.02; letter-spacing: -0.03em">The best features are in person.</h2>
       <p style="margin: 20px 0 40px; max-width: 36em; font-size: 21px; color: #46433E">Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. Go say hi, and if you know a place that belongs here, tell BC next time you see him.</p>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px">
 
-        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F1EDE4; border: 2px solid #191817; border-radius: 22px">
+        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F4EDE0; border: 2px solid #1C1B19; border-radius: 22px">
           <img src="/assets/present-company.webp" alt="Present Company logo" style="width: 150px; height: auto; transform: rotate(-3deg)">
           <h3 style="margin: 0; font-weight: 800; font-size: 30px; letter-spacing: -0.02em">Present Company</h3>
           <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #55524C">Milton Square · St. Paul</p>
           <p style="margin: 0; font-weight: 600; font-size: 21px">“Let's be here together.”</p>
           <p style="margin: 0">An analog lifestyle shop with phone-free events: fewer screens, more repair, and real time with people of every generation.</p>
-          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #191817">BC's take:</b> A hidden gem in St. Anthony Park for anyone who's lost an evening to doomscrolling. Dig through vinyl, CDs and tapes, plus the boomboxes and Walkmans to play them. Tell Mick we sent ya.</p>
-          <a href="https://presentcompanyanalog.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #191817; color: #F1EDE4; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Present Company</a>
+          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #1C1B19">BC's take:</b> A hidden gem in St. Anthony Park for anyone who's lost an evening to doomscrolling. Dig through vinyl, CDs and tapes, plus the boomboxes and Walkmans to play them. Tell Mick we sent ya.</p>
+          <a href="https://presentcompanyanalog.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #1C1B19; color: #F4EDE0; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Present Company</a>
         </article>
 
-        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F1EDE4; border: 2px solid #191817; border-radius: 22px">
+        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F4EDE0; border: 2px solid #1C1B19; border-radius: 22px">
           <img src="https://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,h_256,w_256,f_auto,q_90/731583/Agharta_Color_Favicon_etgb9t.png" alt="Agharta Records logo" referrerpolicy="no-referrer" onerror="this.remove()" style="width: 72px; height: 72px; border-radius: 14px; border: 1px solid #D6D0C4; background: #E8E8E8; object-fit: cover">
           <h3 style="margin: 0; font-weight: 800; font-size: 30px; letter-spacing: -0.02em">Agharta Records</h3>
           <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #55524C">University Ave · St. Paul</p>
           <p style="margin: 0">New and collectible vinyl: rock, punk and metal, jazz, funk and soul, electronic, and a local bin worth digging through.</p>
-          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #191817">BC's take:</b> The best vinyl shop in St. Paul, hands down. We've been many times and always find something amazing at a decent price.</p>
-          <a href="https://www.aghartarecords.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #191817; color: #F1EDE4; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Agharta Records</a>
+          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #1C1B19">BC's take:</b> The best vinyl shop in St. Paul, hands down. We've been many times and always find something amazing at a decent price.</p>
+          <a href="https://www.aghartarecords.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #1C1B19; color: #F4EDE0; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Agharta Records</a>
         </article>
 
-        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F1EDE4; border: 2px solid #191817; border-radius: 22px">
+        <article style="display: flex; flex-direction: column; gap: 14px; padding: 28px; background: #F4EDE0; border: 2px solid #1C1B19; border-radius: 22px">
           <span style="position: relative; display: block; width: 150px; height: 76px; overflow: hidden; border-radius: 14px; border: 1px solid #D6D0C4; background: #FFFFFF"><img src="https://www.inkwellbooksellersco.com/sites/default/files/styles/logo/public/design/2026/09/04/inkwell.png?itok=5BTb25mQ" alt="Inkwell Booksellers logo" referrerpolicy="no-referrer" onerror="this.parentNode.remove()" style="position: absolute; left: -25px; top: -31px; width: 195px; height: 156px; max-width: none"></span>
           <h3 style="margin: 0; font-weight: 800; font-size: 30px; letter-spacing: -0.02em">Inkwell Booksellers</h3>
           <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #55524C">E Hennepin Ave · Minneapolis</p>
           <p style="margin: 0">An independent bookshop with a café and a cozy reading nook. Grab a book and a pastry, then settle in for a while.</p>
-          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #191817">BC's take:</b> Worth checking out. It's a short walk from a bunch of great Northeast Minneapolis restaurants, so make a night of it.</p>
-          <a href="https://www.inkwellbooksellersco.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #191817; color: #F1EDE4; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Inkwell Booksellers</a>
+          <p style="margin: 0; padding: 12px 14px; background: #FFFDF8; border-radius: 12px; font-size: 17px; line-height: 1.45; color: #46433E"><b style="color: #1C1B19">BC's take:</b> Worth checking out. It's a short walk from a bunch of great Northeast Minneapolis restaurants, so make a night of it.</p>
+          <a href="https://www.inkwellbooksellersco.com/" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: #1C1B19; color: #F4EDE0; font-weight: 600; text-decoration: none; border-radius: 14px">Visit Inkwell Booksellers</a>
         </article>
       </div>
     </div>
@@ -314,63 +305,62 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section id="join" class="wrap oymj" data-preview hidden>
-    <div class="rule"><h2>Pick your pass</h2><p>Every pass gets the card</p></div>
-    <div class="ways">
-      <div class="way">
-        <p class="eyebrow">Card only</p>
-        <div class="price"><b>$20</b><span>one time · for the year</span></div>
-        <ul><li>The membership card in the mail</li><li>Stickers</li><li>Member pricing at gatherings</li><li>No auto-renew, ever. Want another year? Join again.</li></ul>
-        <a class="btn solid" href="mailto:bc@runawayanchor.com?subject=Own%20Your%20Media%20Club%20membership&amp;body=Put%20me%20on%20the%20list%20for%20a%20membership%20card.%0A%0AName%3A%20%0ACity%3A%20">Get on the list</a>
-        <small>For people who are done with subscriptions.</small>
-      </div>
-      <div class="way alt">
-        <p class="eyebrow">Member</p>
-        <div class="price"><b>$50</b><span>a year · two months free</span></div>
-        <p class="alt-price">or $5 a month</p>
-        <ul><li>Everything in Card only</li><li><b>Letters from BC Gordon</b>, BC’s essays by email</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Liner Notes:</b> your name in the credits of the free apps</li><li>A members-only look in myStereo, as a thank-you</li></ul>
-        <a class="btn solid sub" data-tier="member" href="#join" aria-disabled="true">Opening soon</a>
-        <small>Monthly members get their card after three paid months.</small>
-      </div>
-      <div class="way top">
-        <p class="eyebrow">Backstage</p>
-        <div class="price"><b>$75</b><span>a year</span></div>
-        <p class="alt-price">or $10 a month</p>
-        <ul><li>Everything in Member</li><li><b>The yearly gathering</b>, plus a guest</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul>
-        <a class="btn solid sub" data-tier="backstage" href="#join" aria-disabled="true">Opening soon</a>
-        <small>Monthly members get their card after three paid months.</small>
-      </div>
+  <section id="join" class="wrap oymj">
+    <div class="rule"><h2>Backstage passes</h2><p>Coming soon</p></div>
+    <p class="bp-lede">Three ways into the club, each one a pass you can hang on a lanyard. The apps stay free no matter what. Passes are how you support the club and get in on the in-person stuff.</p>
+    <div class="bp-row">
+      <div class="bp-tier"><div class="bp-clip" style="--strap:#1C1B19"></div>
+        <div class="bp bp1"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div>
+          <img class="bp-seal" src="/assets/oym-seal.webp" alt="">
+          <div class="bp-lvl">MEMBER</div><div class="bp-kind">ONE YEAR · NO RENEWAL</div><div class="bp-bars"></div>
+          <div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div>
+          <div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0001</div></div></div>
+        <div class="bp-info"><h3>Member</h3><p class="bp-how">One-time card · coming soon</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Member pricing at gatherings</li><li>No auto-renew, ever. Want another year? Join again.</li></ul></div></div>
+      <div class="bp-tier"><div class="bp-clip" style="--strap:#D8452E"></div>
+        <div class="bp bp2"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div>
+          <img class="bp-seal" src="/assets/oym-seal.webp" alt=""><div class="bp-stamp">RENEWS</div>
+          <div class="bp-lvl">ALL<br>ACCESS</div><div class="bp-bars"></div>
+          <div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div>
+          <div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0042</div></div></div>
+        <div class="bp-info"><h3>All Access</h3><p class="bp-how">Renews · coming soon</p><ul><li class="plus">Everything in Member</li><li><b>Letters from BC Gordon</b>, BC’s essays by email</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Liner Notes:</b> your name in the credits of the free apps</li><li>A members-only look in myStereo, as a thank-you</li></ul></div></div>
+      <div class="bp-tier"><div class="bp-clip" style="--strap:#E2A33B"></div>
+        <div class="bp bp3"><div class="bp-slot"></div><div class="bp-hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div>
+          <img class="bp-seal" src="/assets/oym-seal-crew.webp" alt=""><div class="bp-stamp">STAFF ONLY</div>
+          <div class="bp-lvl">CREW</div><div class="bp-kind">BEHIND THE SCENES</div><div class="bp-bars"></div>
+          <div class="bp-mot">own it · enjoy it · share it<br>ownyourmedia.club</div>
+          <div class="bp-ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0007</div></div></div>
+        <div class="bp-info"><h3>Crew</h3><p class="bp-how">Renews · coming soon</p><ul><li class="plus">Everything in All Access</li><li><b>The yearly gathering</b>, plus a guest</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul></div></div>
     </div>
-    <p class="fine">Memberships open soon. Member and Backstage are handled by Substack, and you can cancel there anytime. <a href="/club2/">Questions about membership</a></p>
+    <p class="fine">Passes aren’t open yet. Want a heads-up when they are? Email <b>bc@runawayanchor.com</b>. <a href="/club2/">Questions about membership</a></p>
   </section>
 
 
   <section id="about" style="max-width: 1160px; margin: 0 auto; padding: 80px 24px 88px">
-    <p style="margin: 0 0 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #2549C7">About us</p>
+    <p style="margin: 0 0 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #1C1B19">About us</p>
     <h2 style="margin: 0; max-width: 18em; font-weight: 800; font-size: clamp(36px, 5vw, 56px); line-height: 1.02; letter-spacing: -0.03em">It started around a table.</h2>
     <p style="margin: 20px 0 44px; max-width: 36em; font-size: 21px; color: #46433E">Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten. Here's how we got here.</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px 28px">
-        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #191817">
+        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #1C1B19">
           <div aria-hidden="true" style="height: 84px; display: flex; align-items: center"><img src="/assets/runaway-anchor.webp" alt="" style="height: 84px; width: auto"></div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #B23A12">2023</p>
+          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #C93C25">2023</p>
           <h3 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em"><a href="https://www.runawayanchor.com" style="color: inherit; text-decoration-thickness: 2px; text-underline-offset: 4px">Runaway Anchor</a></h3>
           <p style="margin: 0; font-size: 18px; color: #46433E">It started with cocktails and mocktails. A few friends and I began mixing drinks, writing menus and hosting nights together. The drinks were good, but the real draw was the room: people talking, laughing and staying late.</p>
         </article>
-        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #191817">
+        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #1C1B19">
           <div aria-hidden="true" style="height: 84px; display: flex; align-items: center"><img src="/assets/letters.webp" alt="" style="height: 52px; width: auto; transform: rotate(-3deg)"></div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #B23A12">Then</p>
+          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #C93C25">Then</p>
           <h3 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em"><a href="https://lettersfrombc.com" style="color: inherit; text-decoration-thickness: 2px; text-underline-offset: 4px">Letters from BC Gordon</a></h3>
           <p style="margin: 0; font-size: 18px; color: #46433E">Next came the writing. Letters from BC Gordon on Substack, often drafted on a manual typewriter, about friendship, family and the quiet costs of living on our screens.</p>
         </article>
-        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #191817">
-          <div aria-hidden="true" style="height: 84px; display: flex; align-items: center"><span style="display: grid; place-items: center; width: 84px; height: 64px; background: #F2C230; border: 2px solid #191817; border-radius: 6px; transform: rotate(4deg); font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; color: #191817">phone<br>goes here</span></div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #B23A12">2026</p>
+        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #1C1B19">
+          <div aria-hidden="true" style="height: 84px; display: flex; align-items: center"><span style="display: grid; place-items: center; width: 84px; height: 64px; background: #F2C230; border: 2px solid #1C1B19; border-radius: 6px; transform: rotate(4deg); font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; color: #1C1B19">phone<br>goes here</span></div>
+          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #C93C25">2026</p>
           <h3 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em">The dumb experiment</h3>
           <p style="margin: 0; font-size: 18px; color: #46433E">For 60 days I swapped my iPhone for a flip phone from dumb.co and wrote about it every week. The smartphone still lives in a yellow box most of the day. I got my evenings back, and I noticed how much of my music, movies and books I was renting instead of owning.</p>
         </article>
-        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #191817">
+        <article style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid #1C1B19">
           <div aria-hidden="true" style="height: 84px; display: flex; align-items: center"><img src="/assets/club-logo-96.png" alt="" style="width: 72px; height: 72px; border-radius: 18px"></div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #B23A12">Now</p>
+          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #C93C25">Now</p>
           <h3 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em">Own Your Media Club</h3>
           <p style="margin: 0; font-size: 18px; color: #46433E">So I started building small tools that keep my media mine, like myStereo and myShelf, and keeping a list of local places worth putting the phone down for. Records, typewriters, paper books and face-to-face conversation. That’s the club.</p>
         </article>
@@ -378,22 +368,22 @@ img{max-width:100%}
     <p style="margin: 40px 0 0; font-size: 21px; font-weight: 600">Pull up a chair. You're in. <span style="font-weight: 400; color: #55524C">— BC Gordon</span></p>
   </section>
 
-  <section id="rules" style="background: #191817; color: #F1EDE4">
+  <section id="rules" style="background: #1C1B19; color: #F4EDE0">
     <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 80px">
       <h2 style="margin: 0 0 36px; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em">Club rules</h2>
       <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px">
-        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F1EDE4; padding-top: 18px">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F2A07F">01</span>
+        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F4EDE0; padding-top: 18px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F08A73">01</span>
           <span style="font-weight: 800; font-size: 28px; line-height: 1.1">Own what you love.</span>
           <span style="font-size: 19px; color: #D6D0C4">Keep the records, the files, the shelf. Nobody can take back what you own.</span>
         </li>
-        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F1EDE4; padding-top: 18px">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F2A07F">02</span>
+        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F4EDE0; padding-top: 18px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F08A73">02</span>
           <span style="font-weight: 800; font-size: 28px; line-height: 1.1">Free, with no ads.</span>
           <span style="font-size: 19px; color: #D6D0C4">These are made for fun and for friends. Nothing here is trying to keep you scrolling.</span>
         </li>
-        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F1EDE4; padding-top: 18px">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F2A07F">03</span>
+        <li style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #F4EDE0; padding-top: 18px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 16px; color: #F08A73">03</span>
           <span style="font-weight: 800; font-size: 28px; line-height: 1.1">Then put it down.</span>
           <span style="font-size: 19px; color: #D6D0C4">Play the album, log the shelf, then go find your people.</span>
         </li>
@@ -401,6 +391,7 @@ img{max-width:100%}
     </div>
   </section>
 
+  <div class="oym-stripes" aria-hidden="true"></div>
   <footer style="max-width: 1160px; margin: 0 auto; padding: 48px 24px 56px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px">
     <div style="display: flex; flex-direction: column; gap: 6px">
       <span style="font-weight: 800; font-size: 22px">Own Your Media Club</span>
@@ -411,7 +402,7 @@ img{max-width:100%}
 <script>
 /* "Pick your pass" stays hidden until memberships open. To show it (for partners), add ?preview=pass to the address:
    https://ownyourmedia.club/?preview=pass  ·  When memberships open, set SHOW_PASSES to true. */
-const SHOW_PASSES = false;
+const SHOW_PASSES = true;
 if (SHOW_PASSES || new URLSearchParams(location.search).get('preview') === 'pass') {
   document.querySelectorAll('[data-preview]').forEach(el => { el.hidden = false; el.style.display = el.tagName === 'A' ? 'inline-flex' : ''; });
   document.querySelectorAll('[data-public]').forEach(el => { el.hidden = true; });
