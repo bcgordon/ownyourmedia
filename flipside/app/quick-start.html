@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@700&family=IBM+Plex+Mono:wght@600&display=swap"><meta charset="utf-8"><title>Flipside Alpha · Quick Start</title>
+<style>
+
+
+
+
+
+@page{size:Letter;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:"Bricolage Grotesque",sans-serif;color:#191817;font-size:12.5pt;line-height:1.42}
+.pg{width:8.5in;height:11in;padding:.5in .6in;background:#F1EDE4;position:relative;overflow:hidden;page-break-after:always}
+.pg:last-child{page-break-after:auto}
+.eyebrow{font:600 9.5pt "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#C9501E;margin:0}
+.top{display:flex;align-items:center;gap:14px}
+.top img{width:52px;height:52px;border-radius:12px;border:2px solid #191817}
+h1{margin:14px 0 8px;font-weight:800;font-size:44pt;line-height:.95;letter-spacing:-.035em}
+h1 span{font-family:Caveat,cursive;color:#E0602A;letter-spacing:0;font-size:1.15em}
+.lead{font-size:14pt;margin:0;max-width:5.1in}
+.hero{display:grid;grid-template-columns:1fr 1.25in;gap:.3in;align-items:start}
+.hero img{width:1.25in;border-radius:18px;border:2.5px solid #191817;box-shadow:6px 6px 0 #191817;background:#2c4f8f}
+h2{margin:0 0 10px;font-weight:800;font-size:20pt;letter-spacing:-.02em}
+ol{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:9px}
+ol li{counter-increment:s;position:relative;padding:11px 14px 11px 56px;background:#FFFDF8;border:2px solid #191817;border-radius:12px;box-shadow:3px 3px 0 #191817}
+ol li::before{content:counter(s);position:absolute;left:13px;top:11px;width:30px;height:30px;border-radius:50%;background:#E0602A;color:#FFF6EC;border:2px solid #191817;font:800 14pt/26px "Bricolage Grotesque";text-align:center}
+ol b.t{display:block;font-size:13.5pt}
+ol p{margin:1px 0 0;color:#46433E;font-size:11.5pt}
+.k{font:600 .8em "IBM Plex Mono",monospace;background:#191817;color:#F2B84B;padding:1px 6px;border-radius:4px;white-space:nowrap}
+.url{font:600 .9em "IBM Plex Mono",monospace;color:#191817}
+section{margin-top:.22in}
+ul{margin:0;padding-left:1.1em;color:#46433E}ul li{margin:5px 0}ul b{color:#191817}
+.note{padding:14px 18px;background:#fff6d6;border:2px solid #191817;border-radius:12px}
+.note p{margin:0 0 6px}.note p:last-child{margin:0}
+.foot{position:absolute;left:.6in;right:.6in;bottom:.45in;display:flex;justify-content:space-between;font:600 9pt "IBM Plex Mono",monospace;color:#55524C;border-top:2px solid #191817;padding-top:10px}
+.cta{margin-top:.3in;padding:18px 22px;background:#E0602A;color:#FFF6EC;border:2px solid #191817;border-radius:16px;box-shadow:5px 5px 0 #191817}
+.cta b{display:block;font-size:19pt;font-weight:800;letter-spacing:-.01em}
+.cta span{font:600 12pt "IBM Plex Mono",monospace;color:#191817}
+.foot .club{display:flex;align-items:center;gap:8px}.foot .club img{width:20px;height:20px}
+.badge{position:absolute;top:.42in;right:.6in;width:.62in}
+body{font-size:11.5pt!important;line-height:1.36!important}h1{font-size:38pt!important;margin:10px 0 6px!important}.hero{grid-template-columns:1fr 1.05in!important}.hero img{width:1.05in!important}ol{gap:7px!important}ol li{padding:8px 12px 8px 52px!important}ol p{font-size:10.8pt!important}section{margin-top:.15in!important}ul li{margin:3px 0!important}.cta{margin-top:.18in!important;padding:12px 18px!important}.cta b{font-size:16pt!important}h2{margin-bottom:6px!important;font-size:18pt!important}.lead{font-size:12.5pt!important}.note{padding:10px 14px!important}
+.hero img{margin-top:.42in}
+.badge{border-radius:50%;width:.78in!important;top:.38in!important;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}.foot .club img{border-radius:50%}
+@media screen and (max-width:9in){html,body{background:#F1EDE4}.pg{width:auto;height:auto;padding:24px 18px 40px;overflow:visible}.foot{position:static;margin-top:24px}.hero{grid-template-columns:1fr 92px!important}.hero img{width:92px!important;margin-top:56px}.badge{width:58px!important;top:20px!important;right:18px!important}.top{padding-right:72px}h1{font-size:40px!important}body{font-size:17px}}
+</style></head><body>
+<div class="pg">
+  <img class="badge" src="qs/oym-seal.webp" alt="Own Your Media Club">
+  <div class="top"><img src="qs/flipside-icon.webp" alt=""><p class="eyebrow">Alpha tester · Quick Start · Flipside 1.6.3</p></div>
+  <div class="hero">
+    <div>
+      <h1>Welcome to <span>Flipside.</span></h1>
+      <p class="lead">You’re one of the first people making mixtapes on Flipside. Five minutes gets you from nothing to a tape in a friend’s hands. Then tell BC what happened.</p>
+    </div>
+    <img src="qs/deck.jpg" alt="Flipside's Cassette Deck on a phone">
+  </div>
+  <section>
+    <h2>Get going</h2>
+    <ol>
+      <li><b class="t">Put it on your Home Screen</b><p><b>iPhone:</b> open <span class="url">ownyourmedia.club/flipside/app</span> in Safari, tap Share, then Add to Home Screen. <b>Android:</b> open it in Chrome, tap ⋮, then Add to Home screen or Install app. On a computer, just open the link.</p></li>
+      <li><b class="t">Sign in to Plex</b><p>On the deck, tap <span class="k">Menu</span>, then Settings › Your Music › Plex. No Plex handy? Choose Demo Library and try everything with sample songs.</p></li>
+      <li><b class="t">Make a tape on your bench</b><p>Press <span class="k">REC</span>, then <b>+ New Tape</b>. Name it, pick a C60 or C90, and add songs to Side A and Side B. When a side is full, it’s full. Want help? Plan it first with the Coach.</p></li>
+      <li><b class="t">Send it to the rack</b><p>New tapes stay on your bench until they’re done. Open the <b>Tape</b> tab, check the list and press <b>Send to the Rack</b>.</p></li>
+      <li><b class="t">Play it</b><p><span class="k">STOP/EJECT</span> opens your tape rack. Tap a tape to lift it out, press <b>LOAD TAPE</b>, then <span class="k">PLAY</span>. Hold <span class="k">REW</span> or <span class="k">FF</span> to wind. <span class="k">FLIP</span> turns it over; <span class="k">⏮ RESTART</span> goes back to the start of the side.</p></li>
+      <li><b class="t">Send it to a friend</b><p>Press <span class="k">SEND MIXTAPE</span> on the deck. They hear it from your music, so share your Plex library with them first.</p></li>
+    </ol>
+  </section>
+  <div class="foot"><span>FLIPSIDE · POWERED BY myStereo</span><span class="club"><img src="qs/oym-seal.webp" alt="">OWN YOUR MEDIA CLUB · 1 / 2</span></div>
+</div>
+<div class="pg">
+  <section>
+    <h2>Try these too</h2>
+    <ul>
+      <li><b>File it in a drawer.</b> In the rack, lift a tape and press <b>ASSIGN</b> to put it in Morning, Road Trip or a drawer of your own. The color band on a tape shows its drawer group.</li>
+      <li><b>Rework a tape.</b> Lift it in the rack and press <b>REWORK</b>. It goes back to your bench, drawers and notes and all, until you send it back.</li>
+      <li><b>Say why.</b> Tap a song in the deck’s <b>SONGS</b> list and write a line about why it’s on the tape. It travels with the tape.</li>
+      <li><b>Put it on the TV.</b> Screen Mirror your phone, then Menu › <b>TV Mode</b>. The tape, the song and your note, made for the couch.</li>
+      <li><b>Plan one first.</b> + New Tape › Need help planning? Fill a crate, pick a story arc, put the keepers in order and let the Mixtape Coach help. Then Record It.</li>
+      <li><b>Dress up the label.</b> The bench’s <b>Label</b> tab: one tap for a Theme, or pick each part yourself, from the Design to the Shell. ✦ Surprise Me if you can’t decide.</li>
+      <li><b>On every device.</b> Tapes, drawers, plans and the Wishlist follow you through Plex. Works in progress show in Plexamp with a ✎.</li>
+      <li><b>Analog Mode.</b> Settings › On Your Phone › Analog Mode puts every tape on your phone so Flipside works with no signal. Dub on Wi-Fi.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Tell BC</h2>
+    <div class="note">
+      <p>Press <span class="k">✎ NOTE</span> on the deck any time something breaks, gives you an idea or makes you smile. Write a line and press <b>SEND NOW</b>, or save it and later use Menu › <b>Alpha › Notepad › Send All to BC</b>. <b>Alpha › What to Test</b> lists what BC most wants to hear about.</p>
+      <p>Broken, confusing, too small, or just right: all of it helps. No mail app? Write to <span class="url">bc@runawayanchor.com</span>.</p>
+    </div>
+  </section>
+  <section>
+    <h2>Good to know</h2>
+    <ul>
+      <li>It’s an alpha. Things will break. Your tapes are saved to your Plex server, so they’re safe.</li>
+      <li>Phones only start sound after a tap. If the first PLAY is silent, press it again.</li>
+      <li>Listening with the screen locked? Close myStereo first, so the lock screen only has Flipside on it.</li>
+      <li>New tape not in the rack? It’s still on your bench: Tape tab › Send to the Rack.</li>
+      <li>Tape missing on another device? Sync with Plex, on your bench.</li>
+      <li>A friend can’t play your tape? Share your Plex music library with them, then send it again.</li>
+      <li>More help: Settings › Help &amp; About, or <span class="url">ownyourmedia.club/flipside/app/guide.html</span></li>
+    </ul>
+  </section>
+  <div class="cta"><b>Who are you making a tape for?</b><span>ownyourmedia.club/flipside/app</span></div>
+  <div class="foot"><span>FLIPSIDE · POWERED BY myStereo</span><span class="club"><img src="qs/oym-seal.webp" alt="">OWN YOUR MEDIA CLUB · 2 / 2</span></div>
+</div>
+</body></html>
