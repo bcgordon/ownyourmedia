@@ -6,7 +6,7 @@
       "kind": "Flip phone + service",
       "what": "A flip phone with custom software that keeps the useful stuff, like calls, texts, maps and rides, and leaves out the web browser and social media.",
       "take": "",
-      "icon": "https://dumb.co/_astro/logo.DybNkUdu_2rMTKC.webp",
+      "icon": "assets/logos/dumb.webp",
       "links": [
         {
           "label": "Visit dumb.co",
@@ -20,7 +20,7 @@
       "kind": "App · Honeycrisp Health · iPhone",
       "what": "Locks your phone for timed sessions and scheduled routines, so a break from your phone is actually a break.",
       "take": "",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f6/5b/f3/f65bf3de-b041-1345-963d-e98b4dd50dfb/NoPhone_default-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.jpg",
+      "icon": "assets/logos/nophone.webp",
       "links": [
         {
           "label": "App Store",
@@ -33,7 +33,7 @@
       "kind": "App · iPhone",
       "what": "Blocks distracting apps during scheduled \"present sessions\" and turns time away from your phone into streaks you can share with friends.",
       "take": "",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/83/1d/a5831d5b-76ec-c253-a1f2-a22a1427ff25/Modern_Icon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "icon": "assets/logos/bepresent.webp",
       "links": [
         {
           "label": "App Store",
