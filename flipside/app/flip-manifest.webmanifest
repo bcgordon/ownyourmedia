@@ -20,7 +20,7 @@
       "type": "image/png"
     },
     {
-      "src": "flip-icon-512.png",
+      "src": "flip-icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
