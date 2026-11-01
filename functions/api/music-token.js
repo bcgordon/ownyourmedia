@@ -1,7 +1,7 @@
 // tape.ownyourmedia.club · the pass booth.
 // Signs a 30-minute Apple Music developer pass for Flipside. Adapted from Matt's Channel 47 lab (commit a3b58b2).
 // The private key lives only in this server's secret settings (APPLE_PRIVATE_KEY). It never reaches Flipside's code.
-export const ALLOWED = ['https://ownyourmedia.club', 'https://www.ownyourmedia.club', 'https://tape.ownyourmedia.club', 'http://localhost:8766', 'http://localhost:8788', 'http://127.0.0.1:8788'];
+export const ALLOWED = ['https://ownyourmedia.club', 'https://www.ownyourmedia.club', 'http://localhost:8766', 'http://localhost:8788', 'http://127.0.0.1:8788'];
 function cors(origin) {
   return { 'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Methods': 'GET, OPTIONS', 'Access-Control-Max-Age': '600', Vary: 'Origin' };
 }

@@ -14,7 +14,7 @@ export function decodePreview(value) {
   return { sender, title };
 }
 export function pageHTML({ sender, title }, url) {
-  const heading = `${sender} made you a mixtape.`, image = `${SITE}/images/tape-preview.jpg`;
+  const heading = `${sender} made you a mixtape.`, image = `${SITE}/images/tape-preview-v2.jpg`;
   const m = (k, v, name) => `<meta ${name ? 'name' : 'property'}="${k}" content="${esc(v)}">`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(heading + ' — ' + title)}</title><link rel="canonical" href="${esc(url)}">

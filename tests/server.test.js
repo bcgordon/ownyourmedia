@@ -33,11 +33,23 @@ test('the preview page: name and title only, made safe, and it hands the tape to
   const r = await preview({ params: { preview: pv } }); assert.equal(r.status, 200);
   const html = await r.text();
   assert.match(html, /Brian &lt;b&gt; made you a mixtape\./); assert.match(html, /Blaine ’98 &amp; &quot;friends&quot;/);
-  assert.match(html, /og:image" content="https:\/\/tape\.ownyourmedia\.club\/images\/tape-preview\.jpg/);
+  assert.match(html, /og:image" content="https:\/\/tape\.ownyourmedia\.club\/images\/tape-preview-v2\.jpg/);
   assert.match(html, /location\.replace\(u\)/); assert.match(html, /https:\/\/ownyourmedia\.club\/flipside\/app\//);
   assert.ok(!/<b>/.test(html.split('<main>')[0]));
 });
 test('a broken preview link gets a plain message', async () => {
   for (const bad of ['', '!!!', b64u('[2,"a","b"]'), b64u('[1,"",""]')]) { const r = await preview({ params: { preview: bad } }); assert.equal(r.status, 400); }
   assert.throws(() => decodePreview('x'.repeat(2000)));
+});
+test('the one-file version for drag-and-drop does the same things', async () => {
+  const w = (await import('../public/_worker.js')).default;
+  const { pem } = await keyPair();
+  const env = { APPLE_TEAM_ID: '7E5R7STZMG', APPLE_KEY_ID: 'MY5CSXP2Q3', APPLE_PRIVATE_KEY: pem, ASSETS: { fetch: async () => new Response('landing') } };
+  const t = await w.fetch(new Request('https://tape.ownyourmedia.club/api/music-token', { headers: { Origin: 'https://ownyourmedia.club' } }), env);
+  assert.equal(t.status, 200); assert.ok((await t.json()).token.split('.').length === 3);
+  const o = await w.fetch(new Request('https://tape.ownyourmedia.club/api/music-token', { method: 'OPTIONS', headers: { Origin: 'https://ownyourmedia.club' } }), env); assert.equal(o.status, 204);
+  const bad = await w.fetch(new Request('https://tape.ownyourmedia.club/api/music-token', { headers: { Origin: 'https://evil.example' } }), env); assert.equal(bad.status, 403);
+  const pv = b64u(JSON.stringify([1, 'Brian', 'Blaine ’98']));
+  const p = await w.fetch(new Request('https://tape.ownyourmedia.club/m/' + pv), env); assert.equal(p.status, 200); assert.match(await p.text(), /Brian made you a mixtape\./);
+  const home = await w.fetch(new Request('https://tape.ownyourmedia.club/'), env); assert.equal(await home.text(), 'landing');
 });

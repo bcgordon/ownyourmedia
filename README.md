@@ -11,14 +11,17 @@ Two pieces, both Cloudflare Pages Functions:
 
 ## Set it up (once)
 
-1. Make a free Cloudflare account. Workers & Pages › Create › Pages › Upload assets (or connect a GitHub repo holding this folder).
-2. Project name: `oym-tape`. Build command: none. Output directory: `public`. The `functions` folder is picked up on its own.
-3. Settings › Variables and Secrets (Production):
+Cloudflare's drag-and-drop upload doesn't run a `functions` folder, so `public/_worker.js` holds the same two pieces in one file. Upload the **public** folder.
+
+1. Make a free Cloudflare account. Go to **Workers & Pages** › **Create application**. At the bottom of that page, pick the **Pages** option (it may say "Looking to deploy Pages? Get started"), then **Drag and drop your files**.
+2. Project name: `oym-tape`. Drop the **public** folder (it has index.html, _worker.js, _headers and images). **Deploy site**.
+3. Open the project › **Settings** › **Variables and Secrets** (Production) › Add:
    - `APPLE_TEAM_ID` = `7E5R7STZMG` (Text)
    - `APPLE_KEY_ID` = `MY5CSXP2Q3` (Text)
-   - `APPLE_PRIVATE_KEY` = the whole .p8 file, including the BEGIN and END lines (Secret). Type or paste it here only.
-4. Custom domains › add `tape.ownyourmedia.club`. Cloudflare shows a CNAME record. Add that one record at Porkbun (DNS for ownyourmedia.club).
-5. Check: https://tape.ownyourmedia.club shows the landing page.
+   - `APPLE_PRIVATE_KEY` = the whole .p8 file, including the BEGIN and END lines (Secret). Paste it here only.
+   Then **Deployments** › redeploy (or drop the public folder again) so the settings take.
+4. **Custom domains** › Set up a custom domain › `tape.ownyourmedia.club`. Cloudflare shows a CNAME record. Add that one record at Porkbun (DNS for ownyourmedia.club).
+5. Check: https://tape.ownyourmedia.club shows the landing page, and https://tape.ownyourmedia.club/api/music-token says it needs ownyourmedia.club (a 403 is right when you open it straight in a browser).
 
 ## Tests
 
