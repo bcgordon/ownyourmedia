@@ -15,14 +15,14 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="OYM Club">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=Special+Elite&amp;family=Bricolage+Grotesque:opsz,wght@12..96,800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
 /* The club handbook: one reading column on warm paper, chapters with typewriter heads. It's paper, so it stays light on every device. */
-:root{--paper:#F2EADB;--sheet:#FBF7EE;--ink:#2A2724;--ink2:#1C1B19;--muted:#6B655C;--red:#C93C25;--stripe:#D8452E;--gold:#E2A33B;--pen:#1c2a6b;--rule:rgba(42,39,36,.22);color-scheme:light}
+:root{--tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace;--paper:#F2EADB;--sheet:#FBF7EE;--ink:#2A2724;--ink2:#1C1B19;--muted:#6B655C;--red:#C93C25;--stripe:#D8452E;--gold:#E2A33B;--pen:#1c2a6b;--rule:rgba(42,39,36,.22);color-scheme:light}
 *{box-sizing:border-box}
 html{background:var(--paper);scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;color:var(--ink);font:400 20px/1.6 Newsreader,Georgia,serif;background:radial-gradient(circle at 18% 6%,rgba(255,255,255,.6),transparent 45%),repeating-linear-gradient(0deg,rgba(28,27,25,.016) 0 1px,transparent 1px 3px),var(--paper);
+body{margin:0;color:var(--ink);font:400 20px/1.6 var(--tw);background:radial-gradient(circle at 18% 6%,rgba(255,255,255,.6),transparent 45%),repeating-linear-gradient(0deg,rgba(28,27,25,.016) 0 1px,transparent 1px 3px),var(--paper);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
@@ -30,24 +30,24 @@ a:focus-visible{outline:3px solid var(--pen);outline-offset:3px;border-radius:4p
 .col{max-width:760px;margin:0 auto}
 .mast{text-align:center;padding-block:28px 26px}
 .mast img{width:120px;margin:0 auto;border-radius:50%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
-.mast .t{margin-top:16px;font:400 16px/1.3 "Special Elite",monospace;letter-spacing:.2em;text-transform:uppercase}
-.mast nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 22px;margin-top:14px;font:400 17px/1 "Special Elite",monospace}
+.mast .t{margin-top:16px;font:400 16px/1.3 var(--tw);letter-spacing:.2em;text-transform:uppercase}
+.mast nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 22px;margin-top:14px;font:400 17px/1 var(--tw)}
 .mast nav a{padding:12px 0}
 .stripes{max-width:760px;height:22px;margin:0 auto;background:linear-gradient(var(--stripe) 0 6px,transparent 6px 8px,var(--gold) 8px 14px,transparent 14px 16px,var(--ink2) 16px 22px)}
-h1{margin:48px 0 0;font:500 clamp(46px,8vw,80px)/1 Newsreader,Georgia,serif;letter-spacing:-.02em;text-align:center;text-wrap:balance}
+h1{margin:48px 0 0;font:500 clamp(46px,8vw,80px)/1 var(--tw);letter-spacing:-.02em;text-align:center;text-wrap:balance}
 h1 i{color:var(--red)}
-.kick{margin:18px 0 0;text-align:center;font:400 15px/1.4 "Special Elite",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kick{margin:18px 0 0;text-align:center;font:400 15px/1.4 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .open{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:28px;margin-top:38px;align-items:start}
 .letter p{margin:0 0 18px;font-size:21px}
-.sig{font:700 42px/1 Caveat,cursive;color:var(--pen);margin-top:-6px}
+.sig{font:700 42px/1 var(--tw);color:var(--pen);margin-top:-6px}
 .taped{position:relative;transform:rotate(3deg);margin:8px 0 0}
 .taped img{width:100%;height:auto;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
 .taped::before{content:"";position:absolute;left:50%;top:-12px;width:90px;height:24px;margin-left:-45px;transform:rotate(-6deg);background:rgba(226,163,59,.55);z-index:1}
-.taped figcaption{margin-top:10px;text-align:center;font:700 23px/1.1 Caveat,cursive;color:var(--pen);transform:rotate(-3deg)}
-.jump{display:flex;flex-wrap:wrap;gap:10px 22px;margin:6px 0 0;padding:0;list-style:none;font:400 16px/1 "Special Elite",monospace}
+.taped figcaption{margin-top:10px;text-align:center;font:700 23px/1.1 var(--tw);color:var(--pen);transform:rotate(-3deg)}
+.jump{display:flex;flex-wrap:wrap;gap:10px 22px;margin:6px 0 0;padding:0;list-style:none;font:400 16px/1 var(--tw)}
 .jump a{display:inline-block;padding:10px 0}
 .sec{margin-top:80px;scroll-margin-top:16px}
-.sec h2{margin:0;display:flex;align-items:baseline;gap:14px;font:400 18px/1.2 "Special Elite",monospace;letter-spacing:.14em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.sec h2{margin:0;display:flex;align-items:baseline;gap:14px;font:400 18px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--ink)}
 .sec h2 span{color:var(--red)}
 .sec h2 small{margin-left:auto;font-size:14px;letter-spacing:.08em;color:var(--muted);text-transform:none}
 .sec .intro{margin:20px 0 0;font-size:21px}
@@ -58,27 +58,27 @@ h1 i{color:var(--red)}
 .hang{display:flex;flex-direction:column;align-items:center}
 .clip{position:relative;width:48px;height:26px;margin-bottom:-11px;z-index:2;border-radius:6px 6px 3px 3px;background:linear-gradient(#cfd2d6,#8f949b)}
 .clip::before{content:"";position:absolute;left:50%;bottom:100%;width:13px;height:30px;margin-left:-6.5px;background:var(--strap);border-radius:2px}
-.bp{position:relative;width:190px;max-width:100%;aspect-ratio:2.125/3.375;border-radius:13px;overflow:hidden;box-shadow:0 14px 24px rgba(0,0,0,.24);container-type:inline-size;font-family:"Bricolage Grotesque",sans-serif;flex:none}
+.bp{position:relative;width:190px;max-width:100%;aspect-ratio:2.125/3.375;border-radius:13px;overflow:hidden;box-shadow:0 14px 24px rgba(0,0,0,.24);container-type:inline-size;font-family:var(--tw);flex:none}
 .bp::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.22) 0 18%,transparent 34% 70%,rgba(255,255,255,.1) 84%);pointer-events:none}
 .bp .slot{position:absolute;left:50%;top:4.5cqw;width:30cqw;height:6.5cqw;margin-left:-15cqw;border-radius:99px;background:var(--sheet);box-shadow:inset 0 2px 4px rgba(0,0,0,.35)}
-.bp .hd{position:absolute;left:0;right:0;top:15cqw;padding:0 7cqw;display:flex;justify-content:space-between;font:800 3.6cqw/1 "Bricolage Grotesque",sans-serif;letter-spacing:.2em}
+.bp .hd{position:absolute;left:0;right:0;top:15cqw;padding:0 7cqw;display:flex;justify-content:space-between;font:800 3.6cqw/1 var(--tw);letter-spacing:.2em}
 .bp .seal{position:absolute;left:50%;top:22cqw;width:46cqw;margin-left:-23cqw;border-radius:50%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
-.bp .lvl{position:absolute;left:0;right:0;top:72cqw;text-align:center;font:500 15cqw/.9 Newsreader,Georgia,serif}
-.bp .kind{position:absolute;left:0;right:0;top:91cqw;text-align:center;font:800 3.6cqw/1 "Bricolage Grotesque",sans-serif;letter-spacing:.24em}
+.bp .lvl{position:absolute;left:0;right:0;top:72cqw;text-align:center;font:500 15cqw/.9 var(--tw)}
+.bp .kind{position:absolute;left:0;right:0;top:91cqw;text-align:center;font:800 3.6cqw/1 var(--tw);letter-spacing:.24em}
 .bp .bars{position:absolute;left:0;right:0;top:102cqw;height:9cqw;background:linear-gradient(#D8452E 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#1C1B19 70%)}
 .bp2 .bars{top:108cqw;background:linear-gradient(#F4EDE0 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#1C1B19 70%)}
 .bp3 .bars{background:linear-gradient(#D8452E 0 30%,transparent 30% 35%,#E2A33B 35% 65%,transparent 65% 70%,#F4EDE0 70%)}
-.bp .mot{position:absolute;left:0;right:0;top:120cqw;text-align:center;font:400 4.4cqw/1.4 "Special Elite",monospace;opacity:.85}
-.bp .ft{position:absolute;left:7cqw;right:7cqw;bottom:6cqw;display:flex;justify-content:space-between;font:400 4.2cqw/1.25 "Special Elite",monospace}
-.bp .ft b{display:block;font:800 2.8cqw/1 "Bricolage Grotesque",sans-serif;letter-spacing:.2em;margin-bottom:1.6cqw;opacity:.7}.bp .ft .r{text-align:right}
-.bp .stamp{position:absolute;right:5cqw;top:62cqw;transform:rotate(-14deg);padding:1.4cqw 2.6cqw;border:.8cqw solid currentColor;border-radius:1.4cqw;font:800 3.6cqw/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em}
+.bp .mot{position:absolute;left:0;right:0;top:120cqw;text-align:center;font:400 4.4cqw/1.4 var(--tw);opacity:.85}
+.bp .ft{position:absolute;left:7cqw;right:7cqw;bottom:6cqw;display:flex;justify-content:space-between;font:400 4.2cqw/1.25 var(--tw)}
+.bp .ft b{display:block;font:800 2.8cqw/1 var(--tw);letter-spacing:.2em;margin-bottom:1.6cqw;opacity:.7}.bp .ft .r{text-align:right}
+.bp .stamp{position:absolute;right:5cqw;top:62cqw;transform:rotate(-14deg);padding:1.4cqw 2.6cqw;border:.8cqw solid currentColor;border-radius:1.4cqw;font:800 3.6cqw/1 var(--tw);letter-spacing:.14em}
 .bp1{background:radial-gradient(circle at 30% 20%,#FFFDF8,#F4EDE0 60%);color:#1C1B19}.bp1 .hd{color:#C93C25}.bp1 .kind{color:#6B655C}
 .bp2{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px),radial-gradient(circle at 30% 20%,#E5573F,#D8452E 60%,#B93722);color:#F4EDE0}.bp2 .stamp{color:#E2A33B}
 .bp3{background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px),radial-gradient(circle at 30% 20%,#2D2B28,#1C1B19 60%);color:#F4EDE0}.bp3 .lvl{color:#E2A33B;letter-spacing:.06em}.bp3 .stamp{color:#D8452E}.bp .st-c{font-size:3.2cqw;letter-spacing:.1em;right:4cqw}
 .info{width:100%;margin-top:22px}
-.info h3{margin:0;font:500 27px/1.1 Newsreader,Georgia,serif}
-.info .why{margin:10px 0 0;font:700 24px/1.15 Caveat,"Bradley Hand",cursive;color:var(--pen)}
-.info .how{margin:4px 0 0;font:400 14px/1.3 "Special Elite",monospace;color:var(--red)}
+.info h3{margin:0;font:500 27px/1.1 var(--tw)}
+.info .why{margin:10px 0 0;font:700 24px/1.15 var(--tw);color:var(--pen)}
+.info .how{margin:4px 0 0;font:400 14px/1.3 var(--tw);color:var(--red)}
 .info ul{margin:12px 0 0;padding:0;list-style:none}
 .info li{position:relative;padding:7px 0 7px 22px;font-size:18px;line-height:1.4;border-top:1px dashed var(--rule)}
 .info li::before{content:"";position:absolute;left:3px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
@@ -93,59 +93,59 @@ h1 i{color:var(--red)}
 .plogo img{height:72px;width:auto;max-width:100%;box-shadow:0 4px 10px rgba(0,0,0,.12)}
 .logo{width:96px;height:96px;border-radius:14px;background:#fff;border:1px solid var(--rule);display:grid;place-items:center;overflow:hidden;padding:10px}
 .logo img{max-height:100%;width:100%;object-fit:contain}
-.logo .lt{font:800 40px/1 "Bricolage Grotesque",sans-serif;color:var(--ink2)}
-.ent h3{margin:0;font:500 28px/1.15 Newsreader,Georgia,serif}
-.ent .where{display:block;margin-top:3px;font:400 15px/1.3 "Special Elite",monospace;color:var(--muted)}
+.logo .lt{font:800 40px/1 var(--tw);color:var(--ink2)}
+.ent h3{margin:0;font:500 28px/1.15 var(--tw)}
+.ent .where{display:block;margin-top:3px;font:400 15px/1.3 var(--tw);color:var(--muted)}
 .ent p{margin:8px 0 0;font-size:19px}
 .ent q{display:block;margin-top:8px;font-style:italic;font-size:20px}
-.take{display:block;margin-top:12px;font:700 25px/1.18 Caveat,"Bradley Hand","Segoe Print",cursive;color:var(--pen);padding-left:16px;border-left:3px solid rgba(28,42,107,.3)}
+.take{display:block;margin-top:12px;font:700 25px/1.18 var(--tw);color:var(--pen);padding-left:16px;border-left:3px solid rgba(28,42,107,.3)}
 .take b{font-weight:700;opacity:.75}
-.go{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font:400 16px/1 "Special Elite",monospace}
+.go{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font:400 16px/1 var(--tw)}
 .app{grid-template-columns:84px minmax(0,1fr)}
 .app .logo{width:84px;height:84px;border-radius:20px;padding:0;border:0;background:none}
 .app .logo img{width:84px;height:84px;border-radius:20px;box-shadow:0 6px 12px rgba(0,0,0,.18)}
-.app .tag{display:block;margin-top:3px;font:400 15px/1.3 "Special Elite",monospace;color:var(--muted)}
+.app .tag{display:block;margin-top:3px;font:400 15px/1.3 var(--tw);color:var(--muted)}
 .note{font-size:18px!important;color:#57524b}
 
 /* detox tools come from detox-tools.json */
-.sub{margin:44px 0 0;font:400 17px/1.3 "Special Elite",monospace;letter-spacing:.12em;text-transform:uppercase}
+.sub{margin:44px 0 0;font:400 17px/1.3 var(--tw);letter-spacing:.12em;text-transform:uppercase}
 .sub small{margin-left:10px;letter-spacing:.06em;text-transform:none;color:var(--muted);font-size:14px}
 .dt{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:22px 0;border-bottom:1px dashed var(--rule)}
 .dt:last-child{border-bottom:0}
 .dt .ic{width:64px;height:64px;border-radius:15px;border:1px solid var(--rule);background:#fff;object-fit:cover}
 .dt .ic.logo-fit{object-fit:contain;padding:3px}
-.dt .lt{display:grid;place-items:center;background:var(--ink2);color:#F4EDE0;font:800 28px/1 "Bricolage Grotesque",sans-serif;border:0}
-.dt b{font:500 24px/1.2 Newsreader,Georgia,serif}
-.dt small{display:block;margin-top:2px;font:400 14px/1.3 "Special Elite",monospace;color:var(--muted)}
+.dt .lt{display:grid;place-items:center;background:var(--ink2);color:#F4EDE0;font:800 28px/1 var(--tw);border:0}
+.dt b{font:500 24px/1.2 var(--tw)}
+.dt small{display:block;margin-top:2px;font:400 14px/1.3 var(--tw);color:var(--muted)}
 .dt p{margin:6px 0 0;font-size:19px}
 .dt .links{display:flex;flex-wrap:wrap;gap:4px 20px}
 
 .perks{margin:16px 0 0;padding:0;list-style:none}
 .perks li{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px dashed var(--rule)}
 .perks li:last-child{border-bottom:0}
-.perks b{font:500 22px/1.25 Newsreader,Georgia,serif}
+.perks b{font:500 22px/1.25 var(--tw)}
 .perks span{font-size:19px}
 .list{margin:16px 0 0;padding:0;list-style:none}
 .list li{padding:16px 0;border-bottom:1px dashed var(--rule)}
 .list li:last-child{border-bottom:0}
-.list b{font:500 23px/1.2 Newsreader,Georgia,serif}
+.list b{font:500 23px/1.2 var(--tw)}
 .list p{margin:4px 0 0;font-size:19px}
-.list .when{float:right;margin:6px 0 0 12px;font:400 14px/1 "Special Elite",monospace;color:var(--red)}
+.list .when{float:right;margin:6px 0 0 12px;font:400 14px/1 var(--tw);color:var(--red)}
 .story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 36px;margin-top:10px}
 .story div{padding:20px 0}
 .story .art{height:52px;width:auto;margin-bottom:12px}
-.story .yr{font:400 14px/1 "Special Elite",monospace;color:var(--red);letter-spacing:.1em;text-transform:uppercase}
-.story h3{margin:6px 0 0;font:500 24px/1.2 Newsreader,Georgia,serif}
+.story .yr{font:400 14px/1 var(--tw);color:var(--red);letter-spacing:.1em;text-transform:uppercase}
+.story h3{margin:6px 0 0;font:500 24px/1.2 var(--tw)}
 .story p{margin:6px 0 0;font-size:18px}
 .rules{margin:22px 0 0;padding:0;list-style:none;counter-reset:r}
 .rules li{counter-increment:r;display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;padding:16px 0}
-.rules li::before{content:counter(r);font:700 54px/.8 Caveat,cursive;color:var(--red)}
-.rules b{display:block;font:500 25px/1.2 Newsreader,Georgia,serif}
+.rules li::before{content:counter(r);font:700 54px/.8 var(--tw);color:var(--red)}
+.rules b{display:block;font:500 25px/1.2 var(--tw)}
 .rules p{margin:4px 0 0;font-size:19px}
 .end{text-align:center;padding-block:72px calc(64px + env(safe-area-inset-bottom,0px))}
 .end img{width:130px;margin:0 auto 16px;border-radius:50%;transform:rotate(-6deg);filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
-.end b{display:block;font:700 42px/1 Caveat,cursive;color:var(--pen)}
-.end span{display:block;margin-top:10px;font:400 16px/1.5 "Special Elite",monospace}
+.end b{display:block;font:700 42px/1 var(--tw);color:var(--pen)}
+.end span{display:block;margin-top:10px;font:400 16px/1.5 var(--tw)}
 
 @media (max-width:700px){
   .tiers{grid-template-columns:minmax(0,1fr);padding:34px 16px 18px;gap:34px}
@@ -164,6 +164,35 @@ h1 i{color:var(--red)}
   .sec h2 small{display:none}
 }
 @media (max-width:380px){.tier{grid-template-columns:minmax(0,1fr)}.bp{width:160px}}
+
+/* American Typewriter everywhere. Apple devices have it built in; others fall back to Special Elite. */
+body{font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.letter p,.sec .intro{font-size:19px}
+h1{font-weight:400;font-size:clamp(40px,7vw,66px);line-height:1.08;letter-spacing:0}
+h1 i{font-style:normal}
+.mast .t{letter-spacing:.1em}
+.kick,.sec h2{letter-spacing:.08em}
+.sub{letter-spacing:.06em}
+.ent h3,.info h3,.story h3,.rules b,.list b,.dt b,.perks b{font-weight:600}
+.ent h3{font-size:25px}.info h3{font-size:24px}.rules b{font-size:22px}.story h3,.list b{font-size:21px}.dt b,.perks b{font-size:20px}
+.ent p,.dt p,.list p,.rules p,.perks span{font-size:17px}.story p,.info li,.fine,.note{font-size:16.5px!important}
+.ent q,.info li.plus{font-style:normal}
+.take,.info .why{font-weight:300;font-size:19px;line-height:1.4}
+.taped figcaption{font-weight:300;font-size:17px}
+.sig,.end b{font-weight:300;font-size:30px}
+.rules li::before{font-weight:700;font-size:40px;line-height:.9}
+.bp .lvl{font-size:12cqw;font-weight:600}
+.bp .hd,.bp .kind,.bp .stamp{letter-spacing:.1em}
+.logo .lt,.dt .lt{font-weight:700}
+
+/* the typed letter: BC's own page, scanned */
+.typed{margin:4px 0 26px;transform:rotate(-1.2deg)}
+.typed img{width:100%;height:auto;box-shadow:0 1px 2px rgba(0,0,0,.12),0 10px 22px rgba(0,0,0,.16)}
+.typed a{display:block}
+@media (min-width:641px) and (min-height:501px){.open{grid-template-columns:minmax(0,1fr) 210px;grid-template-areas:"letter tape" "jump tape"}.open .typed{grid-area:letter}.open .taped{grid-area:tape}.open .jump{grid-area:jump}}
+/* phones turned sideways: letter across the full width, cassette below it, never beside it */
+@media (max-height:500px) and (orientation:landscape){.open{grid-template-columns:minmax(0,1fr);gap:30px}.taped{max-width:220px;margin:0 auto}.typed{transform:none}}
+@media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:110%;max-width:none;margin-left:-5%;box-shadow:none}.open{gap:30px}}
 </style>
 </head>
 <body>
@@ -178,16 +207,11 @@ h1 i{color:var(--red)}
   <h1>Own your media. <i>Then go outside.</i></h1>
   <p class="kick">Offline projects · Twin Cities, MN</p>
   <div class="open">
-    <div class="letter">
-      <p>Homemade tools that work on iPhone and Android, for people who would rather own their music, movies and books than rent them <b>from tech companies</b>. Plus a short list of local places where the good stuff still happens in person.</p>
-      <p>Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten.</p>
-      <p>Pull up a chair. You're in.</p>
-      <div class="sig">BC Gordon</div>
+      <figure class="typed"><a href="/assets/bc-letter.webp" aria-label="Open BC's typed letter full size"><img src="/assets/bc-letter.webp" width="1300" height="903" alt="A letter typed on BC's typewriter: Homemade tools that work on iPhone and Android, for people who would rather own their music, movies, and books than rent them from tech companies. Plus a short list of local places where the good stuff still happens in person. Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten. Pull up a chair. You're in. Signed, BC."></a></figure>
+    <figure class="taped"><img src="/assets/oym-cassette.webp" alt="Own Your Media cassette sticker" width="732" height="545"><figcaption>made for mixtapes</figcaption></figure>
       <ul class="jump" aria-label="Jump to">
         <li><a href="#tools">See the projects →</a></li><li><a href="#passes">See the passes →</a></li><li><a href="#places">Find a place nearby →</a></li><li><a href="#detox">See what we're testing →</a></li>
       </ul>
-    </div>
-    <figure class="taped"><img src="/assets/oym-cassette.webp" alt="Own Your Media cassette sticker" width="732" height="545"><figcaption>made for mixtapes</figcaption></figure>
   </div>
 
   <section class="sec" id="passes"><h2><span>§1</span> Backstage passes <small>coming soon</small></h2>
