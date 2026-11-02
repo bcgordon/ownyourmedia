@@ -2769,5 +2769,25 @@ document.addEventListener('keydown', e => {
   }
 });
 </script>
+<script id="oym-moving">
+/* Book of Rao has its own address now, so an iPhone keeps it apart from the club's other apps. Your shelf is saved online: sign in there. */
+(function () {
+  if (!/^(www\.)?ownyourmedia\.club$/.test(location.hostname)) return;
+  try { if (sessionStorage.getItem('oymMovingLater')) return; } catch (e) {}
+  var url = 'https://rao.ownyourmedia.club/rao/';
+  var d = document.createElement('div');
+  d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Book of Rao has a new home');
+  d.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(20,18,15,.72)';
+  d.innerHTML = '<div style="max-width:380px;width:100%;background:#F3ECDD;color:#1F1D1A;border-radius:6px;padding:22px 20px 18px;font:18px/1.5 \'American Typewriter\',AmericanTypewriter,\'Special Elite\',\'Courier New\',serif;box-shadow:0 10px 30px rgba(0,0,0,.4)">'
+    + '<div style="font-weight:700;font-size:24px;line-height:1.15">Book of Rao has a new home.</div>'
+    + '<p style="margin:10px 0 0">' + url.split('/')[2] + '</p>'
+    + '<p style="margin:10px 0 0">Your shelf is saved online, so nothing needs moving. Open the new address in Safari, sign in, and add it to your Home Screen. Then remove this one.</p>'
+    + '<p style="margin:16px 0 0"><a href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;padding:10px 14px 9px;background:#1F1D1A;color:#F3ECDD;border-radius:3px;text-decoration:none;font-weight:700">Open the New Book of Rao</a></p>'
+    + '<p style="margin:12px 0 0"><button type="button" style="background:none;border:0;padding:0;font:inherit;font-size:16px;text-decoration:underline;color:#1F1D1A;cursor:pointer">Not now</button></p></div>';
+  d.querySelector('button').onclick = function () { try { sessionStorage.setItem('oymMovingLater', '1'); } catch (e) {} d.remove(); };
+  document.addEventListener('DOMContentLoaded', function () { document.body.appendChild(d); });
+  if (document.readyState !== 'loading') document.body.appendChild(d);
+})();
+</script>
 </body>
 </html>

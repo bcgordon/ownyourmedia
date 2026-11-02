@@ -3,500 +3,311 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#E0602A">
+<meta name="theme-color" content="#F3ECDD">
 <link rel="apple-touch-icon" href="flip-apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="flip-favicon-32.png">
-<style>body{margin:0}</style>
 <title>Flipside User’s Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Special+Elite&display=swap">
 <style>
-/* Layout: one narrow column like a pocket manual; a silhouette-ad color band up top, white pages after.
-   Deliberately a single light look, like the printed booklets. */
-:root{
-  --paper:#ffffff; --ink:#1d1d1f; --gray:#6e6e73; --light:#a1a1a6; --rule:#e3e3e6; --wash:#f5f5f7;
-  --lime:#9bd84e; --blue:#2f6fd2;
-  --f:"Source Sans 3","Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
-  color-scheme:light;
-}
-html{background:var(--paper)}
-body{background:var(--paper);color:var(--ink);font-family:var(--f);font-size:18px;line-height:1.55;-webkit-text-size-adjust:100%}
-.wrap{max-width:620px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-a{color:var(--blue)}
-h1,h2,h3{text-wrap:balance}
-p{margin:0 0 .9em}
-
-/* hero: the silhouette-ad band */
-.hero{background:var(--lime);overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;padding-block:44px 0}
-.hero h1{margin:0 0 6px;font-weight:300;font-size:clamp(52px,15vw,84px);letter-spacing:-.02em;line-height:.95;color:#000}
-.hero .sub{font-size:clamp(19px,5vw,24px);font-weight:400;color:#000;margin:0 0 30px;max-width:13em;line-height:1.25}
-.hero .kicker{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#1f3a08;margin:0 0 14px}
-.hero svg{display:block;width:clamp(120px,34vw,180px);height:auto}
-
-/* own your media: a black band, like the back of the box */
-.own{background:#000;color:#fff}
-.own .wrap{padding-block:48px 44px}
-.own .label{color:var(--lime)}
-.own h2{margin:0 0 18px;font-weight:300;font-size:clamp(44px,13vw,68px);letter-spacing:-.02em;line-height:.98}
-.own h2 em{font-style:normal;color:var(--lime)}
-.own p{color:#d2d2d7;font-size:19px;max-width:30em}
-.own ul{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:18px}
-.own li{border-top:1px solid #333;padding-top:14px}
-.own li b{display:block;color:#fff;font-size:21px;font-weight:600;margin-bottom:2px}
-.own li span{color:#a1a1a6;font-size:17px}
-.own .sign{margin:30px 0 0;color:#fff;font-size:21px;font-weight:300}
-footer .own-line{color:var(--ink);font-size:17px;font-weight:600;margin:4px 0 2px}
-
-/* table of contents */
-.toc{padding-block:36px 8px}
-.label{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--light);margin:0 0 12px}
-.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
-.toc li{border-bottom:1px solid var(--rule)}
-.toc a{display:flex;align-items:baseline;gap:16px;padding:13px 2px;color:var(--ink);text-decoration:none;font-size:19px}
-.toc a span{width:1.6em;color:var(--light);font-weight:300;font-variant-numeric:tabular-nums}
-.toc a::after{content:"›";margin-left:auto;color:var(--light)}
-.toc a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-
-/* chapters */
-.ch{padding-block:44px 8px;border-bottom:1px solid var(--rule)}
-.ch .num{font-size:15px;font-weight:600;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin:0 0 2px}
-.ch h2{font-weight:300;font-size:clamp(34px,9vw,44px);letter-spacing:-.01em;line-height:1.05;margin:0 0 18px}
-.ch h3{font-size:19px;font-weight:700;margin:26px 0 6px}
-.lead{font-size:20px;color:var(--gray)}
-.steps{list-style:none;counter-reset:s;margin:0 0 1em;padding:0}
-.steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:14px}
-.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
-  font-size:15px;font-weight:700;display:grid;place-items:center}
-.path{font-weight:600;white-space:nowrap}
-@media (max-width:480px){.path{white-space:normal}}
-.key{display:inline-block;padding:0 .4em;border:1px solid #c7c7cc;border-radius:6px;background:linear-gradient(#fff,#ececef);font-size:.82em;font-weight:700;line-height:1.5;white-space:nowrap}
-.note{background:var(--wash);border-radius:12px;padding:14px 16px;margin:18px 0;font-size:17px;color:#3a3a3c}
-.note b{color:var(--ink)}
-dl.terms{margin:0}
-dl.terms div{display:grid;grid-template-columns:7.5em 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
-dl.terms dt{font-weight:700}
-dl.terms dd{margin:0;color:#3a3a3c;min-width:0}
-dl.terms .path{white-space:normal}
-
-/* figures: little iPod screens */
-figure{margin:22px 0}
-img.shot.el-only{display:none}html.elite img.shot.el-only{display:block}html.elite img.shot.std-only{display:none}
-img.shot{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08)}
-figcaption{font-size:15px;color:var(--gray);margin-top:8px;text-align:center}
-.lcd{width:min(300px,100%);margin:0 auto;border:9px solid #26282b;border-radius:6px;background:#fff;overflow:hidden;font-weight:600;font-size:17px;box-shadow:0 1px 0 #fff,0 10px 30px -14px rgba(0,0,0,.45)}
-.lcd-bar{display:grid;grid-template-columns:1.6em 1fr 1.6em;align-items:center;padding:4px 8px;background:linear-gradient(#fefefe,#d5d8dd);border-bottom:1px solid #8c939b;font-weight:700;text-align:center}
-.lcd-bar i{font-style:normal;color:var(--blue)}
-.lcd-row{display:flex;justify-content:space-between;padding:6px 12px}
-.lcd-row.sel{background:linear-gradient(#73adf0,#3b7fdb 48%,#2a68cc 52%,#2f6fd2);color:#fff}
-.lcd-row span{color:#555;font-weight:400}
-.lcd-row.sel span{color:#fff}
-.lcd-strip{display:flex;gap:8px;padding:6px 12px;border-top:1px solid #8c939b;background:linear-gradient(#f4f6f8,#cfd4da);font-size:15px}
-.lcd-strip b{color:var(--blue)}
-.lcd.classic{background:linear-gradient(#ccd6bb,#b7c2a4);color:#1a2012}
-.lcd.classic .lcd-bar{background:transparent;border-bottom:2px solid #1a2012}
-.lcd.classic .lcd-bar i{color:#1a2012}
-.lcd.classic .lcd-row span{color:#1a2012}
-.lcd.classic .lcd-row.sel{background:#1a2012;color:#ccd6bb}
-.lcd.classic .lcd-row.sel span{color:#ccd6bb}
-.pair{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.pair .lcd{font-size:13px;border-width:6px;min-width:0}
-.pair .lcd-row{padding:5px 7px}
-.pair .lcd-bar{padding:3px 4px;grid-template-columns:.6em 1fr .6em}
-.lcd.dark{background:#16181b;color:#f2f3f5}
-.lcd.dark .lcd-bar{background:linear-gradient(#3a3e44,#24272c);border-bottom-color:#0b0c0e}
-.lcd.dark .lcd-row span{color:#a7adb5}
-.pair .lcd{font-size:13px;border-width:6px;min-width:0}
-.pair .lcd-row{padding:5px 7px}
-.pair .lcd-bar{padding:3px 4px;grid-template-columns:.6em 1fr .6em}
-.pair .lcd-row{padding:5px 9px}
-
-.wheelfig svg{display:block;width:min(340px,100%);height:auto;margin:0 auto}
-.modes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;text-align:center;margin:18px 0}
-.modes div{border:1px solid var(--rule);border-radius:12px;padding:12px 4px;font-size:15px}
-.modes b{display:block;font-size:13px;color:var(--light);font-weight:700;letter-spacing:.06em}
-.modes i{display:flex;justify-content:center;gap:3px;margin:8px 0 6px}
-.modes i u{width:7px;height:7px;flex:none;border-radius:50%;border:1.5px solid #6b727a}
-.modes i u.on{background:var(--blue);border-color:#1d4f9e}
-
-.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:16px 10px;margin:16px 0 8px;padding:0;list-style:none}
-.swatches li{text-align:center;font-size:14px;color:#3a3a3c}
-.swatches li::before{content:"";display:block;width:52px;height:84px;margin:0 auto 8px;border-radius:9px;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 6px 14px -8px rgba(0,0,0,.5)}
-
-.rotate{display:flex;align-items:center;justify-content:center;gap:18px;margin:20px 0}
-.rotate svg{width:min(280px,100%);height:auto}
-
-.backbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);transform:translateX(-50%);z-index:5;
-  background:#1d1d1f;color:#fff;text-decoration:none;font-weight:600;font-size:17px;padding:12px 20px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-[hidden]{display:none!important}
-footer{padding-block:40px 56px;text-align:center;color:var(--light);font-size:14px}
-footer .mark{font-weight:300;font-size:30px;color:var(--ink);letter-spacing:-.01em}
-footer .club{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;font-weight:600;color:var(--gray)}footer .club img{border-radius:9px}
-@media (max-width:380px){.pair{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}}
-@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
-
-/* ---------- myStereo Elite: Starship Console edition of the guide (html.elite) ---------- */
-html.elite{--paper:#000;--ink:#ffcc99;--gray:#e8c9a8;--light:#9999ff;--rule:#2a2a44;--wash:#14142a;--blue:#9999ff;
-  --lc-peach:#ffcc99;--lc-orange:#ff9966;--lc-lilac:#cc99cc;--lc-peri:#9999ff;--lc-gold:#e7b24a;--lc-red:#cc6666;
-  --fa:Antonio,"Arial Narrow","Roboto Condensed",sans-serif;color-scheme:dark}
-html.elite body{color:#f3dcc4}
-html.elite a{color:var(--lc-peri)}
-html.elite .el-only{display:revert}
-html.elite .std-only,.el-only{display:none}
-html.elite h1,html.elite h2,html.elite h3,html.elite .label,html.elite .num,html.elite .kicker,html.elite .toc a,html.elite dl.terms dt,
-html.elite figcaption,html.elite footer,html.elite .backbar{font-family:var(--fa);letter-spacing:.04em}
-/* hero: an LCARS header frame */
-html.elite .hero{background:#000;padding:18px 0 0}
-html.elite .hero .wrap{position:relative;padding-block:30px 26px;padding-left:max(118px,calc(env(safe-area-inset-left,0px) + 98px));
-  grid-template-columns:1fr auto;align-items:center}
-html.elite .hero .wrap::before{content:"";position:absolute;left:max(20px,env(safe-area-inset-left,0px));top:0;bottom:0;width:70px;
-  background:var(--lc-lilac);border-top-left-radius:44px;border-bottom-left-radius:44px}
-html.elite .hero .wrap::after{content:"";position:absolute;left:calc(max(20px,env(safe-area-inset-left,0px)) + 40px);right:max(20px,env(safe-area-inset-right,0px));top:0;height:16px;
-  background:linear-gradient(90deg,var(--lc-lilac) 0 46%,#000 46% calc(46% + 6px),var(--lc-orange) calc(46% + 6px) 70%,#000 70% calc(70% + 6px),var(--lc-peri) calc(70% + 6px));border-top-left-radius:30px}
-html.elite .hero .kicker{color:var(--lc-orange);font-size:15px;letter-spacing:.2em;margin:10px 0 6px}
-html.elite .hero h1{color:var(--lc-peach);font-weight:600;text-transform:uppercase;font-size:clamp(46px,13vw,76px);letter-spacing:.02em;line-height:.95}
-html.elite .hero .sub{color:#f3dcc4;margin-bottom:6px}
-html.elite .hero svg{width:clamp(96px,26vw,150px)}
-html.elite .hero .wrap>div{min-width:0}html.elite .hero h1{overflow-wrap:normal;font-size:clamp(26px,7vw,60px)}
-.hero svg.el-only{display:none}html.elite .hero svg.el-only{display:block}html.elite .hero svg.std-only{display:none}
-html.elite .hero .bars{display:flex;gap:6px;margin:0 max(20px,env(safe-area-inset-right,0px)) 0 calc(max(20px,env(safe-area-inset-left,0px)) + 40px);height:16px}
-html.elite .hero .bars i{display:block;height:100%;background:var(--lc-peri)}
-html.elite .hero .bars i:nth-child(1){flex:3;background:var(--lc-lilac);border-bottom-left-radius:30px;margin-left:-40px}
-html.elite .hero .bars i:nth-child(2){flex:1;background:var(--lc-gold)}
-html.elite .hero .bars i:nth-child(3){flex:2;background:var(--lc-orange)}
-html.elite .hero .bars i:nth-child(4){flex:4;background:var(--lc-peri)}
-/* own your media band */
-html.elite .own{background:#000}
-html.elite .own .wrap{border:3px solid var(--lc-orange);border-left-width:22px;border-radius:30px 0 0 30px;margin-top:22px;padding:30px 22px 30px 22px;max-width:620px}
-@media (min-width:660px){html.elite .own .wrap{margin-inline:auto}}
-@media (max-width:659px){html.elite .own .wrap{margin-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}}
-html.elite .own .label{color:var(--lc-orange)}
-html.elite .own h2{text-transform:uppercase;font-weight:600;color:var(--lc-peach);font-size:clamp(40px,11vw,60px)}
-html.elite .own h2 em{color:var(--lc-orange)}
-html.elite .own p{color:#f3dcc4}
-html.elite .own li{border-top-color:#33335a}
-html.elite .own li b{color:var(--lc-peri);font-family:var(--fa);letter-spacing:.04em;text-transform:uppercase}
-html.elite .own li span{color:#e8c9a8}
-html.elite .own .sign{color:var(--lc-peach);font-family:var(--fa);text-transform:uppercase;letter-spacing:.05em}
-/* contents: LCARS pill buttons */
-html.elite .label{color:var(--lc-peri)}
-html.elite .toc ol{border:0;display:grid;gap:6px}
-html.elite .toc li{border:0}
-html.elite .toc a{background:var(--c,var(--lc-peach));color:#000;border-radius:999px 0 0 999px;padding:9px 16px;text-transform:uppercase;font-size:20px;font-weight:600;align-items:center}
-html.elite .toc li:nth-child(3n+2) a{--c:var(--lc-lilac)}
-html.elite .toc li:nth-child(3n) a{--c:var(--lc-peri)}
-html.elite .toc li a[href="#elite"]{--c:var(--lc-orange)}
-html.elite .toc a span{color:#000;opacity:.6;width:1.8em}
-/* chapters: an elbow rail down the left */
-html.elite .ch{border:0;position:relative;padding-left:26px;margin-top:30px;padding-block:0 26px}
-html.elite .ch::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;background:var(--rail,var(--lc-lilac));border-radius:12px 0 0 12px}
-html.elite .ch::after{content:"";position:absolute;left:0;top:0;width:min(170px,40%);height:12px;background:var(--rail,var(--lc-lilac));border-top-left-radius:12px}
-html.elite .ch:nth-of-type(3n+2){--rail:var(--lc-peri)}
-html.elite .ch:nth-of-type(3n){--rail:var(--lc-orange)}
-html.elite .ch#elite{--rail:var(--lc-gold)}
-html.elite .ch .num{color:var(--rail,var(--lc-lilac));padding-top:22px;font-size:16px;letter-spacing:.18em}
-html.elite .ch h2{text-transform:uppercase;color:var(--lc-peach);font-weight:600;letter-spacing:.03em}
-html.elite .ch h2 em{font-style:normal;color:var(--lc-orange)}
-html.elite .ch h3{text-transform:uppercase;color:var(--lc-orange);font-weight:600;font-size:21px}
-html.elite .lead{color:#e8c9a8}
-html.elite .steps li::before{background:var(--lc-orange);color:#000;border-radius:999px;width:32px;font-family:var(--fa)}
-html.elite .path{color:var(--lc-peach)}
-html.elite .key{background:#20203a;border:0;border-radius:999px;color:var(--lc-peach);padding:0 .6em}
-html.elite .note{background:#000;border:2px solid var(--lc-peri);border-left:14px solid var(--lc-peri);border-radius:18px 0 0 18px;color:#e8c9a8}
-html.elite .note b{color:var(--lc-peri)}
-html.elite dl.terms div{border-bottom-color:var(--rule)}
-html.elite dl.terms dt{color:var(--lc-peri);text-transform:uppercase;font-weight:600;font-size:19px}
-html.elite dl.terms dd{color:#f3dcc4}
-html.elite figcaption{color:var(--lc-peri);text-transform:uppercase;font-size:16px}
-/* little screens become Starship Consoles */
-html.elite .lcd:not(.classic):not(.dark){background:#000;border-color:#2a2e35;color:var(--lc-peach);font-family:var(--fa);text-transform:uppercase;letter-spacing:.04em;
-  box-shadow:0 0 0 1px #5b616a,0 10px 30px -14px rgba(0,0,0,.8);position:relative}
-html.elite .lcd:not(.classic):not(.dark) .lcd-bar{background:var(--lc-lilac);color:#000;border:0;border-top-left-radius:14px;margin:6px 6px 4px}
-html.elite .lcd:not(.classic):not(.dark) .lcd-bar i{color:#000}
-html.elite .lcd:not(.classic):not(.dark) .lcd-row{margin:2px 6px 2px 22px;border-radius:999px}
-html.elite .lcd:not(.classic):not(.dark) .lcd-row.sel{background:var(--lc-orange);color:#000}
-html.elite .lcd:not(.classic):not(.dark) .lcd-row span{color:var(--lc-peri)}
-html.elite .lcd:not(.classic):not(.dark) .lcd-row.sel span{color:#000}
-html.elite .lcd:not(.classic):not(.dark) .lcd-strip{background:#000;border-top:3px solid var(--lc-peri);color:var(--lc-peach)}
-html.elite .lcd:not(.classic):not(.dark) .lcd-strip b{color:var(--lc-orange)}
-html.elite .lcd.classic,html.elite .lcd.dark{border-color:#2a2e35}
-/* the wheel diagram: Away Mission gunmetal with a gold ring */
-html.elite .wheelfig circle:nth-of-type(1){fill:#2a2e35;stroke:var(--lc-gold)}
-html.elite .wheelfig circle:nth-of-type(2){fill:#1f2227;stroke:var(--lc-gold)}
-html.elite .wheelfig svg>text,html.elite .wheelfig svg>path[fill="#9a9da2"]{fill:var(--lc-gold)}
-html.elite .wheelfig g text{fill:var(--lc-peach)}
-html.elite .wheelfig g text[fill]{fill:var(--lc-peri)}
-html.elite .wheelfig path[stroke="#2f6fd2"]{stroke:var(--lc-orange)}html.elite .wheelfig path[fill="#2f6fd2"]{fill:var(--lc-orange)}
-html.elite .wheelfig g text[x="170"][y="155"]{fill:var(--lc-gold)}
-html.elite .modes div{border-color:var(--rule);border-radius:999px 999px 18px 18px;font-family:var(--fa);text-transform:uppercase;color:var(--lc-peach)}
-html.elite .modes b{color:var(--lc-peri)}
-html.elite .modes i u{border-color:var(--lc-peri)}html.elite .modes i u.on{background:var(--lc-orange);border-color:var(--lc-orange)}
-html.elite .swatches li{color:#e8c9a8}
-html.elite .rotate svg [fill="#1d1d1f"]{fill:var(--lc-peach)}
-html.elite .backbar{background:var(--lc-orange);color:#000;text-transform:uppercase;font-weight:600}
-html.elite footer{color:var(--lc-peri)}
-html.elite footer .mark{color:var(--lc-peach);text-transform:uppercase;font-weight:600}
-html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-transform:uppercase;letter-spacing:.05em}
-.ctlfig svg{display:block;width:min(340px,100%);margin:0 auto}
-
-/* ---------- Flipside edition ---------- */
-:root{--lime:#E0602A;--blue:#C9501E}
-.hero{background:#E0602A}
-.hero h1{font-family:Caveat,cursive;font-weight:700;color:#191817;letter-spacing:0}
-.hero .kicker{color:#3b1606}.hero .sub{color:#191817}
-.own .label,.own h2 em{color:#F2B84B}
+/* The guide reads like a typed manual: American Typewriter (built into iPhone, iPad and Mac), Special Elite elsewhere.
+   One face for everything, Caveat only where something is meant to look handwritten. */
+:root{--paper:#F3ECDD;--card:#FBF7EE;--ink:#1F1D1A;--mut:#5E584F;--red:#C2462B;--gold:#E2A33B;--blue:#23307a;--rule:rgba(31,29,26,.2);
+  --type:"American Typewriter","AmericanTypewriter","Special Elite","Courier New",Courier,serif;--hand:Caveat,"Bradley Hand","Marker Felt",cursive;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font:400 18px/1.6 var(--type);-webkit-text-size-adjust:100%;overflow-wrap:anywhere}
+.w{max-width:640px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 72px max(18px,env(safe-area-inset-left,0px))}
+.stripes{height:16px;background:linear-gradient(var(--red) 0 4px,transparent 4px 6px,var(--gold) 6px 10px,transparent 10px 12px,var(--ink) 12px 16px)}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+h1{font:700 44px/1.05 var(--type);margin:34px 0 0}
+.tag{font:700 30px/1.1 var(--hand);color:var(--red);margin:4px 0 0}
+h2{font:700 27px/1.15 var(--type);margin:0 0 6px}
+h3{font:700 19px/1.3 var(--type);margin:24px 0 2px}
+p{margin:10px 0 0}
+.small{font-size:15px;color:var(--mut)}
+.ch{margin-top:52px;padding-top:16px;border-top:2px solid var(--ink)}
+.no{font:700 13px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+.key{display:inline-block;padding:0 6px;border:1.5px solid var(--ink);border-radius:3px;font-size:.8em;font-weight:700;letter-spacing:.03em;white-space:nowrap;line-height:1.5}
+.path{white-space:normal}
+ol.steps{margin:12px 0 0;padding:0;list-style:none;counter-reset:n}
+ol.steps>li{counter-increment:n;position:relative;padding:10px 0 10px 36px;border-top:1px solid var(--rule)}
+ol.steps>li::before{content:counter(n) ".";position:absolute;left:0;top:10px;font-weight:700;color:var(--red)}
+dl{margin:8px 0 0}
+dt{font-weight:700;margin-top:16px}
+dd{margin:2px 0 0}
+.note{margin-top:16px;padding:12px 14px;border-left:4px solid var(--gold);background:var(--card)}
+.toc{margin:14px 0 0;padding:0;list-style:none;font-size:17px}
+.toc li{padding:4px 0;border-top:1px dotted var(--rule)}
+.toc a{text-decoration:none}
+.toc span{display:inline-block;width:30px;color:var(--red);font-weight:700}
+figure{margin:18px 0 0}
+figure img{display:block;width:min(260px,72%);height:auto;border:2px solid var(--ink);border-radius:20px;background:#000}
+figcaption{font-size:14px;color:var(--mut);margin-top:6px}
+.two{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px}
+.two figure{flex:0 0 min(210px,58%)}.two figure img{width:100%}
+.lights{margin:10px 0 0;padding:0;list-style:none}
+.lights li{padding:6px 0;border-top:1px solid var(--rule)}
+.lights b{display:inline-block;min-width:118px}
+.foot{margin-top:60px;padding-top:14px;border-top:1px solid var(--rule)}
+.foot .mark{font:700 30px/1 var(--type)}
+.foot p{font-size:15px;color:var(--mut)}
+.backbar{position:fixed;left:12px;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;padding:10px 14px 9px;border:2px solid var(--ink);border-radius:3px;background:var(--ink);color:var(--paper);font:700 16px/1 var(--type);text-decoration:none}
+@media (max-width:420px){h1{font-size:38px}}
+@media print{.backbar{display:none}body{font-size:11pt}.ch{margin-top:22pt}h2,.no{break-after:avoid}figure{break-inside:avoid}figure img{width:180px}.two figure{flex-basis:170px}}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <div>
-      <p class="kicker">User’s Guide · Powered by myStereo</p>
-      <h1>Flipside.</h1>
-      <p class="sub">Make someone a mixtape.</p>
-    </div>
-    <svg viewBox="0 0 180 300" role="img" aria-label="Flipside on a phone: a cassette in the deck window above four big keys">
-      <rect x="30" y="20" width="120" height="270" rx="12" fill="#1b1c1f" stroke="#000" stroke-width="1.5"/>
-      <rect x="40" y="40" width="100" height="70" rx="6" fill="#0c0c0e" stroke="#3a3c40"/>
-      <rect x="48" y="50" width="84" height="52" rx="4" fill="#F1EDE4"/>
-      <rect x="54" y="56" width="72" height="14" rx="2" fill="#E0602A"/>
-      <circle cx="72" cy="86" r="8" fill="#191817"/><circle cx="108" cy="86" r="8" fill="#191817"/>
-      <circle cx="72" cy="86" r="3" fill="#F1EDE4"/><circle cx="108" cy="86" r="3" fill="#F1EDE4"/>
-      <rect x="40" y="128" width="100" height="56" rx="6" fill="#2c6fd6"/>
-      <rect x="48" y="138" width="60" height="7" rx="2" fill="#fff" opacity=".9"/><rect x="48" y="152" width="44" height="6" rx="2" fill="#ffb15c"/>
-      <g fill="#2e3033"><rect x="40" y="206" width="22" height="36" rx="4"/><rect x="66" y="206" width="22" height="36" rx="4"/><rect x="92" y="206" width="22" height="36" rx="4"/><rect x="118" y="206" width="22" height="36" rx="4"/></g>
-      <rect x="92" y="206" width="22" height="36" rx="4" fill="#E0602A"/>
-      <circle cx="90" cy="268" r="5" fill="#ff7a1a"/>
-    </svg>
-  </div>
-</header>
+<div class="stripes" aria-hidden="true"></div>
+<main class="w">
+<p class="small" style="margin-top:18px">User’s Guide · Flipside 1.9 · Powered by myStereo</p>
+<h1>Flipside.</h1>
+<p class="tag">Make someone a mixtape.</p>
+<p>A mixtape is a few songs picked for one person, in an order that means something. Flipside gives you a C60 or a C90, two sides, a label you write yourself and a cassette deck with real keys. It plays music you own: songs on your phone, or your own Plex server.</p>
+<p>Ninety minutes makes you choose. That’s the whole point.</p>
 
-<section class="own" aria-labelledby="own-h">
-  <div class="wrap">
-    <p class="label">Before you begin</p>
-    <h2 id="own-h">Ninety minutes makes you <em>choose.</em></h2>
-    <p>A mixtape is a few songs picked for one person, in an order that means something. Flipside gives you a C60 or a C90, two sides, a handwritten label and a deck with real keys. It plays your own music from your own Plex server.</p>
-    <ul>
-      <li><b>Your music.</b><span>Songs you ripped or bought, on your server. No subscription, no feed.</span></li>
-      <li><b>All buttons.</b><span>PLAY stays down while it plays. REW and FF wind. FLIP turns it over.</span></li>
-      <li><b>Made for someone.</b><span>Send a tape to anyone you share your Plex server with.</span></li>
-    </ul>
-  </div>
+<section><p class="no" style="margin-top:34px">Contents</p>
+<ol class="toc">
+<li><a href="#start"><span>1</span>Getting Started</a></li>
+<li><a href="#deck"><span>2</span>The Cassette Deck</a></li>
+<li><a href="#rack"><span>3</span>The Tape Rack</a></li>
+<li><a href="#make"><span>4</span>Making a Tape</a></li>
+<li><a href="#label"><span>5</span>The Label and Liner Notes</a></li>
+<li><a href="#plan"><span>6</span>Planning with the Coach</a></li>
+<li><a href="#send"><span>7</span>Sending a Tape</a></li>
+<li><a href="#get"><span>8</span>When Someone Sends You One</a></li>
+<li><a href="#real"><span>9</span>Real Tape</a></li>
+<li><a href="#own"><span>10</span>Songs You Don’t Own Yet</a></li>
+<li><a href="#menu"><span>11</span>The Menu Side and Settings</a></li>
+<li><a href="#computer"><span>12</span>On a Computer</a></li>
+<li><a href="#help"><span>13</span>Troubleshooting</a></li>
+</ol></section>
+
+<section class="ch" id="start"><p class="no">Chapter 1</p><h2>Getting Started</h2>
+<p>Flipside is a web app. There’s nothing to download from an app store. Put it on your Home Screen and it opens full screen with its own cassette icon.</p>
+<h3>iPhone</h3>
+<p>Open <b>flipside.ownyourmedia.club</b> in Safari. Tap Share, then Add to Home Screen, then Add.</p>
+<h3>Android</h3>
+<p>Open it in Chrome. Tap ⋮, then Add to Home screen or Install app. Your phone’s Back button works like the MENU key.</p>
+<h3>Where’s your music?</h3>
+<p>The first time you open Flipside, a card on the deck asks.</p>
+<dl>
+<dt>This Phone</dt><dd>The Files app opens. Pick songs you’ve ripped or bought (tap Select to choose several). They’re saved inside Flipside and play with no signal. You land back on the deck, ready to press REC.</dd>
+<dt>My Plex</dt><dd>Sign in to Plex and your whole library is on the bench. Tapes save to Plex too, so they follow you to every device and show up in myStereo.</dd>
+<dt>Just looking?</dt><dd>Try the demo songs. Turn them off later in <span class="path">Settings › Your Music › Demo Library</span>.</dd>
+</dl>
+<p>You can do both. Add songs any time in <span class="path">Settings › Your Music › Add Songs from Files</span>, and sign in to Plex from the same place.</p>
+<figure><img src="gimg/welcome.webp" alt="The welcome card on the deck, with This Phone and My Plex" width="402" height="874" loading="lazy"><figcaption>The welcome card.</figcaption></figure>
+<p class="note">Use the Home Screen app for your real tapes. A private Safari tab forgets everything when you close it.</p>
 </section>
 
-<main class="wrap">
-  <nav class="toc" aria-label="Chapters">
-    <p class="label">Contents</p>
-    <ol>
-      <li><a href="#start"><span>1</span>Getting Started</a></li>
-      <li><a href="#deck"><span>2</span>The Cassette Deck</a></li>
-      <li><a href="#make"><span>3</span>Making a Mixtape</a></li>
-      <li><a href="#plan"><span>4</span>Planning a Tape</a></li>
-      <li><a href="#own"><span>5</span>Songs You Don’t Own Yet</a></li>
-      <li><a href="#send"><span>6</span>Sending and Receiving</a></li>
-      <li><a href="#library"><span>7</span>The Menu Side</a></li>
-      <li><a href="#desk"><span>8</span>On a Computer</a></li>
-      <li><a href="#settings"><span>9</span>Settings and Deck Colors</a></li>
-      <li><a href="#trouble"><span>10</span>Troubleshooting</a></li>
-    </ol>
-  </nav>
+<section class="ch" id="deck"><p class="no">Chapter 2</p><h2>The Cassette Deck</h2>
+<p>Flipside opens on the deck. The window shows the tape that’s loaded, and the readout underneath shows the counter, the side and the song that’s playing.</p>
+<figure><img src="gimg/deck.webp" alt="The cassette deck with a tape loaded" width="402" height="874" loading="lazy"></figure>
+<dl>
+<dt><span class="key">PLAY/PAUSE</span></dt><dd>Plays the tape, or pauses it. The reels turn while it plays.</dd>
+<dt><span class="key">REW</span> and <span class="key">FF</span></dt><dd>Tap to jump back or ahead 15 seconds. Hold to keep winding, right across songs, with the sound of the tape. A tape plays in order; there’s no skipping to a song.</dd>
+<dt><span class="key">STOP/EJECT</span></dt><dd>Stops the tape. Press it again to open your tape rack (Chapter 3).</dd>
+<dt><span class="key">FLIP</span></dt><dd>Turns the tape over. At the end of Side A the tape stops and FLIP glows until you turn it. Want Side B to start on its own? <span class="path">Settings › Playing › Auto Reverse</span>.</dd>
+<dt><span class="key">RESTART</span></dt><dd>Back to the start of the side you’re on.</dd>
+<dt><span class="key">SONGS</span></dt><dd>The song list, written on the J-card, with the liner notes at the top. Tap a song to write a note about why it’s there.</dd>
+<dt><span class="key">TAPE RACK</span></dt><dd>Opens the rack while the tape keeps playing.</dd>
+<dt><span class="key">REC</span></dt><dd>Starts a new tape on the bench (Chapter 4).</dd>
+<dt><span class="key">SEND</span></dt><dd>Sends the tape in the deck (Chapter 7).</dd>
+<dt><span class="key">✎ NOTE</span></dt><dd>For alpha testers: jot down anything that breaks, an idea, or something you love. SEND NOW sends it straight to BC.</dd>
+<dt><span class="key">Menu</span></dt><dd>Turns the player over to the menu side (Chapter 11).</dd>
+</dl>
+<h3>The light</h3>
+<p>Next to the Flipside name. It says where the song is coming from.</p>
+<ul class="lights">
+<li><b>ON PHONE</b> A song you added, or a copy saved on this phone. No data used.</li>
+<li><b>FROM PLEX</b> Streaming from your Plex server.</li>
+<li><b>APPLE MUSIC</b> A tape someone sent you, playing from Apple Music.</li>
+<li><b>NO SIGNAL</b> You’re offline and this tape isn’t saved on this phone yet.</li>
+<li><b>DEMO</b> The demo songs.</li>
+</ul>
+<h3>A note on a song</h3>
+<p>When the song playing has a Why It’s Here note, the readout shows <span class="key">✎ NOTE</span>. Tap it and the note opens on a card. CLOSE goes back to the deck.</p>
+<h3>Turn it sideways</h3>
+<p>Turn your phone on its side and the deck goes wide, with REC, SEND and Menu along the top. Turn it back any time; nothing stops playing.</p>
+<p>Tapes remember where you stopped. Load one again and it picks up on the same side, in the same song.</p>
+</section>
 
-  <section class="ch" id="start">
-    <p class="num">Chapter 1</p>
-    <h2>Getting Started</h2>
-    <p>The first time you open Flipside, a welcome card on the deck walks you through it: sign in to Plex (or try the demo songs), press REC, send it. You can see it again in <span class="path">Alpha › Welcome Screen</span>.</p>
-    <p>Flipside is a web app. There’s nothing to download from an app store. Put it on your Home Screen and it opens full screen with its own cassette icon.</p>
-    <h3>iPhone</h3>
-    <ol class="steps">
-      <li>Open <b>ownyourmedia.club/flipside/app</b> in <b>Safari</b>.</li>
-      <li>Tap <b>Share</b>, then <b>Add to Home Screen</b>, then <b>Add</b>.</li>
-      <li>Open Flipside from your Home Screen.</li>
-    </ol>
-    <h3>Android</h3>
-    <ol class="steps">
-      <li>Open <b>ownyourmedia.club/flipside/app</b> in <b>Chrome</b>.</li>
-      <li>Tap the <b>⋮</b> menu, then <b>Add to Home screen</b> or <b>Install app</b>.</li>
-      <li>Open Flipside from your Home screen. Your phone’s Back button works like the MENU key.</li>
-    </ol>
-    <h3>Sign in to Plex</h3>
-    <p>Go to <span class="path">Settings › Your Music › Plex</span> and sign in. Flipside finds your servers and the music on them. A friend’s server that’s shared with you works too.</p>
-    <div class="note"><b>No Plex yet?</b> Choose <span class="path">Settings › Your Music › Demo Library</span> to try everything with sample music first.</div>
-  </section>
+<section class="ch" id="rack"><p class="no">Chapter 3</p><h2>The Tape Rack</h2>
+<p>Press <span class="key">STOP/EJECT</span> and the rack fills the screen. Every tape stands on its spine, newest first, with the one in the deck on top.</p>
+<div class="two"><figure><img src="gimg/rack.webp" alt="The tape rack" width="402" height="874" loading="lazy"><figcaption>The rack.</figcaption></figure>
+<figure><img src="gimg/lifted.webp" alt="A tape lifted out of the rack" width="402" height="874" loading="lazy"><figcaption>A tape lifted out.</figcaption></figure></div>
+<dl>
+<dt>Lift a tape</dt><dd>Tap it to see its label, liner notes and songs. Swipe sideways for the next tape.</dd>
+<dt><span class="key">LOAD TAPE</span></dt><dd>Puts it in the deck. If another tape is playing, the button says SWAP IN THIS TAPE; the playing tape stops and keeps its place.</dd>
+<dt><span class="key">SEND</span></dt><dd>Sends it (Chapter 7).</dd>
+<dt><span class="key">ASSIGN</span></dt><dd>Files it in drawers. A tape can sit in as many as you like.</dd>
+<dt><span class="key">REWORK</span></dt><dd>Takes it back to the bench to change, drawers and notes and all.</dd>
+<dt><span class="key">TAPE OUT</span></dt><dd>Records it onto a real cassette (Chapter 9).</dd>
+</dl>
+<p>Your first tape shows LOAD TAPE, SEND and <span class="key">⋯ MORE</span>; MORE has the rest.</p>
+<h3>Drawers</h3>
+<p>The tabs down the side. ALL shows every tape once. A drawer gets a tab once something’s in it: Morning, Road Trip, Late Night or one you make with +. NO DRAWER shows the tapes you haven’t filed. Press and hold a tab to rename it or take it out.</p>
+<h3>From friends</h3>
+<p>A tape someone sent you has a pink ♫ mark with their name on its spine. The FROM FRIENDS tab shows just those.</p>
+<h3>Search, erase and paste</h3>
+<p>The search bar finds tapes by name, who they’re for, or a song on them. Swipe a tape left and tap <span class="key">ERASE</span>, then <span class="key">SURE?</span> to erase it; a backup is saved first. <b>＋ PASTE A TAPE LINK</b> at the top adds a tape from a link you’ve copied (Chapter 8).</p>
+</section>
 
-  <section class="ch" id="deck">
-    <p class="num">Chapter 2</p>
-    <h2>The Cassette Deck</h2>
-    <p>Flipside opens on the deck. The window shows the tape that’s loaded: its name on the top line and the song that’s playing in big writing below it. The counter underneath keeps time. The date and who the tape is for are at the top of the song list (SONGS).</p>
-    <dl class="terms">
-      <div><dt>STOP/EJECT</dt><dd>Stops the tape. Press it again, or when stopped, to open the door: your <b>tape rack</b> fills the screen. Your tapes stand in it on their spines, grouped by drawer (Morning, Late Night, Road Trip and the rest), newest first. The <b>tabs down the right edge</b> jump to a drawer; <b>+</b> makes a new one, and pressing and holding a tab lets you rename it or take it out. <b>⌕</b> searches your tapes by name, who they’re for, or the songs on them. Tap a tape to lift it out: it comes up big with its song list. Swipe sideways for the next tape in that drawer. <b>LOAD TAPE</b> puts it in the deck; <b>ASSIGN</b> puts it in as many drawers as you like; <b>SEND</b> gives it to someone; <b>EDIT</b> opens it on the menu side. Sideways and on a computer, the drawers are chips along the top: press and hold one (or right-click it) to rename it or take it out. Tap the now-playing strip, or ‹ DECK, to go back to the deck. Your drawers match on every device signed in to the same Plex server; they live in a small Flipside Drawers playlist there, so leave it in place.</dd></div>
-      <div><dt>PLAY/PAUSE</dt><dd>Plays the tape, or pauses it. While it plays, the key stays down with an orange light and the reels turn. Paused partway through, the key shows a red light. The song playing is written on the tape.</dd></div>
-      <div><dt>TAPE RACK</dt><dd>In the top-right corner of the tape window (TAPES at the bottom when sideways). Opens your tape rack while the tape keeps playing. What’s playing shows at the top, with pause, and its tape is marked IN THE DECK. ‹ BACK TO RACK (or a swipe down on the lifted tape) puts it back. Lift a different tape and the big button says SWAP IN THIS TAPE: the playing tape stops and keeps its place. Lift the one that’s playing and it says BACK TO THE DECK.</dd></div>
-      <div><dt>SONGS</dt><dd>The small button in the tape window opens the track list, written on the J-card. It’s for reading: a tape plays in order, the way it was made.</dd></div>
-      <div><dt>TV Mode</dt><dd>For Screen Mirroring to a TV: Menu › TV Mode, or TV on the deck sideways. A listening room with your tape, the song, a counter, a visualizer, Up Next and the song’s Why It’s Here note. Tap anywhere for REW, PLAY/PAUSE, FF, FLIP and EXIT. The phone shows the same picture, since mirroring copies the screen. Tap for the keys; <b>◐ LOOK</b> changes how the room looks: Den, Neon Club, Record Store, Midnight, Daylight, or one of the five Edition looks. <b>≋ VIZ</b> changes the visualizer: VU Needles, Peak Meters, Graphic EQ or Scope. Settings › Look › TV Mode picks both, and can keep song notes off the TV.</dd></div>
-      <div><dt>Why It’s Here</dt><dd>Write a line about why a song is on the tape: tap it in the deck’s SONGS list, press + Why on it in the Workbench, press + NOTE in TV Mode while it plays. It shows in TV Mode, travels with the tape when you send it, and syncs to your other devices.</dd></div>
-      <div><dt>The lamp</dt><dd>Next to the Flipside name. <b>PLEX</b> (green): streaming from your Plex server. <b>ANALOG</b> (amber): no internet needed; you’re playing tapes saved on this phone. <b>NOT DUBBED</b> (red): you’re offline and this tape isn’t saved here yet. Turn on Analog Mode in Settings and tapes dub to the phone when you play them on Wi-Fi.</dd></div>
-      <div><dt>✎ NOTE</dt><dd>For alpha testers: jot down anything that breaks, an idea, or something you love. Each note remembers where you were and what was playing. Menu › Alpha › Notepad sends them all to BC in one email. <b>SEND NOW</b> sends that one note to BC straight away (with the playback log, for a Broke note).</dd></div>
-      <div><dt>⏮ RESTART</dt><dd>Rewinds to the start of the side you’re on and stops, ready for PLAY. On Side B it goes back to the first song of Side B; for the very top of the tape, FLIP to Side A and press RESTART. Tapes otherwise pick up where you left off.</dd></div>
-      <div><dt>REW and FF</dt><dd>Tap to wind back or ahead 15 seconds. Hold to keep winding, right across songs, with the sound of the tape. The counter and the song name on the tape follow along, and when you let go the tape plays from that spot (or stays stopped, if it was stopped).</dd></div>
-      <div><dt>FLIP</dt><dd>Turns the tape over to the other side. At the end of Side A the tape stops and the FLIP key glows gold until you flip it. To have Side B start on its own, turn on <span class="path">Settings › Playing › Auto Reverse</span>.</dd></div>
-      <div><dt>REC</dt><dd>Opens the Workbench and starts a new tape. See Chapter 3.</dd></div>
-      <div><dt>Menu</dt><dd>Turns the player over to the menu side. See Chapter 7.</dd></div>
-    </dl>
-    <p>Tapes remember where you stopped. Load one again and it picks up on the same side, in the same song.</p>
-    <h3>Turn it sideways</h3>
-    <p>Turn your phone on its side and the deck goes wide: a bigger tape window with REC, Send and Menu along the top, and four big keys. Open the door and your tapes stand in a row, labels facing you; the drawers are along the top (+ makes a new one). Swipe through them, or use REW and FF, and tap the middle tape or LOAD TAPE to load it. SONG LIST shows the middle tape’s songs first. Turn the phone upright any time; nothing stops playing.</p>
-  </section>
+<section class="ch" id="make"><p class="no">Chapter 4</p><h2>Making a Tape</h2>
+<p>Tapes are made on the bench. Press <span class="key">REC</span> on the deck, or BENCH on the menu side.</p>
+<ol class="steps">
+<li>Write the label: the tape’s name.</li>
+<li>Pick a <b>C60</b> (30 minutes a side) or a <b>C90</b> (45). When a side is full, it’s full.</li>
+<li>The library opens. Tap a song for <b>+ Side A</b> or <b>+ Side B</b>. Each side shows the time left, and a song too long for the room left is crossed out. Press Done Adding to see the tape.</li>
+<li>To change the order, press and hold a song until it lifts, then drag it. Tap a song for its buttons: the other side, Play, + Why, or take it off.</li>
+<li>When it’s ready, open the <b>Finish</b> tab and press <b>Send to the Rack</b>. The deck turns over and your tape is waiting in the rack.</li>
+</ol>
+<div class="two"><figure><img src="gimg/bench.webp" alt="The bench with songs on Side A" width="402" height="874" loading="lazy"><figcaption>The bench.</figcaption></figure>
+<figure><img src="gimg/finish.webp" alt="The Finish tab" width="402" height="874" loading="lazy"><figcaption>Finish.</figcaption></figure></div>
+<h3>Every tape fits a real cassette</h3>
+<p>Side times count four seconds of quiet between songs, so a Flipside C90 fits a real C90. A side that’s too long shows in red, and the tape can’t go in the rack until you move a song.</p>
+<h3>Fill</h3>
+<p>A side with a minute or more left shows a <b>Fill</b> button. It offers songs that fit the time: from your crate first, then by artists already on the tape, then from your library.</p>
+<h3>After your first tape</h3>
+<p>Your first tape keeps the bench simple: Songs, Label, Finish. From your second tape on, a few more things appear, with a note the first time:</p>
+<dl>
+<dt>The Crate</dt><dd>A maybe pile beside Side A and Side B, with no time limit. Choose later.</dd>
+<dt>Plan</dt><dd>The Coach, for a tape with a story (Chapter 6).</dd>
+<dt>Don’t Own and Wishlist</dt><dd>Room for songs you don’t have yet (Chapter 10).</dd>
+<dt>Tape</dt><dd>The Finish tab becomes Tape: length, label, who it’s for, drawers, Apple Music Copy, sync, and Erase This Tape.</dd>
+</dl>
+<h3>Sideways</h3>
+<p>Turn your phone on its side and the bench spreads out: the library, the crate and the tape side by side. Drag songs between columns. Swipe left or right across the columns to give one more room.</p>
+</section>
 
-  <section class="ch" id="make">
-    <p class="num">Chapter 3</p>
-    <h2>Making a Mixtape</h2>
-    <p>Every tape is made on the <b>Workbench</b>. Open it with <b>REC</b> on the deck, <span class="path">Menu › Workbench</span>, or <b>EDIT</b> on a tape in the rack. Upright, it’s one column with four tabs along the top: <b>Songs</b>, <b>Label</b>, <b>Plan</b> and <b>Tape</b>. Sideways or on a computer, the same tabs run down the left and the columns sit side by side.</p>
-    <ol class="steps">
-      <li>On your bench, press <b>+ New Tape</b> and write the label.</li>
-      <li>Choose <b>C60 · Start Recording</b> (30 minutes a side) or <b>C90 · Start Recording</b> (45 a side). The limit is part of the art: when a side is full, it’s full. Or, first on the list, <b>Need help planning? Tap for the Coach</b> (Chapter 4).</li>
-      <li>The library opens. Find songs and tap one for <b>+ Side A</b>, <b>+ Side B</b> or <b>+ Crate</b>. Songs too long for the room left are crossed out. Press <b>Done Adding</b> to see the tape.</li>
-      <li>Switch between <b>Crate</b>, <b>Side A</b> and <b>Side B</b> with the buttons at the top, the ‹ › buttons beside the dots, or a sideways swipe. The play/pause at the top stops a song you’re previewing. The crate is the maybe pile: no time limit, choose later.</li>
-      <li>To change the order, press and hold a song until it lifts, then drag it. Tap a song for buttons: the other side, the crate, Play, <b>+ Why</b>, or take it off.</li>
-    </ol>
-    <h3>Dress it up</h3>
-    <p>The <b>Label</b> tab turns the tape over to show its label. <b>Themes</b> dress a tape in one press: Rock, Punk, Jazz, Blues, Soul &amp; R&amp;B, Hip-Hop, Disco &amp; Funk, Electronic, Ska, Country, Folk, Classical, Indie, Pop, Chiptune and Metal. <b>Editions</b> match the special edition faceplates. Or build your own: <b>Paper</b>, <b>Pen</b>, <b>Ink</b>, <b>Stripe</b> and <b>Shell</b>. ✦ Surprise Me is first; Start Over is at the bottom. Titles hold up to 40 letters and “for” up to 24. Ink always stays readable. The design travels with the tape when you sync or send it.</p>
-    <h3>When it’s done</h3>
-    <p>The <b>Tape</b> tab holds everything you do with a tape: <b>To the Tape Rack</b> (the deck turns over and your tape is lifted out of the rack, ready to LOAD TAPE), <b>Send Mixtape</b>, <b>Print the J-Card</b> (a paper insert for a real cassette case, with the Own Your Media Club stamp), its <b>Length</b>, <b>Label</b> and <b>For</b>, its <b>Drawers</b>, <b>Dub to Phone</b>, <b>Sync</b>, and <b>Erase This Tape</b> (press it twice).</p>
-    <div class="note"><b>Tapes follow you.</b> Mixtapes save to your Plex server, so they show up on your other devices and in myStereo. <b>Sync with Plex</b> at the bottom of your bench brings them in right away.</div>
-  </section>
+<section class="ch" id="label"><p class="no">Chapter 5</p><h2>The Label and Liner Notes</h2>
+<p>The Label tab shows the tape itself. Change it as much or as little as you like.</p>
+<figure><img src="gimg/label.webp" alt="The Label tab with a blue Flipside Flat tape" width="402" height="874" loading="lazy"></figure>
+<dl>
+<dt>One tap</dt><dd><b>✦ Surprise Me</b>, or <b>Themes</b>: eighteen looks named for kinds of music, from Rock and Jazz to Chiptune. <b>Editions</b> match the special edition decks.</dd>
+<dt>Or pick each part</dt><dd><b>Design</b> (Classic, Factory, Handmade, Metal or Flipside Flat), <b>Paper</b>, <b>Pen</b>, <b>Ink</b> and <b>Shell</b>. Ink always stays readable on the paper you pick.</dd>
+<dt>Flipside Flat</dt><dd>One solid color with big lettering. Its tabs are <b>Color</b> (your drawer’s color, or one of twelve), <b>Lettering</b> (Bold, Marker, Block Caps, Typewriter, Digital) and <b>Ink</b> (Best Fit picks cream or black so it reads).</dd>
+<dt>Title and Who’s It For?</dt><dd>Titles hold up to 30 letters, “for” up to 24.</dd>
+<dt>Liner Notes</dt><dd>A few lines about the whole tape: who it’s for, what it’s about, when to play it. They show on the tape’s song list in the rack, at the top of SONGS on the deck, and they go with the tape when you send it.</dd>
+<dt>Start Over</dt><dd>Back to a plain label.</dd>
+</dl>
+<p>Two kinds of notes, then: liner notes for the whole tape, and Why It’s Here for one song. Use either, both or neither.</p>
+</section>
 
-  <section class="ch" id="plan">
-    <p class="num">Chapter 4</p>
-    <h2>Planning a Tape</h2>
-    <p>A great mixtape is often planned before it’s recorded. On your bench, press <b>+ New Tape</b>, write the label and choose <b>Need help planning? Tap for the Coach</b>. The plan sits on your bench under <b>Planning</b> until you record it. Finished tapes live in the rack: lift one and press <b>EDIT</b> to change it on the bench.</p>
-    <ol class="steps">
-      <li>Pick a <b>Story Arc</b>: the Classic Arc, Road Trip, For a Crush, Party, Heartbreak, or Bright Side, Late Side. Or <b>Build Your Own</b>, or skip it.</li>
-      <li>On the <b>Songs</b> tab, fill <b>The Crate</b> with maybes, in any order, with no time limit.</li>
-      <li>Tap a keeper for <b>→ Running Order</b> and pick the beat where it belongs. Hold and drag to rearrange.</li>
-      <li>The <b>Plan</b> tab shows the story, each beat (done, held or empty), how the order fits a C60 or C90, and the Coach’s notes.</li>
-      <li>When it fits and tells the story, press <b>● Record It</b> and choose C60 or C90. Side A fills first, and Side B picks up where it ends. The crate stays behind.</li>
-    </ol>
-    <dl class="terms">
-      <div><dt>The story</dt><dd>A line or two to remember the idea. Tap it on the Plan tab to write it.</dd></div>
-      <div><dt>Story beats</dt><dd>Each beat explains its job (“Opener: say hello”). On the Songs tab, tap a beat’s name to rename it, change its job, add one after it or remove it.</dd></div>
-      <div><dt>Hold a Spot</dt><dd>Know you need “something slow to cool down, about four minutes” but not which song? Hold the spot, and pick its beat. It counts toward the time until you put the real song in and take the spot off.</dd></div>
-      <div><dt>Why It’s Here</dt><dd>A short note on any song, about why it made the tape.</dd></div>
-      <div><dt>The Mixtape Coach</dt><dd>Gentle notes on the rules of thumb: an artist twice in a row, a long opener, the song right before the flip, an empty beat, a tape too long for a C90. Press <b>Got It</b> to dismiss one. Turn the coach off in <span class="path">Settings › Making Tapes › Mixtape Coach</span>. Recorded tapes get Coach’s Notes too, on their Plan tab.</dd></div>
-      <div><dt>The Art of the Mixtape</dt><dd>Ten rules of thumb for the craft, on the menu side and at <b>ownyourmedia.club/flipside/art</b>.</dd></div>
-    </dl>
-    <h3>The Workbench sideways</h3>
-    <p>Turn your phone on its side and the bench spreads out: the library, the crate and the tape (or the order) side by side, with the tabs down the left. Drag songs between columns. Swipe left across the columns to hide the library; swipe right to hide the tape; tap the slim tab on the edge to see all three. Turn the phone upright and you stay on the same tape.</p>
-    <dl class="terms">
-      <div><dt>Library</dt><dd>Browse Artists, Albums, Songs, Playlists and Genres, or search.</dd></div>
-      <div><dt>Don’t Own</dt><dd>Searches for any song, in your library or not. Put one on the tape and it goes on as a song to find, keeping its place and its time. Tap it for <b>Find It</b>. See Chapter 5.</dd></div>
-      <div><dt>Wishlist</dt><dd>Albums and songs you’ve hearted, and every ♡ song already on a tape.</dd></div>
-    </dl>
-    <p>Plans stay on the device you made them on. The tape you record from one syncs like any other.</p>
-  </section>
+<section class="ch" id="plan"><p class="no">Chapter 6</p><h2>Planning with the Coach</h2>
+<p>A great mixtape is often planned before it’s made. Press REC, write the label, and choose <b>Not sure what goes on it? Plan it with the Coach</b>.</p>
+<ol class="steps">
+<li>Pick a story arc: the Classic Arc, Road Trip, For a Crush, Party, Heartbreak, or Bright Side, Late Side. Or build your own, or skip it.</li>
+<li>Fill the crate with maybes, in any order, with no time limit.</li>
+<li>Tap a keeper for → Running Order and pick the beat where it belongs. Hold and drag to rearrange.</li>
+<li>The Plan tab shows the story, each beat, how the order fits a C60 or C90, and the Coach’s notes.</li>
+<li>When it fits and tells the story, press <b>● Make It</b> and choose C60 or C90. Side A fills first, and Side B picks up where it ends.</li>
+</ol>
+<dl>
+<dt>Hold a Spot</dt><dd>Know you need “something slow, about four minutes” but not which song? Hold the spot. It counts toward the time until the real song goes in.</dd>
+<dt>The Mixtape Coach</dt><dd>Gentle notes on the rules of thumb: an artist twice in a row, a long opener, the song right before the flip. Press Got It to dismiss one. Turn the Coach off in <span class="path">Settings › Making Tapes</span>.</dd>
+<dt>The Art of the Mixtape</dt><dd>Ten rules of thumb for the craft, on the menu side.</dd>
+</dl>
+</section>
 
-  <section class="ch" id="own">
-    <p class="num">Chapter 5</p>
-    <h2>Songs You Don’t Own Yet</h2>
-    <p>The perfect song for a tape isn’t always on your server. Save its place anyway.</p>
-    <ol class="steps">
-      <li>On the Workbench, open the tape and press <b>♡ Don’t Own</b> in Add Songs (sideways, it’s the tab beside Library).</li>
-      <li>Search for the song, tap it and put it on a side or in the crate. It holds its spot and its running time.</li>
-      <li>Open it to find links to buy it: Bandcamp, Qobuz, the iTunes Store and 7digital.</li>
-      <li>Add the file to your Plex music. Next time Flipside looks, it fills in on the tape by itself.</li>
-    </ol>
-    <h3>The Wishlist</h3>
-    <p>One list of everything you want to own. In the Workbench’s <b>Don’t Own</b> search, tap a result and press <b>♡ Song</b> or <b>♡ Album</b>. Those land on the <b>Wishlist</b>, along with every ♡ song already on a tape (and which tape it’s on). Find it in the Workbench beside Library and Don’t Own. Each item has buy links, and <b>Check My Library</b> moves anything you’ve added to Plex to <b>Found</b>. The list follows you to your other devices through Plex.</p>
-    <p>On the deck, a tape with songs still to find wears a <b>♡</b> tag on its label. Tap it to see them. The deck plays right past songs you don’t have yet.</p>
-  </section>
+<section class="ch" id="send"><p class="no">Chapter 7</p><h2>Sending a Tape</h2>
+<p>Press <span class="key">SEND</span> on the deck, or lift the tape in the rack and press SEND. If you use Plex, Flipside asks who it’s for.</p>
+<figure><img src="gimg/send.webp" alt="SEND: Anyone, as a link, or Someone on my Plex" width="402" height="874" loading="lazy"></figure>
+<h3>Anyone, as a link</h3>
+<ol class="steps">
+<li>Flipside matches each song to Apple Music. ✓ means it found the same song. ? means Apple’s version runs a different length, maybe live or remastered: KEEP sends Apple’s, OFF leaves that song off the link.</li>
+<li>Press <span class="key">GET THE LINK</span>, then SHARE THE LINK. Pick Messages, Mail, anything.</li>
+</ol>
+<p>A song Apple Music doesn’t have stays on your tape, marked <b>tape only</b>, and is left off the link. Your tape doesn’t change.</p>
+<p>In Messages the link shows an Own Your Media tape with your name and the title. The songs ride inside the link itself, so no server ever sees them. A friend with Apple Music hears every song in full; without it, 30 seconds of each.</p>
+<h3>Someone on my Plex</h3>
+<p>Pick a person you share your Plex server with. They hear the tape from your library, every song as you have it. Song List decides whether they see the songs up front or hear them as a surprise.</p>
+<p class="small">Using only songs on your phone? SEND goes straight to the link.</p>
+</section>
 
-  <section class="ch" id="send">
-    <p class="num">Chapter 6</p>
-    <h2>Sending and Receiving</h2>
-    <h3>Send a tape</h3>
-    <ol class="steps">
-      <li>On the Workbench, open the tape’s <b>Tape</b> tab and choose <b>Send Mixtape</b>. (Sideways on the deck, Send works too.)</li>
-      <li>Choose <b>Song List</b>: <b>Surprise</b> (the default) keeps the songs secret until they’ve heard the whole tape; <b>Shown</b> writes every song on the card.</li>
-      <li>Pick a person. The list shows everyone you share your Plex server with.</li>
-      <li>Your phone’s share sheet opens with a picture of the tape (the case and J-card in your label design) and a short message with the link. Pick Messages, Mail, anything. On a computer, the picture downloads and Mail opens; attach the picture.</li>
-    </ol>
-    <p>Your friend hears the tape from your server, so they need access to your music library in Plex. Share it from Plex first if they’re not on the list.</p>
-    <h3>Open a tape someone sent you</h3>
-    <p>Tap the link. Flipside opens with the tape’s label and who it’s from. <b>See the Card</b> shows the picture they sent. Choose <b>Add It to My Tapes</b>.</p>
-    <p><b>No spoilers.</b> A tape sent to you is a surprise: while it plays, only the song that’s playing is written on the tape, and the track list says “keep listening…” for the songs you haven’t heard. Hear the whole tape, both sides, and the song list is yours. (If the sender chose Shown, it’s all there from the start.)</p>
-    <dl class="terms">
-      <div><dt>Switch Servers</dt><dd>The tape plays from a different server than the one you’re on. Switch to hear it as it was made, or choose <b>Use My Own Library</b> to play the songs you also have.</dd></div>
-      <div><dt>Sign In to Play</dt><dd>Sign in to Plex in Settings. The tape waits for you.</dd></div>
-    </dl>
-  </section>
+<section class="ch" id="get"><p class="no">Chapter 8</p><h2>When Someone Sends You One</h2>
+<p>Tap the link. Flipside opens with the tape in the deck, Side A cued.</p>
+<dl>
+<dt>Sign in to Apple Music</dt><dd>Every song plays in full. No Apple Music? Press PLAY anyway and hear 30 seconds of each.</dd>
+<dt>One song at a time</dt><dd>Only the song that’s playing is written on the tape. Hear both sides to the end and the whole list is yours, with <span class="key">SAVE TO APPLE MUSIC</span>. The liner notes are there from the start.</dd>
+<dt>Opened in Safari instead of the app?</dt><dd>On an iPhone, links always open Safari. Tap <span class="key">COPY THIS TAPE</span>, open Flipside from your Home Screen, and tap ＋ PASTE A TAPE LINK in the rack.</dd>
+<dt>In the rack</dt><dd>It has a ♫ mark with the sender’s name, and lives under FROM FRIENDS.</dd>
+</dl>
+</section>
 
-  <section class="ch" id="library">
-    <p class="num">Chapter 7</p>
-    <h2>The Menu Side</h2>
-    <p>Press <b>Menu</b> on the deck and the player turns over. The other side is a myStereo with a menu, a click wheel and your whole music library. It wears the same colors as the deck color you chose, so it feels like two sides of one player.</p>
-    <dl class="terms">
-      <div><dt>Workbench</dt><dd>Where tapes are made: your bench, + New Tape, and every tape you’re working on. See Chapter 3.</dd></div>
-      <div><dt>Cassette Deck</dt><dd>Turns the player back over. So does <b>DECK</b>.</dd></div>
-      <div><dt>TV Mode</dt><dd>A listening room made for Screen Mirroring to a TV. See Chapter 2.</dd></div>
-      <div><dt>Settings</dt><dd>Everything you can change, in six groups. See Chapter 9.</dd></div>
-      <div><dt>The Art of the Mixtape</dt><dd>How great tapes are made.</dd></div>
-      <div><dt>Alpha</dt><dd>Feedback, the notepad, What to Test and the playback log.</dd></div>
-    </dl>
-    <p>Finished tapes live in the rack on the deck; tapes being made live on the Workbench. The menu side is for the rest.</p>
-  </section>
+<section class="ch" id="real"><p class="no">Chapter 9</p><h2>Real Tape</h2>
+<p>Record a Flipside tape onto a real cassette. You need a deck or recorder with a line in (or aux in) and a cable from your phone.</p>
+<figure><img src="gimg/realtape.webp" alt="The Real Tape screen" width="402" height="874" loading="lazy"></figure>
+<ol class="steps">
+<li>Lift the tape in the rack and press <span class="key">TAPE OUT</span>.</li>
+<li>Check the list: cable in, Do Not Disturb on, volume all the way up, phone charging, blank tape at the start of Side A.</li>
+<li>Set your levels with the tone, or with the loudest ten seconds of the side.</li>
+<li>Press record on your deck, then start the countdown. Flipside waits for the leader tape, then plays the side with four seconds of quiet between songs, so your deck can find each break.</li>
+<li>When it tells you, stop the deck, flip the tape, and do Side B.</li>
+</ol>
+<p>A tape you’ve recorded says so on its card in the rack.</p>
+<p class="small">Keep the screen on and the phone plugged in. Bluetooth can clip the start of a song, so use a cable.</p>
+</section>
 
-  <section class="ch" id="desk">
-    <p class="num">Chapter 8</p>
-    <h2>On a Computer</h2>
-    <p>Open Flipside in a browser on your computer. A wide window shows the deck and your library side by side, with a recording panel for building a tape. Turn it on or off in <span class="path">Settings › Look › Desktop Mode</span>.</p>
-    <p>On a computer you also get the Workbench. Press <b>Menu</b> on the deck, or <b>Workbench</b> in the sidebar: the Songs, Label, Plan and Tape tabs run down the left, with the library, crate and tape side by side on Songs. Drag songs with the mouse, and use the three buttons at the top to pick your columns: library and crate, all three, or crate and tape. <b>Menu</b> at the top of the Workbench opens the full Flipside menu; <b>Workbench</b> on that menu brings you back. Open the deck’s door and your tapes stand face-on: scroll or use the arrow keys, then click the middle tape or press Enter to load it.</p>
-    <p>The keyboard works too: the space bar plays and pauses, and the arrow keys move through lists.</p>
-  </section>
+<section class="ch" id="own"><p class="no">Chapter 10</p><h2>Songs You Don’t Own Yet</h2>
+<p>The perfect song isn’t always in your library. Save its place anyway. (This shows up on the bench from your second tape.)</p>
+<ol class="steps">
+<li>On the bench, under Add Songs, press <b>♡ Don’t Own</b>.</li>
+<li>Search for the song and put it on a side or in the crate. It holds its spot and its time.</li>
+<li>Tap it for links to buy it: Bandcamp, Qobuz, the iTunes Store and 7digital.</li>
+<li>Add the file to your music. Flipside fills it in on the tape by itself.</li>
+</ol>
+<p>In the Don’t Own search, <b>♡ Song</b> or <b>♡ Album</b> puts it on your <b>Wishlist</b>, along with every ♡ song already on a tape. The Wishlist is in the Menu, too. The deck plays right past songs you don’t have yet.</p>
+</section>
 
-  <section class="ch" id="settings">
-    <p class="num">Chapter 9</p>
-    <h2>Settings</h2>
-    <dl class="terms">
-      <div><dt>Look</dt><dd><b>Deck Color</b>: Club Colors (the default), Night Black, Metallic Blue or Pearl &amp; Teal, the <b>Sport</b> line, <b>Retro</b> or <b>Editions</b>. <b>Menu Screen</b>: Club, LCD, Dark or Amber. <b>TV Mode</b>: the look on the TV (Club, Den, Neon Club or Midnight, plus your edition’s own with an edition deck), the visualizer, and whether song notes show. <b>Large Text</b>, and <b>Desktop Mode</b> on a computer.</dd></div>
-      <div><dt>Playing</dt><dd><b>Auto Reverse</b> starts Side B on its own. <b>Key Sounds</b>: the little click when you turn the wheel or press a key. <b>AirPlay &amp; Bluetooth</b> picks the speaker.</dd></div>
-      <div><dt>Making Tapes</dt><dd>The <b>Mixtape Coach</b>, on or off.</dd></div>
-      <div><dt>Your Music</dt><dd>Plex sign-in, server choice and the Demo Library.</dd></div>
-      <div><dt>On Your Phone</dt><dd><b>Analog Mode</b> makes Flipside work anywhere: every tape lives on your phone and plays with no signal. <b>Dub All My Tapes</b>, <b>Song Quality</b>, <b>Play Saved Copies First</b>, how much space your tapes use, and <b>Erase Saved Songs</b>.</dd></div>
-      <div><dt>Help &amp; About</dt><dd>The Quick Start, this guide, How to Use, About Us (who makes Flipside, and why) and your version.</dd></div>
-    </dl>
-  </section>
+<section class="ch" id="menu"><p class="no">Chapter 11</p><h2>The Menu Side and Settings</h2>
+<p>Press <span class="key">Menu</span> on the deck and the player turns over: a screen, five keys and a knob. Turn the knob to move, press the center to choose. <span class="key">BENCH</span> opens the bench, <span class="key">DECK</span> turns back to the deck.</p>
+<dl>
+<dt>Wishlist</dt><dd>Songs and albums you want to own.</dd>
+<dt>TV Mode</dt><dd>For Screen Mirroring to a TV: your tape, the song, its note, and a visualizer. Tap for the keys; LOOK changes the room, VIZ the visualizer.</dd>
+<dt>Settings</dt><dd>Six groups, below.</dd>
+<dt>The Art of the Mixtape</dt><dd>How great tapes are made.</dd>
+<dt>Alpha</dt><dd>For testers: the Notepad, What to Test, What’s New, the Quick Start, Logs &amp; Backups.</dd>
+</dl>
+<h3>Settings</h3>
+<dl>
+<dt>Look</dt><dd>Deck Color, Menu Screen, TV Mode, Large Text, and Desktop Mode on a computer.</dd>
+<dt>Playing</dt><dd>Auto Reverse, Key Sounds, AirPlay &amp; Bluetooth.</dd>
+<dt>Making Tapes</dt><dd>The Mixtape Coach, on or off.</dd>
+<dt>Your Music</dt><dd>Songs on This Phone, Add Songs from Files, Back Up My Tapes, Open a Backup, Plex, Demo Library, and Music in the Menu.</dd>
+<dt>On Your Phone</dt><dd><b>Analog Mode</b> saves your Plex tapes to this phone so they play with no signal. It uses space, so it’s your choice. Also Dub All My Tapes, Song Quality and Space Used.</dd>
+<dt>Help &amp; About</dt><dd>The Quick Start, this guide, How to Use, About Us and your version.</dd>
+</dl>
+<h3>Back Up My Tapes</h3>
+<p>One file with every tape, label, drawer, note and wishlist item. Save it to Files now and then, and always before you remove Flipside from your Home Screen: removing it erases what’s stored on the phone. On a new phone, <b>Open a Backup</b> brings it all back. It only adds what’s missing.</p>
+<p class="small">The backup doesn’t hold the songs. Add the same songs on the new phone and the tapes find them.</p>
+</section>
 
-  <section class="ch" id="trouble">
-    <p class="num">Chapter 10</p>
-    <h2>Troubleshooting</h2>
-    <dl class="terms">
-      <div><dt>First PLAY does nothing</dt><dd>Phones only start sound after a tap. Press PLAY once more. If it’s still silent, check the ring switch on an iPhone and the volume.</dd></div>
-      <div><dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex. Then try <span class="path">Settings › Your Music › Plex › Reconnect</span>.</dd></div>
-      <div><dt>Tape missing on another device</dt><dd>Choose <b>Sync with Plex</b> on your bench, on the device that made it, then on the one that’s missing it. Both need to be on the same Plex server.</dd></div>
-      <div><dt>My friend can’t play my tape</dt><dd>They need access to your music library. In Plex, share your server with them, then send the tape again. If they see Switch Servers, they should choose your server.</dd></div>
-      <div><dt>A sketch or tape is missing</dt><dd>Flipside keeps backup copies on your phone. Go to <span class="path">Alpha › Restore Sketches &amp; Tapes</span>, pick a copy from before it went missing, and it comes back. Nothing you have now is changed.</dd></div>
-      <div><dt>Playback stops or skips</dt><dd>Go to <span class="path">Alpha › Copy Playback Log</span> and paste it into a message to BC. It shows what played and why each song ended.</dd></div>
-      <div><dt>Person not in the Send list</dt><dd>The list shows people you share your Plex server with. Invite them in Plex first.</dd></div>
-      <div><dt>A ♡ song won’t fill in</dt><dd>Check that Plex has scanned the new file and that the title and artist match. Then open <b>Songs to Find</b>, tap the song and choose <b>Check My Library Again</b>.</dd></div>
-      <div><dt>A song is skipped</dt><dd>The song may have been removed from the server, or it’s a ♡ song you don’t own yet.</dd></div>
-      <div><dt>Android: Back closes Flipside</dt><dd>Back steps out of menus first. On the deck, with nothing open, Back leaves the app as on any Android app.</dd></div>
-      <div><dt>Android: no Install option</dt><dd>Use Chrome, not another browser. If the menu shows only Add to Home screen, that works the same way.</dd></div>
-      <div><dt>Icon looks old</dt><dd>Remove Flipside from your Home Screen and add it again from Safari or Chrome. Your sign-in and tapes stay.</dd></div>
-      <div><dt>Music stops when the screen locks</dt><dd>Close Flipside completely and open it again. On Android, check that battery saver isn’t limiting Chrome.</dd></div>
-      <div><dt>Analog Mode: a tape is faded</dt><dd>It isn’t fully on your phone yet. With a signal, press PLAY or use <span class="path">Settings › On Your Phone › Dub All My Tapes</span>. Songs that live on someone else’s server can’t dub from yours.</dd></div>
-      <div><dt>The track list says “keep listening”</dt><dd>It’s a tape someone sent you as a surprise. Listen to the whole thing and the songs appear.</dd></div>
-      <div><dt>Start fresh</dt><dd><span class="path">Settings › Your Music › Plex › Sign Out</span>, then sign in again. Your tapes are safe on your Plex server.</dd></div>
-    </dl>
-    <p>Still stuck? Write to <a href="mailto:bc@runawayanchor.com">bc@runawayanchor.com</a> and say which phone you use.</p>
-  </section>
+<section class="ch" id="computer"><p class="no">Chapter 12</p><h2>On a Computer</h2>
+<p>Open Flipside in a browser on your computer. A wide window shows the deck and the library side by side. Turn it on or off in <span class="path">Settings › Look › Desktop Mode</span>.</p>
+<p>The bench spreads out with the library, crate and tape side by side: drag songs with the mouse. In the rack, scroll or use the arrow keys, and press Enter to load the middle tape. The space bar plays and pauses.</p>
+</section>
 
-  <footer>
-    <div class="mark">Flipside.</div>
-    <p class="own-line">Make someone a mixtape.</p>
-    <p>Powered by myStereo. Built by BC Gordon.</p>
-    <p class="club"><img src="/assets/club-logo-96.png" alt="" width="40" height="40">An Own Your Media Club project · ownyourmedia.club</p>
-  </footer>
+<section class="ch" id="help"><p class="no">Chapter 13</p><h2>Troubleshooting</h2>
+<dl>
+<dt>The first PLAY does nothing</dt><dd>Phones only start sound after a tap. Press PLAY once more, and check the volume and the ring switch.</dd>
+<dt>A song won’t add from Files</dt><dd>If it’s in iCloud Drive, open it once in Files so it downloads, then add it again. Flipside says why when it can’t save one.</dd>
+<dt>Everything’s gone</dt><dd>Were you in a private Safari tab, or did you remove the Home Screen app? Both erase what’s on the phone. Plex tapes come back when you sign in. For the rest: <span class="path">Settings › Your Music › Open a Backup</span>.</dd>
+<dt>A tape is missing</dt><dd>Flipside keeps copies on the phone: <span class="path">Alpha › Logs &amp; Backups › Restore Sketches &amp; Tapes</span>. Pick a copy from before it went missing. Nothing you have now changes.</dd>
+<dt>Can’t reach Plex</dt><dd>Make sure your server is on and Remote Access is turned on in Plex, then <span class="path">Settings › Your Music › Plex › Reconnect</span>.</dd>
+<dt>A tape is missing on another device</dt><dd>Both need to be on the same Plex server. Open the bench on each and Sync with Plex.</dd>
+<dt>My friend can’t play my tape</dt><dd>For a link, they need nothing but the link; without Apple Music they hear previews. For Plex, share your library with them in Plex first.</dd>
+<dt>Music stops with the screen locked</dt><dd>Close myStereo if it’s open, so the lock screen only has Flipside. If it still stops, copy the Playback Log (<span class="path">Alpha › Logs &amp; Backups</span>) and send it to BC.</dd>
+<dt>NO SIGNAL on a tape</dt><dd>It isn’t saved on this phone. With a signal, play it once with Analog Mode on, or use Dub All My Tapes.</dd>
+<dt>The icon looks old</dt><dd>Make a backup file first. Then remove Flipside from your Home Screen, add it again from Safari, and open the backup.</dd>
+<dt>Android: Back closes Flipside</dt><dd>Back steps out of menus first; on the deck with nothing open, it leaves the app.</dd>
+</dl>
+<p>Still stuck? Press ✎ NOTE and tell BC, or write to <a href="mailto:bc@runawayanchor.com">bc@runawayanchor.com</a> and say which phone you use.</p>
+</section>
+
+<div class="foot"><div class="mark">Flipside.</div><p>Make someone a mixtape. Powered by myStereo. Built by BC Gordon in the Twin Cities. An Own Your Media Club project · ownyourmedia.club</p></div>
 </main>
 <a class="backbar" id="backbar" href="./" hidden>‹ Back to Flipside</a>
 <script>
