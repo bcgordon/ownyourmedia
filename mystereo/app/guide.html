@@ -12,7 +12,7 @@
 /* Elite: opened as guide.html?ed=elite, or from inside the myStereo Elite app */
 (() => { let el = new URLSearchParams(location.search).get('ed') === 'elite';
   try { el = el || window.parent.MYPOD_EDITION === 'elite'; } catch (e) {}
-  if (el) { document.documentElement.classList.add('elite'); document.title = 'myStereo Elite User’s Guide';
+  if (el) { document.documentElement.classList.add('elite'); document.title = 'myStereo User’s Guide · Musaka Edition';
     const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = '#000000'; } })();
 </script>
 
@@ -256,7 +256,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <div class="wrap">
     <div>
       <p class="kicker"><span class="std-only">User’s Guide</span><span class="el-only">User’s Guide · Musaka Edition</span></p>
-      <h1><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></h1>
+      <h1><span class="std-only">myStereo.</span><span class="el-only">myStereo</span></h1>
       <p class="sub"><span class="std-only">Own your media. Hold it in one hand.</span><span class="el-only">Own your media. Make it so.</span></p>
     </div>
     <svg class="el-only" viewBox="0 0 180 300" role="img" aria-label="myStereo Elite on the Musaka faceplate: a starship console display, pill buttons and a gold-ringed knob">
@@ -318,7 +318,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <li><a href="#extras"><span>8</span>Extras</a></li>
       <li><a href="#settings"><span>9</span>Settings</a></li>
       <li><a href="#desktop"><span>10</span>Desktop Mode</a></li>
-      <li><a href="#elite"><span>11</span>myStereo Elite</a></li>
+      <li><a href="#elite"><span>11</span>Elite</a></li>
       <li><a href="#alpha"><span>12</span>Alpha Testing</a></li>
       <li><a href="#help"><span>13</span>Tips and Troubleshooting</a></li>
     </ol>
@@ -518,7 +518,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
     <h3>Ratings and rated playlists</h3>
     <p><b>Music › Ratings</b> turns your stars into playlists that update themselves: <b>My Top Rated</b> (4 and 5 stars), one list for each star count, and <b>Recently Rated</b>. Each list starts with <b>Shuffle</b>, and they play on Plexamp too.</p>
     <p>Your ratings are yours alone. They live on this myStereo, not in Plex, so nobody else on your server sees them.</p>
-    <div class="note"><b>Your stars follow you.</b> On a Plex server you own, myStereo saves ratings in Plex itself, so they match on your phone, your computer, myStereo Elite and Plexamp, and survive a deleted app. Songs saved on this phone, songs on a network share, and songs on a server someone shares with you keep their ratings on this device only. For those, go to <b>Settings › Ratings Backup › Back Up Ratings</b> and save the file to Files. <b>Restore from Backup</b> brings them back.</div>
+    <div class="note"><b>Your stars follow you.</b> On a Plex server you own, myStereo saves ratings in Plex itself, so they match on your phone, your computer and Plexamp, and survive a deleted app. Songs saved on this phone, songs on a network share, and songs on a server someone shares with you keep their ratings on this device only. For those, go to <b>Settings › Ratings Backup › Back Up Ratings</b> and save the file to Files. <b>Restore from Backup</b> brings them back.</div>
   </section>
 
   <section class="ch" id="coverflow">
@@ -562,7 +562,7 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
       <div><dt>Stop</dt><dd><span class="key">BACK</span>, or <b>Done</b> when you’re watching sideways.</dd></div>
     </dl>
     <div class="note"><b>Picks up where you left off.</b> myStereo tells Plex how far you got, so your other Plex apps know too. Files your iPhone can’t play directly are converted by your Plex server on the fly.</div>
-    <div class="note el-only"><b>myStereo Elite: videos on your phone.</b> Choose a movie or episode, then <b>Save to Phone</b>. It shows how much room it needs. Movies are big, often 1 to 2 GB, so keep the app open and plugged in while it dubs. MP4 and MOV videos can be saved; other formats still stream.</div>
+    <div class="note"><b>Videos on your phone.</b> Choose a movie or episode, then <b>Save to Phone</b>. It shows how much room it needs. Movies are big, often 1 to 2 GB, so keep the app open and plugged in while it dubs. MP4 and MOV videos can be saved; other formats still stream.</div>
   </section>
 
   <section class="ch" id="playon">
@@ -720,24 +720,24 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   <section class="ch" id="elite">
     <p class="num">Chapter 11</p>
     <h2>myStereo <em>Elite</em></h2>
-    <p class="lead">Want extras like playing music straight from your own network share? myStereo Elite is for you. It’s the same myStereo with features that take a little setup, for people who like to tinker.</p>
+    <p class="lead">Elite isn’t a separate app anymore. It’s what myStereo does once a server is involved: sign in to Plex, or connect a network share, and the extras show up on their own.</p>
     <dl class="terms">
-      <div><dt>Network Share</dt><dd>Play music from your own WebDAV server, with no Plex needed. Browse its folders under <span class="path">Music › Network Share</span>.</dd></div>
-      <div><dt>Starship looks</dt><dd>The Away Mission faceplate, with starship-console pill buttons, and the Starship Console display. (Both are in regular myStereo’s Settings too.)</dd></div>
-      <div><dt>LG Edition</dt><dd>A laser-sword hilt: a chrome faceplate with a black ridged grip, keys that glow blue, and the <b>Blade</b> display. Pick it under <span class="path">Settings › Look › Faceplate</span> and <span class="path">Settings › Look › Display</span>, or open <b>ownyourmedia.club/lg</b>.</dd></div>
-      <div><dt>Musaka back</dt><dd>Flip it over: a dark gunmetal back engraved <b>myStereo Elite · Musaka Edition</b>.</dd></div>
-      <div><dt>Its own space</dt><dd>Elite keeps its own settings, Plex sign-in, ratings and music, so you can keep both on your Home Screen.</dd></div>
+      <div><dt>Network Share</dt><dd>Play music from your own WebDAV server, with no Plex needed. Set it up under <span class="path">Settings › Music Sources › Network Share</span>, then browse it under <span class="path">Music › Network Share</span>. A <b>NET</b> input shows up under the screen.</dd></div>
+      <div><dt>Videos on your phone</dt><dd>With Plex, save a movie or episode to your phone and watch it with no connection.</dd></div>
+      <div><dt>Musaka Edition</dt><dd>A gunmetal faceplate with a gold-ringed knob, the starship colors in Desktop Mode, and a dark back engraved <b>Musaka Edition</b>. Pick it under <span class="path">Settings › Look › Faceplate › Special Editions</span>.</dd></div>
+      <div><dt>LG Edition</dt><dd>A laser-sword hilt: a chrome faceplate with a black ridged grip, keys that glow blue, and the <b>Blade</b> display. It’s under <span class="path">Special Editions</span> too.</dd></div>
     </dl>
-    <h3>Get myStereo Elite</h3>
+    <h3>Coming from the old myStereo Elite?</h3>
     <ol class="steps">
-      <li>Open <a href="/elite/" target="_top"><b>ownyourmedia.club/elite</b></a> in Safari on your iPhone (or Chrome on Android).</li>
-      <li>On iPhone, tap Share, then <span class="path">Add to Home Screen</span>. On Android, tap the ⋮ menu, then <span class="path">Add to Home screen</span>. It gets its own myStereo Elite icon.</li>
+      <li>Open your old myStereo Elite. It shows <b>A New Home</b>. Tap <b>Save a Backup File</b>.</li>
+      <li>Tap <b>Open myStereo</b>, add it to your Home Screen, then go to <span class="path">Settings › Back Up Everything › Open a Backup</span>.</li>
+      <li>Sign in to Plex, and connect your network share again. Backups never carry those.</li>
     </ol>
     <h3>Set up a network share</h3>
     <ol class="steps">
       <li>Your share needs an address that starts with <b>https://</b>. Tailscale, a Cloudflare tunnel or a reverse proxy can give it one.</li>
       <li>The server has to let myStereo in. The easiest way is a recent version of rclone:<br><span class="path" style="white-space:normal;overflow-wrap:anywhere;word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:15px">rclone serve webdav /path/to/Music --user NAME --pass SECRET --allow-origin https://ownyourmedia.club</span></li>
-      <li>In Elite, go to <span class="path">Settings › Music Sources › Network Share › Connect a Share</span> and enter the address, username and password.</li>
+      <li>Go to <span class="path">Settings › Music Sources › Network Share › Connect a Share</span> and enter the address, username and password.</li>
       <li>Open <span class="path">Music › Network Share</span>, pick a folder, and press <b>Play All</b> or <b>Shuffle</b>.</li>
     </ol>
     <div class="note"><b>Good to know:</b> each song downloads fully before it plays, which is quick on a home network. Folders laid out as Artist › Album, with a cover.jpg in each album folder, look best. Elite’s <span class="path">Network Share › Setup Help</span> has the details for other servers.</div>
@@ -773,13 +773,13 @@ html.elite footer .own-line{color:var(--lc-orange);font-family:var(--fa);text-tr
   </section>
 
   <footer>
-    <div class="mark"><span class="std-only">myStereo.</span><span class="el-only">myStereo Elite</span></div>
+    <div class="mark"><span class="std-only">myStereo.</span><span class="el-only">myStereo</span></div>
     <p class="own-line">Own your media.</p>
     <p>Built by BC Gordon.</p>
     <p class="club"><img src="/assets/club-logo-96.png" alt="" width="40" height="40">An Own Your Media Club project · ownyourmedia.club</p>
   </footer>
 </main>
-<a class="backbar" id="backbar" href="./" hidden>‹ Back to myStereo<span class="el-only"> Elite</span></a>
+<a class="backbar" id="backbar" href="./" hidden>‹ Back to myStereo</a>
 <script>
 (() => {
   const inFrame = window.self !== window.top;
