@@ -204,6 +204,45 @@ img{height:auto}
 .endlinks{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 22px;margin:16px 0 4px;font-size:16px}.endlinks a{padding:10px 0}
 /* all images sit straight (BC, Nov 3) */
 .taped,.taped figcaption,.typed,.ac-shot,.appcard:nth-child(2) .ac-shot,.end img{transform:none!important}
+
+/* Passes, Nov 4: two-sided cards (tap to flip) */
+.hang{display:flex;flex-direction:column;align-items:center}
+.pstrap{width:14px;height:32px;border-radius:2px;background:var(--strap,#1C1B19)}
+.pclip{position:relative;width:52px;height:27px;margin-bottom:-12px;z-index:3;border-radius:6px 6px 3px 3px;background:linear-gradient(#d4d7db,#8f949b);box-shadow:0 2px 3px rgba(0,0,0,.25)}
+.pclip::after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:10px;margin-left:-6px;border-radius:2px;background:#7d8288}
+.pcard{all:unset;display:block;position:relative;width:220px;max-width:100%;aspect-ratio:2.125/3.375;perspective:1000px;container-type:inline-size;cursor:pointer;font-family:var(--tw)}
+.pcard:focus-visible{outline:3px solid var(--red);outline-offset:4px;border-radius:15px}
+.pinner{position:absolute;inset:0;display:block;transition:transform .6s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.pcard.on .pinner{transform:rotateY(180deg)}
+@media (prefers-reduced-motion:reduce){.pinner{transition:none}}
+.pface{position:absolute;inset:0;display:block;border-radius:15px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 16px 28px rgba(0,0,0,.22);text-align:left;line-height:1.3}
+.pface::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.22) 0 16%,transparent 32% 70%,rgba(255,255,255,.1) 84%);pointer-events:none}
+.pback{transform:rotateY(180deg)}
+.pslot{position:absolute;left:50%;top:4.5cqw;width:30cqw;height:6.5cqw;margin-left:-15cqw;border-radius:99px;background:var(--paper);box-shadow:inset 0 2px 4px rgba(0,0,0,.35);z-index:2}
+.pcard .ab{position:absolute;left:0;right:0}.pcard .c{text-align:center}
+.pcard .cap{font-size:3.5cqw;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.pcard .xs{font-size:3cqw;letter-spacing:.14em;text-transform:uppercase}
+.pcard .motto{font-size:3.3cqw;letter-spacing:.06em}
+.pseal{position:absolute;left:50%;height:auto;border-radius:50%;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.pbars{height:9cqw;background:linear-gradient(#C2503A 0 30%,transparent 30% 35%,#DEAE5B 35% 65%,transparent 65% 70%,#2E2D28 70%)}
+.pfield{position:absolute;left:8cqw;right:8cqw}
+.pfield b{display:block;font-size:2.8cqw;letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-bottom:1.2cqw}
+.pfield span{display:block;height:5.5cqw;border-bottom:1px solid currentColor;opacity:.55}
+.pperks{position:absolute;left:8cqw;right:8cqw;font-size:3.3cqw;line-height:1.85}
+.pperks div{display:flex;justify-content:space-between;gap:3cqw;border-bottom:1px dashed var(--dash)}
+.pstamp{position:absolute;right:6cqw;top:60cqw;transform:rotate(-14deg);padding:1.3cqw 2.4cqw;border:.7cqw solid #DEAE5B;color:#DEAE5B;border-radius:1.4cqw;font-size:3.4cqw;font-weight:700;letter-spacing:.12em}
+.pqr{position:absolute;left:8cqw;right:8cqw;bottom:5cqw;display:flex;align-items:flex-end;justify-content:space-between;gap:3cqw}
+.pqr b{display:block;font-size:3.6cqw;letter-spacing:.04em}
+.pqr span{display:block;font-size:2.7cqw;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.pqr img{width:20cqw;height:20cqw;border-radius:1.5cqw;flex:none}
+.pcard.mem .pface{background:radial-gradient(circle at 30% 20%,#FFFDF8,#F2EBDA 65%);color:#1C1B19;--dash:rgba(28,27,25,.25)}
+.pcard.all .pface{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px),radial-gradient(circle at 30% 20%,#E5573F,#C8442B 60%,#A9361F);color:#F4EDE0;--dash:rgba(244,237,224,.35)}
+.pcard.all .pbars{background:linear-gradient(#F4EDE0 0 30%,transparent 30% 35%,#DEAE5B 35% 65%,transparent 65% 70%,#2E2D28 70%)}
+.pflip{margin-top:12px;font:700 12px/1 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:700px){.tier{grid-template-columns:160px minmax(0,1fr)}.pcard{width:160px}}
+@media (max-width:420px){.tier{grid-template-columns:minmax(0,1fr)}.pcard{width:230px}.tier .info{margin-top:18px}}
+.manifesto{margin:26px 0 6px;padding:4px 0 24px;border-bottom:1px dashed var(--rule)}.manifesto p{margin:0;font:700 clamp(21px,3.4vw,29px)/1.35 var(--tw)}.manifesto .red{margin-top:10px;color:var(--red)}
+.gintro{margin:20px 0 4px;font-size:19px}.gintro b{color:var(--ink)}
 /* Club colors, Nov 3: follow Flipside's Widescreen Mode (cream paper, ink, OYM red, gold, the three stripes). Same as the app pages. */
 :root{--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--red:#C8442B;--stripe:#C2503A;--gold:#D9A441;--muted:#6E665A;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 html{background:var(--paper)}
@@ -268,11 +307,46 @@ h1{font-weight:700}
   <section class="sec" id="passes"><h2><span>§1</span> Backstage passes <small>coming soon</small></h2>
     <p class="intro">Two ways into the club, each one a pass you can hang on a lanyard. The apps stay free no matter what. Passes are how you support the club and get in on the in-person stuff.</p>
     <div class="tiers">
-      <div class="tier"><div class="hang"><div class="clip" style="--strap:#1C1B19"></div>
-        <div class="bp bp1" role="img" aria-label="The Member pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt="" width="480" height="480"><div class="lvl">MEMBER</div><div class="kind">ONE YEAR · NO RENEWAL</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0001</div></div></div></div>
+      <div class="tier"><div class="hang"><div class="pstrap" style="--strap:#1C1B19"></div><div class="pclip"></div>
+        <button class="pcard mem" type="button" aria-label="The Member pass. Tap to turn it over."><span class="pinner">
+      <span class="pface"><span class="pslot"></span><div class="ab c cap" style="top:15cqw;color:var(--red)">Own Your Media Club</div>
+      <img class="pseal" src="/assets/oym-seal.webp" alt="" width="480" height="480" style="top:22cqw;width:44cqw;margin-left:-22cqw">
+      <div class="ab c" style="top:68cqw;font-size:13cqw;font-weight:700">MEMBER</div>
+      <div class="ab c" style="top:85cqw;font-size:4.4cqw;font-weight:700;color:var(--red)">It’s yours. Not theirs.</div>
+      <div class="ab pbars" style="top:94cqw"></div>
+      <div class="ab c motto" style="top:107cqw">Own it · Enjoy it · Share it</div>
+      <div class="pfield" style="top:118cqw"><b>Member</b><span></span></div>
+      <div class="ab xs" style="bottom:5cqw;padding:0 8cqw;display:flex;justify-content:space-between"><span>No. 0001</span><span>Est. 2026 · Twin Cities</span></div></span>
+      <span class="pface pback"><span class="pslot"></span><div class="ab c cap" style="top:15cqw;color:var(--red)">Own Your Media Club</div>
+      <div class="ab c" style="top:21cqw;font-size:6.4cqw;font-weight:700">MEMBER</div>
+      <div class="ab c xs" style="top:31cqw;color:var(--muted)">What this card gets you</div>
+      <div class="pperks" style="top:40cqw"><div><span>The card in the mail</span><span>✓</span></div><div><span>Club stickers</span><span>✓</span></div><div><span>Word on every gathering</span><span>✓</span></div><div><span>Your name in the Liner Notes</span><span>✓</span></div></div>
+      <div class="ab c" style="top:80cqw;padding:0 8cqw;font-size:3cqw;line-height:1.5;color:var(--muted)">Gathering costs depend on the event.</div>
+      <div class="ab pbars" style="top:94cqw;height:5cqw"></div>
+      <div class="ab c" style="top:104cqw;padding:0 7cqw;font-size:4cqw;line-height:1.4;font-weight:700">Own what you love. Go find your people. That’s the whole thing.</div>
+      <div class="ab c" style="top:125cqw;font-size:3.6cqw;letter-spacing:.16em;text-transform:uppercase;font-weight:700">Valid offline only</div>
+      <div class="pqr"><div><b>Find your name →</b><span>ownyourmedia.club/liner-notes</span></div><img src="/assets/qr-liner-notes.svg" alt="QR code to the club credits" width="132" height="132"></div></span>
+        </span></button><span class="pflip">Tap to flip</span></div>
         <div class="info"><h3>Member</h3><p class="how">One time · coming soon</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Word on every gathering (the cost depends on the event)</li><li><b>Liner Notes:</b> your name in the <a href="/liner-notes/">club credits</a></li><li>No auto-renew, ever. Want another year? Join again.</li></ul></div></div>
-      <div class="tier"><div class="hang"><div class="clip" style="--strap:#D8452E"></div>
-        <div class="bp bp2" role="img" aria-label="The All Access pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt="" width="480" height="480"><div class="stamp">RENEWS</div><div class="lvl">ALL<br>ACCESS</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0042</div></div></div></div>
+      <div class="tier"><div class="hang"><div class="pstrap" style="--strap:#C2503A"></div><div class="pclip"></div>
+        <button class="pcard all" type="button" aria-label="The All Access pass. Tap to turn it over."><span class="pinner">
+      <span class="pface"><span class="pslot"></span><div class="ab c cap" style="top:15cqw">Own Your Media Club</div>
+      <img class="pseal" src="/assets/oym-seal.webp" alt="" width="480" height="480" style="top:22cqw;width:40cqw;margin-left:-20cqw">
+      <div class="pstamp">RENEWS</div>
+      <div class="ab c" style="top:66cqw;font-size:13.5cqw;font-weight:700;line-height:.95">ALL<br>ACCESS</div>
+      <div class="ab pbars" style="top:94cqw"></div>
+      <div class="ab c motto" style="top:107cqw">Own it · Enjoy it · Share it</div>
+      <div class="pfield" style="top:118cqw"><b>Member</b><span></span></div>
+      <div class="ab xs" style="bottom:5cqw;padding:0 8cqw;display:flex;justify-content:space-between"><span>No. 0042</span><span>Member since 2026</span></div></span>
+      <span class="pface pback"><span class="pslot"></span><div class="ab c cap" style="top:15cqw">Own Your Media Club</div>
+      <div class="ab c" style="top:21cqw;font-size:6.4cqw;font-weight:700">ALL ACCESS</div>
+      <div class="ab c xs" style="top:31cqw;opacity:.8">All access, all year</div>
+      <div class="pperks" style="top:40cqw"><div><span>Everything in Member</span><span>✓</span></div><div><span>Members-only Letters</span><span>✓</span></div><div><span>Crate Digs, every quarter</span><span>✓</span></div><div><span>Less at the door</span><span>✓</span></div><div><span>Smaller get-togethers</span><span>✓</span></div><div><span>First word on new places</span><span>✓</span></div></div>
+      <div class="ab pbars" style="top:96cqw;height:5cqw"></div>
+      <div class="ab c" style="top:106cqw;padding:0 7cqw;font-size:4cqw;line-height:1.4;font-weight:700">Own what you love. Go find your people. That’s the whole thing.</div>
+      <div class="ab c" style="top:127cqw;font-size:3.6cqw;letter-spacing:.16em;text-transform:uppercase;font-weight:700">Valid offline only</div>
+      <div class="pqr"><div><b>Find your name →</b><span>ownyourmedia.club/liner-notes</span></div><img src="/assets/qr-liner-notes-red.svg" alt="QR code to the club credits" width="132" height="132"></div></span>
+        </span></button><span class="pflip">Tap to flip</span></div>
         <div class="info"><h3>All Access</h3><p class="how">Monthly or yearly · coming soon</p><ul><li class="plus">Everything in Member</li><li><b>Members-only posts</b> from Letters from BC Gordon on Substack</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Less at the door</b> for gatherings, when there’s a cost</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul></div></div>
     </div>
     <p class="fine">Passes aren’t open yet. Want a heads-up when they are? Email <b>hello@ownyourmedia.club</b>.</p>
@@ -335,6 +409,7 @@ h1{font-weight:700}
   </section>
 
   <section class="sec" id="gather"><h2><span>§5</span> Gatherings <small>phones in pockets</small></h2>
+    <p class="gintro"><b>Bring it to the table.</b> Small nights in the Twin Cities for people who’d rather be in the room: a record, a book, a mixtape, and the people you want to share it with.</p>
     <ul class="list">
       <li><span class="when">COMING SOON</span><b>Listening night</b><p>Bring one record you love. We play a side of each and talk about why.</p></li>
       <li><span class="when">COMING SOON</span><b>Record and book swap</b><p>Bring what you’re done with, leave with something new.</p></li>
@@ -353,10 +428,11 @@ h1{font-weight:700}
   </section>
 
   <section class="sec" id="rules"><h2><span>§7</span> Club rules</h2>
+    <div class="manifesto"><p>Buy the record you love.</p><p>Play it until you know every word.</p><p>Then go find your people and play it for them.</p><p class="red">That’s the whole thing.</p></div>
     <ol class="rules">
       <li><div><b>Own what you love.</b><p>Keep the records, the files, the shelf. Nobody can take back what you own.</p></div></li>
       <li><div><b>Free, with no ads.</b><p>These are made for fun and for friends. Nothing here is trying to keep you scrolling.</p></div></li>
-      <li><div><b>Then put it down.</b><p>Play the album, log the shelf, then go find your people.</p></div></li>
+      <li><div><b>Then put it down.</b><p>Play the album, log the shelf, then close the app. The good part happens in the room.</p></div></li>
     </ol>
   </section>
 </main>
@@ -418,6 +494,10 @@ h1{font-weight:700}
     });
   }).catch(function () {});
 })();
+</script>
+
+<script>
+document.querySelectorAll('.pcard').forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('on')})});
 </script>
 </body>
 </html>
