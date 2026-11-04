@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>myShelf · Own Your Media Club</title>
+<meta name="description" content="A catalog for the physical stuff: records, CDs, Blu-rays, DVDs, VHS and books. Free, with no ads.">
+<link rel="canonical" href="https://ownyourmedia.club/shelf/">
+<meta property="og:title" content="myShelf · Own Your Media Club">
+<meta property="og:description" content="A catalog for the physical stuff: records, CDs, Blu-rays, DVDs, VHS and books. Free, with no ads.">
+<meta property="og:url" content="https://ownyourmedia.club/shelf/">
+<meta property="og:image" content="https://ownyourmedia.club/myshelf/icon-512.png">
+<meta name="theme-color" content="#F2EADB">
+<link rel="icon" type="image/png" href="/assets/club-favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/club-apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet">
+<style>
+/* Colors and type follow Flipside's Widescreen Mode: cream paper, ink, OYM red, gold, and the three stripes. */
+:root{--tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace;--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--ink2:#3A3631;--muted:#6E665A;--red:#C8442B;--gold:#D9A441;--stripe-r:#C2503A;--stripe-g:#DEAE5B;--stripe-k:#2E2D28;--rule:rgba(28,27,25,.18);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color-scheme:light}
+*{box-sizing:border-box}
+html{background:var(--paper);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;color:var(--ink);font:400 19px/1.62 var(--tw);-webkit-font-smoothing:antialiased;background:var(--grain),radial-gradient(circle at 20% 0%,rgba(255,255,255,.55),transparent 50%),var(--paper);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.col{max-width:780px;margin:0 auto}
+.label{font:700 13px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase}
+.mast{display:flex;align-items:center;gap:16px;padding-block:22px 18px}
+.mast .seal{width:58px;border-radius:50%;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18));flex:none}
+.mast .t{font:700 13px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase}
+.mast .t a{text-decoration:none}
+.mast nav{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 18px;font:400 16px/1 var(--tw)}
+.mast nav a{padding:12px 0}
+.mast nav a[aria-current]{text-decoration:none;color:var(--red);font-weight:700}
+.stripes{max-width:780px;height:22px;margin:0 auto;background:var(--grain),linear-gradient(var(--stripe-r) 0 6px,transparent 6px 8px,var(--stripe-g) 8px 14px,transparent 14px 16px,var(--stripe-k) 16px 22px)}
+.hero{display:grid;grid-template-columns:120px minmax(0,1fr);gap:26px;align-items:start;margin-top:44px}
+.hero .icon{width:120px;height:120px;border-radius:27px;box-shadow:0 8px 16px rgba(0,0,0,.2)}
+.hero .kick{margin:0;color:var(--red)}
+h1{margin:8px 0 0;font:700 clamp(42px,7vw,62px)/1.04 var(--tw);letter-spacing:0}
+h1 span{color:var(--red)}
+.lede{margin:16px 0 0;font-size:20px;color:var(--ink2)}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;background:var(--ink);color:#F4EDE0;text-decoration:none;font:700 18px/1 var(--tw);border-radius:6px;box-shadow:3px 3px 0 var(--red)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.acts .more{display:inline-block;padding:12px 0;font-size:17px}
+.fine{margin:14px 0 0;font-size:15px;color:var(--muted)}
+.shot{margin:40px 0 0}
+.shot img{width:100%;height:auto;border-radius:6px;box-shadow:0 2px 3px rgba(0,0,0,.12),0 18px 30px rgba(60,40,20,.2)}
+.shot.wide{transform:rotate(-.8deg)}
+.shot.phone{max-width:300px;margin-inline:auto}
+.shot.panel{max-width:340px;margin-inline:auto}.shot.panel img{border-radius:14px}
+.shot.small{max-width:420px;margin-inline:auto;transform:rotate(-.8deg)}.shot.small figcaption{transform:rotate(.8deg)}
+.shot.phone img{border-radius:28px}
+.shot.tl{transform:rotate(-2deg)}.shot.tr{transform:rotate(1.6deg)}
+.shot.tl figcaption{transform:rotate(2deg)}.shot.tr figcaption{transform:rotate(-1.6deg)}.shot.wide figcaption{transform:rotate(.8deg)}
+.shot figcaption{margin-top:16px;text-align:center;color:var(--muted);font:400 15px/1.4 var(--tw)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;align-items:start;margin-top:44px}
+.pair .shot{margin:0}
+.side{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:center;margin-top:26px}.side .shot{margin:0}.side>div>p{margin:0 0 14px;font-size:18px;color:var(--ink2)}.side .grid{grid-template-columns:minmax(0,1fr);margin-top:0}.side.top{align-items:start}.sub3{margin:30px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}.side.left{grid-template-columns:300px minmax(0,1fr)}
+@media (max-width:640px){.side,.side.left{grid-template-columns:minmax(0,1fr)}}.pair .shot.tr{margin-top:0}
+.sec{margin-top:80px;scroll-margin-top:16px}
+.sec h2{margin:0;display:flex;align-items:baseline;gap:12px;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.sec h2 span{color:var(--gold)}
+.sec .intro{margin:20px 0 0;font-size:19px;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px;margin-top:8px}
+.grid div{padding:18px 0;border-bottom:1px dashed var(--rule)}
+.grid h3,.qa h3{margin:0;font:700 20px/1.25 var(--tw)}
+.grid p,.qa p{margin:6px 0 0;font-size:17px;color:var(--ink2)}
+.big{margin:26px 0 0;font:700 clamp(28px,4.6vw,38px)/1.15 var(--tw)}
+.steps{margin:18px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;padding:14px 0;border-bottom:1px dashed var(--rule)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);font:700 34px/.9 var(--tw);color:var(--red)}
+.steps b{display:block;font:700 20px/1.25 var(--tw)}
+.steps p{margin:4px 0 0;font-size:17px;color:var(--ink2)}
+.steps p b{display:inline;font:inherit;font-weight:700;overflow-wrap:anywhere}
+.qa{margin-top:8px}
+.qa div{padding:16px 0;border-bottom:1px dashed var(--rule)}
+.qa div:last-child{border-bottom:0}
+.note{margin:22px 0 0;padding:14px 18px;background:var(--sheet);border:1px solid var(--rule);font-size:17px}
+.note b{font-weight:700}
+.take{display:block;margin-top:14px;font:400 19px/1.4 var(--tw);color:var(--red);padding-left:16px;border-left:3px solid var(--gold)}
+.close{margin-top:84px;text-align:center}
+.close .big{margin:0 0 22px}
+.end{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 30px;padding-block:72px 34px}
+.end nav{display:flex;flex-wrap:wrap;gap:4px 22px;font-size:16px}
+.end nav a{padding:10px 0}
+.end .made{flex-basis:100%;color:var(--muted);font-size:15px}
+.badge{display:flex;align-items:center;gap:14px;text-decoration:none}
+.badge span{font:700 14px/1 var(--tw);letter-spacing:.22em;text-transform:uppercase}
+.badge img{width:52px;height:52px;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,.14)}
+.foot-stripes{height:46px;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--grain),linear-gradient(var(--stripe-r) 0 12px,transparent 12px 16px,var(--stripe-g) 16px 28px,transparent 28px 32px,var(--stripe-k) 32px 46px)}
+.passes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:26px}
+.pass{position:relative;padding:28px 26px 34px;background:var(--grain),var(--sheet);border:1px solid var(--rule);border-radius:10px;box-shadow:0 2px 3px rgba(0,0,0,.06),0 14px 28px rgba(60,40,20,.1);overflow:hidden}
+.pass::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(#C2503A 0 3px,#DEAE5B 3px 6px,#2E2D28 6px 8px)}
+.pass h3{margin:0;font:700 28px/1.1 var(--tw)}
+.pass .price{margin:14px 0 0;font:700 40px/1 var(--tw)}
+.pass .price small{font-size:17px;font-weight:400;color:var(--muted)}
+.pass .or{margin:6px 0 0;font-size:16px;color:var(--ink2)}
+.pass ul{margin:18px 0 0;padding:0;list-style:none}
+.pass li{position:relative;padding:8px 0 8px 22px;font-size:17px;line-height:1.45;border-top:1px dashed var(--rule)}
+.pass li::before{content:"";position:absolute;left:3px;top:17px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.pass li.plus{color:var(--muted)}
+.pass .soon{display:inline-flex;align-items:center;min-height:46px;margin-top:20px;padding:0 18px;border:2px dashed var(--ink);border-radius:6px;font:700 16px/1 var(--tw)}
+.pass .ships{margin:12px 0 0;font-size:15px;color:var(--muted)}
+@media (max-width:640px){.passes{grid-template-columns:minmax(0,1fr)}}
+/* all images sit straight (BC, Nov 3) */
+.shot,.shot img,.shot figcaption{transform:none!important}
+@media (max-width:640px){
+  body{font-size:18px}
+  .mast{flex-wrap:wrap}.mast .t{flex:1}.mast nav{margin-left:0;width:100%;justify-content:flex-start}
+  .hero{grid-template-columns:minmax(0,1fr);gap:18px;margin-top:30px}
+  .hero .icon{width:76px;height:76px;border-radius:17px}
+  .lede{font-size:18px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .pair{gap:22px}.pair .shot.tr{margin-top:0}
+  .shot.wide{margin-inline:-6px}
+}
+
+.placecard{padding:24px 0 26px;border-bottom:1px solid var(--rule)}
+.placecard:last-child{border-bottom:0}
+.placecard .plogo{display:block;margin-bottom:14px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.placecard .plogo.wide{height:56px;width:auto;max-width:100%}
+.placecard .plogo.sq{height:72px;width:72px;border-radius:14px}
+.placecard h3{margin:0;font:700 24px/1.2 var(--tw)}
+.placecard .where{display:block;margin-top:3px;color:var(--muted);font-size:15px}
+.placecard q{display:block;margin-top:10px;font-size:19px}
+.placecard p{margin:8px 0 0;font-size:17px;color:var(--ink2)}
+.placecard .take{margin-top:12px;padding-left:16px;border-left:3px solid var(--gold);color:var(--ink)}
+.placecard .go{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-size:16px}
+.placecard .since{display:block;margin-top:4px;font:700 12px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.empty{margin:20px 0 0;padding:22px;border:1px dashed var(--rule);border-radius:8px;color:var(--muted);text-align:center}
+.credits{columns:2;column-gap:40px;margin:24px 0 0;padding:0;list-style:none}
+.credits li{break-inside:avoid;padding:7px 0;font-size:19px;border-bottom:1px dashed var(--rule)}
+.yr{margin:34px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+@media (max-width:640px){.credits{columns:1}}
+
+:root{--app:#C93C25;--app-ink:#C93C25}
+</style>
+</head>
+<body>
+<div class="col">
+<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">The Own Your Media Club Handbook</a></div><nav aria-label="Pages"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/">Flipside</a><a href="/shelf/" aria-current="page">myShelf</a></nav></header>
+</div>
+<div class="stripes" role="presentation"></div>
+<main class="col">
+<section class="hero"><img class="icon" src="/myshelf/icon-512.png" alt="" width="120" height="120"><div><p class="kick label">A catalog for the physical stuff</p><h1>Everything<br><span>on your shelf.</span></h1><p class="lede">Records, CDs, Blu-rays, DVDs, VHS tapes and books, all in one place. Know what you own before you buy it twice, actually use what you have, and rediscover the stuff you forgot you loved.</p><div class="acts"><a class="btn" href="https://myshelf.ownyourmedia.club/">Open myShelf</a></div><p class="fine">Free · Phone and computer · Your shelf is private to you</p></div></section>
+<figure class="shot wide"><img src="/shelf/shots/library.webp" width="1400" height="719" alt="Your whole collection. Search it, or filter by format." loading="lazy"><figcaption>Your whole collection. Search it, or filter by format.</figcaption></figure>
+<section class="sec" id="add"><h2><span>§1</span> Three ways to get it in</h2><p class="intro">Start with one shelf, not the whole house.</p><div class="pair"><figure class="shot panel tl"><img src="/shelf/shots/add-single.webp" width="560" height="898" alt="One at a time." loading="lazy"><figcaption>One at a time.</figcaption></figure><figure class="shot panel tr"><img src="/shelf/shots/add-bulk.webp" width="560" height="848" alt="A whole shelf at once." loading="lazy"><figcaption>A whole shelf at once.</figcaption></figure></div><div class="grid"><div><h3>Single</h3><p>Title, format, genre, artist or director or author, year and a note. Done.</p></div><div><h3>Bulk</h3><p>Pick a format and type one title per line. Add the artist, genre and year if you like: Rumours | Fleetwood Mac | Rock | 1977.</p></div><div><h3>Scan</h3><p>Point your phone’s camera at the barcode and let it fill in the rest.</p></div><div><h3>Wish List</h3><p>What you’re hunting for at the record store and the used bookshop, kept separate from what you own.</p></div></div></section>
+<section class="sec" id="formats"><h2><span>§2</span> Just what you collect</h2><div class="side"><div><p>Only into vinyl and books? Turn off the formats you don’t have. The filters, the forms and the TV Guide only show what’s on your shelves.</p><p>Vinyl, CD, Blu-ray, DVD, VHS and books, each with its own switch.</p></div><figure class="shot panel tr"><img src="/shelf/shots/formats.webp" width="480" height="724" alt="Settings: one switch per format." loading="lazy"><figcaption>Settings: one switch per format.</figcaption></figure></div></section>
+<section class="sec" id="earn"><h2><span>§3</span> Earn It</h2><div class="side"><div><p>A reward system for actually using what you own. Set a rule for each format, like play 20 records before you buy another, and every time you press Play on something you already have, it counts.</p><p>The bar fills as you go. When you hit the number, you’ve earned the next one. It’s a club about owning your media, not hoarding it.</p></div><figure class="shot panel tl"><img src="/shelf/shots/earn-it.webp" width="560" height="848" alt="Earn It: 10 of 20 records played." loading="lazy"><figcaption>Earn It: 10 of 20 records played.</figcaption></figure></div></section>
+<section class="sec" id="tvguide"><h2><span>§4</span> The TV Guide</h2><p class="intro">Rediscover your own media. Every night of the week, 7 to 11, myShelf schedules something from your shelves: an album at 7, a show at 8, a movie at 9. Check it off when you’ve watched or played it. Don’t like the lineup? Shuffle it.</p><figure class="shot wide"><img src="/shelf/shots/tvguide2.webp" width="1400" height="757" alt="A week of nights, all from your own collection." loading="lazy"><figcaption>A week of nights, all from your own collection.</figcaption></figure></section>
+<section class="sec" id="start"><h2><span>§5</span> Get started</h2><ol class="steps"><li><div><b>Open myShelf</b><p>Go to <a href="https://myshelf.ownyourmedia.club/">myshelf.ownyourmedia.club</a> and set up your library with an email and a password.</p></div></li><li><div><b>Put it on your Home Screen</b><p>iPhone: in Safari, tap Share, then Add to Home Screen. Android: in Chrome, tap ⋮, then Add to Home screen.</p></div></li><li><div><b>Start with one shelf</b><p>Not the whole house. One shelf, tonight. Bulk makes it quick.</p></div></li></ol></section>
+<p class="note"><b>Founder’s note:</b> BC’s own copy is still called the Book of Rao, the holiest text of the planet Krypton.</p>
+<section class="sec" id="questions"><h2><span>§6</span> Good questions</h2><div class="qa"><div><h3>Does it cost anything?</h3><p>No. No subscription, no ads, no catch.</p></div><div><h3>Who can see my shelf?</h3><p>Just you. You sign in with your own email and password, on any phone or computer.</p></div><div><h3>Used the old address?</h3><p>myShelf moved to its own address. Sign in at <a href="https://myshelf.ownyourmedia.club/">myshelf.ownyourmedia.club</a> and everything’s there.</p></div></div></section>
+<section class="close"><p class="big">What’s on your shelf?</p><a class="btn" href="https://myshelf.ownyourmedia.club/">Open myShelf</a></section>
+</main>
+<footer class="col end"><nav aria-label="More"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/">Flipside</a><a href="/places/">Places</a><a href="/liner-notes/">Liner Notes</a></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
+<div class="foot-stripes" role="presentation"></div>
+</body>
+</html>

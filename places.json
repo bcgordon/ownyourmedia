@@ -1,0 +1,40 @@
+{
+  "_howto": "Every place we've featured. The first three with \"featured\": true show on the homepage; the rest live on ownyourmedia.club/places/ as the archive. To rotate: set the old one's featured to false (it moves to the archive), and add the new one with featured true. Put new logos in assets/logos/.",
+  "updated": "November 2026",
+  "places": [
+    {
+      "name": "Present Company",
+      "featured": true,
+      "since": "October 2026",
+      "where": "Milton Square · St. Paul",
+      "logo": "/assets/present-company.webp",
+      "logoShape": "wide",
+      "quote": "Let's be here together.",
+      "what": "An analog lifestyle shop with phone-free events: fewer screens, more repair, and real time with people of every generation.",
+      "take": "A hidden gem in St. Anthony Park for anyone who's lost an evening to doomscrolling. Dig through vinyl, CDs and tapes, plus the boomboxes and Walkmans to play them. Tell Mick we sent ya.",
+      "url": "https://presentcompanyanalog.com/"
+    },
+    {
+      "name": "Agharta Records",
+      "featured": true,
+      "since": "October 2026",
+      "where": "University Ave · St. Paul",
+      "logo": "/assets/logos/agharta.webp",
+      "logoShape": "square",
+      "what": "New and collectible vinyl: rock, punk and metal, jazz, funk and soul, electronic, and a local bin worth digging through.",
+      "take": "The best vinyl shop in St. Paul, hands down. We've been many times and always find something amazing at a decent price.",
+      "url": "https://www.aghartarecords.com/"
+    },
+    {
+      "name": "Inkwell Booksellers",
+      "featured": true,
+      "since": "October 2026",
+      "where": "E Hennepin Ave · Minneapolis",
+      "logo": "/assets/logos/inkwell.webp",
+      "logoShape": "wide",
+      "what": "An independent bookshop with a café and a cozy reading nook. Grab a book and a pastry, then settle in for a while.",
+      "take": "Worth checking out. It's a short walk from a bunch of great Northeast Minneapolis restaurants, so make a night of it.",
+      "url": "https://www.inkwellbooksellersco.com/"
+    }
+  ]
+}

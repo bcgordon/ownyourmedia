@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Own Your Media Club</title>
 <meta name="description" content="Homemade tools for owning your music, movies and books, plus Twin Cities places to go offline.">
+<meta property="og:image" content="https://ownyourmedia.club/assets/oym-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://ownyourmedia.club/">
 <meta property="og:title" content="Own Your Media Club">
 <meta property="og:description" content="Homemade tools for owning your music, movies and books, plus Twin Cities places to go offline.">
@@ -193,13 +197,60 @@ h1 i{font-style:normal}
 /* phones turned sideways: letter across the full width, cassette below it, never beside it */
 @media (max-height:500px) and (orientation:landscape){.open{grid-template-columns:minmax(0,1fr);gap:30px}.taped{max-width:220px;margin:0 auto}.typed{transform:none}}
 @media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:110%;max-width:none;margin-left:-5%;box-shadow:none}.open{gap:30px}}
+
+img{height:auto}
+.tiers{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:700px){.tiers{grid-template-columns:minmax(0,1fr)}}
+.endlinks{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 22px;margin:16px 0 4px;font-size:16px}.endlinks a{padding:10px 0}
+/* all images sit straight (BC, Nov 3) */
+.taped,.taped figcaption,.typed,.ac-shot,.appcard:nth-child(2) .ac-shot,.end img{transform:none!important}
+/* Club colors, Nov 3: follow Flipside's Widescreen Mode (cream paper, ink, OYM red, gold, the three stripes). Same as the app pages. */
+:root{--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--red:#C8442B;--stripe:#C2503A;--gold:#D9A441;--muted:#6E665A;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html{background:var(--paper)}
+body{background:var(--grain),radial-gradient(circle at 20% 0%,rgba(255,255,255,.55),transparent 50%),var(--paper)}
+h1{font-weight:700}
+.sec h2{font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--red)}
+.sec h2 span{color:var(--gold)}
+.sec h2 small{color:var(--muted)}
+.stripes{background:var(--grain),linear-gradient(#C2503A 0 6px,transparent 6px 8px,#DEAE5B 8px 14px,transparent 14px 16px,#2E2D28 16px 22px)}
+.mast .t{font-weight:700;font-size:14px;letter-spacing:.14em}
+.end .badge{display:inline-flex;align-items:center;gap:14px;margin-top:22px;text-decoration:none}
+.end .badge span{display:inline;margin:0;font:700 14px/1 var(--tw);letter-spacing:.22em;text-transform:uppercase}
+.end .badge img{width:52px;height:52px;margin:0;border-radius:12px;transform:none;box-shadow:0 3px 8px rgba(0,0,0,.14)}
+.foot-stripes{height:46px;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));background:var(--grain),linear-gradient(#C2503A 0 12px,transparent 12px 16px,#DEAE5B 16px 28px,transparent 28px 32px,#2E2D28 32px 46px)}
+.end{padding-bottom:44px}
+
+/* §2 the apps, front and center: one card each, with a phone shot */
+.apps{display:grid;gap:26px;margin-top:26px}
+.appcard{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:center;padding:28px 28px 28px 30px;background:var(--grain),var(--sheet);border:1px solid var(--rule);border-radius:10px;box-shadow:0 2px 3px rgba(0,0,0,.06),0 14px 28px rgba(60,40,20,.1);overflow:hidden}
+.appcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(#C2503A 0 3px,#DEAE5B 3px 6px,#2E2D28 6px 8px)}
+.ac-icon{width:96px;height:96px;border-radius:22px;box-shadow:0 6px 12px rgba(0,0,0,.18)}
+.appcard h3{margin:18px 0 0;font:700 32px/1.1 var(--tw)}
+.ac-tag{display:block;margin-top:6px;font:700 13px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.appcard p{margin:12px 0 0;font-size:17px;line-height:1.6}
+.appcard .ac-note{font-size:15.5px;color:#57524b}
+.ac-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 20px;background:var(--ink);color:#F4EDE0;text-decoration:none;font:700 17px/1 var(--tw);border-radius:6px;box-shadow:3px 3px 0 var(--red)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.ac-acts .go{margin-top:0}
+.ac-shot{width:190px;height:auto;border-radius:22px;box-shadow:0 2px 3px rgba(0,0,0,.12),0 16px 26px rgba(60,40,20,.22);transform:rotate(2deg)}
+.appcard:nth-child(2) .ac-shot{transform:rotate(-2deg)}
+#detox{margin-top:16px}
+@media (max-width:640px){
+  .appcard{display:block;padding:22px 18px 28px}
+  .ac-icon{width:68px;height:68px;border-radius:16px}
+  .appcard h3{margin-top:14px;font-size:27px}
+  .appcard h3,.ac-tag{padding-right:104px}
+  .ac-shot{position:absolute;top:20px;right:16px;width:88px;border-radius:12px}
+  .appcard .ac-text>p:first-of-type{margin-top:22px}
+}
 </style>
 </head>
 <body>
 <header class="mast" id="top">
-  <img src="/assets/oym-seal.webp" alt="Own Your Media Club seal">
+  <img src="/assets/oym-seal.webp" alt="Own Your Media Club seal" width="480" height="480">
   <div class="t">The Own Your Media Club Handbook</div>
-  <nav aria-label="Main"><a href="#passes">Passes</a><a href="#places">Places</a><a href="#tools">Tools</a><a href="#club">The club</a><a href="#gather">Gatherings</a><a href="#story">About</a><a href="#rules">Rules</a></nav>
+  <nav aria-label="Main"><a href="#passes">Passes</a><a href="#tools">Apps</a><a href="#places">Places</a><a href="#club">The club</a><a href="#gather">Gatherings</a><a href="#story">About</a><a href="#rules">Rules</a></nav>
 </header>
 <div class="stripes" aria-hidden="true"></div>
 
@@ -215,51 +266,36 @@ h1 i{font-style:normal}
   </div>
 
   <section class="sec" id="passes"><h2><span>§1</span> Backstage passes <small>coming soon</small></h2>
-    <p class="intro">Three ways into the club, each one a pass you can hang on a lanyard. The apps stay free no matter what. Passes are how you support the club and get in on the in-person stuff.</p>
+    <p class="intro">Two ways into the club, each one a pass you can hang on a lanyard. The apps stay free no matter what. Passes are how you support the club and get in on the in-person stuff.</p>
     <div class="tiers">
       <div class="tier"><div class="hang"><div class="clip" style="--strap:#1C1B19"></div>
-        <div class="bp bp1" role="img" aria-label="The Member pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt=""><div class="lvl">MEMBER</div><div class="kind">ONE YEAR · NO RENEWAL</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0001</div></div></div></div>
-        <div class="info"><h3>Member</h3><p class="how">One-time card · coming soon</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Member pricing at gatherings</li><li>No auto-renew, ever. Want another year? Join again.</li></ul></div></div>
+        <div class="bp bp1" role="img" aria-label="The Member pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt="" width="480" height="480"><div class="lvl">MEMBER</div><div class="kind">ONE YEAR · NO RENEWAL</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0001</div></div></div></div>
+        <div class="info"><h3>Member</h3><p class="how">One time · coming soon</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Word on every gathering (the cost depends on the event)</li><li><b>Liner Notes:</b> your name in the <a href="/liner-notes/">club credits</a></li><li>No auto-renew, ever. Want another year? Join again.</li></ul></div></div>
       <div class="tier"><div class="hang"><div class="clip" style="--strap:#D8452E"></div>
-        <div class="bp bp2" role="img" aria-label="The All Access pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt=""><div class="stamp">RENEWS</div><div class="lvl">ALL<br>ACCESS</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0042</div></div></div></div>
-        <div class="info"><h3>All Access</h3><p class="how">Renews · coming soon</p><ul><li class="plus">Everything in Member</li><li><b>Letters from BC Gordon</b>, BC’s essays by email</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Liner Notes:</b> your name in the credits of the free apps</li><li>A members-only look in myStereo, as a thank-you</li></ul></div></div>
-      <div class="tier"><div class="hang"><div class="clip" style="--strap:#E2A33B"></div>
-        <div class="bp bp3" role="img" aria-label="The Crew pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal-crew.webp" alt=""><div class="stamp st-c">CONTRIBUTOR</div><div class="lvl">CREW</div><div class="kind">BEHIND THE SCENES</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0007</div></div></div></div>
-        <div class="info"><h3>Crew</h3><p class="how">Renews · coming soon</p><p class="why">Help us build community and better apps!</p><ul><li class="plus">Everything in All Access</li><li><b>The yearly gathering</b>, plus a guest</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul></div></div>
+        <div class="bp bp2" role="img" aria-label="The All Access pass"><div class="slot"></div><div class="hd"><span>OWN YOUR MEDIA CLUB</span><span>2026</span></div><img class="seal" src="/assets/oym-seal.webp" alt="" width="480" height="480"><div class="stamp">RENEWS</div><div class="lvl">ALL<br>ACCESS</div><div class="bars"></div><div class="mot">own it · enjoy it · share it<br>ownyourmedia.club</div><div class="ft"><div><b>MEMBER SINCE</b>2026</div><div class="r"><b>NO.</b>0042</div></div></div></div>
+        <div class="info"><h3>All Access</h3><p class="how">Monthly or yearly · coming soon</p><ul><li class="plus">Everything in Member</li><li><b>Members-only posts</b> from Letters from BC Gordon on Substack</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Less at the door</b> for gatherings, when there’s a cost</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul></div></div>
     </div>
-    <p class="fine">Passes aren’t open yet. Want a heads-up when they are? Email <b>bc@runawayanchor.com</b>.</p>
+    <p class="fine">Passes aren’t open yet. Want a heads-up when they are? Email <b>hello@ownyourmedia.club</b>.</p>
   </section>
 
-  <section class="sec" id="places"><h2><span>§2</span> Places worth the trip</h2>
-    <p class="intro"><b>The best features are in person.</b> Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. Go say hi, and if you know a place that belongs here, tell BC next time you see him.</p>
-    <article class="ent place"><div class="plogo"><img src="/assets/present-company.webp" alt="Present Company logo" style="height:52px"></div><div><h3>Present Company</h3><span class="where">Milton Square · St. Paul</span>
-      <q>Let's be here together.</q>
-      <p>An analog lifestyle shop with phone-free events: fewer screens, more repair, and real time with people of every generation.</p>
-      <span class="take"><b>BC's take:</b> A hidden gem in St. Anthony Park for anyone who's lost an evening to doomscrolling. Dig through vinyl, CDs and tapes, plus the boomboxes and Walkmans to play them. Tell Mick we sent ya.</span>
-      <a class="go" href="https://presentcompanyanalog.com/">Visit Present Company →</a></div></article>
-    <article class="ent place"><div class="plogo"><img src="/assets/logos/agharta.webp" alt="Agharta Records logo" style="border-radius:14px"></div><div><h3>Agharta Records</h3><span class="where">University Ave · St. Paul</span>
-      <p>New and collectible vinyl: rock, punk and metal, jazz, funk and soul, electronic, and a local bin worth digging through.</p>
-      <span class="take"><b>BC's take:</b> The best vinyl shop in St. Paul, hands down. We've been many times and always find something amazing at a decent price.</span>
-      <a class="go" href="https://www.aghartarecords.com/">Visit Agharta Records →</a></div></article>
-    <article class="ent place"><div class="plogo"><img src="/assets/logos/inkwell.webp" alt="Inkwell Booksellers logo" style="border-radius:12px"></div><div><h3>Inkwell Booksellers</h3><span class="where">E Hennepin Ave · Minneapolis</span>
-      <p>An independent bookshop with a café and a cozy reading nook. Grab a book and a pastry, then settle in for a while.</p>
-      <span class="take"><b>BC's take:</b> Worth checking out. It's a short walk from a bunch of great Northeast Minneapolis restaurants, so make a night of it.</span>
-      <a class="go" href="https://www.inkwellbooksellersco.com/">Visit Inkwell Booksellers →</a></div></article>
-  </section>
-
-  <section class="sec" id="tools"><h2><span>§3</span> The projects <small>free · no ads</small></h2>
-    <p class="intro">Free · No ads · iPhone &amp; Android</p>
-    <article class="ent app"><div class="logo"><img src="/mystereo/app/icon-512.png" alt="myStereo app icon"></div><div><h3>myStereo</h3><span class="tag">Music · iPhone &amp; Android</span>
-      <p>Your own Plex music library on a stereo-style player with a real turn-and-press knob. No Plex? No problem. It also plays music stored right on your device. Cases, ratings, games and a few secrets.</p>
-      <p class="note">Like to tinker? <a href="/elite/">myStereo Elite</a> adds extras like playing music from your own network share.</p>
-      <a class="go" href="/mystereo/">Meet myStereo →</a></div></article>
-    <article class="ent app"><div class="logo"><img src="/flipside/app/flip-icon-512.png" alt="Flipside app icon"></div><div><h3>Flipside</h3><span class="tag">Mixtapes · Powered by myStereo</span>
-      <p>Make someone a mixtape. A C60 or a C90, Side A and Side B, a handwritten label, played on a cassette deck that’s all buttons, and sent to a friend.</p>
-      <a class="go" href="/flipside/">Meet Flipside →</a></div></article>
-    <article class="ent app"><div class="logo"><img src="/myshelf/icon-512.png" alt="myShelf app icon"></div><div><h3>myShelf</h3><span class="tag">Shelf tracker · Phone &amp; computer</span>
-      <p>A catalog for the physical stuff: records, tapes, discs and books. Retro video-store looks, with a fast bulk-entry mode for big shelves.</p>
-      <p class="note"><b>Founder’s note:</b> BC’s own copy is still called the Book of Rao, the holiest text of the planet Krypton.</p>
-      <a class="go" href="/myshelf/">Open myShelf →</a></div></article>
+  <section class="sec" id="tools"><h2><span>§2</span> The apps <small>free · no ads</small></h2>
+    <p class="intro">Homemade, free and ad-free. They work on iPhone, Android and computers, and they play what you already own.</p>
+    <div class="apps">
+      <article class="appcard"><div class="ac-text"><img class="ac-icon" src="/mystereo/app/icon-512.png" alt="" width="96" height="96"><h3>myStereo</h3><span class="ac-tag">Music · Tapes · Vinyl · Video</span>
+        <p>A stereo for the music and movies you own, with a real turn-and-press knob. It plays from your own Plex server or from songs right on your phone. On a computer it turns into a walnut console with a turntable and a tape deck.</p>
+        <p class="ac-note">Used myPod or myStereo Elite? They’re part of myStereo now.</p>
+        <div class="ac-acts"><a class="btn" href="https://mystereo.ownyourmedia.club/">Open myStereo</a><a class="go" href="/mystereo/">Meet myStereo →</a></div></div>
+        <img class="ac-shot" src="/mystereo/shots/handheld-black.webp" alt="myStereo on a phone, playing a song" width="600" height="1111" loading="lazy"></article>
+      <article class="appcard"><div class="ac-text"><img class="ac-icon" src="/flipside/app/flip-icon-512.png" alt="" width="96" height="96"><h3>Flipside</h3><span class="ac-tag">Mixtapes · Powered by myStereo</span>
+        <p>Make someone a mixtape. A C60 or a C90, Side A and Side B, a label you write yourself, played on a cassette deck that’s all buttons. Send it to friends on Apple Music or your Plex server, or record it onto a real cassette.</p>
+        <div class="ac-acts"><a class="btn" href="https://flipside.ownyourmedia.club/">Open Flipside</a><a class="go" href="/flipside/">Meet Flipside →</a></div></div>
+        <img class="ac-shot" src="/flipside/shots/deck.webp" alt="Flipside's cassette deck on a phone" width="600" height="1058" loading="lazy"></article>
+      <article class="appcard"><div class="ac-text"><img class="ac-icon" src="/myshelf/icon-512.png" alt="" width="96" height="96"><h3>myShelf</h3><span class="ac-tag">Shelf tracker · Phone &amp; computer</span>
+        <p>A catalog for the physical stuff: records, CDs, Blu-rays, DVDs, VHS and books. Bulk entry and a barcode scanner for big shelves, a wish list, and a TV Guide made from your own collection.</p>
+        <p class="ac-note"><b>Founder’s note:</b> BC’s own copy is still called the Book of Rao, the holiest text of the planet Krypton.</p>
+        <div class="ac-acts"><a class="btn" href="https://myshelf.ownyourmedia.club/">Open myShelf</a><a class="go" href="/shelf/">Meet myShelf →</a></div></div>
+        <img class="ac-shot" src="/shelf/shots/shelf.webp" alt="myShelf on a phone" width="600" height="1203" loading="lazy"></article>
+    </div>
 
     <div id="detox">
       <h3 class="sub">Digital detox tools we're trying <small id="toolsUpdated"></small></h3>
@@ -268,13 +304,33 @@ h1 i{font-style:normal}
     </div>
   </section>
 
+  <section class="sec" id="places"><h2><span>§3</span> Places worth the trip</h2>
+    <p class="intro"><b>The best features are in person.</b> Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. Go say hi, and if you know a place that belongs here, tell BC next time you see him.</p>
+    <div id="placesList">
+    <article class="ent place"><div class="plogo"><img src="/assets/present-company.webp" alt="Present Company logo" style="height:52px" width="616" height="133"></div><div><h3>Present Company</h3><span class="where">Milton Square · St. Paul</span>
+      <q>Let's be here together.</q>
+      <p>An analog lifestyle shop with phone-free events: fewer screens, more repair, and real time with people of every generation.</p>
+      <span class="take"><b>BC's take:</b> A hidden gem in St. Anthony Park for anyone who's lost an evening to doomscrolling. Dig through vinyl, CDs and tapes, plus the boomboxes and Walkmans to play them. Tell Mick we sent ya.</span>
+      <a class="go" href="https://presentcompanyanalog.com/">Visit Present Company →</a></div></article>
+    <article class="ent place"><div class="plogo"><img src="/assets/logos/agharta.webp" alt="Agharta Records logo" style="border-radius:14px" width="137" height="136"></div><div><h3>Agharta Records</h3><span class="where">University Ave · St. Paul</span>
+      <p>New and collectible vinyl: rock, punk and metal, jazz, funk and soul, electronic, and a local bin worth digging through.</p>
+      <span class="take"><b>BC's take:</b> The best vinyl shop in St. Paul, hands down. We've been many times and always find something amazing at a decent price.</span>
+      <a class="go" href="https://www.aghartarecords.com/">Visit Agharta Records →</a></div></article>
+    <article class="ent place"><div class="plogo"><img src="/assets/logos/inkwell.webp" alt="Inkwell Booksellers logo" style="border-radius:12px" width="292" height="145"></div><div><h3>Inkwell Booksellers</h3><span class="where">E Hennepin Ave · Minneapolis</span>
+      <p>An independent bookshop with a café and a cozy reading nook. Grab a book and a pastry, then settle in for a while.</p>
+      <span class="take"><b>BC's take:</b> Worth checking out. It's a short walk from a bunch of great Northeast Minneapolis restaurants, so make a night of it.</span>
+      <a class="go" href="https://www.inkwellbooksellersco.com/">Visit Inkwell Booksellers →</a></div></article>
+    </div>
+    <p class="fine"><a href="/places/">Every place we’ve featured →</a></p>
+  </section>
+
   <section class="sec" id="club"><h2><span>§4</span> What the club is <small>less screen, more company</small></h2>
     <ul class="perks">
       <li><b>Gatherings</b><span>Listening nights, record swaps and slow evenings with people who’d rather be in the room.</span></li>
       <li><b>Places worth the trip</b><span>A list of Twin Cities spots for records, books, typewriters and good conversation.</span></li>
       <li><b>Letters</b><span>Essays from BC on living with less screen and more of what you love.</span></li>
       <li><b>A real card</b><span>Wallet-sized, mailed to your door. Valid offline only.</span></li>
-      <li><b>Free tools</b><span>myStereo for your music and myShelf for your shelves. Free for everyone, members or not.</span></li>
+      <li><b>Free tools</b><span>myStereo for your music, Flipside for mixtapes and myShelf for your shelves. Free for everyone, members or not.</span></li>
     </ul>
   </section>
 
@@ -282,17 +338,16 @@ h1 i{font-style:normal}
     <ul class="list">
       <li><span class="when">COMING SOON</span><b>Listening night</b><p>Bring one record you love. We play a side of each and talk about why.</p></li>
       <li><span class="when">COMING SOON</span><b>Record and book swap</b><p>Bring what you’re done with, leave with something new.</p></li>
-      <li><span class="when">COMING SOON</span><b>The yearly gathering</b><p>The big one, for Crew members and their plus-ones.</p></li>
     </ul>
   </section>
 
   <section class="sec" id="story"><h2><span>§6</span> It started around a table</h2>
     <p class="intro">Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten. Here's how we got here.</p>
     <div class="story">
-      <div><img class="art" src="/assets/runaway-anchor.webp" alt=""><span class="yr">2023</span><h3><a href="https://www.runawayanchor.com">Runaway Anchor</a></h3><p>It started with cocktails and mocktails. A few friends and I began mixing drinks, writing menus and hosting nights together. The drinks were good, but the real draw was the room: people talking, laughing and staying late.</p></div>
-      <div><img class="art" src="/assets/letters.webp" alt=""><span class="yr">Then</span><h3><a href="https://lettersfrombc.com">Letters from BC Gordon</a></h3><p>Next came the writing. Letters from BC Gordon on Substack, often drafted on a manual typewriter, about friendship, family and the quiet costs of living on our screens.</p></div>
-      <div><span class="yr">2026</span><h3>The dumb experiment</h3><p>For 60 days I swapped my iPhone for a flip phone from dumb.co and wrote about it every week. The smartphone still lives in a yellow box most of the day. I got my evenings back, and I noticed how much of my music, movies and books I was renting instead of owning.</p></div>
-      <div><img class="art" src="/assets/oym-seal.webp" alt="" style="border-radius:50%"><span class="yr">Now</span><h3>Own Your Media Club</h3><p>So I started building small tools that keep my media mine, like myStereo and myShelf, and keeping a list of local places worth putting the phone down for. Records, typewriters, paper books and face-to-face conversation. That’s the club.</p></div>
+      <div><img class="art" src="/assets/runaway-anchor.webp" alt="" width="424" height="424"><span class="yr">2023</span><h3><a href="https://www.runawayanchor.com">Runaway Anchor</a></h3><p>It started with cocktails and mocktails. A few friends and I began mixing drinks, writing menus and hosting nights together. The drinks were good, but the real draw was the room: people talking, laughing and staying late.</p></div>
+      <div><img class="art" src="/assets/letters.webp" alt="" width="944" height="290"><span class="yr">Then</span><h3><a href="https://lettersfrombc.com">Letters from BC Gordon</a></h3><p>Next came the writing. Letters from BC Gordon on Substack, often drafted on a manual typewriter, about friendship, family and the quiet costs of living on our screens.</p></div>
+      <div><img class="art" src="/assets/logos/dumb.webp" alt="" style="border-radius:10px;border:1px solid var(--rule)" width="98" height="57"><span class="yr">2026</span><h3>The dumb experiment</h3><p>For 60 days I swapped my iPhone for a flip phone from dumb.co and wrote about it every week. The smartphone still lives in a yellow box most of the day. I got my evenings back, and I noticed how much of my music, movies and books I was renting instead of owning.</p></div>
+      <div><img class="art" src="/assets/oym-seal.webp" alt="" style="border-radius:50%" width="480" height="480"><span class="yr">Now</span><h3>Own Your Media Club</h3><p>So I started building small tools that keep my media mine, like myStereo, Flipside and myShelf, and keeping a list of local places worth putting the phone down for. Records, typewriters, paper books and face-to-face conversation. That’s the club.</p></div>
     </div>
   </section>
 
@@ -305,7 +360,8 @@ h1 i{font-style:normal}
   </section>
 </main>
 <div class="stripes" style="margin-top:64px" aria-hidden="true"></div>
-<footer class="end"><img src="/assets/oym-seal-crew.webp" alt=""><b>Pull up a chair. You're in.</b><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span></footer>
+<footer class="end"><img src="/assets/oym-seal-crew.webp" alt="" width="480" height="471"><b>Pull up a chair. You're in.</b><nav class="endlinks" aria-label="More"><a href="/places/">Places</a><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></nav><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span><a class="badge" href="#top"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="" width="52" height="52"></a></footer>
+<div class="foot-stripes" role="presentation"></div>
 
 <script>
 /* Detox tools: edit detox-tools.json to swap the three tools. No code changes needed. */
@@ -335,6 +391,31 @@ h1 i{font-style:normal}
       body.appendChild(row); li.appendChild(body); list.appendChild(li);
     });
   }).catch(function () { document.getElementById('detox').hidden = true; });
+})();
+</script>
+
+<script>
+/* Places: edit places.json. The first three with "featured": true show here; the rest live on /places/. */
+(function () {
+  var box = document.getElementById('placesList'); if (!box) return;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  fetch('/places.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+    var now = (d.places || []).filter(function (p) { return p.featured; }).slice(0, 3);
+    if (!now.length) return;
+    box.innerHTML = '';
+    now.forEach(function (p) {
+      var art = el('article', 'ent place'), logo = el('div', 'plogo');
+      if (p.logo) { var i = el('img'); i.src = p.logo; i.alt = p.name + ' logo'; i.style.cssText = p.logoShape === 'square' ? 'border-radius:14px' : 'height:52px'; logo.appendChild(i); }
+      art.appendChild(logo);
+      var b = el('div'); b.appendChild(el('h3', '', p.name));
+      if (p.where) b.appendChild(el('span', 'where', p.where));
+      if (p.quote) b.appendChild(el('q', '', p.quote));
+      if (p.what) b.appendChild(el('p', '', p.what));
+      if (p.take) { var t = el('span', 'take'); t.appendChild(el('b', '', "BC's take: ")); t.appendChild(document.createTextNode(p.take)); b.appendChild(t); }
+      if (p.url) { var g = el('a', 'go', 'Visit ' + p.name + ' →'); g.href = p.url; g.rel = 'noopener'; b.appendChild(g); }
+      art.appendChild(b); box.appendChild(art);
+    });
+  }).catch(function () {});
 })();
 </script>
 </body>

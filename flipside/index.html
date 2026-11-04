@@ -1,153 +1,166 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flipside · Make someone a mixtape</title>
-<meta name="description" content="Flipside is a mixtape maker for your own music. C60 or C90, Side A and Side B, a handwritten label, sent to a friend. Powered by myStereo.">
+<meta name="description" content="Make someone a mixtape. A C60 or a C90, two sides, a label you write yourself and a cassette deck with real keys. Free, with no ads.">
 <link rel="canonical" href="https://ownyourmedia.club/flipside/">
-<meta property="og:title" content="This is Flipside.">
-<meta property="og:description" content="Make someone a mixtape. C60 or C90, Side A and Side B, a handwritten label, sent to a friend. Powered by myStereo.">
+<meta property="og:title" content="Flipside · Make someone a mixtape">
+<meta property="og:description" content="Make someone a mixtape. A C60 or a C90, two sides, a label you write yourself and a cassette deck with real keys. Free, with no ads.">
 <meta property="og:url" content="https://ownyourmedia.club/flipside/">
-<meta property="og:image" content="https://ownyourmedia.club/flipside/app/flip-icon-1024.png">
-<meta name="theme-color" content="#F1EDE4">
-<link rel="icon" type="image/png" href="/flipside/app/flip-favicon-32.png">
-<link rel="apple-touch-icon" href="/flipside/app/flip-apple-touch-icon.png">
+<meta property="og:image" content="https://ownyourmedia.club/flipside/app/flip-icon-512.png">
+<meta name="theme-color" content="#F2EADB">
+<link rel="icon" type="image/png" href="/assets/club-favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/club-apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Caveat:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#F1EDE4}
-a{color:#191817}a:hover{color:#C9501E}
-a:focus-visible{outline:3px solid #C9501E;outline-offset:3px}
-html{-webkit-text-size-adjust:100%}
-img{max-width:100%}
-.card{padding:26px;background:#FFFDF8;border:2px solid #191817;border-radius:20px;box-shadow:5px 5px 0 #191817;display:flex;flex-direction:column;gap:8px}
-.card h3{margin:0;font-weight:800;font-size:25px;line-height:1.15}
-.card p{margin:0;font-size:19px;color:#46433E}
-.eyebrow{margin:0;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#C9501E}
-.btn{display:inline-flex;align-items:center;min-height:56px;padding:0 28px;background:#E0602A;color:#FFF6EC;font-weight:600;font-size:20px;text-decoration:none;border-radius:999px;border:2px solid #191817;box-shadow:4px 4px 0 #191817}
-.btn:hover{color:#FFF6EC;filter:brightness(1.05)}
+/* Colors and type follow Flipside's Widescreen Mode: cream paper, ink, OYM red, gold, and the three stripes. */
+:root{--tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace;--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--ink2:#3A3631;--muted:#6E665A;--red:#C8442B;--gold:#D9A441;--stripe-r:#C2503A;--stripe-g:#DEAE5B;--stripe-k:#2E2D28;--rule:rgba(28,27,25,.18);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color-scheme:light}
+*{box-sizing:border-box}
+html{background:var(--paper);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;color:var(--ink);font:400 19px/1.62 var(--tw);-webkit-font-smoothing:antialiased;background:var(--grain),radial-gradient(circle at 20% 0%,rgba(255,255,255,.55),transparent 50%),var(--paper);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.col{max-width:780px;margin:0 auto}
+.label{font:700 13px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase}
+.mast{display:flex;align-items:center;gap:16px;padding-block:22px 18px}
+.mast .seal{width:58px;border-radius:50%;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18));flex:none}
+.mast .t{font:700 13px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase}
+.mast .t a{text-decoration:none}
+.mast nav{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 18px;font:400 16px/1 var(--tw)}
+.mast nav a{padding:12px 0}
+.mast nav a[aria-current]{text-decoration:none;color:var(--red);font-weight:700}
+.stripes{max-width:780px;height:22px;margin:0 auto;background:var(--grain),linear-gradient(var(--stripe-r) 0 6px,transparent 6px 8px,var(--stripe-g) 8px 14px,transparent 14px 16px,var(--stripe-k) 16px 22px)}
+.hero{display:grid;grid-template-columns:120px minmax(0,1fr);gap:26px;align-items:start;margin-top:44px}
+.hero .icon{width:120px;height:120px;border-radius:27px;box-shadow:0 8px 16px rgba(0,0,0,.2)}
+.hero .kick{margin:0;color:var(--red)}
+h1{margin:8px 0 0;font:700 clamp(42px,7vw,62px)/1.04 var(--tw);letter-spacing:0}
+h1 span{color:var(--red)}
+.lede{margin:16px 0 0;font-size:20px;color:var(--ink2)}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;background:var(--ink);color:#F4EDE0;text-decoration:none;font:700 18px/1 var(--tw);border-radius:6px;box-shadow:3px 3px 0 var(--red)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.acts .more{display:inline-block;padding:12px 0;font-size:17px}
+.fine{margin:14px 0 0;font-size:15px;color:var(--muted)}
+.shot{margin:40px 0 0}
+.shot img{width:100%;height:auto;border-radius:6px;box-shadow:0 2px 3px rgba(0,0,0,.12),0 18px 30px rgba(60,40,20,.2)}
+.shot.wide{transform:rotate(-.8deg)}
+.shot.phone{max-width:300px;margin-inline:auto}
+.shot.panel{max-width:340px;margin-inline:auto}.shot.panel img{border-radius:14px}
+.shot.small{max-width:420px;margin-inline:auto;transform:rotate(-.8deg)}.shot.small figcaption{transform:rotate(.8deg)}
+.shot.phone img{border-radius:28px}
+.shot.tl{transform:rotate(-2deg)}.shot.tr{transform:rotate(1.6deg)}
+.shot.tl figcaption{transform:rotate(2deg)}.shot.tr figcaption{transform:rotate(-1.6deg)}.shot.wide figcaption{transform:rotate(.8deg)}
+.shot figcaption{margin-top:16px;text-align:center;color:var(--muted);font:400 15px/1.4 var(--tw)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;align-items:start;margin-top:44px}
+.pair .shot{margin:0}
+.side{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:center;margin-top:26px}.side .shot{margin:0}.side>div>p{margin:0 0 14px;font-size:18px;color:var(--ink2)}.side .grid{grid-template-columns:minmax(0,1fr);margin-top:0}.side.top{align-items:start}.sub3{margin:30px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}.side.left{grid-template-columns:300px minmax(0,1fr)}
+@media (max-width:640px){.side,.side.left{grid-template-columns:minmax(0,1fr)}}.pair .shot.tr{margin-top:0}
+.sec{margin-top:80px;scroll-margin-top:16px}
+.sec h2{margin:0;display:flex;align-items:baseline;gap:12px;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.sec h2 span{color:var(--gold)}
+.sec .intro{margin:20px 0 0;font-size:19px;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px;margin-top:8px}
+.grid div{padding:18px 0;border-bottom:1px dashed var(--rule)}
+.grid h3,.qa h3{margin:0;font:700 20px/1.25 var(--tw)}
+.grid p,.qa p{margin:6px 0 0;font-size:17px;color:var(--ink2)}
+.big{margin:26px 0 0;font:700 clamp(28px,4.6vw,38px)/1.15 var(--tw)}
+.steps{margin:18px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;padding:14px 0;border-bottom:1px dashed var(--rule)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);font:700 34px/.9 var(--tw);color:var(--red)}
+.steps b{display:block;font:700 20px/1.25 var(--tw)}
+.steps p{margin:4px 0 0;font-size:17px;color:var(--ink2)}
+.steps p b{display:inline;font:inherit;font-weight:700;overflow-wrap:anywhere}
+.qa{margin-top:8px}
+.qa div{padding:16px 0;border-bottom:1px dashed var(--rule)}
+.qa div:last-child{border-bottom:0}
+.note{margin:22px 0 0;padding:14px 18px;background:var(--sheet);border:1px solid var(--rule);font-size:17px}
+.note b{font-weight:700}
+.take{display:block;margin-top:14px;font:400 19px/1.4 var(--tw);color:var(--red);padding-left:16px;border-left:3px solid var(--gold)}
+.close{margin-top:84px;text-align:center}
+.close .big{margin:0 0 22px}
+.end{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 30px;padding-block:72px 34px}
+.end nav{display:flex;flex-wrap:wrap;gap:4px 22px;font-size:16px}
+.end nav a{padding:10px 0}
+.end .made{flex-basis:100%;color:var(--muted);font-size:15px}
+.badge{display:flex;align-items:center;gap:14px;text-decoration:none}
+.badge span{font:700 14px/1 var(--tw);letter-spacing:.22em;text-transform:uppercase}
+.badge img{width:52px;height:52px;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,.14)}
+.foot-stripes{height:46px;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--grain),linear-gradient(var(--stripe-r) 0 12px,transparent 12px 16px,var(--stripe-g) 16px 28px,transparent 28px 32px,var(--stripe-k) 32px 46px)}
+.passes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:26px}
+.pass{position:relative;padding:28px 26px 34px;background:var(--grain),var(--sheet);border:1px solid var(--rule);border-radius:10px;box-shadow:0 2px 3px rgba(0,0,0,.06),0 14px 28px rgba(60,40,20,.1);overflow:hidden}
+.pass::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(#C2503A 0 3px,#DEAE5B 3px 6px,#2E2D28 6px 8px)}
+.pass h3{margin:0;font:700 28px/1.1 var(--tw)}
+.pass .price{margin:14px 0 0;font:700 40px/1 var(--tw)}
+.pass .price small{font-size:17px;font-weight:400;color:var(--muted)}
+.pass .or{margin:6px 0 0;font-size:16px;color:var(--ink2)}
+.pass ul{margin:18px 0 0;padding:0;list-style:none}
+.pass li{position:relative;padding:8px 0 8px 22px;font-size:17px;line-height:1.45;border-top:1px dashed var(--rule)}
+.pass li::before{content:"";position:absolute;left:3px;top:17px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.pass li.plus{color:var(--muted)}
+.pass .soon{display:inline-flex;align-items:center;min-height:46px;margin-top:20px;padding:0 18px;border:2px dashed var(--ink);border-radius:6px;font:700 16px/1 var(--tw)}
+.pass .ships{margin:12px 0 0;font-size:15px;color:var(--muted)}
+@media (max-width:640px){.passes{grid-template-columns:minmax(0,1fr)}}
+/* all images sit straight (BC, Nov 3) */
+.shot,.shot img,.shot figcaption{transform:none!important}
+@media (max-width:640px){
+  body{font-size:18px}
+  .mast{flex-wrap:wrap}.mast .t{flex:1}.mast nav{margin-left:0;width:100%;justify-content:flex-start}
+  .hero{grid-template-columns:minmax(0,1fr);gap:18px;margin-top:30px}
+  .hero .icon{width:76px;height:76px;border-radius:17px}
+  .lede{font-size:18px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .pair{gap:22px}.pair .shot.tr{margin-top:0}
+  .shot.wide{margin-inline:-6px}
+}
+
+.placecard{padding:24px 0 26px;border-bottom:1px solid var(--rule)}
+.placecard:last-child{border-bottom:0}
+.placecard .plogo{display:block;margin-bottom:14px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.placecard .plogo.wide{height:56px;width:auto;max-width:100%}
+.placecard .plogo.sq{height:72px;width:72px;border-radius:14px}
+.placecard h3{margin:0;font:700 24px/1.2 var(--tw)}
+.placecard .where{display:block;margin-top:3px;color:var(--muted);font-size:15px}
+.placecard q{display:block;margin-top:10px;font-size:19px}
+.placecard p{margin:8px 0 0;font-size:17px;color:var(--ink2)}
+.placecard .take{margin-top:12px;padding-left:16px;border-left:3px solid var(--gold);color:var(--ink)}
+.placecard .go{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-size:16px}
+.placecard .since{display:block;margin-top:4px;font:700 12px/1.3 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.empty{margin:20px 0 0;padding:22px;border:1px dashed var(--rule);border-radius:8px;color:var(--muted);text-align:center}
+.credits{columns:2;column-gap:40px;margin:24px 0 0;padding:0;list-style:none}
+.credits li{break-inside:avoid;padding:7px 0;font-size:19px;border-bottom:1px dashed var(--rule)}
+.yr{margin:34px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+@media (max-width:640px){.credits{columns:1}}
+
+:root{--app:#E2A33B;--app-ink:#B5401F}
 </style>
 </head>
 <body>
-<div style="background: #F1EDE4; color: #191817; font-family: 'Bricolage Grotesque', Georgia, sans-serif; font-size: 19px; line-height: 1.5; min-height: 100vh">
-
-  <header style="max-width: 1160px; margin: 0 auto; padding: 22px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-    <a href="/" style="display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 16px; min-height: 44px">
-      <img src="/assets/club-logo-96.png" alt="" style="width: 44px; height: 44px; border-radius: 11px">
-      <span>Own Your Media Club</span>
-    </a>
-    <a class="btn" href="/flipside/app/" style="min-height: 48px; font-size: 18px; padding: 0 22px; box-shadow: 3px 3px 0 #191817">Open Flipside</a>
-  </header>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 32px 24px 80px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
-    <div style="flex: 1 1 500px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
-      <div style="display: flex; align-items: center; gap: 16px">
-        <img src="/assets/flipside-icon.webp" width="76" height="76" alt="The Flipside app icon: a cassette with a handwritten Flipside label" style="border-radius: 18px; border: 2px solid #191817">
-        <p class="eyebrow" style="color: #46433E">Powered by myStereo</p>
-      </div>
-      <h1 style="margin: 0; font-weight: 800; font-size: clamp(52px, 8vw, 96px); line-height: .95; letter-spacing: -0.04em">This is <span style="font-family: Caveat, cursive; font-weight: 700; color: #E0602A; letter-spacing: 0; font-size: 1.15em">Flipside.</span></h1>
-      <p style="margin: 0; max-width: 30em; font-size: 23px; line-height: 1.45">Make someone a mixtape. Pick a C60 or a C90, fill Side A and Side B with songs you love, write the label by hand, and send it to a friend.</p>
-      <p style="margin: 0; max-width: 30em; font-size: 20px; color: #46433E">Millions of songs are everywhere. Ninety minutes makes you choose, and that’s the whole point.</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 6px">
-        <a class="btn" href="/flipside/app/">Open Flipside</a>
-        <a href="/flipside/app/guide.html" style="font-weight: 600; font-size: 19px">Read the User’s Guide</a>
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #55524C">Free · iPhone, Android and computer</span>
-      </div>
-    </div>
-    <div style="flex: 1 1 300px; display: flex; justify-content: center; min-width: 0">
-      <img src="/assets/flipside-deck-blue.webp" width="390" height="844" alt="Flipside on a phone in Metallic Blue: a mixtape called Road Trip, for the crew, with a retro striped label, loaded in the Cassette Deck above REW, STOP/EJECT, PLAY/PAUSE and FF keys" style="width: min(320px, 80vw); height: auto; border-radius: 40px; border: 3px solid #191817; box-shadow: 12px 12px 0 #191817; background: #2c4f8f">
-    </div>
-  </section>
-
-  <section style="background: #191817; color: #FFF6EC; border-top: 2px solid #191817; border-bottom: 2px solid #191817">
-    <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 80px; display: flex; flex-direction: column; gap: 32px">
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <p class="eyebrow" style="color: #F2B84B">How it works</p>
-        <h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em; line-height: 1.02">Make it. Play it. Send it.</h2>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; color: #191817">
-        <article class="card"><h3>Make it</h3><p>Press REC, name the tape and pick its length. Every song shows how long it runs, and songs too long for the room left are crossed out. When a side is full, it’s full.</p></article>
-        <article class="card"><h3>Play it</h3><p>A cassette deck with real buttons. PLAY/PAUSE stays down while it plays, REW and FF wind with the sound of the tape, and FLIP turns it over. No shuffle, no skipping.</p></article>
-        <article class="card"><h3>Send it</h3><p>Send Mixtape lists the people you share your Plex server with. They get a picture of the tape case and a link that opens it. The songs stay a surprise until they’ve heard the whole thing, unless you choose to show them.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 8px">
-    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px">
-      <p class="eyebrow">Make it yours</p>
-      <h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em; line-height: 1.02">A tape that looks like you made it.</h2>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px">
-      <article class="card"><p class="eyebrow">Label Maker</p><h3>Write the label</h3><p>Sixteen music themes, from Punk and Jazz to Chiptune, dress a tape in one press. Or pick the paper, the pen, the ink, the stripe and the shell yourself: clear, smoke, neon or gold. Stuck? Press Surprise Me.</p></article>
-      <article class="card"><p class="eyebrow">Search any song</p><h3>Not just what you own</h3><p>Search for any song by title and artist, not just your library. If it’s already in your Plex library, it fills right in. If it isn’t yet, it holds its place on the tape with links to buy it.</p></article>
-      <article class="card"><p class="eyebrow">Deck colors</p><h3>Two sides, one player</h3><p>Night Black, Metallic Blue, Pearl &amp; Teal, or the rugged Sport line in seven colors. Turn the player over and the menu side matches, screen and all. On a computer, Desktop Mode wears it too.</p></article>
-    </div>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 64px 24px 0">
-    <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center; justify-content: space-between; padding: 32px; background: #FFFDF8; border: 2px solid #191817; border-radius: 22px; box-shadow: 6px 6px 0 #191817">
-      <div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 10px">
-        <p class="eyebrow">Learn the craft</p>
-        <h2 style="margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 44px); letter-spacing: -0.02em; line-height: 1.05">The art of the mixtape, built in.</h2>
-        <p style="margin: 0; color: #46433E">Plan a tape on the Sketch Pad before you press REC: fill a crate with maybe-songs, pick a story arc, put the keepers in order, and let the Mixtape Coach point out the rules of thumb. A great way to learn how it’s done.</p>
-      </div>
-      <a class="btn" href="/flipside/art/">The Art of the Mixtape</a>
-    </div>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px">
-    <div style="display: flex; flex-direction: column; gap: 12px">
-      <p class="eyebrow">Songs you don’t own yet</p>
-      <h2 style="margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 42px); letter-spacing: -0.02em; line-height: 1.05">Save its place. Buy it. Watch it fill in.</h2>
-      <p style="margin: 0; color: #46433E">Put a song on a tape before you own it. It holds its spot and its time, with links to buy it on Bandcamp, Qobuz or the iTunes Store. Add the file to your Plex music and it fills in on the tape by itself.</p>
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 12px">
-      <p class="eyebrow">Powered by myStereo</p>
-      <h2 style="margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 42px); letter-spacing: -0.02em; line-height: 1.05">Your music stays yours.</h2>
-      <p style="margin: 0; color: #46433E">Flipside plays from your own Plex server. Tapes save to Plex, so they follow you to every device and show up in <a href="/mystereo/">myStereo</a> too. No Plex yet? Try it with the demo music first.</p>
-    </div>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 24px 24px 40px">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px 40px">
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">What do I need?</h3><p style="margin: 0; color: #46433E">A Plex Media Server with your music, yours or one a friend shares with you. An iPhone (Safari), an Android phone (Chrome) or a computer. Nothing to download from an app store.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">How is it different from myStereo?</h3><p style="margin: 0; color: #46433E">myStereo does it all: music, videos, games, faceplates. Flipside does one thing, mixtapes, with a deck that’s all buttons. Press Menu to turn it over for your music, tapes and settings.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">Does it work without a signal?</h3><p style="margin: 0; color: #46433E">Turn on Analog Mode and every tape lives on your phone, so it plays anywhere: on a plane, up north, in the basement. Recording copies each song to the phone. Dub your tapes on Wi-Fi first.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">Can I put it on my home screen?</h3><p style="margin: 0; color: #46433E">Yes. <b style="color: #191817">iPhone:</b> open it in Safari, tap Share, then Add to Home Screen. <b style="color: #191817">Android:</b> open it in Chrome, tap the ⋮ menu, then Add to Home screen (or Install app). Either way it gets its own cassette icon and opens full screen.</p></div>
-    </div>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 24px 24px 40px" aria-labelledby="fix-h">
-    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px">
-      <p class="eyebrow">Troubleshooting</p>
-      <h2 id="fix-h" style="margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 42px); letter-spacing: -0.02em; line-height: 1.05">Something not working?</h2>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px 40px">
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">First PLAY is silent</h3><p style="margin: 0; color: #46433E">Phones only start sound after a tap. Press PLAY again, and check the volume and the iPhone ring switch.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">Can’t reach Plex</h3><p style="margin: 0; color: #46433E">Make sure your server is on with Remote Access turned on, then go to Settings › Music Sources › Plex › Reconnect.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">My friend can’t play my tape</h3><p style="margin: 0; color: #46433E">They hear it from your server, so share your Plex library with them first, then send the tape again.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">A tape is missing on my other phone</h3><p style="margin: 0; color: #46433E">Choose Mixtapes › Sync with Plex on both devices. They need to be on the same Plex server.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">Android Back button</h3><p style="margin: 0; color: #46433E">Back steps out of menus like the MENU key. On the deck with nothing open, it leaves the app.</p></div>
-      <div><h3 style="margin: 0 0 4px; font-size: 21px; font-weight: 600">The icon looks old</h3><p style="margin: 0; color: #46433E">Remove Flipside from your Home Screen and add it again. Your sign-in and tapes stay.</p></div>
-    </div>
-    <p style="margin: 24px 0 0"><a href="/flipside/app/guide.html#trouble" style="font-weight: 600">More fixes in the User’s Guide ›</a></p>
-  </section>
-
-  <section style="max-width: 1160px; margin: 0 auto; padding: 32px 24px 72px">
-    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 36px; background: #E0602A; color: #FFF6EC; border: 2px solid #191817; border-radius: 26px; box-shadow: 8px 8px 0 #191817">
-      <h2 style="margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.02em">Who are you making a tape for?</h2>
-      <a href="/flipside/app/" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 30px; background: #FFF6EC; color: #191817; font-weight: 600; font-size: 20px; text-decoration: none; border-radius: 999px; border: 2px solid #191817">Open Flipside</a>
-    </div>
-  </section>
-
-  <footer style="max-width: 1160px; margin: 0 auto; padding: 0 24px 56px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #55524C">
-    <a href="/" style="padding: 12px 0">← Own Your Media Club</a>
-    <a href="/flipside/app/guide.html" style="padding: 12px 0">User’s Guide</a>
-    <a href="/flipside/art/" style="padding: 12px 0">The Art of the Mixtape</a>
-    <span style="padding: 12px 0">Made in the Twin Cities by BC Gordon</span>
-  </footer>
+<div class="col">
+<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">The Own Your Media Club Handbook</a></div><nav aria-label="Pages"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/" aria-current="page">Flipside</a><a href="/shelf/">myShelf</a></nav></header>
 </div>
+<div class="stripes" role="presentation"></div>
+<main class="col">
+<section class="hero"><img class="icon" src="/flipside/app/flip-icon-512.png" alt="" width="120" height="120"><div><p class="kick label">Powered by myStereo</p><h1>Make someone<br><span>a mixtape.</span></h1><p class="lede">A mixtape is a few songs picked for one person, in an order that means something. Flipside gives you a C60 or a C90, two sides, a label you write yourself and a cassette deck with real keys. Ninety minutes makes you choose. That’s the whole point.</p><div class="acts"><a class="btn" href="https://flipside.ownyourmedia.club/">Open Flipside</a><a class="more" href="https://flipside.ownyourmedia.club/flipside/app/guide.html">Read the guide →</a></div><p class="fine">Free · iPhone, Android and computer · Plays songs on your phone or your own Plex</p></div></section>
+<figure class="shot wide"><img src="/flipside/shots/widescreen.webp" width="1520" height="774" alt="Turn the phone sideways: Widescreen Mode." loading="lazy"><figcaption>Turn the phone sideways: Widescreen Mode.</figcaption></figure>
+<div class="pair"><figure class="shot phone tl"><img src="/flipside/shots/deck.webp" width="600" height="1058" alt="The deck. No shuffle, no skipping." loading="lazy"><figcaption>The deck. No shuffle, no skipping.</figcaption></figure><figure class="shot phone tr"><img src="/flipside/shots/rack.webp" width="600" height="932" alt="The tape rack, with drawers down the side." loading="lazy"><figcaption>The tape rack, with drawers down the side.</figcaption></figure></div>
+<section class="sec" id="how"><h2><span>§1</span> Make it. Play it. Send it.</h2><figure class="shot wide"><img src="/flipside/shots/bench.webp" width="1400" height="796" alt="The bench, phone turned sideways: your library, the crate of maybes, and Side A and Side B with the time left." loading="lazy"><figcaption>The bench, phone turned sideways: your library, the crate of maybes, and Side A and Side B with the time left.</figcaption></figure><div class="grid"><div><h3>Make it</h3><p>Press REC, write the label and pick a C60 or a C90. Each side shows the time left, and a song too long for the room is crossed out. When a side is full, it’s full.</p></div><div><h3>Play it</h3><p>A cassette deck with real keys. REW and FF wind with the sound of the tape, and at the end of Side A you flip it. Tapes remember where you stopped.</p></div><div><h3>Send it with Apple Music</h3><p>Have an Apple Music subscription? Send a tape made from your own library to anyone else who has one. Flipside turns it into a link; they tap it and the tape is in their deck, Side A cued. Friends without Apple Music still hear a 30-second preview of each song.</p></div><div><h3>No Apple Music?</h3><p>Share it on your own network: anyone you’ve invited to your Plex server hears the tape from your library, every song just as you have it. Or use TAPE OUT and record it onto a real cassette you can hand them.</p></div></div></section>
+<section class="sec" id="label"><h2><span>§2</span> A tape that looks like you made it</h2><div class="side top"><div class="grid"><div><h3>Write the label</h3><p>Eighteen looks named for kinds of music, from Rock and Jazz to Chiptune. Or pick the paper, the pen, the ink and the shell yourself. Stuck? Surprise Me.</p></div><div><h3>Liner notes</h3><p>A few lines about the whole tape: who it’s for, what it’s about, when to play it. They go with the tape when you send it.</p></div><div><h3>Why it’s here</h3><p>A note on one song. It shows on the deck while that song plays.</p></div><div><h3>Deck colors</h3><p>Night Black, Metallic Blue, Pearl & Teal and more. Turn the player over and the menu side matches.</p></div></div><figure class="shot panel"><img src="/flipside/shots/label.webp" width="600" height="976" alt="The Label tab: Surprise Me, a theme, or pick each part yourself." loading="lazy"><figcaption>The Label tab: Surprise Me, a theme, or pick each part yourself.</figcaption></figure></div></section>
+<section class="sec" id="coach"><h2><span>§3</span> Plan it with the Coach</h2><p class="intro">A great mixtape is often planned before it’s made. Pick a story arc (Road Trip, For a Crush, Heartbreak, Bright Side, Late Side), fill the crate with maybes, and put the keepers in order. Hold a spot for “something slow, about four minutes.” The Mixtape Coach points out the rules of thumb, like an artist twice in a row or a long opener, and gets out of the way.</p><figure class="shot wide"><img src="/flipside/shots/art-rules.webp" width="1400" height="728" alt="The Art of the Mixtape: ten rules of thumb, right inside Flipside." loading="lazy"><figcaption>The Art of the Mixtape: ten rules of thumb, right inside Flipside.</figcaption></figure><div class="acts"><a class="more" href="/flipside/art/">Read all ten rules →</a></div><h3 class="sub3">The story arcs</h3><div class="grid"><div><h3>The Classic Arc</h3><p>Opener · The Build · The Peak · The Breather · The Closer</p></div><div><h3>Road Trip</h3><p>Wake-Up · Cruising · Sing-Along · Sunset · Night Drive</p></div><div><h3>For a Crush</h3><p>Hello · The Hint · The Confession · Hope</p></div><div><h3>Party</h3><p>Warm-Up · Lift Off · The Peak · Last Call · Goodnight</p></div><div><h3>Heartbreak</h3><p>The Hurt · The Anger · Wallowing · Getting Up · Moving On</p></div><div><h3>Bright Side, Late Side</h3><p>Side A: Bright · Side B: Late Night</p></div><div><h3>Build Your Own</h3><p>Name your own beats, one at a time.</p></div></div></section>
+<section class="sec" id="realtape"><h2><span>§4</span> Real Tape</h2><div class="side left top"><figure class="shot panel"><img src="/flipside/shots/realtape.webp" width="600" height="1101" alt="TAPE OUT: check the fit, then the list before you press record." loading="lazy"><figcaption>TAPE OUT: check the fit, then the list before you press record.</figcaption></figure><div><p>Record your tape onto a real cassette. Lift a tape in the rack and press TAPE OUT. Flipside checks that each side fits the tape, with the quiet between songs counted, and walks you through a short list: phone wired to the deck’s line in, Do Not Disturb on, volume up, phone charging, blank tape at the start of Side A.</p><p>Set your levels with a tone, press record on the deck, and Flipside plays the side with four seconds of quiet between songs, so your deck can find every break. Every Flipside C90 fits a real C90.</p><span class="take">Then hand it to someone. That’s the best part.</span></div></div></section>
+<section class="sec" id="more"><h2><span>§5</span> And a few more things</h2><div class="grid"><div><h3>Songs you don’t own yet</h3><p>Put the perfect song on a tape before you have it. It holds its spot, with links to buy it from Bandcamp, Qobuz or the iTunes Store. Add the file and it fills itself in.</p></div><div><h3>Turn it sideways</h3><p>Widescreen Mode: the tape turning on one side, the album art and song in big letters on the other. Made for mirroring to a TV.</p></div><div><h3>No signal</h3><p>Songs on your phone play anywhere. Using Plex? Analog Mode saves your tapes to the phone for the plane or the cabin.</p></div><div><h3>Inside myStereo too</h3><p>Flipside is the Tapes button on myStereo. Same tapes, same deck.</p></div></div></section>
+<section class="sec" id="start"><h2><span>§6</span> Get it on your phone</h2><ol class="steps"><li><div><b>Put it on your Home Screen</b><p>iPhone: open <a href="https://flipside.ownyourmedia.club/">flipside.ownyourmedia.club</a> in Safari, tap Share, then Add to Home Screen. Android: open it in Chrome, tap ⋮, then Add to Home screen. It gets its own cassette icon.</p></div></li><li><div><b>Tell it where your music is</b><p>This Phone picks songs from the Files app. My Plex brings your whole library. Just looking? Try the demo songs.</p></div></li><li><div><b>Press REC</b><p>Name it, pick C60 or C90, and start choosing.</p></div></li></ol></section>
+<section class="sec" id="questions"><h2><span>§7</span> Good questions</h2><div class="qa"><div><h3>Does my friend need Flipside?</h3><p>No. A tape link opens in their browser. With their own Apple Music subscription they hear every song in full; without it, a 30-second preview of each. To keep it, they can add Flipside to their Home Screen and paste the link into the rack.</p></div><div><h3>What happens to my tapes on a new phone?</h3><p>Settings › Your Music › Back Up My Tapes saves one file with every tape, label and note. Open it on the new phone. Add the same songs and the tapes find them.</p></div><div><h3>Does it cost anything?</h3><p>No. No subscription, no ads, no catch.</p></div><div><h3>Something not working?</h3><p>The <a href="https://flipside.ownyourmedia.club/flipside/app/guide.html#trouble">guide has fixes</a> for the usual things. Still stuck? Write to hello@ownyourmedia.club and say which phone you use.</p></div></div></section>
+<section class="close"><p class="big">Who are you making a tape for?</p><a class="btn" href="https://flipside.ownyourmedia.club/">Open Flipside</a></section>
+</main>
+<footer class="col end"><nav aria-label="More"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/shelf/">myShelf</a><a href="/places/">Places</a><a href="/liner-notes/">Liner Notes</a></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
+<div class="foot-stripes" role="presentation"></div>
 </body>
 </html>
