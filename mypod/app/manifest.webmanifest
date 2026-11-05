@@ -1,4 +1,5 @@
 {
+  "id": "/mypod/app/",
   "name": "myStereo",
   "short_name": "myStereo",
   "start_url": "./",
