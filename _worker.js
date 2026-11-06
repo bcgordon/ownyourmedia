@@ -2,8 +2,8 @@
 // Each app gets its own site so an iPhone keeps their Home Screen apps apart. The files are the repo's own;
 // this only sends each address to its app's folder. ownyourmedia.club itself stays on GitHub Pages.
 const APPS = {
-  'flipside.ownyourmedia.club': ['/flipside/app/', ['/flipside/', '/assets/']],
-  'mystereo.ownyourmedia.club': ['/mystereo/app/', ['/mystereo/', '/assets/']],
+  'flipside.ownyourmedia.club': ['/flipside/app/', ['/flipside/', '/assets/', '/demo/']],
+  'mystereo.ownyourmedia.club': ['/mystereo/app/', ['/mystereo/', '/assets/', '/demo/']],
   'myshelf.ownyourmedia.club': ['/myshelf/', ['/myshelf/', '/assets/']],
   'rao.ownyourmedia.club': ['/rao/', ['/rao/', '/assets/']]
 };

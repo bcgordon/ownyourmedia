@@ -1,0 +1,258 @@
+[
+ {
+  "id": "hell-fighters-1919",
+  "title": "Hell Fighters Band, 1919",
+  "artist": "Lt. Jim Europe",
+  "performer": "Lieut. Jim Europe’s 369th U.S. Infantry “Hell Fighters” Band",
+  "byline": "Lieut. Jim Europe’s 369th U.S. Infantry “Hell Fighters” Band, recorded on Pathé in 1919",
+  "genre": "Jazz & Blues",
+  "year": 1919,
+  "cover": "/demo/hell-fighters-1919/cover.jpg",
+  "tracks": [
+   {
+    "n": 1,
+    "title": "Memphis Blues",
+    "file": "/demo/hell-fighters-1919/01-memphis-blues.mp3",
+    "dur": 170400,
+    "license": "Public domain in the US",
+    "licenseUrl": "",
+    "source": "Great 78 Project, Internet Archive",
+    "page": "https://archive.org/details/78_memphis-blues_lieut-jim-europes-369th-u-s-inf-hell-fighters-band-handy_gbia0298581b",
+    "composer": "W.C. Handy (1912)"
+   },
+   {
+    "n": 2,
+    "title": "St. Louis Blues",
+    "file": "/demo/hell-fighters-1919/02-st-louis-blues.mp3",
+    "dur": 199730,
+    "license": "Public domain in the US",
+    "licenseUrl": "",
+    "source": "Great 78 Project, Internet Archive",
+    "page": "https://archive.org/details/78_st-louis-blues_lieut-jim-europes-369th-u-s-inf-hell-fighters-band-handy_gbia0298608b",
+    "composer": "W.C. Handy (1914)"
+   },
+   {
+    "n": 3,
+    "title": "Clarinet Marmalade",
+    "file": "/demo/hell-fighters-1919/03-clarinet-marmalade.mp3",
+    "dur": 182490,
+    "license": "Public domain in the US",
+    "licenseUrl": "",
+    "source": "Great 78 Project, Internet Archive",
+    "page": "https://archive.org/details/78_clarinet-marmalade_lieut-jim-europes-369th-us-inf-hell-fighters-band-shields_gbia0317552b",
+    "composer": "Larry Shields & Henry Ragas (1918)"
+   },
+   {
+    "n": 4,
+    "title": "That Moaning Trombone",
+    "file": "/demo/hell-fighters-1919/04-that-moaning-trombone.mp3",
+    "dur": 180110,
+    "license": "Public domain in the US",
+    "licenseUrl": "",
+    "source": "Great 78 Project, Internet Archive",
+    "page": "https://archive.org/details/78_that-moaning-trombone_lieut-jim-europes-369th-u-s-inf-hell-fighters-band-b_gbia0298581a",
+    "composer": "Tom Bethel"
+   }
+  ]
+ },
+ {
+  "id": "the-simple-life",
+  "title": "The Simple Life, Part 1",
+  "artist": "Josh Woodward",
+  "genre": "Folk",
+  "year": 2008,
+  "cover": "/demo/the-simple-life/cover.jpg",
+  "tracks": [
+   {
+    "n": 1,
+    "title": "Heritage Place",
+    "file": "/demo/the-simple-life/01-heritage-place.mp3",
+    "dur": 238290,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Josh_Woodward/The_Simple_Life_Part_1/JoshWoodward-TheSimpleLife-101-HeritagePlace/"
+   },
+   {
+    "n": 2,
+    "title": "Go",
+    "file": "/demo/the-simple-life/02-go.mp3",
+    "dur": 224630,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Josh_Woodward/The_Simple_Life_Part_1/JoshWoodward-TheSimpleLife-102-Go/"
+   },
+   {
+    "n": 3,
+    "title": "Saturday",
+    "file": "/demo/the-simple-life/03-saturday.mp3",
+    "dur": 266080,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Josh_Woodward/The_Simple_Life_Part_1/JoshWoodward-TheSimpleLife-103-Saturday/"
+   },
+   {
+    "n": 4,
+    "title": "The Parade",
+    "file": "/demo/the-simple-life/04-the-parade.mp3",
+    "dur": 264020,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Josh_Woodward/The_Simple_Life_Part_1/JoshWoodward-TheSimpleLife-104-TheParade/"
+   }
+  ]
+ },
+ {
+  "id": "pipe-choir",
+  "title": "Pipe Choir",
+  "artist": "Pipe Choir",
+  "genre": "Indie Rock",
+  "year": 2014,
+  "cover": "/demo/pipe-choir/cover.jpg",
+  "tracks": [
+   {
+    "n": 1,
+    "title": "Lights Up",
+    "file": "/demo/pipe-choir/01-lights-up.mp3",
+    "dur": 315980,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Pipe_Choir/Pipe_Choir/Lights_Up/"
+   },
+   {
+    "n": 2,
+    "title": "The Wind Is Rising",
+    "file": "/demo/pipe-choir/02-the-wind-is-rising.mp3",
+    "dur": 239310,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Pipe_Choir/Pipe_Choir/The_Wind_Is_Rising/"
+   },
+   {
+    "n": 3,
+    "title": "Mettle",
+    "file": "/demo/pipe-choir/03-mettle.mp3",
+    "dur": 259470,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Pipe_Choir/Pipe_Choir/Mettle/"
+   },
+   {
+    "n": 4,
+    "title": "Savior",
+    "file": "/demo/pipe-choir/04-savior.mp3",
+    "dur": 285570,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Pipe_Choir/Pipe_Choir/Savior/"
+   }
+  ]
+ },
+ {
+  "id": "directionless-ep",
+  "title": "Directionless EP",
+  "artist": "Broke For Free",
+  "genre": "Electronic",
+  "year": 2011,
+  "cover": "/demo/directionless-ep/cover.jpg",
+  "tracks": [
+   {
+    "n": 1,
+    "title": "Night Owl",
+    "file": "/demo/directionless-ep/01-night-owl.mp3",
+    "dur": 193180,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl/"
+   },
+   {
+    "n": 2,
+    "title": "My Always Mood",
+    "file": "/demo/directionless-ep/02-my-always-mood.mp3",
+    "dur": 188600,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_02_My_Always_Mood/"
+   },
+   {
+    "n": 3,
+    "title": "Day Bird",
+    "file": "/demo/directionless-ep/03-day-bird.mp3",
+    "dur": 223290,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_03_Day_Bird/"
+   },
+   {
+    "n": 4,
+    "title": "Mell's Parade",
+    "file": "/demo/directionless-ep/04-mell-s-parade.mp3",
+    "dur": 198140,
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_05_Mells_Parade/"
+   }
+  ]
+ },
+ {
+  "id": "tundra-orchestra",
+  "title": "Tundra Orchestra",
+  "artist": "Blear Moon",
+  "genre": "Cinematic",
+  "year": 2022,
+  "cover": "/demo/tundra-orchestra/cover.jpg",
+  "tracks": [
+   {
+    "n": 1,
+    "title": "Heron dance",
+    "file": "/demo/tundra-orchestra/01-heron-dance.mp3",
+    "dur": 237920,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Blear_Moon/tundra-orchestra/heron-dance/"
+   },
+   {
+    "n": 2,
+    "title": "Languid dawn",
+    "file": "/demo/tundra-orchestra/02-languid-dawn.mp3",
+    "dur": 233610,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Blear_Moon/tundra-orchestra/languid-dawn/"
+   },
+   {
+    "n": 3,
+    "title": "Runaway caves",
+    "file": "/demo/tundra-orchestra/03-runaway-caves.mp3",
+    "dur": 189990,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Blear_Moon/tundra-orchestra/runaway-caves/"
+   },
+   {
+    "n": 4,
+    "title": "Lair",
+    "file": "/demo/tundra-orchestra/04-lair.mp3",
+    "dur": 206890,
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "Free Music Archive",
+    "page": "https://freemusicarchive.org/music/Blear_Moon/tundra-orchestra/lair/"
+   }
+  ]
+ }
+]
