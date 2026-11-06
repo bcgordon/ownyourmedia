@@ -243,6 +243,13 @@ img{height:auto}
 @media (max-width:420px){.tier{grid-template-columns:minmax(0,1fr)}.pcard{width:230px}.tier .info{margin-top:18px}}
 .manifesto{margin:26px 0 6px;padding:4px 0 24px;border-bottom:1px dashed var(--rule)}.manifesto p{margin:0;font:700 clamp(21px,3.4vw,29px)/1.35 var(--tw)}.manifesto .red{margin-top:10px;color:var(--red)}
 .gintro{margin:20px 0 4px;font-size:19px}.gintro b{color:var(--ink)}
+.whole{position:relative;margin:72px calc(50% - 50vw) 0;padding:64px max(20px,calc(50vw - 380px)) 70px;background:var(--grain),#1C1B19;color:#F4EDE0;text-align:left}
+.whole::before,.whole::after{content:"";position:absolute;left:0;right:0;height:16px;background:linear-gradient(#C2503A 0 5px,transparent 5px 6px,#DEAE5B 6px 11px,transparent 11px 12px,#2E2D28 12px 16px)}
+.whole::before{top:0}.whole::after{bottom:0;transform:scaleY(-1)}
+.whole p{margin:0}
+.w1{font:700 clamp(44px,9vw,92px)/1.02 var(--tw)}
+.w2{margin-top:22px!important;font:700 clamp(22px,3.6vw,34px)/1.2 var(--tw);color:#DEAE5B}
+.whole+.sec{margin-top:72px}
 /* Club colors, Nov 3: follow Flipside's Widescreen Mode (cream paper, ink, OYM red, gold, the three stripes). Same as the app pages. */
 :root{--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--red:#C8442B;--stripe:#C2503A;--gold:#D9A441;--muted:#6E665A;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 html{background:var(--paper)}
@@ -430,9 +437,9 @@ h1{font-weight:700}
   <section class="sec" id="rules"><h2><span>§7</span> Club rules</h2>
     <div class="manifesto"><p>Buy the record you love.</p><p>Play it until you know every word.</p><p>Then go find your people and play it for them.</p><p class="red">That’s the whole thing.</p></div>
     <ol class="rules">
-      <li><div><b>Own what you love.</b><p>Keep the records, the files, the shelf. Nobody can take back what you own.</p></div></li>
-      <li><div><b>Free, with no ads.</b><p>These are made for fun and for friends. Nothing here is trying to keep you scrolling.</p></div></li>
-      <li><div><b>Then put it down.</b><p>Play the album, log the shelf, then close the app. The good part happens in the room.</p></div></li>
+      <li><div><b>Own it.</b><p>Buy the records, films and books you love, and keep them. Nobody can take back what you own.</p></div></li>
+      <li><div><b>Play it.</b><p>Actually use what’s on your shelf. Put on a whole album, start to finish, or build the ultimate party mixtape.</p></div></li>
+      <li><div><b>Share it.</b><p>Bring it to the table: a listening night, a swap, a mixtape made for one person. It’s all better with your people.</p></div></li>
     </ol>
   </section>
 </main>
