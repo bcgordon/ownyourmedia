@@ -250,6 +250,17 @@ img{height:auto}
 .w1{font:700 clamp(44px,9vw,92px)/1.02 var(--tw)}
 .w2{margin-top:22px!important;font:700 clamp(22px,3.6vw,34px)/1.2 var(--tw);color:#DEAE5B}
 .whole+.sec{margin-top:72px}
+.handmade{margin:56px 0 0;padding:22px 26px 24px;background:var(--grain),var(--sheet);border:1px solid var(--rule);border-left:5px solid var(--red);border-radius:6px}
+.hm-k{margin:0;font:700 14px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.handmade ul{margin:12px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px}
+.handmade li{position:relative;padding:6px 0 6px 26px;font-size:18px}
+.handmade li::before{content:"✓";position:absolute;left:0;top:6px;color:var(--red);font-weight:700}
+@media (max-width:560px){.handmade ul{grid-template-columns:minmax(0,1fr)}}
+.info .price{margin:10px 0 0;font:700 34px/1 var(--tw)}
+.info .price small{font-size:16px;font-weight:400;color:var(--muted)}
+.info .how{color:var(--muted)!important}
+.btn.join{margin-top:18px}
+.info .ships{margin:10px 0 0;font-size:15px;color:var(--muted)}
 /* Club colors, Nov 3: follow Flipside's Widescreen Mode (cream paper, ink, OYM red, gold, the three stripes). Same as the app pages. */
 :root{--paper:#F2EBD9;--sheet:#FAF5E9;--ink:#1C1B19;--red:#C8442B;--stripe:#C2503A;--gold:#D9A441;--muted:#6E665A;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 html{background:var(--paper)}
@@ -311,7 +322,7 @@ h1{font-weight:700}
       </ul>
   </div>
 
-  <section class="sec" id="passes"><h2><span>§1</span> Backstage passes <small>coming soon</small></h2>
+  <section class="sec" id="passes"><h2><span>§1</span> Backstage passes <small>open now</small></h2>
     <p class="intro">Two ways into the club, each one a pass you can hang on a lanyard. The apps stay free no matter what. Passes are how you support the club and get in on the in-person stuff.</p>
     <div class="tiers">
       <div class="tier"><div class="hang"><div class="pstrap" style="--strap:#1C1B19"></div><div class="pclip"></div>
@@ -334,7 +345,7 @@ h1{font-weight:700}
       <div class="ab c" style="top:125cqw;font-size:3.6cqw;letter-spacing:.16em;text-transform:uppercase;font-weight:700">Valid offline only</div>
       <div class="pqr"><div><b>Find your name →</b><span>ownyourmedia.club/liner-notes</span></div><img src="/assets/qr-liner-notes.svg" alt="QR code to the club credits" width="132" height="132"></div></span>
         </span></button><span class="pflip">Tap to flip</span></div>
-        <div class="info"><h3>Member</h3><p class="how">One time · coming soon</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Word on every gathering (the cost depends on the event)</li><li><b>Liner Notes:</b> your name in the <a href="/liner-notes/">club credits</a></li><li>No auto-renew, ever. Want another year? Join again.</li></ul></div></div>
+        <div class="info"><h3>Member</h3><p class="price">$20 <small>one time</small></p><p class="how">For the year.</p><ul><li>The membership card in the mail</li><li>Stickers</li><li>Word on every gathering (the cost depends on the event)</li><li><b>Liner Notes:</b> your name in the <a href="/liner-notes/">club credits</a></li><li>No auto-renew, ever. Want another year? Join again.</li></ul><a class="btn join" href="https://buy.stripe.com/3cI4gy73jd021j25LQ5Ne02">Join for $20</a><p class="ships">Your card ships when you join.</p></div></div>
       <div class="tier"><div class="hang"><div class="pstrap" style="--strap:#C2503A"></div><div class="pclip"></div>
         <button class="pcard all" type="button" aria-label="The All Access pass. Tap to turn it over."><span class="pinner">
       <span class="pface"><span class="pslot"></span><div class="ab c cap" style="top:15cqw">Own Your Media Club</div>
@@ -354,9 +365,9 @@ h1{font-weight:700}
       <div class="ab c" style="top:127cqw;font-size:3.6cqw;letter-spacing:.16em;text-transform:uppercase;font-weight:700">Valid offline only</div>
       <div class="pqr"><div><b>Find your name →</b><span>ownyourmedia.club/liner-notes</span></div><img src="/assets/qr-liner-notes-red.svg" alt="QR code to the club credits" width="132" height="132"></div></span>
         </span></button><span class="pflip">Tap to flip</span></div>
-        <div class="info"><h3>All Access</h3><p class="how">Monthly or yearly · coming soon</p><ul><li class="plus">Everything in Member</li><li><b>Members-only posts</b> from Letters from BC Gordon on Substack</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Less at the door</b> for gatherings, when there’s a cost</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul></div></div>
+        <div class="info"><h3>All Access</h3><p class="price">$50 <small>a year</small></p><p class="how">or $5 a month, through Substack</p><ul><li class="plus">Everything in Member</li><li><b>Members-only posts</b> from Letters from BC Gordon on Substack</li><li><b>Crate Digs:</b> a quarterly post on what BC found, where, and why it’s good</li><li><b>Less at the door</b> for gatherings, when there’s a cost</li><li><b>Smaller get-togethers</b> through the year</li><li><b>First word</b> on new places and events, before the list goes public</li></ul><a class="btn join" href="https://lettersfrombc.com/subscribe">Join All Access</a><p class="ships">Yearly: your card ships right away. Monthly: after your second payment.</p></div></div>
     </div>
-    <p class="fine">Passes aren’t open yet. Want a heads-up when they are? Email <b>hello@ownyourmedia.club</b>.</p>
+    <p class="fine">Changed your mind? Write within 30 days for a full refund. Questions: <b>hello@ownyourmedia.club</b>.</p>
   </section>
 
   <section class="sec" id="tools"><h2><span>§2</span> The apps <small>free · no ads</small></h2>
@@ -383,6 +394,11 @@ h1{font-weight:700}
       <p class="note" style="margin:10px 0 0">Some are apps, some are things you can hold. Three we're testing right now to help put the phone down.</p>
       <ul class="list" id="toolsList" style="margin-top:6px"></ul>
     </div>
+  </section>
+
+  <section class="handmade" aria-label="Made by hand, always">
+    <p class="hm-k">Made by hand, always</p>
+    <ul><li>The letters and the writing</li><li>The places on the list</li><li>No AI picks your music</li><li>No algorithm, no feed</li></ul>
   </section>
 
   <section class="sec" id="places"><h2><span>§3</span> Places worth the trip</h2>
@@ -435,8 +451,7 @@ h1{font-weight:700}
   </section>
 
   <section class="sec" id="rules"><h2><span>§7</span> Club rules</h2>
-    <div class="manifesto"><p>Buy the record you love.</p><p>Play it until you know every word.</p><p>Then go find your people and play it for them.</p><p class="red">That’s the whole thing.</p></div>
-    <ol class="rules">
+        <ol class="rules">
       <li><div><b>Own it.</b><p>Buy the records, films and books you love, and keep them. Nobody can take back what you own.</p></div></li>
       <li><div><b>Play it.</b><p>Actually use what’s on your shelf. Put on a whole album, start to finish, or build the ultimate party mixtape.</p></div></li>
       <li><div><b>Share it.</b><p>Bring it to the table: a listening night, a swap, a mixtape made for one person. It’s all better with your people.</p></div></li>
