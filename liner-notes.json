@@ -1,5 +1,7 @@
 {
   "_howto": "Every member's name, in the order they joined. Add one line per member: {\"name\": \"First Last\", \"year\": 2026}. Use the name they asked to be credited as (first name and last initial is fine). Leave someone off if they'd rather not be listed.",
   "updated": "November 2026",
-  "members": []
+     "members": [
+     {"name": "BC Gordon", "year": 2026}
+   ]
 }
