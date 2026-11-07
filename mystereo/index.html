@@ -60,6 +60,7 @@ h1 span{color:var(--red)}
 .shot figcaption{margin-top:16px;text-align:center;color:var(--muted);font:400 15px/1.4 var(--tw)}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;align-items:start;margin-top:44px}
 .pair .shot{margin:0}
+.pair.even{align-items:start}.pair.even .shot{max-width:none;text-align:center}.pair.even .shot img{height:min(520px,64vw);width:auto;max-width:100%;margin-inline:auto}
 .side{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:center;margin-top:26px}.side .shot{margin:0}.side>div>p{margin:0 0 14px;font-size:18px;color:var(--ink2)}.side .grid{grid-template-columns:minmax(0,1fr);margin-top:0}.side.top{align-items:start}.sub3{margin:30px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}.side.left{grid-template-columns:300px minmax(0,1fr)}
 @media (max-width:640px){.side,.side.left{grid-template-columns:minmax(0,1fr)}}.pair .shot.tr{margin-top:0}
 .sec{margin-top:80px;scroll-margin-top:16px}
@@ -139,6 +140,12 @@ h1 span{color:var(--red)}
 .yr{margin:34px 0 0;font:700 15px/1.2 var(--tw);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
 @media (max-width:640px){.credits{columns:1}}
 
+.dnote{max-width:680px;margin:34px 0 6px;padding:20px 24px 16px;background:var(--grain),#FBF6E9;border-left:6px solid var(--red);box-shadow:0 2px 3px rgba(0,0,0,.06),0 12px 24px rgba(60,40,20,.10)}
+.dnote .label{margin:0 0 8px}
+.dnote p{margin:0;font-size:19px;line-height:1.65}
+.dnote p+p{margin-top:12px}
+.dnote .sig{margin-top:10px;text-align:right;font-weight:700;font-size:17px}
+.dnote .sig::before{content:"— "}
 /* myStereo: owner's manual */
 .manual{margin-top:30px;padding:22px 26px 10px;border:2px solid var(--ink);border-radius:4px;background:var(--grain),var(--sheet)}
 .manual .mh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px;font:700 13px/1.2 var(--tw);letter-spacing:.16em;text-transform:uppercase}
@@ -185,6 +192,7 @@ h1 span{color:var(--red)}
 <div class="stripes" role="presentation"></div>
 <main class="col">
 <section class="hero"><img class="icon" src="/mystereo/app/icon-512.png" alt="" width="120" height="120"><div><p class="kick label">Owner’s manual</p><h1>myStereo.<br><span>Your stereo.</span></h1><p class="lede">myStereo turns your phone into a stereo for the albums and movies you already own. It plays songs or movies stored right on your phone. You can also connect a Plex server, but it’s not required. No subscription, no ads, no algorithm. You pick the album, turn the knob and press play.</p><div class="acts"><a class="btn" href="https://mystereo.ownyourmedia.club/">Open myStereo</a><a class="more" href="https://mystereo.ownyourmedia.club/mystereo/app/guide.html">Read the guide →</a></div><p class="fine">iPhone, Android and computer · Try it with the demo music first</p></div></section>
+<aside class="dnote"><p class="label">A note from the designer</p><p>I loved the iPod because it put all my music in my pocket. Streaming music felt like an insane step forward with everything instantly accessible, at least at first. But access doesn’t mean ownership, and over the past decade I’d handed over the keys to my music to the tech bros, and lost my own musical taste in the process. I built myStereo to take control back!</p><p class="sig">BC</p></aside>
 <div class="pair"><figure class="shot phone"><img src="/mystereo/shots/handheld-yellow.webp" width="600" height="1111" alt="The handheld player, knob and all." loading="lazy"><figcaption>The handheld player, knob and all.</figcaption></figure><figure class="shot phone"><img src="/mystereo/shots/back.webp" width="600" height="1127" alt="Swipe the case and it turns over." loading="lazy"><figcaption>Swipe the case and it turns over.</figcaption></figure></div>
 <div class="manual" id="inputs"><div class="mh"><span>Front panel</span><span>Fig. 1</span></div><figure class="shot small"><img src="/mystereo/shots/inputs.webp" width="1206" height="461" alt="Three inputs under the screen, like an old receiver. Video sits with the buttons." loading="lazy"><figcaption>Three inputs under the screen, like an old receiver. Video sits with the buttons.</figcaption></figure><div class="ctl"><span class="n">1</span><div><h3>Music</h3><p>Your whole library: artists, albums, genres, playlists, ratings and search. Spin the knob through it, or just touch the screen.</p></div></div><div class="ctl"><span class="n">2</span><div><h3>Tapes</h3><p>Our mixtape tool, <a href="/flipside/">Flipside</a>, lives right inside. Press TAPES and the deck comes up with every mixtape you’ve made.</p></div></div><div class="ctl"><span class="n">3</span><div><h3>Vinyl</h3><p>The turntable. Pick any side, A through D, and press the center of the knob to turn the sleeve over: the songs, the pressing and how many times you’ve spun it. Every CD is now a record.</p></div></div><div class="ctl"><span class="n">4</span><div><h3>Video</h3><p>Your movies and shows, right on the display. Turn the phone sideways for full screen. It picks up where you left off. (Plex server optional.)</p></div></div></div>
 <figure class="shot wide"><img src="/mystereo/shots/vinyl.webp" width="1520" height="745" alt="Vinyl, with the phone turned sideways." loading="lazy"><figcaption>Vinyl, with the phone turned sideways.</figcaption></figure>
