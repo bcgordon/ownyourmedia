@@ -187,17 +187,28 @@ h1 span{color:var(--red)}
 <section class="hero"><img class="icon" src="/assets/club-icon-192.png" alt="" width="120" height="120"><div><p class="kick label">The credits</p><h1>Liner<br><span>Notes.</span></h1><p class="lede">Records used to tell you everyone who made them: who played, who recorded it, who to thank. These are the club’s credits. Every member is listed here, by the year they joined, and the apps link back to this page.</p><div class="acts"><a class="btn" href="/#passes">About the passes</a></div><p class="fine">Members can ask to be listed by first name and last initial, or left off.</p></div></section>
 <section class="sec" id="members"><h2>Members</h2><div id="credits"></div></section>
 <script>
-fetch('/liner-notes.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
-  var box=document.getElementById('credits'), m=d.members||[];
-  if(!m.length){box.innerHTML='<p class="empty">The first names go here when passes open. The founding members of 2026 will always be listed first.</p>';return;}
+var SHEET='https://docs.google.com/spreadsheets/d/e/2PACX-1vQxxZHxXAUPm2sAFuH0vh8eJ4Rwmuff03Qgw9xSRzeG0esUipHtWqPsJbaKVswURXdejkU6tEKZlaox/pub?gid=113297464&single=true&output=csv';
+function csv(t){var rows=[],row=[],f='',q=false;for(var i=0;i<t.length;i++){var c=t[i];
+  if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c=='"')q=true;else if(c==','){row.push(f);f=''}else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;row.push(f);rows.push(row);row=[];f=''}else f+=c}
+  if(f||row.length){row.push(f);rows.push(row)}return rows}
+function fromSheet(t){var r=csv(t);if(!r.length)return[];var h=r[0].map(function(x){return x.trim().toLowerCase()});
+  var ni=h.findIndex(function(x){return x.indexOf('name')>-1}),yi=h.findIndex(function(x){return x.indexOf('year')>-1});
+  if(ni<0){ni=0;yi=1}else r=r.slice(1);
+  return r.map(function(x){return{name:(x[ni]||'').trim(),year:((yi>-1?x[yi]:'')||'').trim()||'2026'}}).filter(function(x){return x.name})}
+function show(m){var box=document.getElementById('credits');box.innerHTML='';
+  if(!m.length){box.innerHTML='<p class="empty">The first names go here soon. The founding members of 2026 will always be listed first.</p>';return;}
   var years={}; m.forEach(function(x){(years[x.year]=years[x.year]||[]).push(x.name)});
   Object.keys(years).sort().forEach(function(y){
     var h=document.createElement('p'); h.className='yr'; h.textContent='Class of '+y; box.appendChild(h);
     var ul=document.createElement('ul'); ul.className='credits';
     years[y].forEach(function(n){var li=document.createElement('li'); li.textContent=n; ul.appendChild(li)});
     box.appendChild(ul);
-  });
-}).catch(function(){});
+  });}
+function backup(){return fetch('/liner-notes.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){show(d.members||[])})}
+fetch(SHEET,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+  if(/^\s*</.test(t))throw 0; show(fromSheet(t));
+}).catch(function(){backup().catch(function(){show([])})});
 </script>
 </main>
 <footer class="col end"><nav aria-label="More"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/">Flipside</a><a href="/shelf/">myShelf</a><a href="/places/">Places</a></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
