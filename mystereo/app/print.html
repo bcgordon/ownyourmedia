@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>J-Card</title>
+<body style="margin:0;padding:28px 20px;font:18px/1.45 -apple-system,'Helvetica Neue',Arial,sans-serif;color:#222;background:#fff">
+<p id="msg">Opening your J-card…</p>
+<script>
+/* Flipside / myStereo: the J-card print page. The card rides in the link (squeezed), so nothing is stored or sent anywhere.
+   iPhone home-screen apps can't print, so the app opens this page in Safari's sheet, where print works. */
+(async function () {
+  try {
+    var h = location.hash.slice(1); if (!h) throw 0;
+    var z = h.charAt(0) === 'z', s = (z ? h.slice(1) : h.slice(1)).replace(/-/g, '+').replace(/_/g, '/');
+    var bin = atob(s), b = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    var html = z ? await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text() : new TextDecoder().decode(b);
+    document.open(); document.write(html); document.close();
+    setTimeout(function () { try { window.print(); } catch (e) {} }, 1200);
+  } catch (e) { document.getElementById('msg').textContent = 'This J-card didn’t come through. Close this and press Print again.'; }
+})();
+</script>
