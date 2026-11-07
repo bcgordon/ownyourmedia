@@ -301,9 +301,14 @@ h1{font-weight:700}
   .ac-shot{position:absolute;top:20px;right:16px;width:88px;border-radius:12px}
   .appcard .ac-text>p:first-of-type{margin-top:22px}
 }
+@media (min-width:641px){.appcard:nth-child(2){grid-template-columns:190px minmax(0,1fr);padding:28px 30px 28px 28px}.appcard:nth-child(2) .ac-shot{order:-1}}
 .intro.small-print{font-size:16px;color:var(--gray);margin-top:14px}
 .handmade li:last-child:nth-child(odd){grid-column:1/-1}
 .intro.voice{font-size:20px;line-height:1.6;max-width:40em}
+.clubwho{display:grid;grid-template-columns:200px minmax(0,1fr);gap:34px;align-items:center;margin-top:8px}
+.clubwho img{width:200px;height:auto;display:block;filter:drop-shadow(0 3px 6px rgba(28,27,25,.18))}
+.clubwho .intro.voice:first-child{font-size:23px;font-weight:700;line-height:1.45;margin-top:0}
+@media (max-width:640px){.clubwho{grid-template-columns:minmax(0,1fr);gap:18px;justify-items:start}.clubwho img{width:150px}}
 </style>
 </head>
 <body>
@@ -319,7 +324,7 @@ h1{font-weight:700}
   <p class="kick">Offline projects · Twin Cities, MN</p>
   <div class="open">
       <figure class="typed"><a href="/bc-letter.webp" aria-label="Open BC's typed letter full size"><img src="/bc-letter.webp" width="1300" height="903" alt="A letter typed on BC's typewriter: Homemade tools that work on iPhone and Android, for people who would rather own their music, movies, and books than rent them from tech companies. Plus a short list of local places where the good stuff still happens in person. Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten. Pull up a chair. You're in. Signed, BC."></a></figure>
-    <figure class="taped"><img src="/oym-cassette.webp" alt="Own Your Media cassette sticker" width="732" height="545"><figcaption>made for mixtapes</figcaption></figure>
+    <figure class="taped"><img src="/oym-cassette.webp" alt="Own Your Media cassette sticker" width="732" height="545"></figure>
       <ul class="jump" aria-label="Jump to">
         <li><a href="#tools">See the projects →</a></li><li><a href="#passes">See the passes →</a></li><li><a href="#places">Find a place nearby →</a></li><li><a href="#detox">See what we're testing →</a></li>
       </ul>
@@ -374,7 +379,8 @@ h1{font-weight:700}
   </section>
 
   <section class="sec" id="tools"><h2><span>§2</span> The apps <small>free · no ads</small></h2>
-    <p class="intro">I originally made these apps for myself because I wanted more flexibility for using my own media on mobile. Then I realized others might enjoy these tools too. The biggest revelation was discovering that these tools allow me (and now you) to listen to music and consume your media in a brand new (though actually quite old) way, and I want EVERYONE to experience it!</p>
+    <p class="intro">I originally made these apps for myself because I wanted more flexibility for using my own media on mobile (and to track what physical media I actually own). Then it dawned on me that others might benefit from what I’d built.</p>
+    <p class="intro">The mind-blowing moment for me was re-discovering music that I’d forgotten I owned! And the excitement that comes with sharing something you love with others. With these apps in your hands, I hope you have the same experience as me.</p>
     <p class="intro small-print">Free, no ads. They work on iPhone, Android and computers, and they play what you already own.</p>
     <div class="apps">
       <article class="appcard"><div class="ac-text"><img class="ac-icon" src="/mystereo/app/icon-512.png" alt="" width="96" height="96"><h3>myStereo</h3><span class="ac-tag">Music · Tapes · Vinyl · Video</span>
@@ -426,7 +432,8 @@ h1{font-weight:700}
   </section>
 
   <section class="sec" id="club"><h2><span>§4</span> What the club is <small>less screen, more company</small></h2>
-    <p class="intro voice">From movies to music, experiencing these things is always better when you’re with someone. The shared joys of a great album. The shared memories of a movie you’ve loved for years. This club is about bringing people together to not just mimic those feelings from the past, but to bring them into our Present and experience things together AGAIN.</p>
+    <div class="clubwho"><img src="/assets/oym-circle.webp" alt="oym. ownyourmedia.club" width="240" height="240"><div><p class="intro voice">Since the rise of smartphones and streaming services, it feels like we’ve lost something that we didn’t know mattered.</p>
+    <p class="intro voice">From movies to music, experiencing these things is always better when you’re with someone. The shared joys of a great album. The shared memories of a movie you’ve loved for years. This club is about gathering to share our love of analog tech and tangible media TOGETHER AGAIN.</p></div></div>
   </section>
 
   <section class="sec" id="gather"><h2><span>§5</span> Gatherings <small>phones in pockets</small></h2>
