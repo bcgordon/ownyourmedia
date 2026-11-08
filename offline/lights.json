@@ -1,0 +1,11 @@
+{
+  "updated": "Nov 2026",
+  "towns": {
+    "Twin Cities": { "state": "MN", "x": 369.8, "y": 423.4, "label": "right" },
+    "Duluth":      { "state": "MN", "x": 436.0, "y": 262.4, "label": "left" },
+    "Madison":     { "state": "WI", "x": 612.2, "y": 587.9, "label": "left" }
+  },
+  "lights": [
+    { "name": "BC Gordon", "town": "Twin Cities", "line": "Letters, cocktails, and the Own Your Media Club. Often at Present Company.", "url": "/offline/" }
+  ]
+}

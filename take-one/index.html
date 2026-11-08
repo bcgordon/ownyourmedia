@@ -200,11 +200,19 @@ h1 span{color:var(--red)}
 .how{margin-top:30px}
 @media (max-width:760px){.items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.items{grid-template-columns:minmax(0,1fr)}.table{padding:34px 18px 10px}}
+
+.end nav{flex-direction:column;gap:2px}
+.end .endmain,.end .endsmall{display:flex;flex-wrap:wrap;gap:4px 22px}
+.end .endsmall{font-size:14px;color:var(--muted)}
+.end .endsmall a{color:inherit}
+.mast nav a[aria-current]{text-decoration:none;color:var(--red);font-weight:700}
+@media (max-width:640px){.mast nav{gap:0 14px;font-size:15.5px;flex-wrap:nowrap}.mast nav a{white-space:nowrap}}
+@media (max-width:640px){.mast nav a[aria-current]{font-weight:400}}
 </style>
 </head>
 <body>
 <div class="col">
-<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">The Own Your Media Club Handbook</a></div><nav aria-label="Pages"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/">Flipside</a><a href="/shelf/">myShelf</a></nav></header>
+<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">The Own Your Media Club Handbook</a></div><nav aria-label="Pages"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/" aria-current="page">Take one</a><a href="/join/">Join</a></nav></header>
 </div>
 <div class="stripes" role="presentation"></div>
 <main class="col">
@@ -242,7 +250,7 @@ h1 span{color:var(--red)}
 <div><h3>Got an idea for the table?</h3><p>Write hello@ownyourmedia.club. If it's good, it goes on the table.</p></div>
 </div></section>
 </main>
-<footer class="col end"><nav aria-label="More"><a href="/">Home</a><a href="/mystereo/">myStereo</a><a href="/flipside/">Flipside</a><a href="/shelf/">myShelf</a><a href="/places/">Places</a><a href="/take-one/" aria-current="page">Take one</a></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
+<footer class="col end"><nav aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/join/">Join</a></div><div class="endsmall"><a href="/about/">About the club</a><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
 <div class="foot-stripes" role="presentation"></div>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
