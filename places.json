@@ -1,5 +1,5 @@
 {
-  "_howto": "Every place we've featured. The first three with \"featured\": true show on the homepage; the rest live on ownyourmedia.club/places/ as the archive. To rotate: set the old one's featured to false (it moves to the archive), and add the new one with featured true. Put new logos in assets/logos/.",
+  "_howto": "Every place we've featured. The one with \"featured\": true shows on the homepage and at the top of ownyourmedia.club/places/; the rest live there as the archive. To rotate: set the old one's featured to false (it moves to the archive), and add the new one with featured true. Put new logos in assets/logos/.",
   "updated": "November 2026",
   "places": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "name": "Agharta Records",
-      "featured": true,
+      "featured": false,
       "since": "October 2026",
       "where": "University Ave · St. Paul",
       "logo": "/assets/logos/agharta.webp",
@@ -27,7 +27,7 @@
     },
     {
       "name": "Inkwell Booksellers",
-      "featured": true,
+      "featured": false,
       "since": "October 2026",
       "where": "E Hennepin Ave · Minneapolis",
       "logo": "/assets/logos/inkwell.webp",

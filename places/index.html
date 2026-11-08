@@ -205,7 +205,7 @@ h1 span{color:var(--red)}
 </div>
 <div class="stripes" role="presentation"></div>
 <main class="col">
-<section class="hero"><img class="icon" src="/assets/club-icon-192.png" alt="" width="120" height="120"><div><p class="kick label">Twin Cities, MN</p><h1>Places worth<br><span>the trip.</span></h1><p class="lede">The best features are in person. These are Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. Three are featured on the front page at a time. Every one we’ve featured stays here.</p><div class="acts"><a class="btn" href="/join/">Join the club</a></div><p class="fine">Know a place that belongs here? Tell BC next time you see him, or write to hello@ownyourmedia.club.</p></div></section>
+<section class="hero"><img class="icon" src="/assets/club-icon-192.png" alt="" width="120" height="120"><div><p class="kick label">Twin Cities, MN</p><h1>Places worth<br><span>the trip.</span></h1><p class="lede">The best features are in person. These are Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. One is featured on the front page at a time. Every one we’ve featured stays here.</p><div class="acts"><a class="btn" href="/join/">Join the club</a></div><p class="fine">Know a place that belongs here? Tell BC next time you see him, or write to hello@ownyourmedia.club.</p></div></section>
 <section class="sec" id="now"><h2>Featured now</h2><div id="featured"></div></section>
 <section class="sec" id="archive"><h2>The archive</h2><p class="intro">Places we’ve featured before. Still worth the trip.</p><div id="archive"></div></section>
 <section class="sec" id="gather"><h2>Gatherings</h2><p class="intro"><b>Bring it to the table.</b> Small nights in the Twin Cities for people who’d rather be in the room: a record, a book, a mixtape, and the people you want to share it with.</p><ul class="gather"><li><span class="when">Coming soon</span><b>Listening night</b><p>Bring one record you love. We play a side of each and talk about why.</p></li><li><span class="when">Coming soon</span><b>Record and book swap</b><p>Bring what you’re done with, leave with something new.</p></li><li><span class="when">Coming soon</span><b>Mixtape recording party</b><p>Gather friends to listen to your mixtape as you record it onto a real cassette. Quiet listening or deep explanations: it all depends on the vibe you’re going for.</p></li></ul><p class="gjoin"><a class="more" href="/join/">Join the club →</a> Members hear about every gathering first.</p></section>
@@ -225,7 +225,7 @@ function oymPlace(p){
 }
 
 fetch('/places.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
-  var all=d.places||[], now=all.filter(function(p){return p.featured}).slice(0,3), past=all.filter(function(p){return now.indexOf(p)<0});
+  var all=d.places||[], now=all.filter(function(p){return p.featured}).slice(0,1), past=all.filter(function(p){return now.indexOf(p)<0});
   var f=document.getElementById('featured'), a=document.getElementById('archive');
   now.forEach(function(p){f.appendChild(oymPlace(p))});
   if(past.length) past.forEach(function(p){a.appendChild(oymPlace(p))});

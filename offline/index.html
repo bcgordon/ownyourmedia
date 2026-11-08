@@ -336,7 +336,7 @@ h1{font-weight:700}
 .contents .row .dots{flex:1;border-bottom:2px dotted rgba(28,27,25,.35);transform:translateY(-5px)}
 .contents .row a{white-space:nowrap;font-weight:700}
 .contents p{margin:6px 0 0;max-width:36em}
-.contents .feat{display:block;margin-top:6px;color:var(--muted);font-size:15px}
+.featplace{margin-top:14px}.featplace .ent{margin:0}
 .aboutlink{margin-top:22px}
 .offline-soon{margin-top:22px}
 .pagehead + .sec{margin-top:22px}
@@ -402,6 +402,8 @@ h1{font-weight:700}
 @media (max-width:760px){.bhero .blogo .hand{position:static;display:block;margin:4px 0 0 auto;height:42px!important;transform:rotate(-6deg) translateX(40px)}}
 .proj img.here{vertical-align:-8px;margin-left:12px;max-width:60%}
 @media (max-width:760px){.proj img.here{display:block;margin:8px 0 0}}
+.proj .btns{display:flex;flex-direction:column;align-items:flex-end;gap:12px}.proj .btns .plain{font-size:15px}
+@media (max-width:760px){.proj .btns{align-items:flex-start}}
 /* wall of lights */
 .mapsheet{position:relative;background:var(--sheet);margin:40px auto 0;padding:18px 18px 10px;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:rotate(.6deg)}
 .mapsheet::before,.mapsheet::after{content:"";position:absolute;top:-10px;width:80px;height:22px;background:rgba(216,154,48,.55)}
@@ -466,9 +468,9 @@ h1{font-weight:700}
   </div>
 
   <section class="sec" id="where"><h2>Where I am now <small>no algorithm required</small></h2>
-    <div class="proj"><div><h3>Letters from BC Gordon</h3><div class="tag">Essays · Substack</div><p>Mostly about friendship and figuring out what “enough” means.</p></div><a class="dark" href="https://lettersfrombc.com">Read the letters</a></div>
-    <div class="proj"><div><h3>Runaway Anchor</h3><div class="tag">Cocktails · Mocktails</div><p>Made with four friends who are better at it than me.</p></div><a class="dark" href="https://www.runawayanchor.com">Visit the bar</a></div>
-    <div class="proj"><div><h3>Own Your Media Club <img class="hand here" src="/offline/img/hand-youre-here.webp" alt="← you’re here" width="733" height="170" style="height:34px"></h3><div class="tag">Apps · Places · Gatherings</div><p>Own your media. Then go outside.</p></div><a class="dark" href="/">Back to the club</a></div>
+    <div class="proj"><div><h3>Letters from BC Gordon</h3><div class="tag">Writing · Reflection</div><p>Essays on intentional living, friendship and finding enough, delivered to your inbox. This is where the conversation lives now.</p></div><a class="dark" href="https://lettersfrombc.com">Read and subscribe</a></div>
+    <div class="proj"><div><h3>Runaway Anchor</h3><div class="tag">Cocktails · Mocktails</div><p>The cocktail and mocktail project I run with four friends. Recipes, the seasonal menu, and a Patreon where members help shape what we pour next.</p></div><div class="btns"><a class="dark" href="https://www.runawayanchor.com">Visit Runaway Anchor</a><a class="plain" href="https://www.patreon.com/TheRunawayAnchor">Join on Patreon →</a></div></div>
+    <div class="proj"><div><h3>Own Your Media Club <img class="hand here" src="/offline/img/hand-youre-here.webp" alt="← you’re here" width="733" height="170" style="height:34px"></h3><div class="tag">Offline projects · Twin Cities</div><p>Own your media. Then go outside. Free, homemade apps for enjoying the music, movies and books you actually own, plus a guide to Twin Cities places to go offline. A membership card gets you in on the in-person gatherings.</p></div><a class="dark" href="/">Back to the club</a></div>
   </section>
 
   <section class="sec" id="find"><h2>Find me offline <small>phones in pockets</small></h2>

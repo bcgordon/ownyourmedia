@@ -336,7 +336,7 @@ h1{font-weight:700}
 .contents .row .dots{flex:1;border-bottom:2px dotted rgba(28,27,25,.35);transform:translateY(-5px)}
 .contents .row a{white-space:nowrap;font-weight:700}
 .contents p{margin:6px 0 0;max-width:36em}
-.contents .feat{display:block;margin-top:6px;color:var(--muted);font-size:15px}
+.featplace{margin-top:14px}.featplace .ent{margin:0}
 .aboutlink{margin-top:22px}
 .offline-soon{margin-top:22px}
 .pagehead + .sec{margin-top:22px}
@@ -361,7 +361,7 @@ h1{font-weight:700}
   <section class="sec" id="contents"><h2>In this handbook</h2>
     <ol class="contents">
       <li><div class="row"><b>The apps</b><span class="dots"></span><a href="/apps/">Apps →</a></div><p>myStereo, Flipside and myShelf. Homemade, free and ad-free, for the music, movies and books you already own.</p></li>
-      <li><div class="row"><b>Places worth the trip</b><span class="dots"></span><a href="/places/">Places →</a></div><p>Twin Cities spots that make room for records, books and nights without a screen.</p><span class="feat" id="featNames"></span></li>
+      <li><div class="row"><b>Places worth the trip</b><span class="dots"></span><a href="/places/">Places →</a></div><p>Twin Cities spots that make room for records, books and nights without a screen. One featured at a time:</p><div class="featplace" id="featPlace"></div></li>
       <li><div class="row"><b>Go offline</b><span class="dots"></span><a href="/offline/">Offline →</a></div><p>Light your beacon, and the digital detox tools we’re trying right now.</p></li>
       <li><div class="row"><b>Take one</b><span class="dots"></span><a href="/take-one/">Take one →</a></div><p>Free stuff to keep: phone wallpapers, the Light Your Beacon guide, a hand-me-down card and a mixtape J-card to print.</p></li>
       <li><div class="row"><b>Join the club</b><span class="dots"></span><a href="/join/">Join →</a></div><p>Member, $20 one time, or All Access, $50 a year. A real card in the mail and your name in the Liner Notes.</p></li>
@@ -383,9 +383,19 @@ h1{font-weight:700}
 <div class="foot-stripes" role="presentation"></div>
 
 <script>
+/* The featured place (places.json, "featured": true) shows here; every other place lives on /places/. */
 fetch('/places.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
-  var n=(d.places||[]).filter(function(p){return p.featured}).slice(0,3).map(function(p){return p.name});
-  if(n.length) document.getElementById('featNames').textContent='Featured now: '+n.join(' · ');
+  var p=(d.places||[]).filter(function(x){return x.featured})[0], box=document.getElementById('featPlace'); if(!p||!box) return;
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+  var art=el('article','ent place'), logo=el('div','plogo');
+  if(p.logo){var i=el('img');i.src=p.logo;i.alt=p.name+' logo';i.style.cssText=p.logoShape==='square'?'border-radius:14px':'height:52px';logo.appendChild(i)}
+  art.appendChild(logo);
+  var b=el('div'); b.appendChild(el('h3','',p.name));
+  if(p.where) b.appendChild(el('span','where',p.where));
+  if(p.quote) b.appendChild(el('q','',p.quote));
+  if(p.take){var t=el('span','take');t.appendChild(el('b','',"BC's take: "));t.appendChild(document.createTextNode(p.take));b.appendChild(t)}
+  if(p.url){var g=el('a','go','Visit '+p.name+' →');g.href=p.url;g.rel='noopener';b.appendChild(g)}
+  art.appendChild(b); box.appendChild(art);
 }).catch(function(){});
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script><!-- End Cloudflare Web Analytics -->
