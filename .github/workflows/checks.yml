@@ -1,0 +1,47 @@
+# Runs on every pull request and every push to main. All checks must pass before merging.
+name: checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  secrets:
+    name: No secrets in the repo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No Plex tokens
+        run: |
+          if grep -rIEn 'X-Plex-Token=[A-Za-z0-9_-]{10,}' --exclude-dir=.git .; then
+            echo "::error::A Plex token is in the repo. Remove it before merging."; exit 1; fi
+      - name: No private keys or .p8 files
+        run: |
+          # tests/server.test.js makes up a throwaway key at run time; that's the only allowed match
+          hits=$(grep -rIl 'BEGIN [A-Z ]*PRIVATE KEY' --exclude-dir=.git . | grep -v '^./tests/server.test.js$' || true)
+          p8=$(find . -name '*.p8' -not -path './.git/*')
+          if [ -n "$hits$p8" ]; then echo "::error::Private key material found:"; echo "$hits $p8"; exit 1; fi
+  tape-server:
+    name: Tape server tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+  analytics:
+    name: Analytics on every listed page
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every page in sitemap.xml carries Cloudflare Web Analytics
+        run: |
+          missing=0
+          for url in $(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's#<loc>https://ownyourmedia.club##; s#</loc>##'); do
+            f=".${url}"; case "$f" in */) f="${f}index.html";; esac
+            if [ ! -f "$f" ]; then echo "::error::$url is in sitemap.xml but $f doesn't exist"; missing=1; continue; fi
+            grep -q 2c3c0cf6367140999d0d1c59ae6a5626 "$f" || { echo "::error::$f is missing the analytics snippet"; missing=1; }
+          done
+          exit $missing
