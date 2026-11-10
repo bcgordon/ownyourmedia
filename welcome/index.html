@@ -126,7 +126,10 @@ h1 span{color:var(--red)}
 .placecard:last-child{border-bottom:0}
 .placecard .plogo{display:block;margin-bottom:14px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
 .placecard .plogo.wide{height:56px;width:auto;max-width:100%}
-.placecard .plogo.sq{height:72px;width:72px;border-radius:14px}
+.placecard .plogo.sq{height:80px;width:80px;border-radius:14px}
+.placecard .plogo.badge{height:52px;width:auto;max-width:100%;box-shadow:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.16))}
+.placecard .plogo.tile{height:84px;width:auto;max-width:100%;border-radius:8px;background:#fff}
+@media (max-width:640px){.placecard .plogo.badge{height:46px}.placecard .plogo.tile{height:76px}}
 .placecard h3{margin:0;font:700 24px/1.2 var(--tw)}
 .placecard .where{display:block;margin-top:3px;color:var(--muted);font-size:15px}
 .placecard q{display:block;margin-top:10px;font-size:19px}
