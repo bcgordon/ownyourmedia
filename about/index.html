@@ -196,7 +196,7 @@ h1 i{font-style:normal}
 @media (min-width:641px) and (min-height:501px){.open{grid-template-columns:minmax(0,1fr) 210px;grid-template-areas:"letter tape" "jump tape"}.open .typed{grid-area:letter}.open .taped{grid-area:tape}.open .jump{grid-area:jump}}
 /* phones turned sideways: letter across the full width, cassette below it, never beside it */
 @media (max-height:500px) and (orientation:landscape){.open{grid-template-columns:minmax(0,1fr);gap:30px}.taped{max-width:220px;margin:0 auto}.typed{transform:none}}
-@media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:110%;max-width:none;margin-left:-5%;box-shadow:none}.open{gap:30px}}
+@media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:100%;max-width:100%;margin:0;box-shadow:none}.open{gap:30px}}
 
 img{height:auto}
 .tiers{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -340,6 +340,8 @@ h1{font-weight:700}
 .aboutlink{margin-top:22px}
 .offline-soon{margin-top:22px}
 .pagehead + .sec{margin-top:22px}
+.story .photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:4px;box-shadow:0 2px 3px rgba(0,0,0,.08),0 10px 22px rgba(60,40,20,.14);margin-bottom:14px}
+.rulescard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:34px;align-items:center}.rulescard .rcard{margin:0;transform:rotate(1.5deg)}.rulescard .rcard img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.1),0 12px 26px rgba(60,40,20,.18)}@media (max-width:760px){.rulescard{grid-template-columns:minmax(0,1fr)}.rulescard .rcard{transform:rotate(1deg);max-width:440px}}
 </style>
 </head>
 <body>
@@ -356,19 +358,19 @@ h1{font-weight:700}
   <section class="sec" id="story"><h2>It started around a table</h2>
     <p class="intro">Own Your Media Club grew out of a few years of chasing one feeling: the good one you get with friends around a table, phones forgotten. Here's how we got here.</p>
     <div class="story">
-      <div><img class="art" src="/assets/runaway-anchor.webp" alt="" width="424" height="424"><span class="yr">2023</span><h3><a href="https://www.runawayanchor.com">Runaway Anchor</a></h3><p>It started with cocktails and mocktails. A few friends began mixing drinks, writing menus and hosting nights together. The drinks were good, but the real draw was the room: people talking, laughing and really seeing one another.</p></div>
-      <div><img class="art" src="/assets/letters.webp" alt="" width="944" height="290"><span class="yr">Then</span><h3><a href="https://lettersfrombc.com">Letters from BC Gordon</a></h3><p>Next came the writing. Letters from BC Gordon on Substack, often drafted on a manual typewriter, about friendship, family and the quiet costs of living on our screens.</p></div>
-      <div><img class="art" src="/assets/logos/dumb.webp" alt="" style="border-radius:10px;border:1px solid var(--rule)" width="98" height="57"><span class="yr">2026</span><h3>The dumb experiment</h3><p>For 60 days I swapped my iPhone for a flip phone from dumb.co and wrote about it every week. The smartphone still lives in a yellow box most of the day. I got my evenings back, and I noticed how much of my music, movies and books I was renting instead of owning.</p></div>
-      <div><img class="art" src="/assets/oym-seal.webp" alt="" style="border-radius:50%" width="480" height="480"><span class="yr">Now</span><h3>Own Your Media Club</h3><p>So I started building small tools that keep my media mine, like myStereo, Flipside and myShelf, and keeping a list of local places worth putting the phone down for. Records, typewriters, paper books and face-to-face conversation. That’s the club.</p></div>
+      <div><img class="photo" src="/assets/story/runaway.webp" alt="BC holding up a Runaway Anchor glass in front of the bar cabinet" width="1000" height="750" loading="lazy"><span class="yr">2023</span><h3><a href="https://www.runawayanchor.com">Runaway Anchor</a></h3><p>It started with cocktails and mocktails. A few friends began mixing drinks, writing menus and hosting nights together. The drinks were good, but the real draw was the room: people talking, laughing and really seeing one another.</p></div>
+      <div><img class="photo" src="/assets/story/letters.webp" alt="BC’s Torpedo typewriter with a letter in progress" width="1000" height="750" loading="lazy"><span class="yr">Then</span><h3><a href="https://lettersfrombc.com">Letters from BC Gordon</a></h3><p>Next came the writing. Letters from BC Gordon on Substack, often drafted on a manual typewriter, about friendship, family and the quiet costs of living on our screens.</p></div>
+      <div><img class="photo" src="/assets/story/dumb.webp" alt="The flip phone on the desk, the yellow box where the smartphone lives beside it" width="1000" height="750" loading="lazy"><span class="yr">2026</span><h3>The dumb experiment</h3><p>For 60 days I swapped my iPhone for a flip phone from dumb.co and wrote about it every week. The smartphone still lives in a yellow box most of the day. I got my evenings back, and I noticed how much of my music, movies and books I was renting instead of owning.</p></div>
+      <div><img class="photo" src="/assets/story/club.webp" alt="BC’s record crates, full of vinyl" width="1000" height="750" loading="lazy"><span class="yr">Now</span><h3>Own Your Media Club</h3><p>So I started building small tools that keep my media mine, like myStereo, Flipside and myShelf, and keeping a list of local places worth putting the phone down for. Records, typewriters, paper books and face-to-face conversation. That’s the club.</p></div>
     </div>
   </section>
 
   <section class="sec" id="rules"><h2>Club rules</h2>
-        <ol class="rules">
+        <div class="rulescard"><ol class="rules">
       <li><div><b>Own it.</b><p>Buy the records, films and books you love, and keep them. Nobody can take back what you own.</p></div></li>
       <li><div><b>Play it.</b><p>Actually use what’s on your shelf. Put on a whole album, start to finish, or build the ultimate party mixtape.</p></div></li>
       <li><div><b>Share it.</b><p>Bring it to the table: a listening night, a swap, a mixtape made for one person. It’s all better with your people.</p></div></li>
-    </ol>
+    </ol><figure class="rcard"><img src="/assets/story/rules-card.webp" alt="The three club rules, typed on an index card and signed by BC" width="1100" height="754" loading="lazy"></figure></div>
   </section>
 
 </main>

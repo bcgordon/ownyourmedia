@@ -196,7 +196,7 @@ h1 i{font-style:normal}
 @media (min-width:641px) and (min-height:501px){.open{grid-template-columns:minmax(0,1fr) 210px;grid-template-areas:"letter tape" "jump tape"}.open .typed{grid-area:letter}.open .taped{grid-area:tape}.open .jump{grid-area:jump}}
 /* phones turned sideways: letter across the full width, cassette below it, never beside it */
 @media (max-height:500px) and (orientation:landscape){.open{grid-template-columns:minmax(0,1fr);gap:30px}.taped{max-width:220px;margin:0 auto}.typed{transform:none}}
-@media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:110%;max-width:none;margin-left:-5%;box-shadow:none}.open{gap:30px}}
+@media (max-width:640px){.typed{margin:0 -16px;transform:none;overflow:hidden}.typed a{border-block:1px solid var(--rule)}.typed img{width:100%;max-width:100%;margin:0;box-shadow:none}.open{gap:30px}}
 
 img{height:auto}
 .tiers{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -340,6 +340,8 @@ h1{font-weight:700}
 .aboutlink{margin-top:22px}
 .offline-soon{margin-top:22px}
 .pagehead + .sec{margin-top:22px}
+.story .photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:4px;box-shadow:0 2px 3px rgba(0,0,0,.08),0 10px 22px rgba(60,40,20,.14);margin-bottom:14px}
+.rulescard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:34px;align-items:center}.rulescard .rcard{margin:0;transform:rotate(1.5deg)}.rulescard .rcard img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.1),0 12px 26px rgba(60,40,20,.18)}@media (max-width:760px){.rulescard{grid-template-columns:minmax(0,1fr)}.rulescard .rcard{transform:rotate(1deg);max-width:440px}}
 </style>
 
 <style>
