@@ -547,7 +547,7 @@ h1{font-weight:700}
         /* app icons fill the tile; a wordmark logo ("iconFit": "logo") sits inside it with some room */
         icon = el('img', 'ic' + (app.iconFit === 'logo' ? ' logo-fit' : '')); icon.alt = ''; icon.referrerPolicy = 'no-referrer';
         icon.onerror = function () { if (icon.parentNode) icon.parentNode.replaceChild(letterTile(), icon); };
-        icon.src = app.icon;
+        icon.src = /^(https?:)?\/\//.test(app.icon) || app.icon.charAt(0) === '/' ? app.icon : '/' + app.icon;
       } else icon = letterTile();
       li.appendChild(icon);
       var body = el('div');
