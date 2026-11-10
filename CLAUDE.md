@@ -9,3 +9,4 @@ The same files are also served by the Cloudflare Pages project `oym-apps`, which
 - **Changes arrive by pull request.** BC merges. Never push to `main`, and never rewrite history.
 - **Nothing private here:** no addresses, no tester details, no keys or tokens. The Cloudflare analytics token and the Supabase publishable key are public by design.
 - `.github/workflows/checks.yml` must pass: no Plex tokens or private keys, tape server tests, analytics on every page in `sitemap.xml`.
+- If a GitHub Pages publish hangs at "finished_file_sync" and times out, re-running it retries the same stuck publish. Merge a new commit instead; that starts a fresh one.
