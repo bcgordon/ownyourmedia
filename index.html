@@ -328,6 +328,7 @@ h1{font-weight:700}
 .endlinks a[aria-current]{color:var(--red);text-decoration:none}
 @media (max-width:640px){.mast nav a[aria-current]{font-weight:400}}
 @media (max-width:640px){.mast nav{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:center;gap:2px 22px!important;font-size:15.5px!important}.mast.sub nav{justify-content:start}}
+.mast nav a[href="/join/"]{display:inline-block;line-height:1.2;border:1.5px solid var(--red);color:var(--red);padding:4px 12px;margin:-6px 0;border-radius:3px;text-decoration:none;font-weight:700;align-self:center;justify-self:start}.mast nav a[href="/join/"]:hover,.mast nav a[href="/join/"][aria-current]{background:var(--red);color:var(--paper)}
 .pagehead{margin:34px 0 0}
 .pagehead h1{margin:0}
 .contents{list-style:none;margin:26px 0 0;padding:0;border-top:2px solid var(--ink)}
@@ -347,7 +348,7 @@ h1{font-weight:700}
 <header class="mast" id="top">
   <img src="/assets/oym-seal.webp" alt="Own Your Media Club seal" width="480" height="480">
   <div class="t">Own Your Media Club</div>
-  <nav aria-label="Main"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/join/">Join</a><a href="/about/">About</a></nav>
+  <nav aria-label="Main"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></nav>
 </header>
 <div class="stripes" aria-hidden="true"></div>
 
@@ -362,7 +363,7 @@ h1{font-weight:700}
   <section class="sec" id="contents"><h2>In this handbook</h2>
     <ol class="contents">
       <li><div class="row"><b>The apps</b><span class="dots"></span><a href="/apps/">Apps →</a></div><p>myStereo, Flipside and myShelf. Homemade, free and ad-free, for the music, movies and books you already own.</p></li>
-      <li><div class="row"><b>Places worth the trip</b><span class="dots"></span><a href="/places/">Places →</a></div><p>Twin Cities spots that make room for records, books and nights without a screen. One featured at a time:</p><div class="featplace" id="featPlace"></div></li>
+      <li><div class="row"><b>Places worth the trip</b><span class="dots"></span><a href="/places/">Places →</a></div><p>Twin Cities spots that make room for records, books and nights without a screen.</p></li>
       <li><div class="row"><b>Go offline</b><span class="dots"></span><a href="/offline/">Offline →</a></div><p>Light your beacon, and the digital detox tools we’re trying right now.</p></li>
       <li><div class="row"><b>Take one</b><span class="dots"></span><a href="/take-one/">Take one →</a></div><p>Free stuff to keep: phone wallpapers, the Light Your Beacon guide, a hand-me-down card and a mixtape J-card to print.</p></li>
       <li><div class="row"><b>Join the club</b><span class="dots"></span><a href="/join/">Join →</a></div><p>Member, $20 one time, or All Access, $50 a year. A real card in the mail and your name in the Liner Notes.</p></li>
@@ -380,25 +381,10 @@ h1{font-weight:700}
 
 </main>
 <div class="stripes" style="margin-top:64px" aria-hidden="true"></div>
-<footer class="end"><img src="/assets/oym-seal-crew.webp" alt="" width="480" height="471"><b>Pull up a chair. You're in.</b><nav class="endlinks" aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/join/">Join</a><a href="/about/">About</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span><a class="badge" href="#top"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="" width="52" height="52"></a></footer>
+<footer class="end"><img src="/assets/oym-seal-crew.webp" alt="" width="480" height="471"><b>Pull up a chair. You're in.</b><nav class="endlinks" aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span><a class="badge" href="#top"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="" width="52" height="52"></a></footer>
 <div class="foot-stripes" role="presentation"></div>
 
-<script>
-/* The featured place (places.json, "featured": true) shows here; every other place lives on /places/. */
-fetch('/places.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
-  var p=(d.places||[]).filter(function(x){return x.featured})[0], box=document.getElementById('featPlace'); if(!p||!box) return;
-  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-  var art=el('article','ent place'), logo=el('div','plogo');
-  if(p.logo){var i=el('img');i.src=p.logo;i.alt=p.name+' logo';i.style.cssText=p.logoShape==='square'?'border-radius:14px':'height:52px';logo.appendChild(i)}
-  art.appendChild(logo);
-  var b=el('div'); b.appendChild(el('h3','',p.name));
-  if(p.where) b.appendChild(el('span','where',p.where));
-  if(p.quote) b.appendChild(el('q','',p.quote));
-  if(p.take){var t=el('span','take');t.appendChild(el('b','',"BC's take: "));t.appendChild(document.createTextNode(p.take));b.appendChild(t)}
-  if(p.url){var g=el('a','go','Visit '+p.name+' →');g.href=p.url;g.rel='noopener';b.appendChild(g)}
-  art.appendChild(b); box.appendChild(art);
-}).catch(function(){});
-</script>
+
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -161,6 +161,7 @@ h1 span{color:var(--red)}
 .gjoin{margin-top:18px}
 @media (max-width:640px){.mast nav a[aria-current]{font-weight:400}}
 @media (max-width:640px){.mast nav{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:center;gap:2px 22px!important;font-size:15.5px!important}.mast.sub nav{justify-content:start}}
+.mast nav a[href="/join/"]{display:inline-block;line-height:1.2;border:1.5px solid var(--red);color:var(--red);padding:4px 12px;margin:-6px 0;border-radius:3px;text-decoration:none;font-weight:700;align-self:center;justify-self:start}.mast nav a[href="/join/"]:hover,.mast nav a[href="/join/"][aria-current]{background:var(--red);color:var(--paper)}
 /* myStereo: owner's manual */
 .manual{margin-top:30px;padding:22px 26px 10px;border:2px solid var(--ink);border-radius:4px;background:var(--grain),var(--sheet)}
 .manual .mh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px;font:700 13px/1.2 var(--tw);letter-spacing:.16em;text-transform:uppercase}
@@ -202,12 +203,12 @@ h1 span{color:var(--red)}
 </head>
 <body>
 <div class="col">
-<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">Own Your Media Club</a></div><nav aria-label="Pages"><a href="/apps/">Apps</a><a href="/places/" aria-current="page">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/join/">Join</a><a href="/about/">About</a></nav></header>
+<header class="mast"><a href="/"><img class="seal" src="/assets/oym-seal.webp" alt="Own Your Media Club" width="58" height="58"></a><div class="t"><a href="/">Own Your Media Club</a></div><nav aria-label="Pages"><a href="/apps/">Apps</a><a href="/places/" aria-current="page">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></nav></header>
 </div>
 <div class="stripes" role="presentation"></div>
 <main class="col">
-<section class="hero"><img class="icon" src="/assets/club-icon-192.png" alt="" width="120" height="120"><div><p class="kick label">Twin Cities, MN</p><h1>Places worth<br><span>the trip.</span></h1><p class="lede">The best features are in person. These are Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. One is featured on the front page at a time. Every one we’ve featured stays here.</p><div class="acts"><a class="btn" href="/join/">Join the club</a></div><p class="fine">Know a place that belongs here? Tell BC next time you see him, or write to hello@ownyourmedia.club.</p></div></section>
-<section class="sec" id="now"><h2>Featured now</h2><div id="featured"></div></section>
+<section class="hero"><img class="icon" src="/assets/club-icon-192.png" alt="" width="120" height="120"><div><p class="kick label">Twin Cities, MN</p><h1>Places worth<br><span>the trip.</span></h1><p class="lede">The best features are in person. These are Twin Cities places that make room for analog hobbies, real conversation and nights without a screen. One is featured at a time, right here at the top. Every one we’ve featured stays here.</p><div class="acts"><a class="btn" href="/join/">Join the club</a></div><p class="fine">Know a place that belongs here? Tell BC next time you see him, or write to hello@ownyourmedia.club.</p></div></section>
+<section class="sec" id="now"><h2>Current feature</h2><div id="featured"></div></section>
 <section class="sec" id="archive"><h2>The archive</h2><p class="intro">Places we’ve featured before. Still worth the trip.</p><div id="archive"></div></section>
 <section class="sec" id="gather"><h2>Gatherings</h2><p class="intro"><b>Bring it to the table.</b> Small nights in the Twin Cities for people who’d rather be in the room: a record, a book, a mixtape, and the people you want to share it with.</p><ul class="gather"><li><span class="when">Coming soon</span><b>Listening night</b><p>Bring one record you love. We play a side of each and talk about why.</p></li><li><span class="when">Coming soon</span><b>Record and book swap</b><p>Bring what you’re done with, leave with something new.</p></li><li><span class="when">Coming soon</span><b>Mixtape recording party</b><p>Gather friends to listen to your mixtape as you record it onto a real cassette. Quiet listening or deep explanations: it all depends on the vibe you’re going for.</p></li></ul><p class="gjoin"><a class="more" href="/join/">Join the club →</a> Members hear about every gathering first.</p></section>
 <script>
@@ -234,7 +235,7 @@ fetch('/places.json',{cache:'no-cache'}).then(function(r){return r.json()}).then
 }).catch(function(){document.getElementById('featured').innerHTML='<p class="empty">Couldn’t load the list. Try again in a minute.</p>'});
 </script>
 </main>
-<footer class="col end"><nav aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/join/">Join</a><a href="/about/">About</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
+<footer class="col end"><nav aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><a class="badge" href="/"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="Own Your Media Club" width="52" height="52"></a><p class="made">Free, with no ads. Made in the Twin Cities by BC Gordon.</p></footer>
 <div class="foot-stripes" role="presentation"></div>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
