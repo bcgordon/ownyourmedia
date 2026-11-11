@@ -22,6 +22,12 @@ jobs:
           hits=$(grep -rIl 'BEGIN [A-Z ]*PRIVATE KEY' --exclude-dir=.git . | grep -v '^./tests/server.test.js$' || true)
           p8=$(find . -name '*.p8' -not -path './.git/*')
           if [ -n "$hits$p8" ]; then echo "::error::Private key material found:"; echo "$hits $p8"; exit 1; fi
+      - name: No Runaway Anchor email addresses
+        run: |
+          # Runaway Anchor stays separate: its email is never an OYM contact (oym-hq#28).
+          # Links to the runawayanchor.com site and the turntable's plate are fine; only addresses fail.
+          if grep -rIEin '@runawayanchor\.com' --exclude-dir=.git .; then
+            echo "::error::A Runaway Anchor email address is on the site. Use hello@ownyourmedia.club."; exit 1; fi
   tape-server:
     name: Tape server tests
     runs-on: ubuntu-latest
