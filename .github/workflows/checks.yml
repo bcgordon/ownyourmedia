@@ -28,6 +28,15 @@ jobs:
           # Links to the runawayanchor.com site and the turntable's plate are fine; only addresses fail.
           if grep -rIEin '@runawayanchor\.com' --exclude-dir=.git .; then
             echo "::error::A Runaway Anchor email address is on the site. Use hello@ownyourmedia.club."; exit 1; fi
+      - name: No Runaway Anchor email addresses in PDFs
+        run: |
+          # grep skips binary files, so read the text out of every PDF too.
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          bad=0
+          while IFS= read -r f; do
+            if pdftotext "$f" - | grep -Eiq '@runawayanchor\.com'; then echo "::error::$f has a Runaway Anchor email address."; bad=1; fi
+          done < <(find . -name '*.pdf' -not -path './.git/*')
+          exit $bad
   tape-server:
     name: Tape server tests
     runs-on: ubuntu-latest
