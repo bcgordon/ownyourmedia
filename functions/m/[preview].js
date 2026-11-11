@@ -2,7 +2,7 @@
 // Messages and other apps read this page to draw the link card: "Brian made you a mixtape." and the title.
 // Only the sender's name and the tape's title are in the address. The tape itself rides after the #, which browsers never send
 // to a server, and this page hands it straight to Flipside.
-export const FLIPSIDE = 'https://ownyourmedia.club/flipside/app/';
+export const FLIPSIDE = 'https://flipside.ownyourmedia.club/flipside/app/';
 export const SITE = 'https://tape.ownyourmedia.club';
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export function decodePreview(value) {

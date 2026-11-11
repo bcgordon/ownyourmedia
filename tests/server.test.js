@@ -34,7 +34,7 @@ test('the preview page: name and title only, made safe, and it hands the tape to
   const html = await r.text();
   assert.match(html, /Brian &lt;b&gt; made you a mixtape\./); assert.match(html, /Blaine ’98 &amp; &quot;friends&quot;/);
   assert.match(html, /og:image" content="https:\/\/tape\.ownyourmedia\.club\/images\/tape-preview-v2\.jpg/);
-  assert.match(html, /location\.replace\(u\)/); assert.match(html, /https:\/\/ownyourmedia\.club\/flipside\/app\//);
+  assert.match(html, /location\.replace\(u\)/); assert.match(html, /https:\/\/flipside\.ownyourmedia\.club\/flipside\/app\//);
   assert.ok(!/<b>/.test(html.split('<main>')[0]));
 });
 test('a broken preview link gets a plain message', async () => {
