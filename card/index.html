@@ -392,7 +392,7 @@ h1{font-weight:700}
   <section class="sec" id="gifts"><h2>Your member gifts</h2>
     <ol class="contents">
       <li><div class="row"><b>This quarter’s club tape</b><span class="dots"></span><span id="tapeLinks">Coming soon</span></div><p id="tapeLine">A new mixtape from BC every quarter, just for members. Plays in Flipside with your Apple Music or Spotify.</p></li>
-      <li><div class="row"><b>The Members Only look</b><span class="dots"></span><span>Coming soon</span></div><p>The OYM record player on walnut, with a Members Only sticker, for myStereo and Flipside.</p></li>
+      <li><div class="row"><b>The Members Only look</b><span class="dots"></span><span id="moLook">With your card</span></div><p>Three faceplates of your own for myStereo, Cream, Red and Ink, with the Members Only sticker and the OYM record player. Your card’s link turns them on; then pick one in Settings › Look › Player.</p></li>
     </ol>
     <p class="fine">Your name lives in your link and on your phone, not on our server. Lost the link? Write to <b>hello@ownyourmedia.club</b>.</p>
   </section>
@@ -411,6 +411,7 @@ var show=function(){var c=null,h=new URLSearchParams(location.hash.slice(1));
   if(h.get('n')||h.get('name')){c=clean({n:h.get('n'),name:h.get('name')});try{if(c)localStorage.setItem(K,JSON.stringify(c))}catch(e){}}
   if(!c){try{c=clean(JSON.parse(localStorage.getItem(K)||'null')||{})}catch(e){}}
   document.getElementById('cname').textContent=c?c.name:'';document.getElementById('cno').textContent=c&&c.n?'No. '+c.n:'No. ____';
+  var mo=document.getElementById('moLook');mo.textContent='';if(c&&c.n){var a=document.createElement('a');a.href='https://mystereo.ownyourmedia.club/#member='+c.n;a.textContent='Open in myStereo →';mo.appendChild(a)}else mo.textContent='With your card';
   document.getElementById('cardNote').textContent=c?note:'Your card shows up here once BC emails you your link. Joined and still waiting? Write to hello@ownyourmedia.club.'};
 show();window.addEventListener('hashchange',show);
 fetch('/club-tape.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(t){
