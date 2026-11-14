@@ -342,6 +342,20 @@ h1{font-weight:700}
 .aboutlink{margin-top:22px}
 .offline-soon{margin-top:22px}
 .pagehead + .sec{margin-top:22px}
+/* Buy BC a Record (Nov 14) */
+.jar{margin-top:22px;background:#1C1B19;color:#F2EBD9;border-radius:6px;padding:24px 22px 20px;box-shadow:4px 4px 0 var(--red);background-image:radial-gradient(rgba(242,235,217,.035) 1px,transparent 1px);background-size:6px 6px}
+.jar-lede{margin:0;font-size:19px;max-width:34em;color:#F2EBD9}
+.crate{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pick{display:flex;align-items:baseline;gap:10px;min-height:56px;box-sizing:border-box;padding:14px 16px;border:1.5px solid rgba(242,235,217,.55);border-radius:6px;background:#2A2826;color:#F2EBD9;text-decoration:none;font:600 19px/1.2 var(--tw);transition:border-color .12s,background .12s}
+.pick:hover,.pick:focus-visible{border-color:#D9A441;background:#33302C;outline:none}
+.pick:focus-visible{box-shadow:0 0 0 2px #D9A441}
+.pick:active{transform:translate(1px,1px)}
+.pick .pd{flex:1;border-bottom:2px dotted rgba(242,235,217,.3);transform:translateY(-4px)}
+.pick .pp{font-weight:700;color:#D9A441;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pick.you{border-style:dashed}
+.jar-small{margin:18px 0 0;font-size:15px;color:rgba(242,235,217,.6)}
+@media (max-width:560px){.crate{grid-template-columns:minmax(0,1fr)}.jar{padding:20px 16px 16px}}
+@media (prefers-reduced-motion:reduce){.pick{transition:none}}
 .story .photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:4px;box-shadow:0 2px 3px rgba(0,0,0,.08),0 10px 22px rgba(60,40,20,.14);margin-bottom:14px}
 .rulescard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:34px;align-items:center}.rulescard .rcard{margin:0;transform:rotate(1.5deg)}.rulescard .rcard img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.1),0 12px 26px rgba(60,40,20,.18)}@media (max-width:760px){.rulescard{grid-template-columns:minmax(0,1fr)}.rulescard .rcard{transform:rotate(1deg);max-width:440px}}
 </style>
@@ -486,7 +500,7 @@ h1{font-weight:700}
 
 </main>
 <div class="stripes" style="margin-top:64px" aria-hidden="true"></div>
-<footer class="end"><img src="/assets/oym-seal-crew.webp" alt="" width="480" height="471"><b>Pull up a chair. You're in.</b><nav class="endlinks" aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a></div></nav><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span><a class="badge" href="#top"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="" width="52" height="52"></a></footer>
+<footer class="end"><img src="/assets/oym-seal-crew.webp" alt="" width="480" height="471"><b>Pull up a chair. You're in.</b><nav class="endlinks" aria-label="More"><div class="endmain"><a href="/apps/">Apps</a><a href="/places/">Places</a><a href="/offline/">Offline</a><a href="/take-one/">Take one</a><a href="/about/">About</a><a href="/join/">Join</a></div><div class="endsmall"><a href="/liner-notes/">Liner Notes</a><a href="/mystereo/plex/">Build a Plex library</a><a href="/flipside/art/">The Art of the Mixtape</a><a href="/#record">Buy BC a Record</a></div></nav><span>Own Your Media Club · Made in the Twin Cities by BC Gordon.</span><a class="badge" href="#top"><span>Own your media</span><img src="/assets/club-icon-192.png" alt="" width="52" height="52"></a></footer>
 <div class="foot-stripes" role="presentation"></div>
 
 <script>
