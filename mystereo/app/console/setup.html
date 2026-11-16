@@ -7,8 +7,9 @@
 <meta name="theme-color" content="#F9EBD1">
 <title>Setting up Console</title>
 <link rel="icon" type="image/png" sizes="32x32" href="console-favicon-32.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;display=swap">
 <style>
-:root{--ink:#13120f;--paper:#F9EBD1;--mark:#C32F26;--tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace}
+:root{--ink:#13120f;--paper:#F9EBD1;--mark:#C32F26;--tw:"American Typewriter","AmericanTypewriter","Courier Prime",Courier,monospace}
 @media (prefers-color-scheme:dark){:root{--ink:#F9EBD1;--paper:#13120f;--mark:#D89A30}}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--tw);font-size:19px;line-height:1.5}
 main{max-width:640px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 22px) 22px calc(env(safe-area-inset-bottom) + 40px)}
@@ -20,46 +21,71 @@ ol{padding-left:24px}
 li{margin:6px 0}
 a{color:inherit}
 .small{font-size:16px;opacity:.75}
+.os{margin:14px 0 -4px;font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--mark)}
 </style>
 </head>
 <body>
 <main>
 <p><a href="./">‹ back to console<span class="red">.</span></a></p>
 <h1>setting up console<span class="red">.</span></h1>
-<p>About ten minutes, once. iPhone menus move around between iOS versions, so the paths below are close, not exact.</p>
+<p>About ten minutes, once, on an iPhone or an Android phone. Phone menus move around between versions, so the paths below are close, not exact.</p>
 <h2>1. put it on the home screen</h2>
+<p class="os">iPhone</p>
 <ol>
 <li>In Safari, open <code>mystereo.ownyourmedia.club/mystereo/app/console/</code></li>
 <li>Share › Add to Home Screen. Keep the name Console.</li>
-<li>From now on, open it from that icon. That's what makes it full screen, with no Safari bars.</li>
 </ol>
+<p class="os">Android</p>
+<ol>
+<li>In Chrome, open <code>mystereo.ownyourmedia.club/mystereo/app/console/</code></li>
+<li>The ⋮ menu › Add to Home screen (or Install app). Keep the name Console.</li>
+</ol>
+<p>From now on, open it from that icon. That's what makes it full screen, with no browser bars.</p>
 <h2>2. bring the stereo in</h2>
 <ol>
-<li>Tap the strip under the clock. myStereo slides up.</li>
-<li>Sign in to Plex there, once. An iPhone keeps each Home Screen app separate, so Console's myStereo is a fresh sign-in.</li>
+<li>Tap the myStereo key under the clock. myStereo slides up.</li>
+<li>Sign in to Plex there, once. On an iPhone each Home Screen app is kept separate, so Console's myStereo is a fresh sign-in.</li>
 <li>Your tapes are behind myStereo's TAPES key, the same as always. Anything missing: Paste a Tape Link, or send it to yourself.</li>
-<li><code>‹ console.</code> at the top takes you home. The music keeps playing, and the strip shows what's on.</li>
+<li><code>‹ console.</code> at the top takes you home. The music keeps playing, and the key shows what's on.</li>
 </ol>
 <h2>3. make your six buttons</h2>
 <p>In Console, tap the gear (top left) for settings. Under buttons, give each of the six a name and say what it opens.</p>
+<p class="os">iPhone</p>
 <ol>
 <li><b>An app:</b> works for any app, through Shortcuts. In the Shortcuts app: + › Add Action › Open App › pick the app. Name the shortcut exactly what Console shows under the Shortcut's name (it suggests one, like <code>Console Phone</code>).</li>
 <li><b>A link:</b> some apps open straight from a link, with no Shortcut. Tap one of the picks (Signal, Podcasts, Music, Maps…) or type the app's link.</li>
 <li>A Shortcut flashes on screen for a moment before the app opens. That's normal.</li>
 <li>If a link doesn't open its app, switch that button to an app and make it a Shortcut. Phone, Messages (to land on your conversations) and most other apps need one.</li>
 </ol>
+<p class="os">Android</p>
+<ol>
+<li><b>An app:</b> tap one of the picks (Signal, WhatsApp, Spotify, Maps…), or type the app's Android name. It's on the app's Google Play page, after <code>id=</code> in the address, like <code>com.spotify.music</code>.</li>
+<li><b>A link:</b> Phone opens the dialer, Texts your messages app, Email your mail app.</li>
+<li>If an app isn't on the phone, its button opens it on Google Play instead.</li>
+</ol>
 <p class="small">Put them back, in settings, returns the six to how Console came.</p>
-<h2>4. a focus with one icon</h2>
+<h2>4. one icon, fewer pulls</h2>
+<p class="os">iPhone</p>
 <ol>
 <li>Settings › Focus › + › Custom. Call it Console.</li>
 <li>People: let your favorites through. Apps: the ones you talk to people with, like Phone and Messages.</li>
 <li>Customize Screens › Home Screen: make a page with only the Console icon on it and pick just that page.</li>
 <li>Turn the Focus on. Swiping up lands on that one page, one tap from Console.</li>
 </ol>
+<p class="os">Android</p>
+<ol>
+<li>Settings › Digital Wellbeing › Focus mode: pick the apps that pull at you. They pause while it's on.</li>
+<li>Put Console on your first home screen page by itself, and the rest of your apps in a folder or the app drawer.</li>
+</ol>
 <h2>5. take the color out (optional)</h2>
+<p class="os">iPhone</p>
 <ol>
 <li>Settings › Accessibility › Display &amp; Text Size › Color Filters › Grayscale.</li>
 <li>Settings › Accessibility › Accessibility Shortcut › Color Filters, so a triple-click of the side button turns it on and off.</li>
+</ol>
+<p class="os">Android</p>
+<ol>
+<li>Settings › Accessibility › Color correction › Grayscale. On some phones it's under Digital Wellbeing › Bedtime mode › Grayscale.</li>
 </ol>
 <h2>6. last bits</h2>
 <ol>
@@ -68,7 +94,7 @@ a{color:inherit}
 <li>Under colors, pick the background for light and for dark: the Typewriter look, a swatch, or any color with +.</li>
 <li>Under quote, write a line for the bottom of the home screen: a quote, a reminder. Tapping that line takes you there too.</li>
 </ol>
-<p class="small">Guided Access (Settings › Accessibility) can lock the phone into Console if you want to go all the way.</p>
+<p class="small">To lock the phone into Console if you want to go all the way: Guided Access on an iPhone (Settings › Accessibility), App pinning on Android (Settings › Security).</p>
 </main>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script>
 </body>
