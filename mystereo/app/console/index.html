@@ -56,7 +56,7 @@ html.night .band::before{display:none}
 .keys{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(60px,1fr);gap:14px;min-height:0;max-height:430px;flex:1;margin-top:16px;padding:0 0 4px}
 .key{display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:22px;box-shadow:0 0 0 2.5px #2b2b2b,0 4px 0 2.5px #1e1e1e,0 6px 8px rgba(0,0,0,.25);margin-bottom:4px}
 .key:active{transform:translateY(3px);box-shadow:0 0 0 2.5px #2b2b2b,0 1px 0 2.5px #1e1e1e}
-.note{font-size:19px;text-align:center;margin:18px 6px 0;min-height:1.4em;outline:none;transform:rotate(-.6deg);color:var(--bandInk)}
+.note{display:block;width:calc(100% - 12px);font-size:19px;text-align:center;margin:18px 6px 0;min-height:1.4em;outline:none;transform:rotate(-.6deg);color:var(--bandInk);white-space:pre-line;overflow-wrap:anywhere}
 .note:empty:before{content:attr(data-ph);opacity:.6}
 .deck{position:absolute;inset:0;background:var(--roomBg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);transform:translateY(102%);transition:transform .28s ease-out;visibility:hidden;z-index:3}
 .deck.up{transform:none;visibility:visible}
@@ -77,12 +77,30 @@ html.night .band::before{display:none}
 .sheet p{font-size:17px;line-height:1.45;margin:6px 0}
 .sheet a{color:inherit}
 .sheet label{display:block;font-size:17px;margin:12px 0 4px}
+.sheet textarea{width:100%;font:inherit;font-size:18px;padding:10px 12px;border:0;border-radius:3px;background:var(--paper);color:var(--blue);box-shadow:inset 0 0 0 2px rgba(31,63,143,.35);resize:none}
 .sheet input{width:100%;font-size:18px;padding:10px 12px;border:0;border-radius:3px;background:var(--paper);color:var(--blue);box-shadow:inset 0 0 0 2px rgba(31,63,143,.35)}
 .row{display:flex;gap:12px;align-items:center}
 .row input{flex:1}
 .picks button{display:block;width:100%;text-align:left;font-size:18px;padding:10px 4px;border-bottom:1px dashed currentColor}
 .sheet .done{float:right}
 .small{font-size:15px;opacity:.8}
+/* 0.1.7 · your own buttons and colors, set under set */
+.kb{margin:14px 0 18px;padding:12px 14px 14px;border-radius:12px;background:rgba(0,0,0,.08)}
+html.night .kb,html.dk .kb{background:rgba(255,255,255,.07)}
+.kb-h{font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--mark)}
+.kb label{margin-top:8px}
+.seg{display:flex;gap:12px;margin:6px 0 8px}
+.seg .chip.on{background:linear-gradient(180deg,#1f2a26,#2f3a36);color:#f6efe0}
+.presets{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:10px}
+.presets .chip{font-size:13px;padding:6px 10px 5px}
+.sw{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 4px}
+.sw button,.sw label.any{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px #2b2b2b,0 3px 0 2px #1e1e1e;margin:0 0 3px;padding:0;position:relative;overflow:hidden}
+.sw button.on{outline:3px solid var(--mark);outline-offset:3px}
+.sw .tw{background:linear-gradient(180deg,#f5efe1 55%,#7eac9a 55%)}
+.sw .tw.dk{background:linear-gradient(172deg,#3f7567,#1f4339)}
+.sw label.any{display:grid;place-items:center;background:conic-gradient(#c8442b,#d9a441,#7eac9a,#1f3f8f,#7a4a8f,#c8442b);color:#fff;font-size:20px;font-weight:700;margin-top:0}
+.sw label.any input{position:absolute;inset:0;opacity:0;width:100%;height:100%;padding:0;border:0}
+html.custom .band::before{display:none}
 </style>
 </head>
 <body>
@@ -102,7 +120,7 @@ html.night .band::before{display:none}
     </button>
     <div class="band">
     <nav class="keys" id="keys"></nav>
-    <div class="note" id="note" contenteditable="plaintext-only" spellcheck="false" data-ph="tap to write yourself a note."></div>
+    <button class="note" id="note" type="button" data-ph="tap to write yourself a note."></button>
     </div>
   </div>
 </div>
@@ -121,15 +139,23 @@ html.night .band::before{display:none}
   <div class="picks" id="picks"></div>
   <p class="small" id="townNow"></p>
   <h3>buttons</h3>
-  <p class="small">Each one opens an app. If one doesn't, the setup sheet shows how to make it a Shortcut.</p>
+  <p class="small">Six buttons, yours to name. Each one opens an app (by a Shortcut, which works for any app) or a link.</p>
   <div id="links"></div>
   <p><button class="chip" type="button" id="resetLinks">put them back</button></p>
+  <h3>quote</h3>
+  <label for="quote">a line for the home screen: a quote, a reminder</label>
+  <textarea id="quote" rows="3" maxlength="120" spellcheck="true" placeholder="write yourself a note."></textarea>
+  <p class="small" id="quoteN"></p>
+  <h3>colors</h3>
+  <label>light background</label><div class="sw" id="swLight"></div>
+  <label>dark background</label><div class="sw" id="swDark"></div>
+  <p class="small">The words and the keys stay readable on any color.</p>
   <h3>setting up the phone</h3>
   <p><a href="setup.html">the setup sheet</a> (Focus, the one-icon home screen, grayscale)</p>
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.6';
+const VERSION = 'Console 0.1.7';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -138,12 +164,27 @@ const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); re
 const keep = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 const cfg = Object.assign({ night: false, place: null, links: {}, note: '' }, load('console.cfg', {}));
 const save = () => keep('console.cfg', cfg);
-const link = k => cfg.links[k] || LINKS[k];
+/* 0.1.7 · six buttons, each a name and what it opens: an app by its Shortcut, or a link. The first six are BC's */
+const DEF_KEYS = [{ name: 'phone', sc: 'Console Phone' }, { name: 'messages', sc: 'Console Messages' }, { name: 'signal', url: 'sgnl://' }, { name: 'audible', url: 'audible://' }, { name: 'podcasts', url: 'podcasts://' }, { name: 'finch', sc: 'Console Finch' }];
+const PRESETS = [['Signal', 'sgnl://'], ['Podcasts', 'podcasts://'], ['Audible', 'audible://'], ['Music', 'music://'], ['Maps', 'maps://'], ['Mail', 'message://'], ['Notes', 'mobilenotes://'], ['Calendar', 'calshow://'], ['Spotify', 'spotify://'], ['WhatsApp', 'whatsapp://']];
+const SC = 'shortcuts://run-shortcut?name=';
+if (!Array.isArray(cfg.keys)) {   /* from 0.1.6: a changed link under set (cfg.links) carries over */
+  cfg.keys = KEYS.map(([k], i) => { const v = (cfg.links || {})[k]; if (!v) return { ...DEF_KEYS[i] };
+    return v.startsWith(SC) ? { name: DEF_KEYS[i].name, sc: decodeURIComponent(v.slice(SC.length)) } : { name: DEF_KEYS[i].name, url: v }; });
+  delete cfg.links; save();
+}
+const keyHref = b => b.sc != null ? SC + encodeURIComponent(b.sc) : (b.url || '');
 /* light and dark: the choice stays on this phone */
 function paint() {
-  document.documentElement.classList.toggle('night', !!cfg.night);
+  const h = document.documentElement, bg = cfg.night ? cfg.bgDark : cfg.bgLight, VARS = ['--room', '--roomBg', '--ink', '--dim', '--mark', '--band', '--bandInk'];
+  h.classList.toggle('night', !!cfg.night);
   $('modeBtn').textContent = cfg.night ? 'light' : 'dark';
-  $('themeColor').setAttribute('content', cfg.night ? '#3f7567' : '#f5efe1');
+  h.classList.toggle('custom', !!bg); VARS.forEach(v => h.style.removeProperty(v));
+  if (bg) { const dark = lum(bg) < .28; h.classList.toggle('dk', dark);
+    const set = { '--room': bg, '--roomBg': `radial-gradient(ellipse 60% 45% at 30% 10%,rgba(255,255,255,${dark ? .08 : .35}),transparent 70%),${bg}`, '--band': 'transparent',
+      '--ink': dark ? '#f6efe0' : '#1f2a26', '--dim': dark ? 'rgba(246,239,224,.8)' : '#2f3a36', '--mark': dark ? '#ffb39a' : '#b3261e', '--bandInk': dark ? '#f6efe0' : '#2f3a36' };
+    for (const [k, v] of Object.entries(set)) h.style.setProperty(k, v); } else h.classList.remove('dk');
+  $('themeColor').setAttribute('content', bg || (cfg.night ? '#3f7567' : '#f5efe1'));
 }
 $('modeBtn').onclick = () => { cfg.night = !cfg.night; save(); paint(); };
 /* the clock */
@@ -201,29 +242,61 @@ $('strip').onclick = deckUp;
 $('homeBtn').onclick = deckDown;
 /* the six buttons */
 function keysDraw() {
-  $('keys').replaceChildren(...KEYS.map(([k, name]) => { const a = document.createElement('a'); a.className = 'key'; a.href = link(k); a.textContent = name; a.dataset.k = k; return a; }));
+  $('keys').replaceChildren(...cfg.keys.map((b, i) => { const a = document.createElement('a'); a.className = 'key'; a.href = keyHref(b); a.textContent = b.name; a.dataset.k = i; return a; }));
 }
-/* the note */
-const note = $('note');
-note.textContent = cfg.note || '';
-note.addEventListener('input', () => { cfg.note = note.textContent.slice(0, 120); save(); });
-note.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); note.blur(); } });
-note.addEventListener('blur', () => { if (!note.textContent.trim()) note.textContent = ''; });
+/* the quote: shown at the bottom, written under set (0.1.7: editing it in place misbehaved on the phone). Tapping it opens set at the box */
+const note = $('note'), quote = $('quote');
+const noteDraw = () => { note.textContent = (cfg.note || '').trim(); $('quoteN').textContent = `${120 - quote.value.length} letters left`; };
+quote.addEventListener('input', () => { cfg.note = quote.value.slice(0, 120); save(); noteDraw(); });
+note.onclick = () => { openSheet(); quote.scrollIntoView({ block: 'center' }); quote.focus(); };
+noteDraw();
 /* set */
 function openSheet() {
-  $('ver').textContent = VERSION + ' · for BC';
+  $('ver').textContent = VERSION; quote.value = cfg.note || ''; noteDraw();
   $('townNow').textContent = cfg.place ? 'now: ' + cfg.place.name : 'no town set yet';
-  $('links').replaceChildren(...KEYS.map(([k, name]) => {
-    const w = document.createElement('div'), l = document.createElement('label'), i = document.createElement('input');
-    l.textContent = name; l.htmlFor = 'ln-' + k; i.id = 'ln-' + k; i.value = link(k); i.autocapitalize = 'off'; i.spellcheck = false;
-    i.onchange = () => { const v = i.value.trim(); if (!v || v === LINKS[k]) delete cfg.links[k]; else cfg.links[k] = v; save(); keysDraw(); };
-    w.append(l, i); return w;
-  }));
+  keyEdit(); swatches();
   $('sheet').hidden = false;
 }
 $('setBtn').onclick = openSheet;
 $('doneBtn').onclick = () => { $('sheet').hidden = true; $('picks').replaceChildren(); };
-$('resetLinks').onclick = () => { cfg.links = {}; save(); keysDraw(); openSheet(); };
+$('resetLinks').onclick = () => { cfg.keys = DEF_KEYS.map(b => ({ ...b })); save(); keysDraw(); keyEdit(); };
+/* the six buttons under set: a name, then an app (its Shortcut's name) or a link */
+const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.createElement(tag), props); e.append(...kids); return e; };
+const cap = t => t ? t[0].toUpperCase() + t.slice(1) : t;
+function keyEdit() {
+  $('links').replaceChildren(...cfg.keys.map((b, n) => {
+    const done = () => { save(); keysDraw(); }, isApp = b.sc != null;
+    const name = el('input', { id: 'kn-' + n, value: b.name, maxLength: 14, autocapitalize: 'off', spellcheck: false });
+    const sc = el('input', { id: 'ks-' + n, value: b.sc || '', placeholder: 'Console ' + cap(b.name), autocapitalize: 'words', spellcheck: false });
+    const url = el('input', { id: 'ku-' + n, value: b.url || '', placeholder: 'sgnl://', autocapitalize: 'off', spellcheck: false, inputMode: 'url' });
+    name.onchange = () => { const v = name.value.trim().slice(0, 14) || DEF_KEYS[n].name; if (b.sc != null && (!b.sc || b.sc === 'Console ' + cap(b.name))) b.sc = 'Console ' + cap(v); b.name = v; done(); keyEdit(); };
+    sc.onchange = () => { b.sc = sc.value.trim() || 'Console ' + cap(b.name); delete b.url; done(); };
+    url.onchange = () => { b.url = url.value.trim(); delete b.sc; done(); };
+    const mode = m => () => { if (m === 'app') { b.sc = b.sc || 'Console ' + cap(b.name); delete b.url; } else { b.url = b.url || ''; delete b.sc; } done(); keyEdit(); };
+    const app = el('div', {}, el('label', { htmlFor: 'ks-' + n, textContent: "the Shortcut's name" }), sc,
+      el('p', { className: 'small', textContent: 'In Shortcuts: + › Add Action › Open App › pick the app. Name the shortcut exactly this.' }));
+    const lnk = el('div', {}, el('label', { htmlFor: 'ku-' + n, textContent: 'the link' }), url,
+      el('div', { className: 'presets' }, ...PRESETS.map(([t, u]) => el('button', { type: 'button', className: 'chip', textContent: t, onclick: () => { b.url = u; delete b.sc; if (b.name === DEF_KEYS[n].name || !b.name) b.name = t.toLowerCase(); done(); keyEdit(); } }))));
+    return el('div', { className: 'kb' }, el('div', { className: 'kb-h', textContent: 'button ' + (n + 1) }),
+      el('label', { htmlFor: 'kn-' + n, textContent: 'name' }), name,
+      el('label', { textContent: 'opens' }),
+      el('div', { className: 'seg' }, el('button', { type: 'button', className: 'chip' + (isApp ? ' on' : ''), textContent: 'an app', onclick: mode('app') }), el('button', { type: 'button', className: 'chip' + (isApp ? '' : ' on'), textContent: 'a link', onclick: mode('link') })),
+      isApp ? app : lnk);
+  }));
+}
+/* 0.1.7 · the background, light and dark: the Typewriter look, a swatch, or any color. The words follow, dark on light, cream on dark */
+const SW_LIGHT = ['#f5efe1', '#ffffff', '#e9e4da', '#e8dfd0', '#f3d9cf', '#dfe8e1', '#d9e2ec', '#f2e6a8'];
+const SW_DARK = ['#13120f', '#000000', '#1c2a3a', '#1f3329', '#2e2a24', '#3a1f1c', '#2a1f2e', '#33363b'];
+function swatches() {
+  for (const [id, key, list, dk] of [['swLight', 'bgLight', SW_LIGHT, false], ['swDark', 'bgDark', SW_DARK, true]]) {
+    const pick = v => () => { if (v) cfg[key] = v; else delete cfg[key]; save(); paint(); swatches(); };
+    const any = el('input', { type: 'color', value: cfg[key] || (dk ? '#2c5a4e' : '#f5efe1') }); any.oninput = () => { cfg[key] = any.value; save(); paint(); }; any.onchange = () => swatches();
+    $(id).replaceChildren(el('button', { type: 'button', className: 'tw' + (dk ? ' dk' : '') + (cfg[key] ? '' : ' on'), title: 'Typewriter', onclick: pick(null) }),
+      ...list.map(c => el('button', { type: 'button', className: cfg[key] === c ? 'on' : '', title: c, style: 'background:' + c, onclick: pick(c) })),
+      el('label', { className: 'any', title: 'any color' }, '+', any));
+  }
+}
+const lum = h => { const n = parseInt(h.slice(1), 16), f = v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * f(n >> 16) + .7152 * f(n >> 8 & 255) + .0722 * f(n & 255); };
 $('town').addEventListener('keydown', e => { if (e.key === 'Enter') $('findBtn').click(); });
 $('findBtn').onclick = async () => {
   const name = $('town').value.split(',')[0].trim(), box = $('picks');

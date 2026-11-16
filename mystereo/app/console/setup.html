@@ -15,7 +15,7 @@ main{max-width:640px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 22px)
 h1{font-size:32px;font-weight:normal;margin:0 0 6px}
 h2{font-size:22px;font-weight:normal;margin:30px 0 6px;border-bottom:1.5px solid var(--ink);padding-bottom:4px}
 .red{color:var(--mark)}
-code{font-family:inherit;border:1px dashed var(--ink);padding:0 5px;word-break:break-all}
+code{font-family:inherit;border:1px dashed var(--ink);padding:0 5px;overflow-wrap:anywhere}
 ol{padding-left:24px}
 li{margin:6px 0}
 a{color:inherit}
@@ -40,19 +40,19 @@ a{color:inherit}
 <li>Your tapes are behind myStereo's TAPES key, the same as always. Anything missing: Paste a Tape Link, or send it to yourself.</li>
 <li><code>‹ console.</code> at the top takes you home. The music keeps playing, and the strip shows what's on.</li>
 </ol>
-<h2>3. make three shortcuts</h2>
-<p>Phone and Finch don't have a link an app can open, and Messages' link only starts a new text, so Console asks Shortcuts to open them.</p>
+<h2>3. make your six buttons</h2>
+<p>In Console, tap set. Under buttons, give each of the six a name and say what it opens.</p>
 <ol>
-<li>Shortcuts › + › Add Action › Open App › Phone. Name it exactly <code>Console Phone</code>.</li>
-<li>Same again with Messages, named <code>Console Messages</code>. It opens Messages where you left it, usually the list of conversations.</li>
-<li>Same again with Finch, named <code>Console Finch</code>.</li>
-<li>Shortcuts flashes on screen for a moment before the app opens. That's normal.</li>
+<li><b>An app:</b> works for any app, through Shortcuts. In the Shortcuts app: + › Add Action › Open App › pick the app. Name the shortcut exactly what Console shows under the Shortcut's name (it suggests one, like <code>Console Phone</code>).</li>
+<li><b>A link:</b> some apps open straight from a link, with no Shortcut. Tap one of the picks (Signal, Podcasts, Music, Maps…) or type the app's link.</li>
+<li>A Shortcut flashes on screen for a moment before the app opens. That's normal.</li>
+<li>If a link doesn't open its app, switch that button to an app and make it a Shortcut. Phone, Messages (to land on your conversations) and most other apps need one.</li>
 </ol>
-<p class="small">If any other button doesn't open its app, make a shortcut for it the same way, then in Console tap set and change that button to <code>shortcuts://run-shortcut?name=</code> plus the shortcut's name (a space is <code>%20</code>).</p>
+<p class="small">Put them back, under set, returns the six to how Console came.</p>
 <h2>4. a focus with one icon</h2>
 <ol>
 <li>Settings › Focus › + › Custom. Call it Console.</li>
-<li>People: let your favorites through. Apps: Phone, Messages, Signal.</li>
+<li>People: let your favorites through. Apps: the ones you talk to people with, like Phone and Messages.</li>
 <li>Customize Screens › Home Screen: make a page with only the Console icon on it and pick just that page.</li>
 <li>Turn the Focus on. Swiping up lands on that one page, one tap from Console.</li>
 </ol>
@@ -65,7 +65,8 @@ a{color:inherit}
 <ol>
 <li>In Console, tap set and find your town for the weather.</li>
 <li>Pick light or dark with the button up top. It stays where you left it.</li>
-<li>Tap the line at the bottom to write yourself a note.</li>
+<li>Under colors, pick the background for light and for dark: the Typewriter look, a swatch, or any color with +.</li>
+<li>Under quote, write a line for the bottom of the home screen: a quote, a reminder. Tapping that line takes you there too.</li>
 </ol>
 <p class="small">Guided Access (Settings › Accessibility) can lock the phone into Console if you want to go all the way.</p>
 </main>
