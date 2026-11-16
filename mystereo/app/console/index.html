@@ -39,6 +39,9 @@ button{background:none;border:0;padding:0;cursor:pointer}
 .date button{text-decoration:underline;text-underline-offset:3px}
 /* the strip is a wide keycap, like the six buttons */
 .strip{display:block;width:100%;text-align:left;border:0;border-radius:12px;background:linear-gradient(180deg,#f6f0e0 0%,#ebe2cb 70%,#d9cfb5 100%);padding:12px 16px 13px;margin-bottom:22px;box-shadow:0 0 0 2.5px #2b2b2b,0 4px 0 2.5px #1e1e1e,0 6px 8px rgba(0,0,0,.25);color:#1f2a26}
+.strip{display:flex;align-items:center;gap:14px}
+.strip .txt{flex:1;min-width:0}
+.strip .icon{flex:none;width:64px;height:64px;border-radius:14px;box-shadow:0 0 0 1.5px #2b2b2b,0 3px 6px rgba(0,0,0,.25)}
 .strip:active{transform:translateY(3px);box-shadow:0 0 0 2.5px #2b2b2b,0 1px 0 2.5px #1e1e1e}
 .strip .lbl{display:block;font-size:14px;color:#b3261e;text-transform:uppercase;letter-spacing:.1em}
 .strip .ttl{display:block;font-size:23px;font-weight:700;margin:5px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,9 +87,10 @@ html.night .band::before{display:none}
     <div class="clock" id="clock" aria-live="off">--:--</div>
     <div class="date"><span id="date"></span> — <span id="wx">…</span></div>
     <button class="strip" id="strip" type="button">
-      <span class="lbl" id="sLbl">tap for the stereo</span>
+      <span class="txt"><span class="lbl" id="sLbl">tap for the stereo</span>
       <span class="ttl" id="sTtl">nothing playing</span>
-      <span class="sub" id="sSub"></span>
+      <span class="sub" id="sSub"></span></span>
+      <img class="icon" src="../apple-touch-icon.png" alt="" width="64" height="64">
     </button>
     <div class="band">
     <nav class="keys" id="keys"></nav>
@@ -116,9 +120,9 @@ html.night .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.3';
+const VERSION = 'Console 0.1.4';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
-const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'messages://', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
+const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
 const $ = id => document.getElementById(id);
 const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch { return d; } };
