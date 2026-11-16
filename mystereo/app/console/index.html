@@ -104,9 +104,9 @@ button{background:none;border:0;padding:0;cursor:pointer}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.1';
+const VERSION = 'Console 0.1.2';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
-const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'sms:', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
+const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'messages://', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
 const $ = id => document.getElementById(id);
 const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch { return d; } };
