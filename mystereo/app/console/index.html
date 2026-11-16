@@ -61,6 +61,12 @@ html.night .band::before{display:none}
 .deck.moving{visibility:visible}
 .bar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 14px;background:var(--chrome) bottom/100% 8px no-repeat;font-size:19px;min-height:52px;color:var(--ink)}
 .bar button{font-size:21px;padding:6px 0}
+/* full screen: a moment after myStereo comes up the bar slides away; pull the grabber down (or tap it) for the bar back */
+.bar{transition:margin-top .25s ease-out}
+.deck.full .bar{margin-top:calc(-1 * var(--barH,52px))}
+.pull{position:absolute;top:env(safe-area-inset-top);left:50%;width:140px;height:30px;margin-left:-70px;display:flex;justify-content:center;padding-top:7px;touch-action:none;z-index:2;opacity:0;pointer-events:none;transition:opacity .2s}
+.pull i{width:46px;height:5px;border-radius:3px;background:rgba(246,239,224,.6);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.deck.full .pull{opacity:1;pointer-events:auto}
 .deck iframe{flex:1;width:100%;border:0;background:#1b1c1f}
 .sheet{position:absolute;inset:0;background:var(--roomBg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 18px) 22px calc(env(safe-area-inset-bottom) + 30px);z-index:4}
 .sheet[hidden]{display:none}
@@ -99,7 +105,8 @@ html.night .band::before{display:none}
   </div>
 </div>
 <section class="deck" id="deck" aria-label="Stereo">
-  <div class="bar"><button type="button" id="homeBtn">‹ console<span class="red">.</span></button><span id="barClock"></span></div>
+  <div class="pull" id="pull" role="button" aria-label="Show the console bar"><i></i></div>
+  <div class="bar" id="bar"><button type="button" id="homeBtn">‹ console<span class="red">.</span></button><span id="barClock"></span></div>
   <iframe id="fs" title="myStereo" allow="autoplay; clipboard-write; web-share"></iframe>
 </section>
 <section class="sheet" id="sheet" hidden>
@@ -120,7 +127,7 @@ html.night .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.4';
+const VERSION = 'Console 0.1.5';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -178,8 +185,16 @@ function strip() {
 /* the deck: myStereo itself, in a frame, so it keeps playing while Console is up */
 const deck = $('deck'), fs = $('fs');
 function frameIn() { if (!fs.getAttribute('src')) fs.src = STEREO; }
-function deckUp() { frameIn(); deck.classList.add('moving'); requestAnimationFrame(() => deck.classList.add('up')); deck.setAttribute('aria-hidden', 'false'); }
-function deckDown() { deck.classList.remove('up'); deck.setAttribute('aria-hidden', 'true'); setTimeout(() => deck.classList.remove('moving'), 320); strip(); }
+let barT = 0;
+function barHide(ms) { clearTimeout(barT); barT = setTimeout(() => { deck.style.setProperty('--barH', $('bar').offsetHeight + 'px'); deck.classList.add('full'); }, ms); }
+function barShow() { deck.classList.remove('full'); barHide(4000); }
+let pullY = null;
+$('pull').addEventListener('pointerdown', e => { pullY = e.clientY; try { e.currentTarget.setPointerCapture(e.pointerId); } catch {} });
+$('pull').addEventListener('pointermove', e => { if (pullY != null && e.clientY - pullY > 20) { pullY = null; barShow(); } });
+addEventListener('pointerup', () => { pullY = null; });
+$('pull').addEventListener('click', barShow);
+function deckUp() { frameIn(); deck.classList.remove('full'); barHide(1500); deck.classList.add('moving'); requestAnimationFrame(() => deck.classList.add('up')); deck.setAttribute('aria-hidden', 'false'); }
+function deckDown() { clearTimeout(barT); deck.classList.remove('full', 'up'); deck.setAttribute('aria-hidden', 'true'); setTimeout(() => deck.classList.remove('moving'), 320); strip(); }
 $('strip').onclick = deckUp;
 $('homeBtn').onclick = deckDown;
 /* the six buttons */
@@ -227,7 +242,7 @@ paint(); tick(); keysDraw(); wxGet(); strip();
 setInterval(strip, 1500);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) { wxGet(); strip(); } });
 setTimeout(frameIn, 600);   /* myStereo loads quietly so the strip can follow it */
-window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, wxGet, VERSION };
+window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, barShow, wxGet, VERSION };
 })();
 </script>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script>
