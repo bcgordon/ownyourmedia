@@ -1,0 +1,15 @@
+{
+  "id": "/flipside/app/console/",
+  "name": "Console",
+  "short_name": "Console",
+  "description": "A quiet home screen, with tapes.",
+  "start_url": "/flipside/app/console/",
+  "scope": "/flipside/app/console/",
+  "display": "standalone",
+  "background_color": "#F9EBD1",
+  "theme_color": "#F9EBD1",
+  "icons": [
+    {"src": "console-icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "console-icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
