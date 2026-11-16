@@ -50,6 +50,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
 .strip .icon{flex:none;width:64px;height:64px;border-radius:14px;box-shadow:0 0 0 1.5px #2b2b2b,0 3px 6px rgba(0,0,0,.25)}
 .strip:active{transform:translateY(3px);box-shadow:0 0 0 2.5px #2b2b2b,0 1px 0 2.5px #1e1e1e}
 .strip .lbl{display:block;font-size:14px;color:#b3261e;text-transform:uppercase;letter-spacing:.1em}
+.strip .lbl.nm{font-size:16px;font-weight:700;text-transform:none;letter-spacing:.02em}   /* 0.1.9 · the app's own name, as it's written */
 .strip .ttl{display:block;font-size:23px;font-weight:700;margin:5px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .strip .sub{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.2em}
 /* light: the Cream Carriage, a cream deck over a chrome strip and a seafoam key band. Dark: one teal room */
@@ -118,7 +119,7 @@ html.custom .band::before{display:none}
     <div class="clock" id="clock" aria-live="off">--:--</div>
     <div class="date"><span id="date"></span> — <span id="wx">…</span></div>
     <button class="strip" id="strip" type="button">
-      <span class="txt"><span class="lbl" id="sLbl">tap for the stereo</span>
+      <span class="txt"><span class="lbl nm" id="sLbl">myStereo</span>
       <span class="ttl" id="sTtl">nothing playing</span>
       <span class="sub" id="sSub"></span></span>
       <img class="icon" src="../apple-touch-icon.png" alt="" width="64" height="64">
@@ -160,7 +161,7 @@ html.custom .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.8';
+const VERSION = 'Console 0.1.9';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -226,7 +227,8 @@ function strip() {
   let st = 'none', md = null;
   try { const ms = $('fs').contentWindow.navigator.mediaSession; st = ms.playbackState || 'none'; md = ms.metadata; } catch {}
   const on = md && md.title && st !== 'none';
-  $('sLbl').textContent = st === 'playing' ? 'playing' + (md && md.album ? ' · ' + md.album : '') : st === 'paused' ? 'paused' + (md && md.album ? ' · ' + md.album : '') : 'tap for the stereo';
+  $('sLbl').textContent = st === 'playing' ? 'playing' + (md && md.album ? ' · ' + md.album : '') : st === 'paused' ? 'paused' + (md && md.album ? ' · ' + md.album : '') : 'myStereo';
+  $('sLbl').classList.toggle('nm', st !== 'playing' && st !== 'paused');
   $('sTtl').textContent = on ? md.title : 'nothing playing';
   $('sSub').textContent = on ? (md.artist || '') : 'albums, and your tapes';
 }
