@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Console">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F9EBD1" id="themeColor">
+<title>Console</title>
+<link rel="apple-touch-icon" href="console-apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="console-favicon-32.png">
+<link rel="manifest" href="console.webmanifest">
+<style>
+:root{--ink:#13120f;--paper:#F9EBD1;--card:#fff8ea;--line:#e3d2b2;--mark:#C32F26;--tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace}
+html.night{--ink:#F9EBD1;--paper:#13120f;--card:#1f1d18;--line:#3a362c;--mark:#D89A30}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font-family:var(--tw);overscroll-behavior:none}
+body{overflow:hidden}
+button,input,a{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+.red{color:var(--mark)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column}
+.rim{position:absolute;inset:8px;pointer-events:none;overflow:visible}
+.rim path{fill:none}
+.rim .outer{stroke:var(--ink);stroke-width:2}
+.rim .inner{stroke:var(--mark);stroke-width:1}
+.frame{flex:1;display:flex;flex-direction:column;padding:max(26px,calc(env(safe-area-inset-top) + 6px)) 28px max(26px,calc(env(safe-area-inset-bottom) + 4px));min-height:0}
+.top{display:flex;justify-content:flex-end;gap:10px}
+.chip{border:1.5px solid var(--ink);border-radius:4px;padding:5px 12px;font-size:17px}
+.clock{font-size:68px;line-height:1;margin:6px 0 0;letter-spacing:-1px}
+.clock small{font-size:22px;margin-left:6px;letter-spacing:0}
+.date{font-size:21px;margin:8px 0 18px}
+.date button{text-decoration:underline;text-underline-offset:3px}
+.strip{display:block;width:100%;text-align:left;border:1.5px solid var(--ink);border-radius:4px;background:var(--card);padding:13px 15px;margin-bottom:16px}
+.strip .lbl{display:block;font-size:15px;color:var(--mark)}
+.strip .ttl{display:block;font-size:23px;margin:4px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strip .sub{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.2em}
+.keys{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(64px,1fr);gap:11px;min-height:0;max-height:440px}
+.key{display:flex;align-items:center;padding:0 16px;border:1.5px solid var(--ink);border-radius:4px;font-size:23px;text-decoration:none}
+.key:active,.strip:active,.chip:active{background:var(--line)}
+.note{font-size:18px;text-align:center;margin:16px 6px 0;min-height:1.4em;outline:none;transform:rotate(-.6deg)}
+.note:empty:before{content:attr(data-ph);opacity:.45}
+.deck{position:absolute;inset:0;background:var(--paper);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);transform:translateY(102%);transition:transform .28s ease-out;visibility:hidden}
+.deck.up{transform:none;visibility:visible}
+.deck.moving{visibility:visible}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;border-bottom:1.5px solid var(--ink);font-size:19px;min-height:46px}
+.bar button{font-size:21px;padding:6px 0}
+.deck iframe{flex:1;width:100%;border:0;background:#1b1c1f}
+.sheet{position:absolute;inset:0;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 18px) 22px calc(env(safe-area-inset-bottom) + 30px)}
+.sheet[hidden]{display:none}
+.sheet h2{font-size:26px;font-weight:normal;margin:0 0 4px}
+.sheet h3{font-size:20px;font-weight:normal;margin:26px 0 8px;border-bottom:1.5px solid var(--ink);padding-bottom:4px}
+.sheet p{font-size:17px;line-height:1.45;margin:6px 0}
+.sheet label{display:block;font-size:17px;margin:12px 0 4px}
+.sheet input{width:100%;font-size:18px;padding:10px 12px;border:1.5px solid var(--ink);border-radius:4px;background:var(--card)}
+.row{display:flex;gap:8px;align-items:center}
+.row input{flex:1}
+.picks button{display:block;width:100%;text-align:left;font-size:18px;padding:10px 4px;border-bottom:1px dashed var(--ink)}
+.sheet .done{float:right}
+.small{font-size:15px;opacity:.75}
+</style>
+</head>
+<body>
+<div class="face" id="face">
+  <svg class="rim" id="rim" aria-hidden="true"><path class="outer" id="rimOut"/><path class="inner" id="rimIn"/></svg>
+  <div class="frame">
+    <div class="top">
+      <button class="chip" id="setBtn" type="button">set</button>
+      <button class="chip" id="modeBtn" type="button" aria-label="Switch light or dark">dark</button>
+    </div>
+    <div class="clock" id="clock" aria-live="off">--:--</div>
+    <div class="date"><span id="date"></span> — <span id="wx">…</span></div>
+    <button class="strip" id="strip" type="button">
+      <span class="lbl" id="sLbl">tap for the stereo</span>
+      <span class="ttl" id="sTtl">nothing playing</span>
+      <span class="sub" id="sSub"></span>
+    </button>
+    <nav class="keys" id="keys"></nav>
+    <div class="note" id="note" contenteditable="plaintext-only" spellcheck="false" data-ph="tap to write yourself a note."></div>
+  </div>
+</div>
+<section class="deck" id="deck" aria-label="Stereo">
+  <div class="bar"><button type="button" id="homeBtn">‹ console<span class="red">.</span></button><span id="barClock"></span></div>
+  <iframe id="fs" title="myStereo" allow="autoplay; clipboard-write; web-share"></iframe>
+</section>
+<section class="sheet" id="sheet" hidden>
+  <button class="chip done" type="button" id="doneBtn">done</button>
+  <h2>set<span class="red">.</span></h2>
+  <p class="small" id="ver"></p>
+  <h3>weather</h3>
+  <label for="town">your town</label>
+  <div class="row"><input id="town" autocomplete="off" placeholder="Minneapolis"><button class="chip" type="button" id="findBtn">find</button></div>
+  <div class="picks" id="picks"></div>
+  <p class="small" id="townNow"></p>
+  <h3>buttons</h3>
+  <p class="small">Each one opens an app. If one doesn't, the setup sheet shows how to make it a Shortcut.</p>
+  <div id="links"></div>
+  <p><button class="chip" type="button" id="resetLinks">put them back</button></p>
+  <h3>setting up the phone</h3>
+  <p><a href="setup.html">the setup sheet</a> (Focus, the one-icon home screen, grayscale)</p>
+</section>
+<script>
+(() => {
+const VERSION = 'Console 0.1.1';
+const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
+const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'sms:', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
+const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
+const $ = id => document.getElementById(id);
+const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch { return d; } };
+const keep = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const cfg = Object.assign({ night: false, place: null, links: {}, note: '' }, load('console.cfg', {}));
+const save = () => keep('console.cfg', cfg);
+const link = k => cfg.links[k] || LINKS[k];
+/* light and dark: the choice stays on this phone */
+function paint() {
+  document.documentElement.classList.toggle('night', !!cfg.night);
+  $('modeBtn').textContent = cfg.night ? 'light' : 'dark';
+  $('themeColor').setAttribute('content', cfg.night ? '#13120f' : '#F9EBD1');
+}
+$('modeBtn').onclick = () => { cfg.night = !cfg.night; save(); paint(); };
+/* the clock */
+const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'], MONS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+function tick() {
+  const d = new Date(), h = d.getHours() % 12 || 12, m = String(d.getMinutes()).padStart(2, '0');
+  $('clock').innerHTML = `${h}:${m}<span class="red">.</span><small>${d.getHours() < 12 ? 'am' : 'pm'}</small>`;
+  $('barClock').textContent = `${h}:${m}`;
+  $('date').textContent = `${DAYS[d.getDay()]}, ${MONS[d.getMonth()]} ${d.getDate()}`;
+  setTimeout(tick, 1000 * (60 - d.getSeconds()) + 50);
+}
+/* weather from Open-Meteo: no account, nothing sent but the town's spot on the map */
+const WX = [[0, 'clear'], [1, 'mostly clear'], [2, 'partly cloudy'], [3, 'cloudy'], [45, 'fog'], [48, 'fog'], [51, 'drizzle'], [53, 'drizzle'], [55, 'drizzle'], [56, 'freezing drizzle'], [57, 'freezing drizzle'], [61, 'light rain'], [63, 'rain'], [65, 'heavy rain'], [66, 'freezing rain'], [67, 'freezing rain'], [71, 'light snow'], [73, 'snow'], [75, 'heavy snow'], [77, 'snow grains'], [80, 'showers'], [81, 'showers'], [82, 'heavy showers'], [85, 'snow showers'], [86, 'snow showers'], [95, 'thunderstorms'], [96, 'thunderstorms'], [99, 'thunderstorms']];
+const wxWord = c => (WX.find(w => w[0] === c) || [0, ''])[1];
+function wxShow() {
+  const el = $('wx'), w = load('console.wx', null);
+  if (!cfg.place) { el.innerHTML = '<button type="button" id="wxSet">set your town</button>'; $('wxSet').onclick = openSheet; return; }
+  el.textContent = w && w.at > Date.now() - 6 * 3600e3 ? `${Math.round(w.t)}° ${wxWord(w.c)}` : '…';
+}
+async function wxGet(force) {
+  if (!cfg.place) return wxShow();
+  const w = load('console.wx', null);
+  if (!force && w && w.at > Date.now() - 20 * 60e3 && w.lat === cfg.place.lat) return wxShow();
+  try {
+    const q = new URLSearchParams({ latitude: cfg.place.lat, longitude: cfg.place.lon, current: 'temperature_2m,weather_code', temperature_unit: 'fahrenheit', timezone: 'auto' });
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?' + q);
+    const j = await r.json();
+    keep('console.wx', { t: j.current.temperature_2m, c: j.current.weather_code, at: Date.now(), lat: cfg.place.lat });
+  } catch {}
+  wxShow();
+}
+/* the strip: reads what myStereo on the deck is playing (an album or a tape from its TAPES key); the deck has the real keys */
+function strip() {
+  let st = 'none', md = null;
+  try { const ms = $('fs').contentWindow.navigator.mediaSession; st = ms.playbackState || 'none'; md = ms.metadata; } catch {}
+  const on = md && md.title && st !== 'none';
+  $('sLbl').textContent = st === 'playing' ? 'playing' + (md && md.album ? ' · ' + md.album : '') : st === 'paused' ? 'paused' + (md && md.album ? ' · ' + md.album : '') : 'tap for the stereo';
+  $('sTtl').textContent = on ? md.title : 'nothing playing';
+  $('sSub').textContent = on ? (md.artist || '') : 'albums, and your tapes';
+}
+/* the deck: myStereo itself, in a frame, so it keeps playing while Console is up */
+const deck = $('deck'), fs = $('fs');
+function frameIn() { if (!fs.getAttribute('src')) fs.src = STEREO; }
+function deckUp() { frameIn(); deck.classList.add('moving'); requestAnimationFrame(() => deck.classList.add('up')); deck.setAttribute('aria-hidden', 'false'); }
+function deckDown() { deck.classList.remove('up'); deck.setAttribute('aria-hidden', 'true'); setTimeout(() => deck.classList.remove('moving'), 320); strip(); }
+$('strip').onclick = deckUp;
+$('homeBtn').onclick = deckDown;
+/* the six buttons */
+function keysDraw() {
+  $('keys').replaceChildren(...KEYS.map(([k, name]) => { const a = document.createElement('a'); a.className = 'key'; a.href = link(k); a.textContent = name; a.dataset.k = k; return a; }));
+}
+/* the note */
+const note = $('note');
+note.textContent = cfg.note || '';
+note.addEventListener('input', () => { cfg.note = note.textContent.slice(0, 120); save(); });
+note.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); note.blur(); } });
+note.addEventListener('blur', () => { if (!note.textContent.trim()) note.textContent = ''; });
+/* set */
+function openSheet() {
+  $('ver').textContent = VERSION + ' · for BC';
+  $('townNow').textContent = cfg.place ? 'now: ' + cfg.place.name : 'no town set yet';
+  $('links').replaceChildren(...KEYS.map(([k, name]) => {
+    const w = document.createElement('div'), l = document.createElement('label'), i = document.createElement('input');
+    l.textContent = name; l.htmlFor = 'ln-' + k; i.id = 'ln-' + k; i.value = link(k); i.autocapitalize = 'off'; i.spellcheck = false;
+    i.onchange = () => { const v = i.value.trim(); if (!v || v === LINKS[k]) delete cfg.links[k]; else cfg.links[k] = v; save(); keysDraw(); };
+    w.append(l, i); return w;
+  }));
+  $('sheet').hidden = false;
+}
+$('setBtn').onclick = openSheet;
+$('doneBtn').onclick = () => { $('sheet').hidden = true; $('picks').replaceChildren(); };
+$('resetLinks').onclick = () => { cfg.links = {}; save(); keysDraw(); openSheet(); };
+$('town').addEventListener('keydown', e => { if (e.key === 'Enter') $('findBtn').click(); });
+$('findBtn').onclick = async () => {
+  const name = $('town').value.split(',')[0].trim(), box = $('picks');
+  if (!name) return;
+  box.textContent = 'looking…';
+  try {
+    const r = await fetch('https://geocoding-api.open-meteo.com/v1/search?' + new URLSearchParams({ name, count: 8, language: 'en' }));
+    const j = await r.json(), res = j.results || [];
+    if (!res.length) { box.textContent = 'no town by that name. try another spelling.'; return; }
+    box.replaceChildren(...res.map(p => { const b = document.createElement('button'); b.type = 'button';
+      b.textContent = [p.name, p.admin1, p.country_code === 'US' ? '' : p.country].filter(Boolean).join(', ');
+      b.onclick = () => { cfg.place = { name: p.name, lat: Math.round(p.latitude * 100) / 100, lon: Math.round(p.longitude * 100) / 100 }; save(); box.replaceChildren(); $('townNow').textContent = 'now: ' + p.name; wxGet(true); };
+      return b; }));
+  } catch { box.textContent = "couldn't reach the weather service. try again in a bit."; }
+};
+/* start */
+/* the rim: the iPhone 17 Pro screen corner is 62 points with Apple's continuous curve (not a circle).
+   The rim sits 8 points in, so its corners are 62 - 8 = 54 (the red line 8 further in: 46), drawn the same way. */
+const SCREEN_CORNER = 62, RIM_INSET = 8, LINE_GAP = 8, SMOOTH = 0.6;
+function squircle(x, y, w, h, r, sm) {
+  r = Math.min(r, w / 2, h / 2);
+  const p = Math.min((1 + sm) * r, w / 2, h / 2), arc = 90 * (1 - sm), rad = Math.PI / 180;
+  const L = Math.sin(arc / 2 * rad) * r * Math.SQRT2, alpha = (90 - arc) / 2, p34 = r * Math.tan(alpha / 2 * rad);
+  const beta = 45 * sm, c = p34 * Math.cos(beta * rad), d = c * Math.tan(beta * rad), b = (p - L - c - d) / 3, a = 2 * b, e = a + b + c;
+  const f = n => +n.toFixed(2);
+  return [`M${f(x + w - p)} ${f(y)}`,
+    `c${f(a)} 0 ${f(a + b)} 0 ${f(e)} ${f(d)}`, `a${f(r)} ${f(r)} 0 0 1 ${f(L)} ${f(L)}`, `c${f(d)} ${f(c)} ${f(d)} ${f(b + c)} ${f(d)} ${f(e)}`,
+    `L${f(x + w)} ${f(y + h - p)}`,
+    `c0 ${f(a)} 0 ${f(a + b)} ${f(-d)} ${f(e)}`, `a${f(r)} ${f(r)} 0 0 1 ${f(-L)} ${f(L)}`, `c${f(-c)} ${f(d)} ${f(-(b + c))} ${f(d)} ${f(-e)} ${f(d)}`,
+    `L${f(x + p)} ${f(y + h)}`,
+    `c${f(-a)} 0 ${f(-(a + b))} 0 ${f(-e)} ${f(-d)}`, `a${f(r)} ${f(r)} 0 0 1 ${f(-L)} ${f(-L)}`, `c${f(-d)} ${f(-c)} ${f(-d)} ${f(-(b + c))} ${f(-d)} ${f(-e)}`,
+    `L${f(x)} ${f(y + p)}`,
+    `c0 ${f(-a)} 0 ${f(-(a + b))} ${f(d)} ${f(-e)}`, `a${f(r)} ${f(r)} 0 0 1 ${f(L)} ${f(-L)}`, `c${f(c)} ${f(-d)} ${f(b + c)} ${f(-d)} ${f(e)} ${f(-d)}`, 'Z'].join('');
+}
+function rim() {
+  const w = innerWidth - 2 * RIM_INSET, h = innerHeight - 2 * RIM_INSET, r = SCREEN_CORNER - RIM_INSET;
+  $('rim').setAttribute('viewBox', `0 0 ${w} ${h}`); $('rim').setAttribute('width', w); $('rim').setAttribute('height', h);
+  $('rimOut').setAttribute('d', squircle(1, 1, w - 2, h - 2, r - 1, SMOOTH));
+  $('rimIn').setAttribute('d', squircle(LINE_GAP, LINE_GAP, w - 2 * LINE_GAP, h - 2 * LINE_GAP, r - LINE_GAP, SMOOTH));
+}
+addEventListener('resize', rim);
+paint(); rim(); tick(); keysDraw(); wxGet(); strip();
+setInterval(strip, 1500);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { wxGet(); strip(); } });
+setTimeout(frameIn, 600);   /* myStereo loads quietly so the strip can follow it */
+window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, wxGet, VERSION, squircle };
+})();
+</script>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script>
+</body>
+</html>
