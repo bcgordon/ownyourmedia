@@ -15,11 +15,12 @@
 <link rel="manifest" href="console.webmanifest">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;text=0123456789:.apmoy&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;display=swap">
 <style>
 :root{--ink:#1f2a26;--dim:#2f3a36;--mark:#b3261e;--room:#f5efe1;--roomBg:radial-gradient(ellipse 70% 45% at 30% 8%,#fffdf6,transparent 70%),#f5efe1;--band:#7eac9a;--bandInk:#f6efe0;
   --paper:#fbf6ea;--blue:#1f3f8f;--chrome:linear-gradient(#f6f8f9,#b7bec3 38%,#eef1f2 52%,#8c949a 100%);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-  --tw:"American Typewriter","AmericanTypewriter","Special Elite",Courier,monospace}
+  --tw:"American Typewriter","AmericanTypewriter","Courier Prime",Courier,monospace}   /* 0.1.12 · Android has no American Typewriter: Courier Prime there */
 /* dark is the Typewriter widescreen's Deep Teal room: seafoam enamel, cream type, light coral */
 html.night{--ink:#f6efe0;--dim:#cfe3da;--mark:#ffb39a;--room:#2c5a4e;--roomBg:radial-gradient(ellipse 55% 50% at 26% 22%,rgba(160,230,205,.16),transparent 70%),var(--grain),linear-gradient(172deg,#3f7567 0%,#2c5a4e 50%,#1f4339 100%);--band:transparent;--bandInk:#f6efe0}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -150,7 +151,7 @@ html.custom .band::before{display:none}
   <div class="picks" id="picks"></div>
   <p class="small" id="townNow"></p>
   <h3>buttons</h3>
-  <p class="small">Six buttons, yours to name. Each one opens an app (by a Shortcut, which works for any app) or a link.</p>
+  <p class="small" id="keysHow"></p>
   <div id="links"></div>
   <p><button class="chip" type="button" id="resetLinks">put them back</button></p>
   <h3>quote</h3>
@@ -166,7 +167,7 @@ html.custom .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.11';
+const VERSION = 'Console 0.1.12';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -179,12 +180,20 @@ const save = () => keep('console.cfg', cfg);
 const DEF_KEYS = [{ name: 'phone', sc: 'Console Phone' }, { name: 'messages', sc: 'Console Messages' }, { name: 'signal', url: 'sgnl://' }, { name: 'audible', url: 'audible://' }, { name: 'podcasts', url: 'podcasts://' }, { name: 'finch', sc: 'Console Finch' }];
 const PRESETS = [['Signal', 'sgnl://'], ['Podcasts', 'podcasts://'], ['Audible', 'audible://'], ['Music', 'music://'], ['Maps', 'maps://'], ['Mail', 'message://'], ['Notes', 'mobilenotes://'], ['Calendar', 'calshow://'], ['Spotify', 'spotify://'], ['WhatsApp', 'whatsapp://']];
 const SC = 'shortcuts://run-shortcut?name=';
+/* 0.1.12 · Android: no Shortcuts there, so "an app" is an installed app by its Android name, opened from Chrome; its own six to start;
+   only the links that work on Android. On an iPhone nothing changes */
+const ANDROID = /Android/i.test(navigator.userAgent);
+const DEF_ANDROID = [{ name: 'phone', url: 'tel:' }, { name: 'messages', url: 'sms:' }, { name: 'signal', pkg: 'org.thoughtcrime.securesms' }, { name: 'audible', pkg: 'com.audible.application' }, { name: 'spotify', pkg: 'com.spotify.music' }, { name: 'maps', pkg: 'com.google.android.apps.maps' }];
+const APPS_ANDROID = [['Signal', 'org.thoughtcrime.securesms'], ['WhatsApp', 'com.whatsapp'], ['Spotify', 'com.spotify.music'], ['Audible', 'com.audible.application'], ['Pocket Casts', 'au.com.shiftyjelly.pocketcasts'], ['Maps', 'com.google.android.apps.maps'], ['Gmail', 'com.google.android.gm'], ['Calendar', 'com.google.android.calendar'], ['Keep', 'com.google.android.keep'], ['Photos', 'com.google.android.apps.photos'], ['YouTube', 'com.google.android.youtube'], ['Chrome', 'com.android.chrome']];
+const LINKS_ANDROID = [['Phone', 'tel:'], ['Texts', 'sms:'], ['Email', 'mailto:'], ['Spotify', 'spotify://'], ['WhatsApp', 'whatsapp://']];
+const intentFor = pkg => `intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${pkg};S.browser_fallback_url=${encodeURIComponent('https://play.google.com/store/apps/details?id=' + pkg)};end`;
+if (ANDROID) DEF_KEYS.splice(0, 6, ...DEF_ANDROID);
 if (!Array.isArray(cfg.keys)) {   /* from 0.1.6: a changed link under set (cfg.links) carries over */
   cfg.keys = KEYS.map(([k], i) => { const v = (cfg.links || {})[k]; if (!v) return { ...DEF_KEYS[i] };
     return v.startsWith(SC) ? { name: DEF_KEYS[i].name, sc: decodeURIComponent(v.slice(SC.length)) } : { name: DEF_KEYS[i].name, url: v }; });
   delete cfg.links; save();
 }
-const keyHref = b => b.sc != null ? SC + encodeURIComponent(b.sc) : (b.url || '');
+const keyHref = b => ANDROID && b.pkg ? intentFor(b.pkg) : b.sc != null && !ANDROID ? SC + encodeURIComponent(b.sc) : (b.url || '');
 /* light and dark: the choice stays on this phone */
 function paint() {
   const h = document.documentElement, bg = cfg.night ? cfg.bgDark : cfg.bgLight, VARS = ['--room', '--roomBg', '--ink', '--dim', '--mark', '--band', '--bandInk'];
@@ -267,6 +276,7 @@ noteDraw();
 function openSheet() {
   $('ver').textContent = VERSION; quote.value = cfg.note || ''; noteDraw();
   $('townNow').textContent = cfg.place ? 'now: ' + cfg.place.name : 'no town set yet';
+  $('keysHow').textContent = ANDROID ? 'Six buttons, yours to name. Each one opens an app on your phone, or a link.' : 'Six buttons, yours to name. Each one opens an app (by a Shortcut, which works for any app) or a link.';
   keyEdit(); swatches();
   $('sheet').hidden = false;
 }
@@ -278,18 +288,25 @@ const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.crea
 const cap = t => t ? t[0].toUpperCase() + t.slice(1) : t;
 function keyEdit() {
   $('links').replaceChildren(...cfg.keys.map((b, n) => {
-    const done = () => { save(); keysDraw(); }, isApp = b.sc != null;
+    const done = () => { save(); keysDraw(); }, isApp = ANDROID ? b.pkg != null : b.sc != null;
     const name = el('input', { id: 'kn-' + n, value: b.name, maxLength: 14, autocapitalize: 'off', spellcheck: false });
     const sc = el('input', { id: 'ks-' + n, value: b.sc || '', placeholder: 'Console ' + cap(b.name), autocapitalize: 'words', spellcheck: false });
+    const pkg = el('input', { id: 'kp-' + n, value: b.pkg || '', placeholder: 'com.spotify.music', autocapitalize: 'off', spellcheck: false });
+    pkg.onchange = () => { b.pkg = pkg.value.trim(); delete b.url; delete b.sc; done(); };
     const url = el('input', { id: 'ku-' + n, value: b.url || '', placeholder: 'sgnl://', autocapitalize: 'off', spellcheck: false, inputMode: 'url' });
     name.onchange = () => { const v = name.value.trim().slice(0, 14) || DEF_KEYS[n].name; if (b.sc != null && (!b.sc || b.sc === 'Console ' + cap(b.name))) b.sc = 'Console ' + cap(v); b.name = v; done(); keyEdit(); };
     sc.onchange = () => { b.sc = sc.value.trim() || 'Console ' + cap(b.name); delete b.url; done(); };
-    url.onchange = () => { b.url = url.value.trim(); delete b.sc; done(); };
-    const mode = m => () => { if (m === 'app') { b.sc = b.sc || 'Console ' + cap(b.name); delete b.url; } else { b.url = b.url || ''; delete b.sc; } done(); keyEdit(); };
-    const app = el('div', {}, el('label', { htmlFor: 'ks-' + n, textContent: "the Shortcut's name" }), sc,
-      el('p', { className: 'small', textContent: 'In Shortcuts: + › Add Action › Open App › pick the app. Name the shortcut exactly this.' }));
+    url.onchange = () => { b.url = url.value.trim(); delete b.sc; delete b.pkg; done(); };
+    const mode = m => () => { if (m === 'app') { if (ANDROID) b.pkg = b.pkg || ''; else b.sc = b.sc || 'Console ' + cap(b.name); delete b.url; } else { b.url = b.url || ''; delete b.sc; delete b.pkg; } done(); keyEdit(); };
+    const pick = (t, set) => el('button', { type: 'button', className: 'chip', textContent: t, onclick: () => { set(); if (b.name === DEF_KEYS[n].name || !b.name) b.name = t.toLowerCase().slice(0, 14); done(); keyEdit(); } });
+    const app = ANDROID
+      ? el('div', {}, el('label', { htmlFor: 'kp-' + n, textContent: 'the app' }), pkg,
+        el('div', { className: 'presets' }, ...APPS_ANDROID.map(([t, k]) => pick(t, () => { b.pkg = k; delete b.url; delete b.sc; }))),
+        el('p', { className: 'small', textContent: "Pick one, or type an app's Android name: on its Google Play page, it's after id= in the address." }))
+      : el('div', {}, el('label', { htmlFor: 'ks-' + n, textContent: "the Shortcut's name" }), sc,
+        el('p', { className: 'small', textContent: 'In Shortcuts: + › Add Action › Open App › pick the app. Name the shortcut exactly this.' }));
     const lnk = el('div', {}, el('label', { htmlFor: 'ku-' + n, textContent: 'the link' }), url,
-      el('div', { className: 'presets' }, ...PRESETS.map(([t, u]) => el('button', { type: 'button', className: 'chip', textContent: t, onclick: () => { b.url = u; delete b.sc; if (b.name === DEF_KEYS[n].name || !b.name) b.name = t.toLowerCase(); done(); keyEdit(); } }))));
+      el('div', { className: 'presets' }, ...(ANDROID ? LINKS_ANDROID : PRESETS).map(([t, u]) => pick(t, () => { b.url = u; delete b.sc; delete b.pkg; }))));
     return el('div', { className: 'kb' }, el('div', { className: 'kb-h', textContent: 'button ' + (n + 1) }),
       el('label', { htmlFor: 'kn-' + n, textContent: 'name' }), name,
       el('label', { textContent: 'opens' }),
@@ -338,7 +355,7 @@ addEventListener('resize', turned); addEventListener('orientationchange', turned
 if (window.visualViewport) visualViewport.addEventListener('resize', turned);
 document.addEventListener('scroll', e => { if (e.target === document || e.target === document.documentElement || e.target === document.body || e.target === deck) pin(); }, { capture: true, passive: true });
 setTimeout(frameIn, 600);   /* myStereo loads quietly so the strip can follow it */
-window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, barShow, pin, wxGet, VERSION };
+window.CONSOLE = { cfg, ANDROID, LINKS, strip, deckUp, deckDown, barShow, pin, wxGet, VERSION };
 })();
 </script>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script>
