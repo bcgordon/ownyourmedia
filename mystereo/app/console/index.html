@@ -23,6 +23,8 @@ html.night{--ink:#f6efe0;--dim:#cfe3da;--mark:#ffb39a;--room:#2c5a4e;--roomBg:ra
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:var(--room);color:var(--ink);font-family:var(--tw);overscroll-behavior:none}
 body{overflow:hidden}
+/* 0.1.6 · pinned: iOS can leave a Home Screen page scrolled after the phone turns, which hid the grabber under the clock */
+html,body{position:fixed;inset:0;width:100%;overflow:hidden}
 button,input,a{font:inherit;color:inherit}
 button{background:none;border:0;padding:0;cursor:pointer}
 .red{color:var(--mark)}
@@ -127,7 +129,7 @@ html.night .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.5';
+const VERSION = 'Console 0.1.6';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -240,9 +242,17 @@ $('findBtn').onclick = async () => {
 /* start */
 paint(); tick(); keysDraw(); wxGet(); strip();
 setInterval(strip, 1500);
-document.addEventListener('visibilitychange', () => { if (!document.hidden) { wxGet(); strip(); } });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { pin(); wxGet(); strip(); } });
+/* 0.1.6 · after the phone turns, put the page back at the top (again a moment later: iOS settles late), and coming back to
+   portrait with myStereo up, show the console bar for a few seconds so ‹ console. is in reach */
+function pin() { if (scrollX || scrollY) scrollTo(0, 0); for (const e of [document.documentElement, document.body, deck, $('face')]) if (e.scrollTop || e.scrollLeft) { e.scrollTop = 0; e.scrollLeft = 0; } }
+let wasWide = innerWidth > innerHeight;
+function turned() { pin(); setTimeout(pin, 250); setTimeout(pin, 700); const wide = innerWidth > innerHeight; if (wasWide && !wide && deck.classList.contains('up')) barShow(); wasWide = wide; }
+addEventListener('resize', turned); addEventListener('orientationchange', turned);
+if (window.visualViewport) visualViewport.addEventListener('resize', turned);
+document.addEventListener('scroll', e => { if (e.target === document || e.target === document.documentElement || e.target === document.body || e.target === deck) pin(); }, { capture: true, passive: true });
 setTimeout(frameIn, 600);   /* myStereo loads quietly so the strip can follow it */
-window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, barShow, wxGet, VERSION };
+window.CONSOLE = { cfg, LINKS, strip, deckUp, deckDown, barShow, pin, wxGet, VERSION };
 })();
 </script>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c3c0cf6367140999d0d1c59ae6a5626"}'></script>
