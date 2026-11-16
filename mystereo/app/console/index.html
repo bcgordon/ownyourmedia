@@ -13,6 +13,8 @@
 <link rel="apple-touch-icon" href="console-apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="console-favicon-32.png">
 <link rel="manifest" href="console.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;text=0123456789:.apmoy&amp;display=swap">
 <style>
 :root{--ink:#1f2a26;--dim:#2f3a36;--mark:#b3261e;--room:#f5efe1;--roomBg:radial-gradient(ellipse 70% 45% at 30% 8%,#fffdf6,transparent 70%),#f5efe1;--band:#7eac9a;--bandInk:#f6efe0;
   --paper:#fbf6ea;--blue:#1f3f8f;--chrome:linear-gradient(#f6f8f9,#b7bec3 38%,#eef1f2 52%,#8c949a 100%);
@@ -30,12 +32,14 @@ button{background:none;border:0;padding:0;cursor:pointer}
 .red{color:var(--mark)}
 .face{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--roomBg)}
 .frame{flex:1;display:flex;flex-direction:column;padding:max(26px,calc(env(safe-area-inset-top) + 6px)) 28px max(26px,calc(env(safe-area-inset-bottom) + 4px));min-height:0}
-.top{display:flex;justify-content:flex-end;gap:14px;margin:2px 8px 0 0}
+.top{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin:2px 8px 0 0}
+/* 0.1.8 · the oym. logo, top left: a little free advertising */
+.oym{margin-right:auto;font:400 34px/1 "Special Elite",var(--tw);color:var(--ink);text-decoration:none;letter-spacing:-.02em}
 /* keycaps: cream caps in black rims, as on the Typewriter widescreen's key bar */
 .chip,.key{background:linear-gradient(180deg,#f6f0e0 0%,#ebe2cb 70%,#d9cfb5 100%);color:#1f2a26;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-decoration:none}
 .chip{border-radius:8px;padding:7px 14px 6px;font-size:15px;box-shadow:0 0 0 2px #2b2b2b,0 3px 0 2px #1e1e1e,0 5px 6px rgba(0,0,0,.22);margin-bottom:3px}
 .chip:active{transform:translateY(2px);box-shadow:0 0 0 2px #2b2b2b,0 1px 0 2px #1e1e1e}
-.clock{font-size:68px;line-height:1;margin:8px 0 0;letter-spacing:-1px;color:var(--ink)}
+.clock{font-size:68px;line-height:1;margin:8px 0 0;letter-spacing:-1px;color:var(--ink);font-family:"Special Elite",var(--tw)}   /* 0.1.8 · the clock in the logo's typewriter face */
 .clock small{font-size:22px;margin-left:6px;letter-spacing:0;color:var(--dim)}
 .date{font-size:21px;margin:8px 0 18px;color:var(--dim)}
 .date button{text-decoration:underline;text-underline-offset:3px}
@@ -107,6 +111,7 @@ html.custom .band::before{display:none}
 <div class="face" id="face">
   <div class="frame">
     <div class="top">
+      <a class="oym" href="https://ownyourmedia.club/" aria-label="Own Your Media">oym<span class="red">.</span></a>
       <button class="chip" id="setBtn" type="button">set</button>
       <button class="chip" id="modeBtn" type="button" aria-label="Switch light or dark">dark</button>
     </div>
@@ -155,7 +160,7 @@ html.custom .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.7';
+const VERSION = 'Console 0.1.8';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
