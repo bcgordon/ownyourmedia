@@ -29,17 +29,22 @@ body{overflow:hidden}
 html,body{position:fixed;inset:0;width:100%;overflow:hidden}
 button,input,a{font:inherit;color:inherit}
 button{background:none;border:0;padding:0;cursor:pointer}
-.red{color:var(--mark)}
+.red{color:#C32F26}   /* 0.1.10 · the dot is always red, the logo's red, in light and dark */
 .face{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--roomBg)}
 .frame{flex:1;display:flex;flex-direction:column;padding:max(26px,calc(env(safe-area-inset-top) + 6px)) 28px max(26px,calc(env(safe-area-inset-bottom) + 4px));min-height:0}
-.top{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin:2px 8px 0 0}
-/* 0.1.8 · the oym. logo, top left: a little free advertising */
-.oym{margin-right:auto;font:400 34px/1 "Special Elite",var(--tw);color:var(--ink);text-decoration:none;letter-spacing:-.02em}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:2px 6px 8px 2px}
+/* 0.1.8 · the oym. logo: a little free advertising (top right since 0.1.10) */
+/* 0.1.10 · settings: a square key with a gear, top left */
+.chip.gear{width:48px;height:48px;padding:0;display:grid;place-items:center}
+.chip.gear svg{width:28px;height:28px}
+.sheet .seg.mode{margin:14px 0 4px}
+.sheet .seg.mode .chip{font-size:17px;padding:9px 20px 8px}
+.oym{font:400 34px/1 "Special Elite",var(--tw);color:var(--ink);text-decoration:none;letter-spacing:-.02em}
 /* keycaps: cream caps in black rims, as on the Typewriter widescreen's key bar */
 .chip,.key{background:linear-gradient(180deg,#f6f0e0 0%,#ebe2cb 70%,#d9cfb5 100%);color:#1f2a26;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-decoration:none}
 .chip{border-radius:8px;padding:7px 14px 6px;font-size:15px;box-shadow:0 0 0 2px #2b2b2b,0 3px 0 2px #1e1e1e,0 5px 6px rgba(0,0,0,.22);margin-bottom:3px}
 .chip:active{transform:translateY(2px);box-shadow:0 0 0 2px #2b2b2b,0 1px 0 2px #1e1e1e}
-.clock{font-size:68px;line-height:1;margin:8px 0 0;letter-spacing:-1px;color:var(--ink);font-family:"Special Elite",var(--tw)}   /* 0.1.8 · the clock in the logo's typewriter face */
+.clock{font-size:68px;line-height:1;margin:8px 0 0;letter-spacing:-1px;color:var(--ink);text-align:center;font-family:"Special Elite",var(--tw)}   /* 0.1.8 · the clock in the logo's typewriter face */
 .clock small{font-size:22px;margin-left:6px;letter-spacing:0;color:var(--dim)}
 .date{font-size:21px;margin:8px 0 18px;color:var(--dim)}
 .date button{text-decoration:underline;text-underline-offset:3px}
@@ -112,9 +117,8 @@ html.custom .band::before{display:none}
 <div class="face" id="face">
   <div class="frame">
     <div class="top">
+      <button class="chip gear" id="setBtn" type="button" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
       <a class="oym" href="https://ownyourmedia.club/" aria-label="Own Your Media">oym<span class="red">.</span></a>
-      <button class="chip" id="setBtn" type="button">set</button>
-      <button class="chip" id="modeBtn" type="button" aria-label="Switch light or dark">dark</button>
     </div>
     <div class="clock" id="clock" aria-live="off">--:--</div>
     <div class="date"><span id="date"></span> — <span id="wx">…</span></div>
@@ -137,8 +141,9 @@ html.custom .band::before{display:none}
 </section>
 <section class="sheet" id="sheet" hidden>
   <button class="chip done" type="button" id="doneBtn">done</button>
-  <h2>set<span class="red">.</span></h2>
+  <h2>settings<span class="red">.</span></h2>
   <p class="small" id="ver"></p>
+  <div class="seg mode" role="group" aria-label="Light or dark"><button class="chip" type="button" id="lightBtn">light</button><button class="chip" type="button" id="darkBtn">dark</button></div>
   <h3>weather</h3>
   <label for="town">your town</label>
   <div class="row"><input id="town" autocomplete="off" placeholder="Minneapolis"><button class="chip" type="button" id="findBtn">find</button></div>
@@ -161,7 +166,7 @@ html.custom .band::before{display:none}
 </section>
 <script>
 (() => {
-const VERSION = 'Console 0.1.9';
+const VERSION = 'Console 0.1.10';
 const KEYS = [['phone', 'phone'], ['messages', 'messages'], ['signal', 'signal'], ['audible', 'audible'], ['podcasts', 'podcasts'], ['finch', 'finch']];
 const LINKS = { phone: 'shortcuts://run-shortcut?name=Console%20Phone', messages: 'shortcuts://run-shortcut?name=Console%20Messages', signal: 'sgnl://', audible: 'audible://', podcasts: 'podcasts://', finch: 'shortcuts://run-shortcut?name=Console%20Finch' };
 const STEREO = '../index.html';   /* myStereo, one folder up; its TAPES key opens Flipside */
@@ -184,7 +189,7 @@ const keyHref = b => b.sc != null ? SC + encodeURIComponent(b.sc) : (b.url || ''
 function paint() {
   const h = document.documentElement, bg = cfg.night ? cfg.bgDark : cfg.bgLight, VARS = ['--room', '--roomBg', '--ink', '--dim', '--mark', '--band', '--bandInk'];
   h.classList.toggle('night', !!cfg.night);
-  $('modeBtn').textContent = cfg.night ? 'light' : 'dark';
+  $('lightBtn').classList.toggle('on', !cfg.night); $('darkBtn').classList.toggle('on', !!cfg.night);
   h.classList.toggle('custom', !!bg); VARS.forEach(v => h.style.removeProperty(v));
   if (bg) { const dark = lum(bg) < .28; h.classList.toggle('dk', dark);
     const set = { '--room': bg, '--roomBg': `radial-gradient(ellipse 60% 45% at 30% 10%,rgba(255,255,255,${dark ? .08 : .35}),transparent 70%),${bg}`, '--band': 'transparent',
@@ -192,7 +197,8 @@ function paint() {
     for (const [k, v] of Object.entries(set)) h.style.setProperty(k, v); } else h.classList.remove('dk');
   $('themeColor').setAttribute('content', bg || (cfg.night ? '#3f7567' : '#f5efe1'));
 }
-$('modeBtn').onclick = () => { cfg.night = !cfg.night; save(); paint(); };
+const mode = night => () => { cfg.night = night; save(); paint(); };   /* 0.1.10 · light and dark live at the top of settings */
+$('lightBtn').onclick = mode(false); $('darkBtn').onclick = mode(true);
 /* the clock */
 const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'], MONS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 function tick() {
