@@ -442,7 +442,11 @@ h1{font-weight:700}
 .opick .gen+h3{margin-top:6px}
 .opick .oby{margin-top:3px;font-size:13px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
 .opick p{margin:8px 0 0;font-size:15.5px;line-height:1.5}
-.opick .btake{margin:10px 0 0;padding:2px 0 2px 12px;border-left:3px solid var(--pen);color:var(--pen);font-size:15px;line-height:1.5}
+.opick .btoggle{display:inline-block;margin:8px 0 0;padding:2px 0;border:0;background:none;font:400 15px/1.4 var(--tw);color:var(--pen);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.opick .btoggle::after{content:" +"}
+.opick .btoggle[aria-expanded="true"]::after{content:" −"}
+.opick .btake{margin:6px 0 0;padding:2px 0 2px 12px;border-left:3px solid var(--pen);color:var(--pen);font-size:15px;line-height:1.5}
+.opick .btake[hidden]{display:none}
 .ocov{display:block;width:100%;height:auto;object-fit:cover;background:#ddd;box-shadow:0 6px 14px rgba(0,0,0,.18)}
 .ocov.books,.ocov.movies{aspect-ratio:2/3}
 .ocov.books{border-radius:2px 4px 4px 2px}
