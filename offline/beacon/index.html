@@ -460,7 +460,8 @@ h1{font-weight:700}
 .lfilter button{font:400 15px/1 var(--tw);padding:9px 14px;border:1.5px solid var(--ink2);background:transparent;color:var(--ink2);border-radius:999px;cursor:pointer}
 .lfilter button.on{background:var(--ink2);color:var(--paper)}
 @media (max-width:760px){.oshelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px}}
-@media (max-width:640px){.otabs{gap:0 2px}.otabs a{padding:9px 7px 7px;font-size:13px;letter-spacing:-.02em}.bcard{grid-template-columns:64px minmax(0,1fr);gap:16px;padding:18px}.bcard b{font-size:24px}.olede{font-size:17px}}
+@media (max-width:640px){.otabs{gap:0 2px}.otabs a{padding:9px 5px 7px;font-size:12px;letter-spacing:-.03em}.bcard{grid-template-columns:64px minmax(0,1fr);gap:16px;padding:18px}.bcard b{font-size:24px}.olede{font-size:17px}}
+@media (max-width:360px){.otabs a{padding:8px 3px 6px;font-size:11px}}
 /* wall of lights */
 .mapsheet{position:relative;background:var(--sheet);margin:40px auto 0;padding:18px 18px 10px;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:rotate(.6deg)}
 .mapsheet::before,.mapsheet::after{content:"";position:absolute;top:-10px;width:80px;height:22px;background:rgba(216,154,48,.55)}
@@ -506,7 +507,7 @@ h1{font-weight:700}
 
 <main class="col">
 
-  <nav class="otabs top" aria-label="Offline"><a href="/offline/">Start here</a><a href="/offline/library/">Library</a><a href="/offline/beacon/" class="on" aria-current="page">Beacon</a><a href="/offline/lights/">Wall of lights</a></nav>
+  <nav class="otabs top" aria-label="Offline"><a href="/offline/">Start here</a><a href="/offline/library/">Library</a><a href="/offline/beacon/" class="on" aria-current="page">Beacon</a><a href="/offline/detox/">Detox</a><a href="/offline/lights/">Wall of lights</a></nav>
   <div class="bhero">
     <div>
       <p class="kick" style="text-align:left">Light your beacon</p>
@@ -567,13 +568,6 @@ h1{font-weight:700}
     <div class="wallteaser"><div><b>Who else left a light on?</b><div class="dots" id="lightDots"></div></div><a class="dark" href="/offline/lights/">See the wall</a></div>
   </section>
 
-  <section class="sec" id="tools">
-    <div id="detox">
-      <h3 class="sub">Digital detox tools we're trying <small id="toolsUpdated"></small></h3>
-      <p class="note" style="margin:10px 0 0">Some are apps, some are things you can hold. Three we're testing right now to help put the phone down.</p>
-      <ul class="list" id="toolsList" style="margin-top:6px"></ul>
-    </div>
-  </section>
 
   <p class="bps"><b>P.S.</b> My old accounts don’t post anything new. About once a month they share the same light, pointing back here. Nobody reads the messages there. Reply to a letter or write hello@ownyourmedia.club instead. I do write back. <img class="hand " src="/offline/img/hand-eventually.webp" alt="(eventually)" width="426" height="310" style="height:66px"></p>
 
@@ -585,35 +579,6 @@ h1{font-weight:700}
 <div class="foot-stripes" role="presentation"></div>
 
 <script>
-/* Detox tools: edit detox-tools.json to swap the three tools. No code changes needed. */
-(function () {
-  var list = document.getElementById('toolsList');
-  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  fetch('/detox-tools.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
-    if (d.updated) document.getElementById('toolsUpdated').textContent = 'Updated ' + d.updated;
-    (d.tools || []).slice(0, 3).forEach(function (app) {
-      var li = el('li', 'dt');
-      function letterTile() { var t = el('span', 'ic lt', (app.name || '?').replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase() || '?'); t.setAttribute('aria-hidden', 'true'); return t; }
-      var icon;
-      if (app.icon) {
-        /* app icons fill the tile; a wordmark logo ("iconFit": "logo") sits inside it with some room */
-        icon = el('img', 'ic' + (app.iconFit === 'logo' ? ' logo-fit' : '')); icon.alt = ''; icon.referrerPolicy = 'no-referrer';
-        icon.onerror = function () { if (icon.parentNode) icon.parentNode.replaceChild(letterTile(), icon); };
-        icon.src = /^(https?:)?\/\//.test(app.icon) || app.icon.charAt(0) === '/' ? app.icon : '/' + app.icon;
-      } else icon = letterTile();
-      li.appendChild(icon);
-      var body = el('div');
-      body.appendChild(el('b', '', app.name));
-      if (app.kind) body.appendChild(el('small', '', app.kind));
-      if (app.what) body.appendChild(el('p', '', app.what));
-      if (app.take) { var t = el('span', 'take'); t.appendChild(el('b', '', "BC's take: ")); t.appendChild(document.createTextNode(app.take)); body.appendChild(t); }
-      var row = el('div', 'links');
-      (app.links || []).forEach(function (l) { if (l && l.url) { var a = el('a', 'go', (l.label || 'Learn more') + ' →'); a.href = l.url; a.rel = 'noopener'; row.appendChild(a); } });
-      body.appendChild(row); li.appendChild(body); list.appendChild(li);
-    });
-  }).catch(function () { document.getElementById('detox').hidden = true; });
-})();
-</script><script>
 /* Lights: edit /offline/lights.json. Each light has a name, town, line, and a link (or "ask": true). Towns need an x/y on the map. */
 (function(){
   var map=document.getElementById('lightsMap'), list=document.getElementById('lightsList'), dots=document.getElementById('lightDots'), count=document.getElementById('lightsCount');

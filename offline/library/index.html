@@ -460,7 +460,8 @@ h1{font-weight:700}
 .lfilter button{font:400 15px/1 var(--tw);padding:9px 14px;border:1.5px solid var(--ink2);background:transparent;color:var(--ink2);border-radius:999px;cursor:pointer}
 .lfilter button.on{background:var(--ink2);color:var(--paper)}
 @media (max-width:760px){.oshelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px}}
-@media (max-width:640px){.otabs{gap:0 2px}.otabs a{padding:9px 7px 7px;font-size:13px;letter-spacing:-.02em}.bcard{grid-template-columns:64px minmax(0,1fr);gap:16px;padding:18px}.bcard b{font-size:24px}.olede{font-size:17px}}
+@media (max-width:640px){.otabs{gap:0 2px}.otabs a{padding:9px 5px 7px;font-size:12px;letter-spacing:-.03em}.bcard{grid-template-columns:64px minmax(0,1fr);gap:16px;padding:18px}.bcard b{font-size:24px}.olede{font-size:17px}}
+@media (max-width:360px){.otabs a{padding:8px 3px 6px;font-size:11px}}
 /* wall of lights */
 .mapsheet{position:relative;background:var(--sheet);margin:40px auto 0;padding:18px 18px 10px;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:rotate(.6deg)}
 .mapsheet::before,.mapsheet::after{content:"";position:absolute;top:-10px;width:80px;height:22px;background:rgba(216,154,48,.55)}
@@ -509,7 +510,7 @@ h1{font-weight:700}
   <p class="kick">Offline</p>
   <h1>The <i>Library.</i></h1>
   <p class="olede">Everything that’s made the shelf, newest first.</p>
-  <nav class="otabs" aria-label="Offline"><a href="/offline/">Start here</a><a href="/offline/library/" class="on" aria-current="page">Library</a><a href="/offline/beacon/">Beacon</a><a href="/offline/lights/">Wall of lights</a></nav>
+  <nav class="otabs" aria-label="Offline"><a href="/offline/">Start here</a><a href="/offline/library/" class="on" aria-current="page">Library</a><a href="/offline/beacon/">Beacon</a><a href="/offline/detox/">Detox</a><a href="/offline/lights/">Wall of lights</a></nav>
   <div class="lfilter" role="group" aria-label="Show"><button type="button" data-k="all" class="on" aria-pressed="true">All</button><button type="button" data-k="books" aria-pressed="false">Books</button><button type="button" data-k="vinyl" aria-pressed="false">Vinyl</button><button type="button" data-k="movies" aria-pressed="false">Movies</button></div>
 
   <section class="sec" id="books"><h2>Books <small>worth putting the phone down for</small></h2>
