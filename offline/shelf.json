@@ -18,6 +18,7 @@
       "year": 2025,
       "genre": "Memoir",
       "why": "A fascinating life explored through his most iconic roles (including Home Alone 2!)",
+      "take": "Learning about the 4th ending of Clue was exciting, but what I loved most about this book was his early years before Rocky Horror. Such an interesting life he lived.",
       "updated": "2026-11-18",
       "cover": "/offline/covers/vagabond-2025.webp"
     },
@@ -43,43 +44,43 @@
     },
     {
       "shelf": "music",
+      "format": "vinyl",
       "title": "Bewitched",
       "by": "Laufey",
       "year": 2023,
       "why": "A go-to for any cocktail party, or just an evening of soft vocals that never miss.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/bewitched-2023.webp",
-      "format": "vinyl"
+      "cover": "/offline/covers/bewitched-2023.webp"
     },
     {
       "shelf": "music",
+      "format": "vinyl",
       "title": "Cinema",
       "by": "Ludovico Einaudi",
       "year": 2021,
       "why": "Starts with the well known “Experience” but never stops being a great listen.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/cinema-2021.webp",
-      "format": "vinyl"
+      "cover": "/offline/covers/cinema-2021.webp"
     },
     {
       "shelf": "music",
+      "format": "vinyl",
       "title": "Everybody Scream",
       "by": "Florence + the Machine",
       "year": 2025,
       "why": "Poetry. And a call to action for society and for each person who hears it.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/everybody-scream-2025.webp",
-      "format": "vinyl"
+      "cover": "/offline/covers/everybody-scream-2025.webp"
     },
     {
       "shelf": "music",
+      "format": "cd",
       "title": "The Joshua Tree",
       "by": "U2",
       "year": 1987,
       "why": "One of the best A sides ever released. And guitars that defined a genre.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/the-joshua-tree-1987.webp",
-      "format": "cd"
+      "cover": "/offline/covers/the-joshua-tree-1987.webp"
     },
     {
       "shelf": "movies",
