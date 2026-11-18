@@ -428,12 +428,17 @@ html.wprint #cPrint{display:block!important}
   /* iTunes (Nov 18): the record's page in the iTunes Store with app=itunes, so a phone opens the iTunes Store app (where the Buy button is), not
      Apple Music. Looked up while the page is open (Apple's store search), so the tap opens it right away. Same matching as the app. */
   var IT = {};
+  /* the app's looser match (1.25.130): edition extras, a leading The, & for and, feat., an artist written longer or shorter */
+  var EXTRA = /\b(super deluxe|deluxe|remaster(ed)?|expanded|anniversary|bonus tracks?|special|legacy|collector'?s|edition|version|\d+(st|nd|rd|th))\b/g;
+  var ltitle = function (s) { var t = norm(String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/\s[-–—:]\s.*$/, '')).replace(EXTRA, ' ').replace(/\s(ep|single)$/, '').replace(/^the\s+/, '').replace(/\s+/g, ' ').trim(); return t || norm(s); };
+  var lartist = function (s) { return norm(String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/\s(feat\.?|featuring|ft\.)\s.*$/, '')).replace(/^the\s+/, '').trim(); };
+  var same = function (x, title, artist) { if (ltitle(title) !== ltitle(x.title)) return false; if (!x.artist) return true; var a = lartist(artist), b = lartist(x.artist); return a === b || (Math.min(a.length, b.length) >= 4 && (a.indexOf(b) >= 0 || b.indexOf(a) >= 0)); };
   var buyUrl = function (u) { try { var q = new URL(u); if (!/^(music|itunes)\.apple\.com$/.test(q.hostname)) return ''; q.searchParams.delete('uo'); q.searchParams.set('app', 'itunes'); return q.toString(); } catch (e) { return ''; } };
   var find = function (x, done) { var album = x.kind === 'album', cb = 'itbuy' + Math.random().toString(36).slice(2), sc = document.createElement('script');
     var end = function () { clearTimeout(t); try { delete window[cb]; } catch (e) {} sc.remove(); }, t = setTimeout(function () { end(); done(null); }, 9000);
     window[cb] = function (d) { end(); var L = (d.results || []).filter(function (y) { return album ? y.collectionViewUrl : y.kind === 'song' && y.trackViewUrl; });
-      var nm = function (y) { return norm(album ? y.collectionName : y.trackName); }, by = function (y) { return norm(y.artistName); }, tt = norm(x.title), ar = norm(x.artist);
-      var hit = L.filter(function (y) { return nm(y) === tt && (!ar || by(y) === ar); })[0] || L.filter(function (y) { return nm(y).indexOf(tt) === 0 && (!ar || by(y).indexOf(ar) >= 0 || ar.indexOf(by(y)) >= 0); })[0] || L.filter(function (y) { return !ar || by(y) === ar; })[0];
+      var nm = function (y) { return album ? y.collectionName : y.trackName; };
+      var hit = L.filter(function (y) { return norm(nm(y)) === norm(x.title) && (!x.artist || norm(y.artistName) === norm(x.artist)); })[0] || L.filter(function (y) { return same(x, nm(y), y.artistName); })[0];
       done(hit ? buyUrl(album ? hit.collectionViewUrl : hit.trackViewUrl) || 'none' : 'none'); };
     sc.onerror = function () { end(); done(null); };
     sc.src = 'https://itunes.apple.com/search?' + qs({ term: (x.artist + ' ' + x.title).trim(), entity: album ? 'album' : 'song', limit: 10, country: 'us', callback: cb });
