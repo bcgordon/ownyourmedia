@@ -442,7 +442,11 @@ h1{font-weight:700}
 .opick .gen+h3{margin-top:6px}
 .opick .oby{margin-top:3px;font-size:13px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
 .opick p{margin:8px 0 0;font-size:15.5px;line-height:1.5}
-.opick .btake{margin:10px 0 0;padding:2px 0 2px 12px;border-left:3px solid var(--pen);color:var(--pen);font-size:15px;line-height:1.5}
+.opick .btoggle{display:inline-block;margin:8px 0 0;padding:2px 0;border:0;background:none;font:400 15px/1.4 var(--tw);color:var(--pen);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.opick .btoggle::after{content:" +"}
+.opick .btoggle[aria-expanded="true"]::after{content:" −"}
+.opick .btake{margin:6px 0 0;padding:2px 0 2px 12px;border-left:3px solid var(--pen);color:var(--pen);font-size:15px;line-height:1.5}
+.opick .btake[hidden]{display:none}
 .ocov{display:block;width:100%;height:auto;object-fit:cover;background:#ddd;box-shadow:0 6px 14px rgba(0,0,0,.18)}
 .ocov.books,.ocov.movies{aspect-ratio:2/3}
 .ocov.books{border-radius:2px 4px 4px 2px}
@@ -600,7 +604,9 @@ h1{font-weight:700}
     c.appendChild(el('h3','',p.title||''));
     c.appendChild(el('div','oby',[k==='movies'?'':p.by,p.year,({vinyl:'Vinyl',cd:'CD',cassette:'Cassette'})[fm]||''].filter(Boolean).join(' · ')));
     if(p.why) c.appendChild(el('p','',p.why));
-    if(p.take){ var t=el('div','btake'); t.appendChild(el('b','','BC’s take. ')); t.appendChild(document.createTextNode(p.take)); c.appendChild(t) }
+    if(p.take){ var id='take-'+k+'-'+p._i, bt=el('button','btoggle','BC’s take'), t=el('div','btake',p.take);
+      bt.type='button'; bt.setAttribute('aria-expanded','false'); bt.setAttribute('aria-controls',id); t.id=id; t.hidden=true;
+      c.appendChild(bt); c.appendChild(t) }
     return c }
   fetch('/offline/shelf.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
     var picks=(d.picks||[]).map(function(p,i){p._i=i; if(p.shelf==='vinyl'){p.shelf='music'; if(!p.format) p.format='vinyl'} return p});
@@ -610,6 +616,11 @@ h1{font-weight:700}
       if(!mine.length && sec) sec.hidden=true;
       if(more && mine.length<=limit) more.hidden=true });
   }).catch(function(){ grids[0].innerHTML='<p class="note">Couldn’t load the shelves. Try again in a minute.</p>' });
+  /* BC's take: a link that opens the review in place; opening one closes any other, a second click closes it */
+  document.addEventListener('click',function(e){ var b=e.target.closest('.btoggle'); if(!b) return;
+    var open=b.getAttribute('aria-expanded')!=='true';
+    document.querySelectorAll('.btoggle[aria-expanded="true"]').forEach(function(o){ o.setAttribute('aria-expanded','false'); document.getElementById(o.getAttribute('aria-controls')).hidden=true });
+    if(open){ b.setAttribute('aria-expanded','true'); document.getElementById(b.getAttribute('aria-controls')).hidden=false } });
   var fb=document.querySelector('.lfilter'); if(!fb) return;
   function show(k){ fb.querySelectorAll('button').forEach(function(b){ var on=b.getAttribute('data-k')===k; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on) });
     grids.forEach(function(g){ g.closest('section').style.display=(k==='all'||g.getAttribute('data-shelf')===k)?'':'none' }) }
