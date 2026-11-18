@@ -424,7 +424,21 @@ html.wprint #cPrint{display:block!important}
   var tag = function (x) { return hash(id + '|' + x.kind + '|' + norm(x.title) + '|' + norm(x.artist)); };
   var qs = function (o) { return new URLSearchParams(o).toString(); };
   var shops = function (x) { var q = (x.artist + ' ' + x.title).trim(); return [['Bandcamp', 'https://bandcamp.com/search?' + qs({ q: q, item_type: x.kind === 'album' ? 'a' : 't' })],
-    ['Qobuz', 'https://www.qobuz.com/us-en/search?' + qs({ q: q })], ['iTunes', 'https://music.apple.com/us/search?' + qs({ term: q })], ['7digital', 'https://us.7digital.com/search?' + qs({ q: q })]]; };
+    ['Qobuz', 'https://www.qobuz.com/us-en/search?' + qs({ q: q })], ['iTunes', 'itunes'], ['7digital', 'https://us.7digital.com/search?' + qs({ q: q })]]; };
+  /* iTunes (Nov 18): the record's page in the iTunes Store with app=itunes, so a phone opens the iTunes Store app (where the Buy button is), not
+     Apple Music. Looked up while the page is open (Apple's store search), so the tap opens it right away. Same matching as the app. */
+  var IT = {};
+  var buyUrl = function (u) { try { var q = new URL(u); if (!/^(music|itunes)\.apple\.com$/.test(q.hostname)) return ''; q.searchParams.delete('uo'); q.searchParams.set('app', 'itunes'); return q.toString(); } catch (e) { return ''; } };
+  var find = function (x, done) { var album = x.kind === 'album', cb = 'itbuy' + Math.random().toString(36).slice(2), sc = document.createElement('script');
+    var end = function () { clearTimeout(t); try { delete window[cb]; } catch (e) {} sc.remove(); }, t = setTimeout(function () { end(); done(null); }, 9000);
+    window[cb] = function (d) { end(); var L = (d.results || []).filter(function (y) { return album ? y.collectionViewUrl : y.kind === 'song' && y.trackViewUrl; });
+      var nm = function (y) { return norm(album ? y.collectionName : y.trackName); }, by = function (y) { return norm(y.artistName); }, tt = norm(x.title), ar = norm(x.artist);
+      var hit = L.filter(function (y) { return nm(y) === tt && (!ar || by(y) === ar); })[0] || L.filter(function (y) { return nm(y).indexOf(tt) === 0 && (!ar || by(y).indexOf(ar) >= 0 || ar.indexOf(by(y)) >= 0); })[0] || L.filter(function (y) { return !ar || by(y) === ar; })[0];
+      done(hit ? buyUrl(album ? hit.collectionViewUrl : hit.trackViewUrl) || 'none' : 'none'); };
+    sc.onerror = function () { end(); done(null); };
+    sc.src = 'https://itunes.apple.com/search?' + qs({ term: (x.artist + ' ' + x.title).trim(), entity: album ? 'album' : 'song', limit: 10, country: 'us', callback: cb });
+    document.head.appendChild(sc); };
+  var findAll = function () { var i = 0; (function nextOne() { if (i >= items.length || i >= 40) return; var x = items[i++], k = tag(x); find(x, function (u) { if (u) { IT[k] = u; draw(); } setTimeout(nextOne, 250); }); })(); };
   var rpc = function (fn, body) { return fetch(SB + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); };
   var MINE = 'oym.want.' + id, mine = {}; try { mine = JSON.parse(localStorage.getItem(MINE) || '{}') || {}; } catch (e) {}
@@ -447,7 +461,11 @@ html.wprint #cPrint{display:block!important}
       var acts = el('div', 'acts');
       if (g) { acts.append(el('span', 'gotit', mine[t] ? '✓ You got this one. Thanks!' : '✓ Someone got this one'));
         var u = el('button', 'undo', mine[t] ? 'Undo' : 'That was me, undo'); u.type = 'button'; u.onclick = function () { mark(t, false, u); }; acts.append(u); }
-      else { var buy = el('span', 'buy', 'Buy it: '); shops(x).forEach(function (s, i) { if (i) buy.append(' · '); var a = el('a', '', s[0]); a.href = s[1]; a.target = '_blank'; a.rel = 'noopener'; buy.append(a); });
+      else { var buy = el('span', 'buy', 'Buy it: '), first = true; shops(x).forEach(function (s) { var u = s[1];
+          if (u === 'itunes') { u = IT[t]; if (u === 'none') return; }
+          if (!first) buy.append(' · '); first = false; var a = el('a', '', s[0]); a.target = '_blank'; a.rel = 'noopener';
+          if (u) a.href = u; else { a.href = '#'; a.onclick = function (ev) { ev.preventDefault(); say('Finding it in the iTunes Store… Tap again in a second.'); }; }
+          buy.append(a); });
         acts.append(buy); if (live) { var m = el('button', 'mark', 'I Got It'); m.type = 'button'; m.onclick = function () { mark(t, true, m); }; acts.append(m); } }
       li.append(acts); ol.append(li); });
   };
@@ -455,7 +473,7 @@ html.wprint #cPrint{display:block!important}
   var mark = function (t, on, btn) { btn.disabled = true;
     rpc('want_mark', { p_list: id, p_tag: t, p_on: on }).then(function (r) { if (!r) throw new Error('refused'); if (on) { got[t] = 1; mine[t] = 1; } else { delete got[t]; delete mine[t]; } saveMine(); say(''); draw(); })
       .catch(function () { btn.disabled = false; say('Couldn’t save that. Check your connection and try again.'); }); };
-  draw();
+  draw(); findAll();
   rpc('want_marks', { p_list: id }).then(function (r) {
     if (r && r.stopped) { $('wIntro').textContent = who + ' stopped sharing this list. Ask for a new link.'; $('wBody').hidden = true; return; }
     if (!r || !r.found) { say('I Got It isn’t working on this list right now. The shops still are.'); return; }
