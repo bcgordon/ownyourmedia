@@ -578,12 +578,12 @@ h1{font-weight:700}
 })();
 </script><script>
 /* Shelves: edit /offline/shelf.json. Each pick: shelf (books, music or movies), format (music: vinyl, cd or cassette), title, by, year, genre (books), why, take (optional),
-   updated (YYYY-MM-DD; newest first), cover (optional: a file in /offline/covers/). No cover, or one that won't load: a typed cover. */
+   updated (YYYY-MM-DD; newest first), by (not shown for movies), cover (optional: a file in /offline/covers/). No cover, or one that won't load: a typed cover. */
 (function(){
   var grids=document.querySelectorAll('.oshelf[data-shelf]'); if(!grids.length) return;
   var limit=+(document.body.getAttribute('data-shelf-limit')||0), colors=['#C93C25','#1c2a6b','#2E2D28','#8a5a1c'];
   function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-  function typed(p,k,i){var d=el('div','ocov tcov '+k);d.style.setProperty('--c',colors[i%colors.length]);d.appendChild(el('b','',p.title||''));d.appendChild(el('span','',p.by||''));d.setAttribute('role','img');d.setAttribute('aria-label',(p.title||'')+' cover');return d}
+  function typed(p,k,i){var d=el('div','ocov tcov '+k);d.style.setProperty('--c',colors[i%colors.length]);d.appendChild(el('b','',p.title||''));d.appendChild(el('span','',k==='movies'?'':(p.by||'')));d.setAttribute('role','img');d.setAttribute('aria-label',(p.title||'')+' cover');return d}
   function card(p,k,i){
     var c=el('div','opick'), cov, f=String(p.cover||'').split('/').pop();
     if(f){ cov=el('img','ocov '+k); cov.alt=(p.title||'')+' cover'; cov.loading='lazy';
@@ -594,7 +594,7 @@ h1{font-weight:700}
     else if(fm){ var w=el('div','rw'); w.appendChild(cov); c.appendChild(w) } else c.appendChild(cov);
     if(p.genre && k==='books') c.appendChild(el('span','gen',p.genre));
     c.appendChild(el('h3','',p.title||''));
-    c.appendChild(el('div','oby',[p.by,p.year,({vinyl:'Vinyl',cd:'CD',cassette:'Cassette'})[fm]||''].filter(Boolean).join(' · ')));
+    c.appendChild(el('div','oby',[k==='movies'?'':p.by,p.year,({vinyl:'Vinyl',cd:'CD',cassette:'Cassette'})[fm]||''].filter(Boolean).join(' · ')));
     if(p.why) c.appendChild(el('p','',p.why));
     if(p.take){ var t=el('div','btake'); t.appendChild(el('b','','BC’s take. ')); t.appendChild(document.createTextNode(p.take)); c.appendChild(t) }
     return c }
