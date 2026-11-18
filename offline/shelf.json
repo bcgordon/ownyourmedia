@@ -1,0 +1,117 @@
+{
+ "_how": "One entry per pick. shelf: books, vinyl or movies. title, by, year; genre for books. why: your line. take: an optional short review. updated: YYYY-MM-DD; the newest four on each shelf show on /offline/, and every pick shows on /offline/library/. cover: a file in offline/covers/. Leave it out and a Claude session fills it in (src/fetch_covers.py). Your own file always wins; send phone photos through a session so they get straightened and their location removed.",
+ "picks": [
+  {
+   "shelf": "books",
+   "title": "Orbital",
+   "by": "Samantha Harvey",
+   "year": 2023,
+   "genre": "Fiction",
+   "why": "One earth day from the space station. A beautiful story, somehow with no actual plot.",
+   "updated": "2026-11-18",
+   "cover": "orbital-2023.webp"
+  },
+  {
+   "shelf": "books",
+   "title": "Vagabond",
+   "by": "Tim Curry",
+   "year": 2025,
+   "genre": "Memoir",
+   "why": "A fascinating life explored through his most iconic roles (including Home Alone 2!)",
+   "updated": "2026-11-18",
+   "cover": "vagabond-2025.webp"
+  },
+  {
+   "shelf": "books",
+   "title": "24/6",
+   "by": "Tiffany Shlain",
+   "year": 2019,
+   "genre": "Non-fiction",
+   "why": "Taking off one day a week from tech is a life-changing decision.",
+   "updated": "2026-11-18",
+   "cover": "24-6-2019.webp"
+  },
+  {
+   "shelf": "books",
+   "title": "Dungeon Crawler Carl",
+   "by": "Matt Dinniman",
+   "year": 2020,
+   "genre": "Science fiction",
+   "why": "An excellent intro to the LitRPG genre. But be ready for lots of weird.",
+   "updated": "2026-11-18",
+   "cover": "dungeon-crawler-carl-2020.webp"
+  },
+  {
+   "shelf": "vinyl",
+   "title": "Bewitched",
+   "by": "Laufey",
+   "year": 2023,
+   "why": "A go-to for any cocktail party, or just an evening of soft vocals that never miss.",
+   "updated": "2026-11-18",
+   "cover": "bewitched-2023.webp"
+  },
+  {
+   "shelf": "vinyl",
+   "title": "Cinema",
+   "by": "Ludovico Einaudi",
+   "year": 2021,
+   "why": "Starts with the well known “Experience” but never stops being a great listen.",
+   "updated": "2026-11-18",
+   "cover": "cinema-2021.webp"
+  },
+  {
+   "shelf": "vinyl",
+   "title": "Everybody Scream",
+   "by": "Florence + the Machine",
+   "year": 2025,
+   "why": "Poetry. And a call to action for society and for each person who hears it.",
+   "updated": "2026-11-18",
+   "cover": "everybody-scream-2025.webp"
+  },
+  {
+   "shelf": "vinyl",
+   "title": "The Joshua Tree",
+   "by": "U2",
+   "year": 1987,
+   "why": "One of the best A sides ever released. And guitars that defined a genre.",
+   "updated": "2026-11-18",
+   "cover": "the-joshua-tree-1987.webp"
+  },
+  {
+   "shelf": "movies",
+   "title": "The Fugitive",
+   "by": "Andrew Davis",
+   "year": 1993,
+   "why": "Early 90s action that has aged incredibly well into the 21st century.",
+   "updated": "2026-11-18",
+   "cover": "the-fugitive-1993.webp"
+  },
+  {
+   "shelf": "movies",
+   "title": "The Iron Giant",
+   "by": "Brad Bird",
+   "year": 1999,
+   "why": "The classic that made Ted Lasso’s Greyhounds cry. As it should.",
+   "updated": "2026-11-18",
+   "cover": "the-iron-giant-1999.webp"
+  },
+  {
+   "shelf": "movies",
+   "title": "The Italian Job",
+   "by": "F. Gary Gray",
+   "year": 2003,
+   "why": "One of the best heist movies ever made. It’s a good train, you should get on it!",
+   "updated": "2026-11-18",
+   "cover": "the-italian-job-2003.webp"
+  },
+  {
+   "shelf": "movies",
+   "title": "Chocolat",
+   "by": "Lasse Hallström",
+   "year": 2000,
+   "why": "Starts as a simple story, but becomes something so much more. And the score is awesome.",
+   "updated": "2026-11-18",
+   "cover": "chocolat-2000.webp"
+  }
+ ]
+}
