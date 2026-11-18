@@ -1,0 +1,82 @@
+# Pages CMS (https://pagescms.org): the editing screens for ownyourmedia.club. For now, only the Library
+# (offline/shelf.json and offline/covers/). Saving commits straight to main and the site updates in about a minute.
+# Right after each save, .github/workflows/shelf.yml fills in any missing covers and takes location data out of
+# uploaded photos. Kept in oym-hq/source/site/live/; edit it there and copy it here.
+
+media:
+  - name: covers
+    label: Covers
+    input: offline/covers
+    output: /offline/covers
+    rename: safe
+    extensions: [jpg, jpeg, png, webp]
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      create: "Library: add {path} (via Pages CMS)"
+      update: "Library: update {path} (via Pages CMS)"
+      delete: "Library: delete {path} (via Pages CMS)"
+      rename: "Library: rename {oldPath} to {newPath} (via Pages CMS)"
+
+content:
+  - name: library
+    label: Library
+    type: file
+    path: offline/shelf.json
+    format: json
+    fields:
+      - name: picks
+        label: Picks
+        description: "The newest four on each shelf (by Updated) show on /offline/; every pick shows in the Library. New picks go at the bottom of this list; the Updated date decides the order on the site."
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title} · {shelf}"
+        fields:
+          - name: shelf
+            label: Shelf
+            type: select
+            options:
+              values: [books, vinyl, movies]
+          - name: title
+            label: Title
+            type: string
+          - name: by
+            label: By
+            description: The author, the artist, or the director.
+            type: string
+          - name: year
+            label: Year
+            type: number
+            options:
+              min: 1800
+              max: 2100
+          - name: genre
+            label: Genre
+            description: Books only, e.g. Fiction, Memoir. Leave empty for vinyl and movies.
+            type: string
+          - name: why
+            label: Why it's here
+            description: Your one line.
+            type: text
+          - name: take
+            label: BC's take
+            description: Optional short review. Leave empty for none.
+            type: text
+          - name: updated
+            label: Updated
+            description: Newest first. Change it to today to move a pick to the front.
+            type: date
+            options:
+              format: yyyy-MM-dd
+          - name: cover
+            label: Cover
+            description: "Leave empty and a real cover is found for you within a few minutes. Your own image always wins. For a phone photo of your copy, a Claude session can straighten and crop it first."
+            type: image
+            options:
+              media: covers

@@ -1,0 +1,35 @@
+# The Library's helpers. After a change to offline/shelf.json or offline/covers/ lands on main (a Pages CMS save,
+# or a merged pull request), this finds a real cover for any pick without one and takes photo metadata (a phone's
+# location) out of every cover image, then commits the result. Script: .github/scripts/fetch_covers.py
+# (a copy of oym-hq/source/site/src/fetch_covers.py). Kept in oym-hq/source/site/live/.
+name: library covers
+on:
+  push:
+    branches: [main]
+    paths: ['offline/shelf.json', 'offline/covers/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: library-covers
+  cancel-in-progress: false
+jobs:
+  covers:
+    name: Fill in covers, remove photo location
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet Pillow==11.0.0
+      - name: Covers
+        run: python3 .github/scripts/fetch_covers.py .
+      - name: Commit any changes
+        run: |
+          git add offline/shelf.json offline/covers
+          if git diff --cached --quiet; then echo "Nothing to change."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Library: covers filled in, photo location removed (automatic)"
+          git pull --rebase -q origin main
+          git push -q origin HEAD:main
