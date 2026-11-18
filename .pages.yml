@@ -54,7 +54,7 @@ content:
             type: string
           - name: by
             label: By
-            description: The author, the artist, or the director (or the show's creator).
+            description: The author or the artist. For movies and TV it isn't shown on the site, so it can stay empty.
             type: string
           - name: year
             label: Year
