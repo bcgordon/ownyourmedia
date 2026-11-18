@@ -447,7 +447,14 @@ h1{font-weight:700}
 .ocov.books,.ocov.movies{aspect-ratio:2/3}
 .ocov.books{border-radius:2px 4px 4px 2px}
 .ocov.movies{border-radius:3px}
-.ocov.vinyl{aspect-ratio:1;position:relative;z-index:1}
+.ocov.music{aspect-ratio:1;position:relative;z-index:1}
+.cw{position:relative;padding-right:18%}
+.cw::before{content:"";position:absolute;top:3%;right:0;width:76%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--paper) 0 6.5%,#9aa3ad 7% 7.8%,#eef1f4 8.3% 13.5%,#8f98a3 14% 14.8%,transparent 15.5% 47%,rgba(0,0,0,.18) 48.5% 49.5%,transparent 50%),conic-gradient(from 30deg,#b9c2cc,#f7f9fb,#a9bde0,#ead2ef,#bfe0c9,#f5ecc8,#b9c2cc,#f2f5f8,#b3c4e6,#e8cfe9,#b9c2cc);box-shadow:0 3px 9px rgba(0,0,0,.28),inset 0 0 0 1.5px rgba(80,88,98,.45)}
+.cw .case,.kw .case{position:relative;z-index:1}
+.kw{position:relative}
+.kw::before{content:"";position:absolute;top:12%;left:37%;width:36%;height:76%;border-radius:5px;background:radial-gradient(circle at 50% 33%,#e9e1cf 0 4px,#3a3733 4px 6px,#f4efe4 6px 11px,#3a3733 11px 12px,transparent 12.5px),radial-gradient(circle at 50% 67%,#e9e1cf 0 4px,#3a3733 4px 6px,#6b4a2e 6px 15px,#3a3733 15px 16px,transparent 16.5px),linear-gradient(#1f1d1b,#1f1d1b) no-repeat 50% 50%/46% 58%,linear-gradient(90deg,#C2503A 0 33.3%,#DEAE5B 33.3% 66.6%,#2E2D28 66.6%) no-repeat 84% 50%/12% 70%,linear-gradient(#efe6d2,#efe6d2) no-repeat 50% 50%/76% 88%,linear-gradient(90deg,#2b2926,#3a3733);box-shadow:0 3px 9px rgba(0,0,0,.28)}
+.cw .case::before{content:"";position:absolute;z-index:2;left:0;top:0;bottom:0;width:7%;background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.22)),repeating-linear-gradient(0deg,rgba(255,255,255,.35) 0 1px,transparent 1px 4px)}
+.cw .case::after{content:"";position:absolute;z-index:2;inset:0;border:1px solid rgba(255,255,255,.6);background:linear-gradient(125deg,rgba(255,255,255,.3) 0 20%,transparent 36%);pointer-events:none}
 .rw{position:relative;padding-right:18%}
 .rw::before{content:"";position:absolute;top:5%;right:0;width:76%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#E2A33B 0 13%,#1C1B19 14% 16%,#2b2926 17% 100%);box-shadow:0 4px 10px rgba(0,0,0,.25)}
 .tcov{display:flex;flex-direction:column;justify-content:flex-end;box-sizing:border-box;padding:14px 12px;background:var(--c,#1c2a6b);color:#FBF7EE}
@@ -462,6 +469,11 @@ h1{font-weight:700}
 @media (max-width:760px){.oshelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px}}
 @media (max-width:640px){.otabs{gap:0 2px}.otabs a{padding:9px 5px 7px;font-size:12px;letter-spacing:-.03em}.bcard{grid-template-columns:64px minmax(0,1fr);gap:16px;padding:18px}.bcard b{font-size:24px}.olede{font-size:17px}}
 @media (max-width:360px){.otabs a{padding:8px 3px 6px;font-size:11px}}
+.kw .case{width:52%;aspect-ratio:.64;display:flex;flex-direction:column;overflow:hidden;background:#F2EADB;border-radius:2px;box-shadow:0 6px 14px rgba(0,0,0,.18)}
+.kw .case .ocov{aspect-ratio:1;flex:none;box-shadow:none}
+.kw .jt{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:3px 7px;font:700 10px/1.15 var(--tw);color:var(--ink2);overflow:hidden}
+.kw .jt::after{content:"";display:block;flex:none;height:4px;margin-top:4px;background:linear-gradient(90deg,#C2503A 0 33.3%,#DEAE5B 33.3% 66.6%,#2E2D28 66.6%)}
+.kw .case::after{content:"";position:absolute;z-index:2;inset:0;border:1px solid rgba(255,255,255,.65);background:linear-gradient(125deg,rgba(255,255,255,.28) 0 20%,transparent 36%);pointer-events:none}
 /* wall of lights */
 .mapsheet{position:relative;background:var(--sheet);margin:40px auto 0;padding:18px 18px 10px;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:rotate(.6deg)}
 .mapsheet::before,.mapsheet::after{content:"";position:absolute;top:-10px;width:80px;height:22px;background:rgba(216,154,48,.55)}
@@ -511,17 +523,17 @@ h1{font-weight:700}
   <h1>The <i>Library.</i></h1>
   <p class="olede">Everything that’s made the shelf, newest first.</p>
   <nav class="otabs" aria-label="Offline"><a href="/offline/">Start here</a><a href="/offline/library/" class="on" aria-current="page">Library</a><a href="/offline/beacon/">Beacon</a><a href="/offline/detox/">Detox</a><a href="/offline/lights/">Wall of lights</a></nav>
-  <div class="lfilter" role="group" aria-label="Show"><button type="button" data-k="all" class="on" aria-pressed="true">All</button><button type="button" data-k="books" aria-pressed="false">Books</button><button type="button" data-k="vinyl" aria-pressed="false">Vinyl</button><button type="button" data-k="movies" aria-pressed="false">Movies</button></div>
+  <div class="lfilter" role="group" aria-label="Show"><button type="button" data-k="all" class="on" aria-pressed="true">All</button><button type="button" data-k="books" aria-pressed="false">Books</button><button type="button" data-k="music" aria-pressed="false">Music</button><button type="button" data-k="movies" aria-pressed="false">Movies and TV</button></div>
 
   <section class="sec" id="books"><h2>Books <small>worth putting the phone down for</small></h2>
     <div class="oshelf" data-shelf="books"></div>
   </section>
 
-  <section class="sec" id="vinyl"><h2>Vinyl <small>on the turntable lately</small></h2>
-    <div class="oshelf" data-shelf="vinyl"></div>
+  <section class="sec" id="music"><h2>Music <small>spinning lately, on vinyl or CD</small></h2>
+    <div class="oshelf" data-shelf="music"></div>
   </section>
 
-  <section class="sec" id="movies"><h2>Movies <small>on disc, no queue</small></h2>
+  <section class="sec" id="movies"><h2>Movies and TV <small>on disc, no queue</small></h2>
     <div class="oshelf" data-shelf="movies"></div>
   </section>
 
@@ -565,7 +577,7 @@ h1{font-weight:700}
   }).catch(function(){ if(list) list.innerHTML='<p class="note">Couldn’t load the lights. Try again in a minute.</p>' });
 })();
 </script><script>
-/* Shelves: edit /offline/shelf.json. Each pick: shelf (books, vinyl or movies), title, by, year, genre (books), why, take (optional),
+/* Shelves: edit /offline/shelf.json. Each pick: shelf (books, music or movies), format (music: vinyl, cd or cassette), title, by, year, genre (books), why, take (optional),
    updated (YYYY-MM-DD; newest first), cover (optional: a file in /offline/covers/). No cover, or one that won't load: a typed cover. */
 (function(){
   var grids=document.querySelectorAll('.oshelf[data-shelf]'); if(!grids.length) return;
@@ -577,15 +589,17 @@ h1{font-weight:700}
     if(f){ cov=el('img','ocov '+k); cov.alt=(p.title||'')+' cover'; cov.loading='lazy';
       cov.onerror=function(){ this.replaceWith(typed(p,k,i)) }; cov.src='/offline/covers/'+encodeURIComponent(f) }
     else cov=typed(p,k,i);
-    if(k==='vinyl'){ var w=el('div','rw'); w.appendChild(cov); c.appendChild(w) } else c.appendChild(cov);
+    var fm=k==='music' ? ({cd:'cd',cassette:'cassette',tape:'cassette'}[String(p.format||'').toLowerCase()]||'vinyl') : '';
+    if(fm==='cd'||fm==='cassette'){ var w=el('div',fm==='cd'?'cw':'kw'), cs=el('div','case'); cs.appendChild(cov); if(fm==='cassette') cs.appendChild(el('div','jt',p.title||'')); w.appendChild(cs); c.appendChild(w) }
+    else if(fm){ var w=el('div','rw'); w.appendChild(cov); c.appendChild(w) } else c.appendChild(cov);
     if(p.genre && k==='books') c.appendChild(el('span','gen',p.genre));
     c.appendChild(el('h3','',p.title||''));
-    c.appendChild(el('div','oby',[p.by,p.year].filter(Boolean).join(' · ')));
+    c.appendChild(el('div','oby',[p.by,p.year,({vinyl:'Vinyl',cd:'CD',cassette:'Cassette'})[fm]||''].filter(Boolean).join(' · ')));
     if(p.why) c.appendChild(el('p','',p.why));
     if(p.take){ var t=el('div','btake'); t.appendChild(el('b','','BC’s take. ')); t.appendChild(document.createTextNode(p.take)); c.appendChild(t) }
     return c }
   fetch('/offline/shelf.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
-    var picks=(d.picks||[]).map(function(p,i){p._i=i;return p});
+    var picks=(d.picks||[]).map(function(p,i){p._i=i; if(p.shelf==='vinyl'){p.shelf='music'; if(!p.format) p.format='vinyl'} return p});
     picks.sort(function(a,b){ var x=String(b.updated||''), y=String(a.updated||''); return x<y?-1:x>y?1:a._i-b._i });
     grids.forEach(function(g){ var k=g.getAttribute('data-shelf'), mine=picks.filter(function(p){return p.shelf===k}), sec=g.closest('section'), more=sec&&sec.querySelector('.omore');
       g.innerHTML=''; (limit?mine.slice(0,limit):mine).forEach(function(p,i){ g.appendChild(card(p,k,i)) });
@@ -596,7 +610,7 @@ h1{font-weight:700}
   function show(k){ fb.querySelectorAll('button').forEach(function(b){ var on=b.getAttribute('data-k')===k; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on) });
     grids.forEach(function(g){ g.closest('section').style.display=(k==='all'||g.getAttribute('data-shelf')===k)?'':'none' }) }
   fb.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var k=b.getAttribute('data-k'); show(k); history.replaceState(null,'',k==='all'?location.pathname:'#'+k) });
-  function fromHash(){ var h=location.hash.slice(1); show(['books','vinyl','movies'].indexOf(h)>-1?h:'all') }
+  function fromHash(){ var h=location.hash.slice(1); if(h==='vinyl') h='music'; show(['books','music','movies'].indexOf(h)>-1?h:'all') }
   window.addEventListener('hashchange',fromHash); fromHash();
 })();
 </script>

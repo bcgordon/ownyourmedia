@@ -6,7 +6,8 @@ Usage: python3 src/fetch_covers.py /path/to/ownyourmedia [--force TITLE]
 Also runs on its own in the live repo after every change to the shelf (.github/workflows/shelf.yml, which uses the
 copy at .github/scripts/fetch_covers.py; keep the two the same).
 
-- Books: Open Library. Vinyl: Apple's music catalog (iTunes Search). Movies: the poster on the film's Wikipedia page.
+- Books: Open Library. Music (vinyl, CD or cassette): Apple's music catalog (iTunes Search). Movies and TV: the poster on the
+  film's or show's Wikipedia page.
 - Saves each cover once, as offline/covers/<slug>.webp (at most 600px on the long side, no metadata), and writes
   "/offline/covers/<slug>.webp" into the pick's "cover" (the same form Pages CMS writes). The site then serves its own copy; visitors never load these services.
 - A pick whose "cover" file already exists is left alone, so a manual cover (a file BC put in offline/covers/)
@@ -54,10 +55,10 @@ def vinyl(p):
 
 def movie(p):
     W = 'https://en.wikipedia.org/w/api.php?'
-    for t in [f"{p['title']} ({p.get('year')} film)", f"{p['title']} (film)", p['title']]:
+    for t in [f"{p['title']} ({p.get('year')} film)", f"{p['title']} (film)", f"{p['title']} (TV series)", f"{p['title']} ({p.get('year')} TV series)", p['title']]:
         d = js(W + urllib.parse.urlencode({'action': 'parse', 'page': t, 'prop': 'wikitext', 'section': 0, 'format': 'json', 'redirects': 1}))
         w = ((d or {}).get('parse') or {}).get('wikitext', {}).get('*', '')
-        if 'Infobox film' not in w: time.sleep(2); continue
+        if 'Infobox film' not in w and 'Infobox television' not in w: time.sleep(2); continue
         m = re.search(r'\|\s*image\s*=\s*([^\n|]+)', w)
         if not m: return None
         time.sleep(2)
@@ -66,7 +67,7 @@ def movie(p):
             for ii in pg.get('imageinfo', []): return get(ii.get('thumburl') or ii['url'])
         return None
 
-FIND = {'books': book, 'vinyl': vinyl, 'movies': movie}
+FIND = {'books': book, 'music': vinyl, 'vinyl': vinyl, 'movies': movie}   # 'vinyl' is the old name for music
 
 def save(raw, path):
     im = Image.open(io.BytesIO(raw) if isinstance(raw, bytes) else raw).convert('RGB')

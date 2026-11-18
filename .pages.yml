@@ -42,13 +42,19 @@ content:
             label: Shelf
             type: select
             options:
-              values: [books, vinyl, movies]
+              values: [books, music, movies]
+          - name: format
+            label: Format
+            description: Music only. Vinyl shows a record coming out of the sleeve, CD a disc coming out of its case, cassette a tape coming out of its case.
+            type: select
+            options:
+              values: [vinyl, cd, cassette]
           - name: title
             label: Title
             type: string
           - name: by
             label: By
-            description: The author, the artist, or the director.
+            description: The author, the artist, or the director (or the show's creator).
             type: string
           - name: year
             label: Year
@@ -58,7 +64,7 @@ content:
               max: 2100
           - name: genre
             label: Genre
-            description: Books only, e.g. Fiction, Memoir. Leave empty for vinyl and movies.
+            description: Books only, e.g. Fiction, Memoir. Leave empty for music and movies.
             type: string
           - name: why
             label: Why it's here

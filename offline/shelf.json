@@ -1,5 +1,5 @@
 {
-  "_how": "Edit in Pages CMS (Library), or by hand. One entry per pick. shelf: books, vinyl or movies. title, by, year; genre for books. why: your line. take: optional short review. updated: YYYY-MM-DD; the newest four on each shelf show on /offline/, every pick on /offline/library/. cover: an image in offline/covers/ (written as /offline/covers/name). Leave it empty and the library-covers Action finds one; your own image always wins.",
+  "_how": "Edit in Pages CMS (Library), or by hand. One entry per pick. shelf: books, music or movies (Movies and TV). format (music): vinyl, cd or cassette. title, by, year; genre for books. why: your line. take: optional short review. updated: YYYY-MM-DD; the newest four on each shelf show on /offline/, every pick on /offline/library/. cover: an image in offline/covers/ (written as /offline/covers/name). Leave it empty and the library-covers Action finds one; your own image always wins.",
   "picks": [
     {
       "shelf": "books",
@@ -42,40 +42,44 @@
       "cover": "/offline/covers/dungeon-crawler-carl-2020.webp"
     },
     {
-      "shelf": "vinyl",
+      "shelf": "music",
       "title": "Bewitched",
       "by": "Laufey",
       "year": 2023,
       "why": "A go-to for any cocktail party, or just an evening of soft vocals that never miss.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/bewitched-2023.webp"
+      "cover": "/offline/covers/bewitched-2023.webp",
+      "format": "vinyl"
     },
     {
-      "shelf": "vinyl",
+      "shelf": "music",
       "title": "Cinema",
       "by": "Ludovico Einaudi",
       "year": 2021,
       "why": "Starts with the well known “Experience” but never stops being a great listen.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/cinema-2021.webp"
+      "cover": "/offline/covers/cinema-2021.webp",
+      "format": "vinyl"
     },
     {
-      "shelf": "vinyl",
+      "shelf": "music",
       "title": "Everybody Scream",
       "by": "Florence + the Machine",
       "year": 2025,
       "why": "Poetry. And a call to action for society and for each person who hears it.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/everybody-scream-2025.webp"
+      "cover": "/offline/covers/everybody-scream-2025.webp",
+      "format": "vinyl"
     },
     {
-      "shelf": "vinyl",
+      "shelf": "music",
       "title": "The Joshua Tree",
       "by": "U2",
       "year": 1987,
       "why": "One of the best A sides ever released. And guitars that defined a genre.",
       "updated": "2026-11-18",
-      "cover": "/offline/covers/the-joshua-tree-1987.webp"
+      "cover": "/offline/covers/the-joshua-tree-1987.webp",
+      "format": "cd"
     },
     {
       "shelf": "movies",
